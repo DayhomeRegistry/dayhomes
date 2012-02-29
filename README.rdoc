@@ -1,3 +1,21 @@
+= Dayhomes
+
+== Development Process
+
+All team members coordinate using Pivotal Tracker. It lists all the stories, tasks, bugs, and releases associated with our project in the order in which they should be completed. If you don’t have access to Pivotal Tracker or aren’t sure how to use it, contact mark@burmis.ca.
+
+Day by day, developers should be signing in to Pivotal to find out what the team expects them to work on. If you don’t own any story and have nothing to work on then just start work on the next story listed in Pivotal. If you’re not sure about the next story, or need help deciding what to start next then send an email to the team. Please don’t wait for us to reach out to you if you’ve got nothing to do.
+
+When you start work on a new story, first fetch the latest copy of the project repo from GitHub and then create a new git branch for your work. As you work, commit to the branch as much as necessary and freely push your branch up to GitHub. If your branch exists for more than a day, or as it gets out of sync with the master branch please merge master into your story branch.
+
+Once you’re satisfied that you’ve completed your code push your branch to GitHub. Navigate to the project repo, open your branch and then click the “Pull Request” button. Add any comments you need to explain your change and complete the pull request. The team will be emailed and someone will review your pull request. If they’re satisfied with your changes they can merge your branch into master, otherwise please use the GitHub pull interface to comment and update the branch until the reviewer is satisfied.
+
+TIP: If you’re reviewing a pull request, you can use the tabs at the top of the pull request to view the comments, commits, and change summary. You’ll probably want to start with the comments and change summary.
+
+Once the pull request is merged into master, the continuous integration server will automatically run the tests and email the team if anything goes wrong. Assuming everything is working the integration server will deploy your code to the staging server automatically ready for demo to the rest of the team. The integration server will tweet the team to let them know the code has been deployed.
+
+After the change has been merged and the pull request closed, please mark your story as finished and delivered. Well demo the story to the product owner at the next team demo and they’ll either accept it or reject it. Accepted stories will be deployed to production on a schedule set by the client.
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create
