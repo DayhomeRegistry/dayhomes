@@ -1,8 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails',                  '3.2.1'
 
-gem 'sqlite3'
+gem 'jquery-rails'
+
+# app server and process management
+gem 'unicorn'
+gem 'foreman'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
@@ -12,4 +16,10 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+group :development, :test do
+  gem 'sqlite3'
+end
+
+group :production do
+  gem 'mysql2'
+end
