@@ -1,5 +1,8 @@
 load 'deploy'
 
+set :stages, %w{vagrant staging production}
+set :default_stage, "staging"
+
 require 'capistrano/fanfare'
 
 fanfare_recipe 'defaults'
