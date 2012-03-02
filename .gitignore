@@ -16,3 +16,6 @@
 
 # Ignore RubyMine Config Files
 .idea/*
+
+# Ignore bins installed by bundler
+/bin/*
