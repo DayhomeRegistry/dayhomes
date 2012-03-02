@@ -47,3 +47,6 @@ rails_best_practices_output.html
 
 # vim poop
 **.swp
+
+# Ignore bins installed by bundler
+/bin/*
