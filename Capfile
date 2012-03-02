@@ -7,7 +7,7 @@ require 'capistrano/fanfare'
 
 fanfare_recipe 'defaults'
 fanfare_recipe 'multistage'
-# fanfare_recipe 'git_style'
+fanfare_recipe 'git_style'
 fanfare_recipe 'bundler'
 fanfare_recipe 'assets'
 fanfare_recipe 'db_seed'
