@@ -4,7 +4,6 @@ gem 'rails', '3.2.2'
 gem 'jquery-rails'
 gem 'haml'
 gem 'gmaps4rails'
-gem 'rspec-rails'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
@@ -17,6 +16,8 @@ end
 group :development, :test do
   gem 'sqlite3'
   gem 'capistrano-fanfare'
+  gem 'rspec-rails', '~> 2.6'
+  gem 'webrat', '~> 0.7.3'
 end
 
 group :production do

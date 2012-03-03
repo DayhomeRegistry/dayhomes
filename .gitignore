@@ -27,11 +27,15 @@ rerun.txt
 capybara-*.html
 rails_best_practices_output.html
 
+
 # foreman/Procfile config
 /.env
 
 # Ignore RubyMine Config Files
 .idea/*
+
+# windows dev mode gems exclusion
+/development/*
 
 # scm revert files
 **.orig
