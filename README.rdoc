@@ -16,6 +16,14 @@ Once the pull request is merged into master, the continuous integration server w
 
 After the change has been merged and the pull request closed, please mark your story as finished and delivered. Well demo the story to the product owner at the next team demo and they’ll either accept it or reject it. Accepted stories will be deployed to production on a schedule set by the client.
 
+== Windows Notes
+To prevent nix explosions:
+bundle install --without production
+
+
+== Gmaps notes
+Asset generate for prod: rails generate gmaps4rails:install
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create

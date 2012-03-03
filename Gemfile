@@ -1,12 +1,10 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.2'
-
 gem 'jquery-rails'
-
-# app server and process management
-gem 'unicorn'
-gem 'foreman'
+gem 'haml'
+gem 'gmaps4rails'
+gem 'rspec-rails'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
@@ -22,5 +20,8 @@ group :development, :test do
 end
 
 group :production do
+  # app server and process management
+  gem 'unicorn'
+  gem 'foreman'
   gem 'mysql2'
 end
