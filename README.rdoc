@@ -24,6 +24,9 @@ bundle install --without production
 == Gmaps notes
 Asset generate for prod: rails generate gmaps4rails:install
 
+Need gmap data?
+rake db:populate
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create
