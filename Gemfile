@@ -18,9 +18,10 @@ end
 
 group :development, :test do
   gem 'capistrano-fanfare'
+  gem 'factory_girl_rails'
+  gem 'guard-rspec'
   gem 'rspec-rails', '~> 2.6'
   gem 'webrat', '~> 0.7.3'
-  gem 'factory_girl_rails'
 end
 
 group :production do
