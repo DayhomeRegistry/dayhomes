@@ -1,0 +1,14 @@
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      %a.brand{ :href => '/'} Dayhomes
+      %ul.nav
+        %li
+          %a{:href => '#'}test
+        %li
+          %a{:href => '#'}test
+        %li
+          %a{:href => '#'}test
+      =form_for @search, :url => searches_path, :method => 'get', :html => {:class => 'navbar-search pull-right'} do |f|
+        =f.text_field :address, :class => "search-query", :placeholder => 'Search by address'
+        =f.submit "Search"
