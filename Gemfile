@@ -4,6 +4,9 @@ gem 'rails', '3.2.2'
 gem 'jquery-rails'
 gem 'haml'
 gem 'gmaps4rails'
+gem 'jquery-rails'
+gem 'mysql2'
+gem 'rails', '3.2.2'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
@@ -14,7 +17,6 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'capistrano-fanfare'
   gem 'rspec-rails', '~> 2.6'
   gem 'webrat', '~> 0.7.3'
@@ -25,5 +27,4 @@ group :production do
   # app server and process management
   gem 'unicorn'
   gem 'foreman'
-  gem 'mysql2'
 end
