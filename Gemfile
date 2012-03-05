@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.2'
-
 gem 'jquery-rails'
+gem 'mysql2'
+gem 'rails', '3.2.2'
 
 # app server and process management
 gem 'unicorn'
@@ -17,13 +17,13 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'capistrano-fanfare'
+  gem 'factory_girl_rails'
+  gem 'guard-rspec'
   gem 'rspec-rails', '~> 2.6'
   gem 'webrat', '~> 0.7.3'
-  gem 'factory_girl_rails'
 end
 
 group :production do
-  gem 'mysql2'
+  # No production only gems right now
 end
