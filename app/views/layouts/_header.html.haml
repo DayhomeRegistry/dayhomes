@@ -1,0 +1,16 @@
+%div{:class => "container"}
+  %div{:class => "navbar navbar-fixed-top"}
+    %div{:class => "navbar-inner"}
+      %div{:class => "container"}
+        %a{:class => "brand", :href => '#'}
+          Dayhomes
+        %ul{:class => "nav"}
+          %li{:class => "nav"}
+            %a{:href => '#'}test
+          %li
+            %a{:href => '#'}test
+          %li
+            %a{:href => '#'}test
+          =form_for @search, :url => searches_path, :method => 'get', :html => {:class => 'navbar-search pull-left'} do |f|
+            =f.text_field :address, :class => "search-query", :placeholder => 'Search'
+            =f.submit "Search"
