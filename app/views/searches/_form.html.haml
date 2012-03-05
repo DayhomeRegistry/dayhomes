@@ -1,0 +1,9 @@
+= form_for(@search) do |f|
+  - if @search.errors.any?
+    = pluralize(@search.errors.count, "error")
+    %ul
+      - @search.errors.full_messages.each do |msg|
+        %li= msg
+  = f.label :address
+  = f.text_field :address
+  = submit_tag "Search"

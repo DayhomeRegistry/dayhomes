@@ -6,9 +6,12 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-
-<%= yield %>
-
-</body>
+     <body>
+        <div class="container">
+          <%= render 'layouts/header' %>
+          <%= render 'layouts/flash_msgs' %>
+          <%= yield %>
+          <%= render 'layouts/footer' %>
+        </div>
+    </body>
 </html>

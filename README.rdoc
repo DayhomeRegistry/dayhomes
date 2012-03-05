@@ -23,8 +23,6 @@ Once the pull request is merged into master, the continuous integration server w
 
 After the change has been merged and the pull request closed, please mark your story as finished and delivered. Well demo the story to the product owner at the next team demo and they’ll either accept it or reject it. Accepted stories will be deployed to production on a schedule set by the client.
 
-== Development Pre-requisites
-
 Before you can run Dayhomes in development, you need to install and be running
 the following on your system:
 
@@ -92,3 +90,10 @@ It's also possible to monitor and run tests as you work using the guard gem:
     bin/guard
 
 This will run tests on individual files as changes are made.
+
+== Windows Notes
+To prevent nix explosions:
+bundle install --without production
+
+== Gmaps notes
+Asset generate for prod: rails generate gmaps4rails:install
