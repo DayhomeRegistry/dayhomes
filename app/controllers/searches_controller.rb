@@ -20,7 +20,7 @@ class SearchesController < ApplicationController
         search_address = Gmaps4rails.geocode(params[:search][:address])
 
         # convert hash to json (string)), decode json to ruby object
-        search_pin = {:lat => search_address[0][:lat], :lng => search_address[0][:lng]}.to_json
+        search_pin = {:lat => search_address[0][:lat], :lng => search_address[0][:lng], :picture => '/assets/search_pin.png', :width => '32', :height => '37'}.to_json
         search_pin = ActiveSupport::JSON.decode(search_pin)
 
         # add the search pin to the list of pins

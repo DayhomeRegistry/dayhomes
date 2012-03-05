@@ -32,6 +32,11 @@ describe SearchesController do
         get :index
         response.should have_selector("input[name='commit'][type='submit']")
       end
+
+      it "should find a valid address" do
+        flash[:error].should be_nil
+      end
+
     end
 
     describe "failure" do
@@ -39,11 +44,15 @@ describe SearchesController do
         @attr = { :address => "" }
       end
 
-      it "should render the 'new' page" do
+      it "should display 'Address not entered, no search pin dropped'" do
         get :index, :search => @attr
-        response.should render_template("new")
+        flash[:error].should == "Address not entered, no search pin dropped"
       end
 
+      it "should display 'Unable to find address, no search pin dropped'" do
+        get :index, :search => @attr.merge(:address => "11111111111111111111111111111111111111")
+        flash[:error].should == "Unable to find address, no search pin dropped"
+      end
     end
 
   end
