@@ -26,7 +26,7 @@
 rerun.txt
 capybara-*.html
 rails_best_practices_output.html
-
+/config/database.yml
 
 # foreman/Procfile config
 /.env
