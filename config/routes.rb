@@ -3,6 +3,10 @@ Dayhomes::Application.routes.draw do
 
   resources :searches
 
+  namespace :admin do
+    resources :day_homes
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
