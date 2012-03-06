@@ -3,7 +3,7 @@ class SearchesController < ApplicationController
   def index
     # no address given, send them to new
     if params[:search].blank? || params[:search][:address].blank?
-      flash[:error] = "Address not entered, no search pin dropped"
+      flash.now[:error] = "Address not entered, no search pin dropped"
 
       # display all of the day homes
       @day_homes = DayHome.all.to_gmaps4rails
@@ -28,8 +28,10 @@ class SearchesController < ApplicationController
 
         # convert back to json for gmaps
         @day_homes = @day_homes.to_json
+
+        flash.now[:success] = "Address found"
       rescue
-        flash[:error] = "Unable to find address, no search pin dropped"
+        flash.now[:error] = "Unable to find address, no search pin dropped"
 
         # display all of the day homes
         @day_homes = DayHome.all.to_gmaps4rails

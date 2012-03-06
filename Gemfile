@@ -5,7 +5,7 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'gmaps4rails'
 gem 'jquery-rails'
-gem 'mysql2'
+gem 'sqlite3'
 gem 'rails', '3.2.2'
 
 group :assets do
