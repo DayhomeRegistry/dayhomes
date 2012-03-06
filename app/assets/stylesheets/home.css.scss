@@ -3,3 +3,15 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap";
 body { padding: 50px 0 0 0; }
+
+// bootstrap placeholder
+:-moz-placeholder {
+  color: #eeeeee;
+}
+::-webkit-input-placeholder {
+  color: #eeeeee;
+}
+.navbar-search .search-query
+{
+  margin-bottom: 6px;
+}
