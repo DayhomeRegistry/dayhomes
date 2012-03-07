@@ -1,0 +1,27 @@
+%p
+  = link_to 'Create Dayhome', [:new, :admin, :day_home], :class => :btn
+
+- if @day_homes.blank?
+  %p
+    No day homes have been added yet!
+- else
+  %table.table-striped.table{:cellpadding => '5'}
+    %thead
+      %tr
+        %th
+          Name
+        %th
+          Address
+        %th
+          Actions
+    %tbody
+      - @day_homes.each do |day_home|
+        %tr
+          %td
+            = day_home.name
+          %td
+            = day_home.address
+          %td
+            = link_to 'Edit', [:edit, :admin, day_home]
+            |
+            = link_to 'Delete', [:admin, day_home], :method => :delete, :confirm => "Are you sure?"
