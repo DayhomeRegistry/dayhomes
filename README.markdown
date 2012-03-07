@@ -1,13 +1,13 @@
-= Dayhomes
+# Dayhomes
 
-== The Team
+## The Team
 
  * *Mark Bennett* - project management, [mark@burmis.ca](mailto:mark@burmis.ca), 780 826 6275, [@MarkBennett on Twitter](https://twitter.com/MarkBennett), [Google+](https://plus.google.com/104431949275766772757/posts), [MarkBennett on GitHub](https://github.com/MarkBennett)
  * *Nathan Bertram* - development, [nbertram@gmail.com](mailto:nbertram@gmail.com), [@nathanbertram on Twitter](https://twitter.com/nathanbertram), [Google+](https://plus.google.com/118053740037238335612/posts), [GitHub](https://github.com/nathanbertram)
  * *Ryan Jones* - development, [ryan.michael.jones@gmail.com](mailto:ryan.michael.jones@gmail.com), 780 907 2969, [https://twitter.com/ryanonrails], [Google+](https://plus.google.com/108111379110069559271/posts), [ryanonrails on GitHub](https://github.com/ryanonrails)
  * *Vonn Gondziola* - user experience, [vonngondziola@gmail.com](mailto:vonngondziola@gmail.com), 780 237 5654, [@vonnziola on Twitter](https://twitter.com/#!/vonnziola), [Google+](https://plus.google.com/104018711410926928454/posts), [vonziola on GitHub](https://github.com/vonnziola)
 
-== Development Process
+## Development Process
 
 All team members coordinate using Pivotal Tracker. It lists all the stories, tasks, bugs, and releases associated with our project in the order in which they should be completed. If you don’t have access to Pivotal Tracker or aren’t sure how to use it, contact mark@burmis.ca.
 
@@ -17,7 +17,7 @@ When you start work on a new story, first fetch the latest copy of the project r
 
 Once you’re satisfied that you’ve completed your code push your branch to GitHub. Navigate to the project repo, open your branch and then click the “Pull Request” button. Add any comments you need to explain your change and complete the pull request. The team will be emailed and someone will review your pull request. If they’re satisfied with your changes they can merge your branch into master, otherwise please use the GitHub pull interface to comment and update the branch until the reviewer is satisfied.
 
-TIP: If you’re reviewing a pull request, you can use the tabs at the top of the pull request to view the comments, commits, and change summary. You’ll probably want to start with the comments and change summary.
+*TIP:* If you’re reviewing a pull request, you can use the tabs at the top of the pull request to view the comments, commits, and change summary. You’ll probably want to start with the comments and change summary.
 
 Once the pull request is merged into master, the continuous integration server will automatically run the tests and email the team if anything goes wrong. Assuming everything is working the integration server will deploy your code to the staging server automatically ready for demo to the rest of the team. The integration server will tweet the team to let them know the code has been deployed.
 
@@ -29,7 +29,7 @@ the following on your system:
   * MySQL 5.5
   * Redis 2.4.8
 
-== Installing
+## Installing
 
 Begin by cloning the dayhomes repository from GitHub to get access to the
 projects source code and build assets.
@@ -69,7 +69,7 @@ You'll also want to prepare the test database with:
 
     bin/rake db:test:prepare
 
-== Running the app
+## Running the app
 
 We're using the Foreman gem to manage our application processes. Kick off the
 application with:
@@ -79,7 +79,7 @@ application with:
 Please note that MySQL and redis should be running as described in the
 prerequisites section.
 
-== Running the tests
+## Running the tests
 
 Our app ships with a large set of tests. You can run the full suite using:
 
@@ -91,9 +91,11 @@ It's also possible to monitor and run tests as you work using the guard gem:
 
 This will run tests on individual files as changes are made.
 
-== Windows Notes
+## Windows Notes
+
 To prevent nix explosions:
 bundle install --without production
 
-== Gmaps notes
+## Gmaps notes
+
 Asset generate for prod: rails generate gmaps4rails:install
