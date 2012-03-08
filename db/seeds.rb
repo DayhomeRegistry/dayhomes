@@ -6,9 +6,20 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-day_homes = ["T5N1Y6", "T5S1R5", "T6C0P9", "T5E4E5", "T6C2W1"]
+#day_homes = ["T5N1Y6", "T5S1R5", "T6C0P9", "T5E4E5", "T6C2W1"]
+#
+## Create a couple of dayhomes
+#day_homes.each_with_index  do |d, index|
+#  DayHome.create!({:name => "Dayhome #{index}", :address => d})
+#end
 
-# Create a couple of dayhomes
-day_homes.each_with_index  do |d, index|
-  DayHome.create!({:name => "Dayhome #{index}", :address => d})
-end
+#DayHome.create!({   :name => 'Awesome Day Home',
+#                 :gmaps =>  true,
+#                 :city =>  'Edmonton',
+#                 :province =>  'AB',
+#                 :street1 =>  '793 blackburn place',
+#                 :street2 =>  '',
+#                 :postal_code =>  'T6W1C3',
+#                 :enrolled => 1,
+#                 :max_enrollment => 10
+#             })

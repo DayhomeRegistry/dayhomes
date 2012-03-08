@@ -10,10 +10,10 @@ class SearchesController < ApplicationController
     else
       # determine which dayhomes to display
       dayhome_filter(params)
-
-      # make sure the search object keeps its persistance
-      @advanced_search = params.has_key?(:search) ? Search.new(params[:search]) : Search.new
     end
+
+    # make sure the search object keeps its persistance
+    @advanced_search = params.has_key?(:search) ? Search.new(params[:search]) : Search.new
   end
 
   private
