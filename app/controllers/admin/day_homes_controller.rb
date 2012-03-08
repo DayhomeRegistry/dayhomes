@@ -1,6 +1,6 @@
 class Admin::DayHomesController < Admin::ApplicationController
   def index
-    @day_homes = DayHome.all
+    @day_homes = DayHome.page(params[:page] || 1).per(params[:per_page] || 10)
   end
 
   def show

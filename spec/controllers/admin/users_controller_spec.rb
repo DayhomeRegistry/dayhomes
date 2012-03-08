@@ -5,16 +5,17 @@ describe Admin::UsersController do
     @user = mock_model(User)
   end
   
-  
   describe "index" do
     def do_render(params={})
       get :index, params
     end
     
     it "should grab all the users in question" do
-      User.stub!(:all).and_return([@user])
-      User.should_receive(:all)
-      do_render
+      User.stub!(:page).and_return([@user])
+      User.page.stub!(:per).and_return([@user])
+      User.should_receive(:page).with('2')
+      User.page.should_receive(:per)
+      do_render(:page => '2')
     end
   end
   
