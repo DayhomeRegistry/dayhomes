@@ -4,15 +4,12 @@ describe SearchesController do
   render_views
 
   before(:each) do
+    @attr = FactoryGirl.attributes_for(:search)
   end
 
   describe "GET 'index'" do
 
-    describe "success" do
-      before(:each) do
-        @attr = { :address => "T6L5M6" }
-      end
-
+    describe "without query params" do
       it "should be successful" do
         get :index
         response.should be_success
@@ -33,9 +30,23 @@ describe SearchesController do
         response.should have_selector("input[name='commit'][type='submit']")
       end
 
-      it "should find a valid address" do
-        flash[:error].should be_nil
+      it "should have an enrolled input select" do
+        get :index
+        response.should have_selector("input[name='enrollment_open']")
       end
+
+      it "should get all of the dayhomes" do
+        flash[:success].should == "Displaying all dayhomes"
+      end
+    end
+
+
+    describe "with query params" do
+      before(:each) do
+        @attr = { }
+      end
+
+
 
     end
 
