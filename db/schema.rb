@@ -11,16 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120303032906) do
+ActiveRecord::Schema.define(:version => 20120306232435) do
 
   create_table "day_homes", :force => true do |t|
     t.string   "name"
     t.float    "lat"
     t.float    "lng"
-    t.string   "address"
     t.boolean  "gmaps"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "city"
+    t.string   "province"
+    t.string   "street1"
+    t.string   "street2"
+    t.string   "postal_code"
   end
 
 end
