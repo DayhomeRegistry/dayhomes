@@ -6,6 +6,7 @@ gem 'haml'
 gem 'gmaps4rails'
 gem 'jquery-rails'
 gem 'carmen'
+gem 'authlogic'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
