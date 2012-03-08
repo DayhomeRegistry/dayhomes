@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.2'
-gem 'jquery-rails'
+gem 'mysql2'
 gem 'haml'
 gem 'gmaps4rails'
 gem 'jquery-rails'
 gem 'mysql2'
+gem 'carmen'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
@@ -20,6 +21,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.6'
   gem 'webrat', '~> 0.7.3'
   gem 'factory_girl_rails'
+  gem 'shoulda-matchers'
 end
 
 group :production do

@@ -61,6 +61,12 @@ First, edit your database credentials in <tt>config/database.yml</tt>. The user
 credentials you enter in this file need to be able to create and admin the dev
 and test databases. 
 
+Setup your database locally
+
+    cp config/database.yml.template config/database.yml
+    rake db:create
+
+
 Once you've entered your database credentials, setup the database with:
 
     bin/rake db:setup
