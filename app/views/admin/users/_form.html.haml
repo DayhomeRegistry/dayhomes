@@ -1,0 +1,24 @@
+= form_for [:admin, @user] do |f|
+  = f.label :first_name
+  = f.text_field :first_name
+
+  = f.label :last_name
+  = f.text_field :last_name
+  
+  = f.label :email
+  = f.text_field :email
+  
+  = f.label :password
+  = f.password_field :password
+  
+  = f.label :password_confirmation, 'Confirm Password'
+  = f.password_field :password_confirmation
+  
+  = f.label :admin, :class => :checkbox do
+    = f.check_box :admin
+    Has admin access?
+  
+  %br
+  = f.submit 'Save', :class => 'btn'
+  |
+  = link_to 'Cancel', [:admin, :users]

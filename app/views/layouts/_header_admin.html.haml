@@ -9,4 +9,6 @@
       .nav-collapse
         %ul.nav
           %li.active
-            %a{:href => "#"} Manage Dayhomes
+            = link_to 'Dayhomes', [:admin, :day_homes]
+          %li.active
+            = link_to 'Users', [:admin, :users]

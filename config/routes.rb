@@ -5,6 +5,7 @@ Dayhomes::Application.routes.draw do
 
   namespace :admin do
     resources :day_homes
+    resources :users
   end
 
   # The priority is based upon order of creation:
