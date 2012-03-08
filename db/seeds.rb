@@ -1,14 +1,23 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# Destroy all existing dayhomes
+DayHome.destroy_all
 
-day_homes = ["T5N1Y6", "T5S1R5", "T6C0P9", "T5E4E5", "T6C2W1"]
+# Reset the primary key increment count; so it starts counting from 1 again.
+DayHome.connection.execute('ALTER TABLE day_homes AUTO_INCREMENT = 1')
+
+addresses_hash = [
+  {:postal_code => 'T5N1Y6', :street1 => '131 St NW'},
+  {:postal_code => 'T5S1R5', :street1 => '178 St NW'},
+  {:postal_code => 'T6C0P9', :street1 => '79 Avenue Northwest'},
+  {:postal_code => 'T5E4E5', :street1 => '128 Avenue Northwest'},
+  {:postal_code => 'T5E4E5', :street1 => '8638 81 Street'}
+]
 
 # Create a couple of dayhomes
-day_homes.each_with_index  do |d, index|
-  DayHome.create!({:name => "Dayhome #{index}", :address => d})
+addresses_hash.each_with_index  do |street_and_postal, index|
+  DayHome.create!({:name => "DayHome #{index}",
+                   :gmaps =>  true,
+                   :city =>  'Edmonton',
+                   :province =>  'AB',
+                   :street2 =>  '',
+               }.merge(street_and_postal))
 end
