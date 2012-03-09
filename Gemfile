@@ -18,6 +18,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'capistrano-fanfare'
   gem 'rspec-rails', '~> 2.6'
   gem 'webrat', '~> 0.7.3'
