@@ -30,16 +30,21 @@ enrolled_address_hash.each_with_index  do |street_and_postal, index|
 end
 
 # Create a couple of dayhomes with open enrollment
-  enrollment_closed_address_hash.each_with_index  do |street_and_postal, index|
-    DayHome.create!({:name => "DayHome #{index}",
-                     :gmaps =>  true,
-                     :city =>  'Edmonton',
-                     :province =>  'AB',
-                     :street2 =>  '',
-                     :enrolled => 10,
-                     :max_enrollment => 10
-                    }.merge(street_and_postal))
-
-
-
+enrollment_closed_address_hash.each_with_index  do |street_and_postal, index|
+  DayHome.create!({:name => "DayHome #{index}",
+                   :gmaps =>  true,
+                   :city =>  'Edmonton',
+                   :province =>  'AB',
+                   :street2 =>  '',
+                   :enrolled => 10,
+                   :max_enrollment => 10
+                  }.merge(street_and_postal))
 end
+
+
+# Create Default Admin User
+User.create!({:email => 'dayadmin@dayhomeregistry.com', :password => 'day4admin', :password_confirmation => 'day4admin', :first_name => 'DayHome', :last_name => 'Admin'})
+
+
+
+
