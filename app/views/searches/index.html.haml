@@ -1,4 +1,5 @@
 .row
-  .span12
-    =label_tag @search_error
+  .span4
+    =render 'form'
+  .span8
     =gmaps4rails(@day_homes)
