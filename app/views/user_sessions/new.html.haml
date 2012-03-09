@@ -1,0 +1,14 @@
+%h2
+  Your Account
+
+= form_for @user_session do |f|
+  = f.label :email
+  = f.text_field :email
+  
+  = f.label :password
+  = f.password_field :password
+  
+  %br
+  = f.submit 'Login', :class => 'btn'
+  |
+  = link_to 'Forgot password?', reset_password_path

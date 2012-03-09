@@ -4,6 +4,7 @@ describe SearchesController do
   render_views
 
   before(:each) do
+    login_regular_user
     @attr = FactoryGirl.attributes_for(:search)
   end
 

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Admin::DayHomesController do
   before(:each) do
     @day_home = mock_model(DayHome)
+    login_admin_user
   end
   
   
@@ -12,9 +13,11 @@ describe Admin::DayHomesController do
     end
     
     it "should grab all the dayhomes in question" do
-      DayHome.stub!(:all).and_return([@day_home])
-      DayHome.should_receive(:all)
-      do_render
+      DayHome.stub!(:page).and_return([@day_home])
+      DayHome.page.stub!(:per).and_return([@day_home])
+      DayHome.should_receive(:page).with('2')
+      DayHome.page.should_receive(:per)
+      do_render(:page => '2')
     end
   end
   

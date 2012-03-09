@@ -1,0 +1,21 @@
+= form_for @user || current_user do |f|
+  = f.label :first_name
+  = f.text_field :first_name
+  
+  = f.label :last_name
+  = f.text_field :last_name
+
+  = f.label :email
+  = f.text_field :email
+
+  = f.label :password
+  = f.password_field :password
+  
+  = f.label :password_confirmation, 'Confirm Password'
+  = f.password_field :password_confirmation
+  
+  %br
+  
+  = f.submit @user ? 'Sign Up!' : 'Update Account', :class => :btn
+  |
+  = link_to 'Cancel', root_path
