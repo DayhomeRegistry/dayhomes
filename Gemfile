@@ -5,7 +5,9 @@ gem 'mysql2'
 gem 'haml'
 gem 'gmaps4rails'
 gem 'jquery-rails'
+gem 'mysql2'
 gem 'carmen'
+gem 'awesome_print'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'

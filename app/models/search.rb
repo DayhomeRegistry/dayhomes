@@ -3,7 +3,7 @@ class Search
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :address
+  attr_accessor :address, :enrollment_open
 
   def initialize(attributes = {})
     attributes.each do |name, value|

@@ -1,5 +1,5 @@
 Dayhomes::Application.routes.draw do
-  root :to => 'home#index'
+  root :to => 'pages#home'
 
   resources :searches
 

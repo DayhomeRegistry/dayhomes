@@ -1,20 +1,27 @@
 class DayHome < ActiveRecord::Base
+
   validates :name, :street1, :city, :province, :postal_code, :presence => true
-  
-  # :address is where you get the address from
-  # :normalized_address will apply the clean gmaps address (over writing the previous address))
-  # IE: d = DayHome.create!({:name => 'Ryan House', :address => 'T6L5M6'})
-  #   #<DayHome id: 5, name: "ryans house", lat: 53.47759199999999, lng: -113.395897, address: "Edmonton, AB T6L 5M6, Canada"
-  acts_as_gmappable :lat => 'lat', :lng => 'lng', :check_process => :prevent_geocoding,
-                    :address => :address, :normalized_address => nil,
+  validates :enrolled, :numericality => { :only_integer => true,
+                                          :less_than_or_equal_to  => :max_enrollment,
+                                          :greater_than_or_equal_to => 0}
+  validates :max_enrollment, :numericality => { :only_integer => true,
+                                                :greater_than_or_equal_to => :enrolled,
+                                                :greater_than_or_equal_to => 0}
+
+  acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
+                    :check_process => :prevent_geocoding, :address => :address,
                     :msg => 'Cannot find a location matching that query.'
-  
-  def address
-    "#{street1} #{street2}, #{city}, #{province}, Canada #{postal_code}"
-  end
-  
+
+  # this method is called when creating or updating a dayhome
+  # it won't make a call to google maps if we already have a lat long however,
+    # this method seems to be ignored on update
   def prevent_geocoding
-    address.blank? || (!lat.blank? && !lng.blank?)
+    (!lat.blank? && !lng.blank?)
+  end
+
+  # this method is called when updating the lat long (this is what's fed to google maps)
+  def address
+    "#{city}, #{province}, Canada #{postal_code}"
   end
 
 end
