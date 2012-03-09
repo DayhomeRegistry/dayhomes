@@ -6,7 +6,8 @@
     = javascript_include_tag :application
     = csrf_meta_tags
   %body
-    = render 'layouts/header_admin'
+    - if current_user
+      = render 'layouts/header_admin'
     .container
       = render 'layouts/flash_msgs'
       = yield

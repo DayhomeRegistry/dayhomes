@@ -1,0 +1,13 @@
+%br
+%p
+  - if current_user
+    Logged in as
+    = current_user.full_name
+    = "-"
+    %strong= link_to "Your Account", user_path(current_user)
+    |
+    %strong= link_to 'Logout', logout_path
+  - else
+    %strong= link_to 'Login', login_path
+    |
+    %strong= link_to 'Sign Up', new_user_path

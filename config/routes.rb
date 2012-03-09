@@ -2,9 +2,27 @@ Dayhomes::Application.routes.draw do
   root :to => 'pages#home'
 
   resources :searches
-
+  
+  match 'login' => 'user_sessions#new', :as => :login
+  match 'logout' => 'user_sessions#destroy', :as => :logout
+  resources :users
+  resources :user_sessions
+  
+  match 'reset_password' => 'password_resets#new', :as => :reset_password
+  match 'reset_password_instructions/:id' => 'password_resets#edit', :as => :reset_password_instructions
+  match 'reset_password_instructions/:id/update' => 'password_resets#update', :as => :update_reset_password_instructions
+  resources :password_resets
+  
+  
   namespace :admin do
+    root :to => 'day_homes#index'
+    
     resources :day_homes
+    resources :users
+    resources :user_sessions
+    
+    match 'login' => 'user_sessions#new', :as => :login
+    match 'logout' => 'user_sessions#destroy', :as => :logout
   end
 
   # The priority is based upon order of creation:
