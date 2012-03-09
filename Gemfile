@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'carmen'
 gem 'authlogic'
 gem 'kaminari'
+gem 'awesome_print'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'

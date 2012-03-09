@@ -5,15 +5,11 @@ describe SearchesController do
 
   before(:each) do
     login_regular_user
+    @attr = FactoryGirl.attributes_for(:search)
   end
 
   describe "GET 'index'" do
-
-    describe "success" do
-      before(:each) do
-        @attr = { :address => "T6L5M6" }
-      end
-
+    describe "without query params" do
       it "should be successful" do
         get :index
         response.should be_success
@@ -34,25 +30,46 @@ describe SearchesController do
         response.should have_selector("input[name='commit'][type='submit']")
       end
 
-      it "should find a valid address" do
-        flash[:error].should be_nil
+      describe "advanced search form" do
+        it "should exist" do
+          get :index
+          response.should have_selector('div', :class => 'container')
+          response.should have_selector('div', :class => 'span4')
+          response.should have_selector('form', :id => 'new_search')
+        end
+
+        it "should have advanced search fields" do
+          get :index
+          response.should have_selector("form") do |node|
+            node.should have_selector('input', :id => 'search_address')
+            node.should have_selector('select', :id => 'search_enrollment_open')
+          end
+        end
       end
 
+      it "should get all of the dayhomes" do
+        get :index
+        flash[:success].should_not be_nil
+      end
+    end
+
+
+    describe "with query params" do
+      it "should be successful" do
+        get :index, @attr
+        response.should be_success
+      end
+
+      it "should be successful without address" do
+        get :index, :search => @attr.merge(:address => "")
+        response.should be_success
+      end
     end
 
     describe "failure" do
-      before(:each) do
-        @attr = { :address => "" }
-      end
-
-      it "should display 'Address not entered, no search pin dropped'" do
-        get :index, :search => @attr
-        flash[:error].should == "Address not entered, no search pin dropped"
-      end
-
       it "should display 'Unable to find address, no search pin dropped'" do
-        get :index, :search => @attr.merge(:address => "11111111111111111111111111111111111111")
-        flash[:error].should == "Unable to find address, no search pin dropped"
+        get :index, :search => @attr.merge(:address => "1111111111111111111111asdfasdfasdfasdf1111111111111111fail")
+        flash[:error].should_not be_nil
       end
     end
 
