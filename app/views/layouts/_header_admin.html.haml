@@ -1,14 +1,15 @@
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
-      %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a.brand{:href => "#"} Dayhomes Admin
+      = link_to 'Dayhomes Admin', [:admin, :day_homes], :class => :brand
       .nav-collapse
         %ul.nav
           %li.active
             = link_to 'Dayhomes', [:admin, :day_homes]
           %li.active
             = link_to 'Users', [:admin, :users]
+      %ul.nav.pull-right
+        %li
+          = link_to current_user.full_name, [:edit, :admin, current_user]
+        %li
+          = link_to 'Logout', admin_logout_path

@@ -4,8 +4,14 @@ Dayhomes::Application.routes.draw do
   resources :searches
 
   namespace :admin do
+    root :to => 'day_homes#index'
+    
     resources :day_homes
     resources :users
+    resources :user_sessions
+    
+    match 'login' => 'user_sessions#new', :as => :login
+    match 'logout' => 'user_sessions#destroy', :as => :logout
   end
 
   # The priority is based upon order of creation:

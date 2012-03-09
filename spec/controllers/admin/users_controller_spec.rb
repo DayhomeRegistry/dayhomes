@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Admin::UsersController do
   before(:each) do
     @user = mock_model(User)
+    login_admin_user
   end
   
   describe "index" do

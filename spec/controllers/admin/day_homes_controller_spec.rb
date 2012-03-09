@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Admin::DayHomesController do
   before(:each) do
     @day_home = mock_model(DayHome)
+    login_admin_user
   end
   
   
