@@ -32,6 +32,7 @@ GEM
     authlogic (3.1.0)
       activerecord (>= 3.0.7)
       activerecord (>= 3.0.7)
+    awesome_print (1.0.2)
     bootstrap-sass (2.0.1)
     builder (3.0.0)
     capistrano (2.11.2)
@@ -179,6 +180,7 @@ PLATFORMS
 
 DEPENDENCIES
   authlogic
+  awesome_print
   bootstrap-sass (~> 2.0.1)
   capistrano-fanfare
   carmen
