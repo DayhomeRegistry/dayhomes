@@ -1,0 +1,11 @@
+%h2
+  Logged in as
+  = current_user.full_name
+
+%p
+  %strong Email:
+  = current_user.email
+  %br
+  = link_to 'Edit Account', edit_user_path(current_user)
+  |
+  = link_to 'Logout', logout_path
