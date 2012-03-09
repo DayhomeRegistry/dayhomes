@@ -20,7 +20,7 @@ class SearchesController < ApplicationController
 
     def dayhome_filter(params)
       search_addy_pin = nil
-      dayhome_query = DayHome.select("*")
+      dayhome_query = DayHome.select('*')
 
       # make sure the address is clean
       if params.has_key?(:search) && params[:search].has_key?(:address) &&  params[:search][:address] != ''
