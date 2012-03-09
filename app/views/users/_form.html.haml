@@ -1,4 +1,4 @@
-= form_for @user do |f|
+= form_for @user || current_user do |f|
   = f.label :first_name
   = f.text_field :first_name
   
@@ -16,4 +16,6 @@
   
   %br
   
-  = f.submit 'Sign Up!', :class => :btn
+  = f.submit @user ? 'Sign Up!' : 'Update Account', :class => :btn
+  |
+  = link_to 'Cancel', root_path
