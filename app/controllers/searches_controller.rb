@@ -34,9 +34,9 @@ class SearchesController < ApplicationController
 
         # get the dayhomes based on Open/Closed (true/false)
         if params[:search][:enrollment_open] == "true"
-          dayhome_query = dayhome_query.where("enrolled < max_enrollment")
+          dayhome_query = dayhome_query.where("available < max_availability")
         else params[:search][:enrollment_open] == "false"
-          dayhome_query = dayhome_query.where("enrolled = max_enrollment")
+          dayhome_query = dayhome_query.where("available = max_availability")
         end
       end
 

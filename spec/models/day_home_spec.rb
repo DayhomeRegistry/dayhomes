@@ -15,22 +15,22 @@ describe DayHome do
     end
 
     it "should not allow dayhomes to have more enrollments than the max enrollments" do
-      invalid_enrollment = DayHome.new(@attr.merge(:enrolled => 100, :max_enrollment => 50 ))
+      invalid_enrollment = DayHome.new(@attr.merge(:available => 100, :max_availability => 50 ))
       invalid_enrollment.should_not be_valid
     end
 
-    it "should not allow dayhomes to set the max enrollments lower than enrolled" do
-      invalid_enrollment = DayHome.new(@attr.merge(:enrolled => 100, :max_enrollment => 50 ))
+    it "should not allow dayhomes to set the max enrollments lower than available" do
+      invalid_enrollment = DayHome.new(@attr.merge(:available => 100, :max_availability => 50 ))
       invalid_enrollment.should_not be_valid
     end
 
-    it "should not allow dayhomes to have enrolled < 0" do
-      invalid_enrollment = DayHome.new(@attr.merge(:enrolled => -1 ))
+    it "should not allow dayhomes to have available < 0" do
+      invalid_enrollment = DayHome.new(@attr.merge(:available => -1 ))
       invalid_enrollment.should_not be_valid
     end
 
     it "should not allow dayhomes to have max enrollment < 0" do
-      invalid_enrollment = DayHome.new(@attr.merge(:max_enrollment => -1 ))
+      invalid_enrollment = DayHome.new(@attr.merge(:max_availability => -1 ))
       invalid_enrollment.should_not be_valid
     end
   end

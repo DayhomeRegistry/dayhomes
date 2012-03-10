@@ -1,9 +1,16 @@
-# Destroy all existing dayhomes
+# Destroy all existing dayhomes - availabilty
 DayHome.destroy_all
+Availability.destroy_all
 
 # Reset the primary key increment count; so it starts counting from 1 again.
 DayHome.connection.execute('ALTER TABLE day_homes AUTO_INCREMENT = 1')
+Availability.connection.execute('ALTER TABLE availability AUTO_INCREMENT = 1')
 
+Availability.create!{:type => 'full-time'}
+Availability.create!{:type => 'part-time'}
+Availability.create!{:type => 'no availability'}
+
+# address hashes
 enrolled_address_hash = [
   {:postal_code => 'T5N1Y6', :street1 => '131 St NW'},
   {:postal_code => 'T5S1R5', :street1 => '178 St NW'},
@@ -23,9 +30,7 @@ enrolled_address_hash.each_with_index  do |street_and_postal, index|
                    :gmaps =>  true,
                    :city =>  'Edmonton',
                    :province =>  'AB',
-                   :street2 =>  '',
-                   :enrolled => 2,
-                   :max_enrollment => 10
+                   :street2 =>  ''
                }.merge(street_and_postal))
 end
 
@@ -35,9 +40,7 @@ enrollment_closed_address_hash.each_with_index  do |street_and_postal, index|
                    :gmaps =>  true,
                    :city =>  'Edmonton',
                    :province =>  'AB',
-                   :street2 =>  '',
-                   :enrolled => 10,
-                   :max_enrollment => 10
+                   :street2 =>  ''
                   }.merge(street_and_postal))
 end
 

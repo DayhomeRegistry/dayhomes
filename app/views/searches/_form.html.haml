@@ -2,9 +2,14 @@
   %h3 Dayhome Search
   .control-group
     .controls
-      = f.label 'Near'
+      = f.label :address, 'Near'
       = f.text_field :address
-      = f.label 'Enrollment'
-      = f.select :enrollment_open, options_for_select({ "Open" => "true", "Closed" => "false"}, @advanced_search.enrollment_open )
+      = f.label 'Availability'
+      - Availability.all.each do |avail|
+        %div
+          = check_box_tag "search[availability_ids][]", avail.id, false
+          = category.name
+
+
       %br
       = submit_tag "Search", :class => 'btn'
