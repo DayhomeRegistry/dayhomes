@@ -11,19 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120309235022) do
+ActiveRecord::Schema.define(:version => 20120310161057) do
 
   create_table "availabilities", :force => true do |t|
     t.integer  "day_home_id"
-    t.integer  "availability_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer  "availability_type_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
-  create_table "availability", :force => true do |t|
-    t.string   "type"
+  create_table "availability_types", :force => true do |t|
+    t.string   "kind"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "day_home_availability_types", :force => true do |t|
+    t.integer  "day_home_id"
+    t.integer  "availability_type_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   create_table "day_homes", :force => true do |t|

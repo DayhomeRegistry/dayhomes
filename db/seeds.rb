@@ -1,14 +1,14 @@
 # Destroy all existing dayhomes - availabilty
 DayHome.destroy_all
-Availability.destroy_all
+AvailabilityType.destroy_all
 
 # Reset the primary key increment count; so it starts counting from 1 again.
 DayHome.connection.execute('ALTER TABLE day_homes AUTO_INCREMENT = 1')
-Availability.connection.execute('ALTER TABLE availability AUTO_INCREMENT = 1')
+AvailabilityType.connection.execute('ALTER TABLE availability_types AUTO_INCREMENT = 1')
 
-Availability.create!{:type => 'full-time'}
-Availability.create!{:type => 'part-time'}
-Availability.create!{:type => 'no availability'}
+AvailabilityType.create!({:kind => 'Full-time'})
+AvailabilityType.create!({:kind => 'Part-time'})
+AvailabilityType.create!({:kind => 'No Availability'})
 
 # address hashes
 enrolled_address_hash = [
@@ -20,7 +20,7 @@ enrolled_address_hash = [
 ]
 
 enrollment_closed_address_hash = [
-    {:postal_code => 'T6@1C3', :street1 => '793 blackburn place'},
+    {:postal_code => 'T6W1C3', :street1 => '793 blackburn place'},
     {:postal_code => 'T6L5M6', :street1 => '4138 36st NW'}
 ]
 
