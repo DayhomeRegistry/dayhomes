@@ -5,8 +5,9 @@ class SearchesController < ApplicationController
     if params[:search].blank?
       flash.now[:success] = "Displaying all dayhomes"
 
-      # display all of the day homes
-      @day_homes = DayHome.all.to_gmaps4rails
+      # display all of the full and part time
+      @day_homes = DayHome.select('*').joins(:day_home_availability_types, :availability_types)
+        .where("kind IN (?)", ['Full-time', 'Part-time']).to_gmaps4rails
     else
       # determine which dayhomes to display
       dayhome_filter(params)
@@ -38,6 +39,7 @@ class SearchesController < ApplicationController
         end
       end
 
+      # feed thw here clause an in (OR)
       unless availability_kind_array.empty?
         dayhome_query = dayhome_query.where("kind IN (?)", availability_kind_array)
       end
