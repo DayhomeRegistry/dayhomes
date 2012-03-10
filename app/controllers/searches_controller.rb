@@ -20,24 +20,26 @@ class SearchesController < ApplicationController
 
     def dayhome_filter(params)
       search_addy_pin = nil
-      dayhome_query = DayHome.select('*')
+      dayhome_query = DayHome.select('*').joins(:day_home_availability_types, :availability_types)
 
-      # make sure the address is clean
-      if params.has_key?(:search) && params[:search].has_key?(:address) &&  params[:search][:address] != ''
+      # morph the hash into the model
+      search = Search.new(params[:search])
 
-        # create search dayhome pin
+      # create search dayhome pin
+      unless search.address.blank?
         search_addy_pin = geocode(params[:search][:address])
       end
 
-      # make sure the enrollment key is clean
-      if params.has_key?(:search) && params[:search].has_key?(:enrollment_open) &&  params[:search][:enrollment_open] != ''
-
-        # get the dayhomes based on Open/Closed (true/false)
-        if params[:search][:enrollment_open] == "true"
-          dayhome_query = dayhome_query.where("available < max_availability")
-        else params[:search][:enrollment_open] == "false"
-          dayhome_query = dayhome_query.where("available = max_availability")
+      # tack on any of the checkboxes to the where clause
+      availability_kind_array = []
+      search.availability_types.each do |search_avil_type|
+        if search_avil_type.checked
+          availability_kind_array << "#{search_avil_type.kind}"
         end
+      end
+
+      unless availability_kind_array.empty?
+        dayhome_query = dayhome_query.where("kind IN (?)", availability_kind_array)
       end
 
       @day_homes = create_pins(dayhome_query, search_addy_pin)

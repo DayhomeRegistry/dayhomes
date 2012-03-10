@@ -36,7 +36,7 @@ private
           self.availability_types.each do |avail_type|
 
             # Set the checkboxes if the user has a checkbox checked, otherwise clear it out
-            if (avail_type.id.to_s == parm_avail_type)
+            if avail_type.id.to_s == parm_avail_type
               avail_type.checked = true
             end
           end
