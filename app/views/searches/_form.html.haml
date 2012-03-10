@@ -10,7 +10,5 @@
         %div
           = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
           = avail_type.kind
-
-
       %br
       = submit_tag "Search", :class => 'btn'
