@@ -26,10 +26,10 @@ part_time_addresses = [
     {:postal_code => 'T6L5M6', :street1 => '4138 36st NW'}
 ]
 
-#no_availability_addresses = [
-#    {:postal_code => 'T6J5M5', :street1 => '2978 106 Street NW'},
-#    {:postal_code => 'T5S1S5', :street1 => '10070 178 Street NW'}
-#]
+no_availability_addresses = [
+    {:postal_code => 'T6J5M5', :street1 => '2978 106 Street NW'},
+    {:postal_code => 'T5S1S5', :street1 => '10070 178 Street NW'}
+]
 
 # Create a couple of dayhomes with full and part time
 fulltime_addresses.each_with_index  do |street_and_postal, index|
@@ -47,31 +47,27 @@ fulltime_addresses.each_with_index  do |street_and_postal, index|
 end
 
 # Create a couple of dayhomes with part time and no availability
-#part_time_addresses.each_with_index  do |street_and_postal, index|
-#  d = DayHome.create!({:name => "DayHome #{index}",
-#                   :gmaps =>  true,
-#                   :city =>  'Edmonton',
-#                   :province =>  'AB',
-#                   :street2 =>  ''
-#                  }.merge(street_and_postal))
-#  d.availability_types << parttime
-#  if index.odd?
-#    d.availability_types << no_availability
-#  end
-#  d.save!
-#end
+part_time_addresses.each_with_index  do |street_and_postal, index|
+  d = DayHome.create!({:name => "DayHome #{index}",
+                   :gmaps =>  true,
+                   :city =>  'Edmonton',
+                   :province =>  'AB',
+                   :street2 =>  ''
+                  }.merge(street_and_postal))
+  d.availability_types << parttime
+end
 
 # Create a couple of dayhomes with no availability
-#no_availability_addresses.each_with_index  do |street_and_postal, index|
-#  d = DayHome.create!({:name => "DayHome #{index}",
-#                       :gmaps =>  true,
-#                       :city =>  'Edmonton',
-#                       :province =>  'AB',
-#                       :street2 =>  ''
-#                      }.merge(street_and_postal))
-#  d.availability_types << no_availability
-#  d.save!
-#end
+no_availability_addresses.each_with_index  do |street_and_postal, index|
+  d = DayHome.create!({:name => "DayHome #{index}",
+                       :gmaps =>  true,
+                       :city =>  'Edmonton',
+                       :province =>  'AB',
+                       :street2 =>  ''
+                      }.merge(street_and_postal))
+  d.availability_types << no_availability
+  d.save!
+end
 
 
 # Create Default Admin User
