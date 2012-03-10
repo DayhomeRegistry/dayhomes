@@ -4,11 +4,11 @@
     .controls
       = f.label :address, 'Near'
       = f.text_field :address
-      = f.label 'Availability'
-      - Availability.all.each do |avail|
+      = f.label :availability_types, 'Availability'
+      - @advanced_search.availability_types.each do |avail_type|
         %div
-          = check_box_tag "search[availability_ids][]", avail.id, false
-          = category.name
+          = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
+          = avail_type.kind
 
 
       %br
