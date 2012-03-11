@@ -42,9 +42,20 @@ describe SearchesController do
           get :index
           response.should have_selector("form") do |node|
             node.should have_selector('input', :id => 'search_address')
-            node.should have_selector('select', :id => 'search_enrollment_open')
+            node.should have_selector('input', :id => 'search_advanced_search', :value => "true")
+            node.should have_selector('label', :for => 'search_availability_types')
           end
         end
+
+        it "should have checkboxes" do
+          get :index
+          response.should have_selector("form") do |node|
+            node.should have_selector('input', :type => 'checkbox', :class => 'waffles')
+          end
+        end
+
+
+
       end
 
       it "should get all of the dayhomes" do

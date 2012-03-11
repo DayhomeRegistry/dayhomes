@@ -1,14 +1,13 @@
-= form_for(@advanced_search, :url => searches_path, :method => 'get', :html => {:class => 'well'}) do |f|
+= form_for(@advanced_search, :url => searches_path, :method => 'get', :html => {:class => 'well', :id => 'advanced-search'}) do |f|
   %h3 Dayhome Search
   .control-group
     .controls
       = f.hidden_field(:advanced_search, :value => true)
       = f.label :address, 'Near'
       = f.text_field :address
-      = f.label :availability_types, 'Availability'
+      = 'Availability'
       - @advanced_search.availability_types.each do |avail_type|
-        %div
-          = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
-          = avail_type.kind
+        = check_box_tag "search[availability_types][kind][#{avail_type.id}]", avail_type.id, checked = true, :class => 'checkbox'
+        = avail_type.kind
       %br
       = submit_tag "Search", :class => 'btn'
