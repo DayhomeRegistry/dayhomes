@@ -14,39 +14,6 @@ describe DayHome do
       it { should validate_presence_of(attribute)}
     end
 
-    it "should not allow dayhomes to have more enrollments than the max enrollments" do
-      invalid_enrollment = DayHome.new(@attr.merge(:available => 100, :max_availability => 50 ))
-      invalid_enrollment.should_not be_valid
-    end
-
-    it "should not allow dayhomes to set the max enrollments lower than available" do
-      invalid_enrollment = DayHome.new(@attr.merge(:available => 100, :max_availability => 50 ))
-      invalid_enrollment.should_not be_valid
-    end
-
-    it "should not allow dayhomes to have available < 0" do
-      invalid_enrollment = DayHome.new(@attr.merge(:available => -1 ))
-      invalid_enrollment.should_not be_valid
-    end
-
-    it "should not allow dayhomes to have max enrollment < 0" do
-      invalid_enrollment = DayHome.new(@attr.merge(:max_availability => -1 ))
-      invalid_enrollment.should_not be_valid
-    end
-  end
-
-  describe "default values" do
-    before(:each) do
-      @ryan_house = DayHome.create!(@attr)
-    end
-
-    it "should have an enrollment of 0 if it's not specified" do
-      @ryan_house.enrolled.should == 0
-    end
-
-    it "should have a maximum enrollment of 10 if it's not specified" do
-      @ryan_house.max_enrollment.should == 10
-    end
   end
 
   describe "geolocation" do

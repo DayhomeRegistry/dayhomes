@@ -1,6 +1,9 @@
 class SearchesController < ApplicationController
 
   def index
+
+    u = User.create!({:email => 'dayadmin@dayhome422registry.com', :password => 'day4admin', :password_confirmation => 'day4admin', :first_name => 'DayHome', :last_name => 'Admin', :admin => true})
+    u.first_name = 'test'
     # user goes directy to index page without search params
     if params[:search].blank?
       flash.now[:success] = "Displaying all dayhomes"

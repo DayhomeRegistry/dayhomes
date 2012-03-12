@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :availability_type do
-    kind "MyString"
+    kind "Full-Time"
   end
 end

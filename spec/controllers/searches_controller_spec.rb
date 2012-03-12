@@ -31,30 +31,32 @@ describe SearchesController do
       end
 
       describe "advanced search form" do
-        it "should exist" do
-          get :index
-          response.should have_selector('div', :class => 'container')
-          response.should have_selector('div', :class => 'span4')
-          response.should have_selector('form', :id => 'new_search')
+        before(:each) do
+          AvailabilityType.create!({:kind => 'Full-time'})
+          AvailabilityType.create!({:kind => 'Part-time'})
+          AvailabilityType.create!({:kind => 'No Availability'})
         end
 
-        it "should have advanced search fields" do
+        it "should exist" do
+          get :index
+          response.should have_selector('form', :id => 'advanced-search')
+        end
+
+        it "should have advanced search address text box" do
           get :index
           response.should have_selector("form") do |node|
             node.should have_selector('input', :id => 'search_address')
-            node.should have_selector('input', :id => 'search_advanced_search', :value => "true")
-            node.should have_selector('label', :for => 'search_availability_types')
           end
         end
 
-        it "should have checkboxes" do
+        it "should have availability type checkboxes" do
           get :index
           response.should have_selector("form") do |node|
-            node.should have_selector('input', :type => 'checkbox', :class => 'waffles')
+            node.should have_selector('input', :type => 'checkbox', :value => '1')
+            node.should have_selector('input', :type => 'checkbox', :value => '2')
+            node.should have_selector('input', :type => 'checkbox', :value => '3')
           end
         end
-
-
 
       end
 
