@@ -3,9 +3,9 @@ class Search
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :address, :availability_types, :advanced_search
+  attr_accessor :address, :availability_types, :advanced_search, :pins
 
-  def initialize(attributes = {})
+  def initialize(attributes = {}, *day_homes)
     # set each of the attributes
     attributes.each do |name, value|
         send("#{name}=", value)
@@ -20,6 +20,11 @@ class Search
     else
       # check full and part time (either /searches or a simple search(header))
       set_default_checkboxes
+    end
+
+    # check if there's any pins, if so, save them to the model
+    unless day_homes.nil?
+      self.pins = day_homes
     end
   end
 

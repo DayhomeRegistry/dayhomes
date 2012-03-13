@@ -77,7 +77,17 @@ describe SearchesController do
         get :index, :search => @attr.merge(:address => "")
         response.should be_success
       end
+
+      it "should be successful with query params" do
+        @params = { :advanced_search => true,
+                    :address => 'T6L5M6 Edmonton Alberta Canada',
+                    :availability_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } }}
+
+        get :index, :search => @params
+        response.should be_success
+      end
     end
+
 
     describe "failure" do
       it "should display 'Unable to find address, no search pin dropped'" do

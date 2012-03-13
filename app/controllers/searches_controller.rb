@@ -1,9 +1,6 @@
 class SearchesController < ApplicationController
 
   def index
-
-    u = User.create!({:email => 'dayadmin@dayhome422registry.com', :password => 'day4admin', :password_confirmation => 'day4admin', :first_name => 'DayHome', :last_name => 'Admin', :admin => true})
-    u.first_name = 'test'
     # user goes directy to index page without search params
     if params[:search].blank?
       flash.now[:success] = "Displaying all dayhomes"
@@ -17,7 +14,7 @@ class SearchesController < ApplicationController
     end
 
     # make sure the search object keeps its persistance
-    @advanced_search = params.has_key?(:search) ? Search.new(params[:search]) : Search.new
+    @advanced_search = params.has_key?(:search) ? Search.new(params[:search], @day_homes) : Search.new
   end
 
   private
@@ -29,22 +26,29 @@ class SearchesController < ApplicationController
       # morph the hash into the model
       search = Search.new(params[:search])
 
+      # if the user uses the advanced search, we use the values form the availability type checkboxes,
+      # otherwise we force to full/part time
+      if search.advanced_search
+
+        # tack on any of the checkboxes to the where clause
+        availability_kind_array = []
+        search.availability_types.each do |search_avil_type|
+          if search_avil_type.checked
+            availability_kind_array << "#{search_avil_type.kind}"
+          end
+        end
+
+        # feed the where clause into an IN (OR)
+        unless availability_kind_array.empty?
+          dayhome_query = dayhome_query.where("kind IN (?)", availability_kind_array)
+        end
+      else
+        dayhome_query = dayhome_query.where("kind IN (?)", ['Full-time', 'Part-time'])
+      end
+
       # create search dayhome pin
       unless search.address.blank?
-        search_addy_pin = geocode(params[:search][:address])
-      end
-
-      # tack on any of the checkboxes to the where clause
-      availability_kind_array = []
-      search.availability_types.each do |search_avil_type|
-        if search_avil_type.checked
-          availability_kind_array << "#{search_avil_type.kind}"
-        end
-      end
-
-      # feed thw here clause an in (OR)
-      unless availability_kind_array.empty?
-        dayhome_query = dayhome_query.where("kind IN (?)", availability_kind_array)
+        search_addy_pin = geocode(search.address)
       end
 
       @day_homes = create_pins(dayhome_query, search_addy_pin)
@@ -61,7 +65,7 @@ class SearchesController < ApplicationController
       end
 
       # convert it back to pure JSON for gmaps
-      day_home_array.to_json
+      @day_homes = day_home_array.to_json
     end
 
     def geocode(address)

@@ -3,11 +3,13 @@
   .control-group
     .controls
       = f.hidden_field(:advanced_search, :value => true)
-      = f.label :address, 'Near'
+      %h4
+        = 'Near'
       = f.text_field :address
-      = 'Availability'
+      %h4
+        = 'Availability'
       - @advanced_search.availability_types.each do |avail_type|
-        = check_box_tag "search[availability_types][kind][#{avail_type.id}]", avail_type.id, checked = true, :class => 'checkbox'
+        %div
+        = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
         = avail_type.kind
-      %br
       = submit_tag "Search", :class => 'btn'

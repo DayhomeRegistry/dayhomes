@@ -5,8 +5,8 @@ DayHomeAvailabilityType.destroy_all
 User.destroy_all
 
 # Reset the primary key increment count; so it starts counting from 1 again.
-#DayHome.connection.execute('ALTER TABLE day_homes AUTO_INCREMENT = 1')
-#AvailabilityType.connection.execute('ALTER TABLE availability_types AUTO_INCREMENT = 1')
+DayHome.connection.execute('ALTER TABLE day_homes AUTO_INCREMENT = 1')
+AvailabilityType.connection.execute('ALTER TABLE availability_types AUTO_INCREMENT = 1')
 
 fulltime = AvailabilityType.create!({:kind => 'Full-time'})
 parttime = AvailabilityType.create!({:kind => 'Part-time'})
