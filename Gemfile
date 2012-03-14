@@ -10,6 +10,7 @@ gem 'carmen'
 gem 'authlogic'
 gem 'kaminari'
 gem 'awesome_print'
+gem 'carrierwave'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'

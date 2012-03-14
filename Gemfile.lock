@@ -44,6 +44,8 @@ GEM
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
     carmen (0.2.13)
+    carrierwave (0.5.8)
+      activesupport (~> 3.0)
     childprocess (0.3.1)
       ffi (~> 1.0.6)
     coffee-rails (3.2.2)
@@ -91,6 +93,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.17.2)
     multi_json (1.1.0)
+    mysql2 (0.3.11)
     mysql2 (0.3.11-x86-mingw32)
     nokogiri (1.5.0)
     nokogiri (1.5.0-x86-mingw32)
@@ -194,6 +197,7 @@ DEPENDENCIES
   capistrano-fanfare
   capybara
   carmen
+  carrierwave
   coffee-rails (~> 3.2.1)
   factory_girl_rails
   foreman
