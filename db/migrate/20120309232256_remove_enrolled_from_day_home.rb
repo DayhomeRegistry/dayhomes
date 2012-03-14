@@ -5,7 +5,7 @@ class RemoveEnrolledFromDayHome < ActiveRecord::Migration
   end
 
   def down
-    add_column :day_homes, :enrolled
-    add_column :day_homes, :max_enrollment
+    add_column :day_homes, :enrolled, :integer
+    add_column :day_homes, :max_enrollment, :integer
   end
 end
