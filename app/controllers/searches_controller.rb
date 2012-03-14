@@ -5,39 +5,50 @@ class SearchesController < ApplicationController
     if params[:search].blank?
       flash.now[:success] = "Displaying all dayhomes"
 
-      # display all of the day homes
-      @day_homes = DayHome.all.to_gmaps4rails
+      # display all of the full and part time
+      @day_homes = DayHome.select('*').joins(:day_home_availability_types, :availability_types)
+        .where("kind IN (?)", ['Full-time', 'Part-time']).to_gmaps4rails
     else
       # determine which dayhomes to display
       dayhome_filter(params)
     end
 
     # make sure the search object keeps its persistance
-    @advanced_search = params.has_key?(:search) ? Search.new(params[:search]) : Search.new
+    @advanced_search = params.has_key?(:search) ? Search.new(params[:search], @day_homes) : Search.new
   end
 
   private
 
     def dayhome_filter(params)
       search_addy_pin = nil
-      dayhome_query = DayHome.select('*')
+      dayhome_query = DayHome.select('*').joins(:day_home_availability_types, :availability_types)
 
-      # make sure the address is clean
-      if params.has_key?(:search) && params[:search].has_key?(:address) &&  params[:search][:address] != ''
+      # morph the hash into the model
+      search = Search.new(params[:search])
 
-        # create search dayhome pin
-        search_addy_pin = geocode(params[:search][:address])
+      # if the user uses the advanced search, we use the values form the availability type checkboxes,
+      # otherwise we force to full/part time
+      if search.advanced_search
+
+        # tack on any of the checkboxes to the where clause
+        availability_kind_array = []
+        search.availability_types.each do |search_avil_type|
+          if search_avil_type.checked
+            availability_kind_array << "#{search_avil_type.kind}"
+          end
+        end
+
+        # feed the where clause into an IN (OR)
+        unless availability_kind_array.empty?
+          dayhome_query = dayhome_query.where("kind IN (?)", availability_kind_array)
+        end
+      else
+        dayhome_query = dayhome_query.where("kind IN (?)", ['Full-time', 'Part-time'])
       end
 
-      # make sure the enrollment key is clean
-      if params.has_key?(:search) && params[:search].has_key?(:enrollment_open) &&  params[:search][:enrollment_open] != ''
-
-        # get the dayhomes based on Open/Closed (true/false)
-        if params[:search][:enrollment_open] == "true"
-          dayhome_query = dayhome_query.where("enrolled < max_enrollment")
-        else params[:search][:enrollment_open] == "false"
-          dayhome_query = dayhome_query.where("enrolled = max_enrollment")
-        end
+      # create search dayhome pin
+      unless search.address.blank?
+        search_addy_pin = geocode(search.address)
       end
 
       @day_homes = create_pins(dayhome_query, search_addy_pin)
@@ -54,7 +65,7 @@ class SearchesController < ApplicationController
       end
 
       # convert it back to pure JSON for gmaps
-      day_home_array.to_json
+      @day_homes = day_home_array.to_json
     end
 
     def geocode(address)

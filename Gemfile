@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.2'
 gem 'mysql2'
+#gem 'sqlite3'
 gem 'haml'
 gem 'gmaps4rails'
 gem 'jquery-rails'
@@ -23,8 +24,10 @@ group :development, :test do
   gem 'capistrano-fanfare'
   gem 'rspec-rails', '~> 2.6'
   gem 'webrat', '~> 0.7.3'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', :require => false
   gem 'shoulda-matchers'
+  gem 'spork', '~> 1.0rc'
+  gem 'capybara'
 end
 
 group :production do
