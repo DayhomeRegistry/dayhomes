@@ -32,9 +32,9 @@ describe SearchesController do
 
       describe "advanced search form" do
         before(:each) do
-          AvailabilityType.create!({:kind => 'Full-time'})
-          AvailabilityType.create!({:kind => 'Part-time'})
-          AvailabilityType.create!({:kind => 'No Availability'})
+          @fulltime = AvailabilityType.create!({:kind => 'Full-time'})
+          @parttime = AvailabilityType.create!({:kind => 'Part-time'})
+          @no_availability = AvailabilityType.create!({:kind => 'No Availability'})
         end
 
         it "should exist" do
@@ -52,9 +52,9 @@ describe SearchesController do
         it "should have availability type checkboxes" do
           get :index
           response.should have_selector("form") do |node|
-            node.should have_selector('input', :type => 'checkbox', :value => '1')
-            node.should have_selector('input', :type => 'checkbox', :value => '2')
-            node.should have_selector('input', :type => 'checkbox', :value => '3')
+            node.should have_selector('input', :type => 'checkbox', :value => @fulltime.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @parttime.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @no_availability.id.to_s)
           end
         end
 

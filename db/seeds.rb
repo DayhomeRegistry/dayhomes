@@ -8,6 +8,7 @@ User.destroy_all
 DayHome.connection.execute('ALTER TABLE day_homes AUTO_INCREMENT = 1')
 AvailabilityType.connection.execute('ALTER TABLE availability_types AUTO_INCREMENT = 1')
 
+# create availability types
 fulltime = AvailabilityType.create!({:kind => 'Full-time'})
 parttime = AvailabilityType.create!({:kind => 'Part-time'})
 no_availability = AvailabilityType.create!({:kind => 'No Availability'})
