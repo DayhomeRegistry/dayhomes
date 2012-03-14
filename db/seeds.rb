@@ -71,6 +71,12 @@ no_availability_addresses.each_with_index  do |street_and_postal, index|
 end
 
 
+# Destroy all existing users
+User.destroy_all
+
+# Reset the primary key increment count; so it starts counting from 1 again.
+User.connection.execute('ALTER TABLE users AUTO_INCREMENT = 1')
+
 # Create Default Admin User
 User.create!({:email => 'dayadmin@dayhomeregistry.com', :password => 'day4admin', :password_confirmation => 'day4admin', :first_name => 'DayHome', :last_name => 'Admin', :admin => true})
 

@@ -14,6 +14,7 @@ class UserSessionsController < ApplicationController
     if @user_session.save
       redirect_to root_path
     else
+      flash[:error] = "Please enter a valid email and password combination."
       render :action => :new
     end
   end
