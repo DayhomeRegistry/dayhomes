@@ -23,6 +23,7 @@
 /public/assets/
 /tmp/
 **.war
+webrat.log
 rerun.txt
 capybara-*.html
 rails_best_practices_output.html

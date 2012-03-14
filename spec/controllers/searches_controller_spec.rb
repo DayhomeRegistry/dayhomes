@@ -31,20 +31,33 @@ describe SearchesController do
       end
 
       describe "advanced search form" do
-        it "should exist" do
-          get :index
-          response.should have_selector('div', :class => 'container')
-          response.should have_selector('div', :class => 'span4')
-          response.should have_selector('form', :id => 'new_search')
+        before(:each) do
+          @fulltime = AvailabilityType.create!({:kind => 'Full-time'})
+          @parttime = AvailabilityType.create!({:kind => 'Part-time'})
+          @no_availability = AvailabilityType.create!({:kind => 'No Availability'})
         end
 
-        it "should have advanced search fields" do
+        it "should exist" do
+          get :index
+          response.should have_selector('form', :id => 'advanced-search')
+        end
+
+        it "should have advanced search address text box" do
           get :index
           response.should have_selector("form") do |node|
             node.should have_selector('input', :id => 'search_address')
-            node.should have_selector('select', :id => 'search_enrollment_open')
           end
         end
+
+        it "should have availability type checkboxes" do
+          get :index
+          response.should have_selector("form") do |node|
+            node.should have_selector('input', :type => 'checkbox', :value => @fulltime.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @parttime.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @no_availability.id.to_s)
+          end
+        end
+
       end
 
       it "should get all of the dayhomes" do
@@ -64,7 +77,17 @@ describe SearchesController do
         get :index, :search => @attr.merge(:address => "")
         response.should be_success
       end
+
+      it "should be successful with query params" do
+        @params = { :advanced_search => true,
+                    :address => 'T6L5M6 Edmonton Alberta Canada',
+                    :availability_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } }}
+
+        get :index, :search => @params
+        response.should be_success
+      end
     end
+
 
     describe "failure" do
       it "should display 'Unable to find address, no search pin dropped'" do
