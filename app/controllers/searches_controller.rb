@@ -24,15 +24,15 @@ class SearchesController < ApplicationController
       # morph the hash into the model
       search = Search.new(params[:search])
 
+      # set the joins based on what the user has
+      dayhome_query = determine_joins(search, dayhome_query)
+
       # if the user uses the advanced search, we use the values from the availability type checkboxes,
       # otherwise we set the default to full/part time
       if search.advanced_search
-        # set the joins based on what the user has
-        dayhome_query = determine_joins(search, dayhome_query)
-
         # apply where clauses
-        dayhome_query = apply_availabilty_type_filter(search, dayhome_query)
-        dayhome_query = apply_certification_type_filter(search, dayhome_query)
+        dayhome_query = apply_type_filter(:availability_types, search, dayhome_query)
+        dayhome_query = apply_type_filter(:certification_types, search, dayhome_query)
       else
         dayhome_query = dayhome_query.where("availability_types.kind IN (?)", ['Full-time', 'Part-time'])
       end
@@ -48,28 +48,14 @@ class SearchesController < ApplicationController
 
     def determine_joins(search, dayhome_query)
       # check if their are related entities (by looking for what's been checked), if so, join to that table
-      has_avail_types = false
-      has_cert_types = false
+      has_avail_types = check_for_checks(:availability_types, search)
+      has_cert_types = check_for_checks(:certification_types, search)
 
-      # check for checked availability types
-      search.availability_types.each do |avail_type|
-        if avail_type.checked == true
-          has_avail_types = true
-        end
-      end
-
-      # check for checked certification types
-      search.certification_types.each do |cert_type|
-        if cert_type.checked == true
-          has_cert_types = true
-        end
-      end
-
-      # if any are found apply the join
+      # if any availability types are found apply the join
       if has_avail_types
         dayhome_query = dayhome_query.joins(:day_home_availability_types, :availability_types)
       end
-      # if any are found apply the join
+      # if any certification types are found apply the join
       if has_cert_types
         dayhome_query = dayhome_query.joins(:day_home_certification_types, :certification_types)
       end
@@ -77,42 +63,34 @@ class SearchesController < ApplicationController
       dayhome_query
     end
 
-    def apply_certification_type_filter(search, dayhome_query)
-      unless search.certification_types.blank?
+    def check_for_checks(type, search)
+      # if a search type is found break and return true
+      search.send(type).each do |search_type|
+        if search_type.checked == true
+          break true
+        end
+        # return false if no checks are found
+        false
+      end
+    end
+
+    def apply_type_filter(type, search, dayhome_query)
+      unless search.send(type).blank?
         # tack on any of the checkboxes to the where clause
-        certification_kind_array = []
-        search.certification_types.each do |search_cert_type|
-          if search_cert_type.checked
-            certification_kind_array << "#{search_cert_type.kind}"
+        kind_array = []
+        search.send(type).each do |search_type|
+          if search_type.checked
+            kind_array << "#{search_type.kind}"
           end
         end
 
         # check if any of the certification types are checked, if not we don't need a where clause here
-        unless certification_kind_array.empty?
-          dayhome_query = dayhome_query.where("certification_types.kind IN (?)", certification_kind_array)
+        unless kind_array.empty?
+          dayhome_query = dayhome_query.where("#{type}.kind IN (?)", kind_array)
         end
       end
       dayhome_query
     end
-
-    def apply_availabilty_type_filter(search, dayhome_query)
-      unless search.availability_types.blank?
-        # tack on any of the checkboxes to the where clause
-        availability_kind_array = []
-        search.availability_types.each do |search_avil_type|
-          if search_avil_type.checked
-            availability_kind_array << "#{search_avil_type.kind}"
-          end
-        end
-
-        # check if any of the availability types are checked, if not we don't need a where clause here
-        unless availability_kind_array.empty?
-          dayhome_query = dayhome_query.where("availability_types.kind IN (?)", availability_kind_array)
-        end
-      end
-      dayhome_query
-    end
-
 
     def create_pins(dayhome_query, search_addy_pin)
       # get all of the dayhomes from the system, convert to JSON array

@@ -37,35 +37,23 @@ private
 
   def update_checkboxes(attributes)
     reset_all_checkboxes
-    availability_checkboxes(attributes)
-    certification_checkboxes(attributes)
+    apply_checks(:availability_types, attributes)
+    apply_checks(:certification_types, attributes)
   end
 
-  def certification_checkboxes(attributes)
-    # save the checked items in the model
-    if attributes.has_key?(:certification_types)
-      attributes[:certification_types][:kind].each do |parm_cert_type|
-        self.certification_types.each do |cert_type|
+  def apply_checks(group, attr)
+    if attr.has_key?(group)
+      # grab intersect of user checkboxes and availability types
+      ids = (attr[group][:kind] & self.send(group).map { |t| t.id.to_s })
 
+      # update the checkboxes
+      self.send(group).each do |type|
+        ids.each do |id|
           # Set the checkboxes if the user has a checkbox checked, otherwise clear it out
-          if cert_type.id.to_s == parm_cert_type
-            cert_type.checked = true
+          if type.id.to_s == id
+            type.checked = true
           end
-        end
-      end
-    end
-  end
 
-  def availability_checkboxes(attributes)
-    # save the checked items in the model
-    if attributes.has_key?(:availability_types)
-      attributes[:availability_types][:kind].each do |parm_avail_type|
-        self.availability_types.each do |avail_type|
-
-          # Set the checkboxes if the user has a checkbox checked, otherwise clear it out
-          if avail_type.id.to_s == parm_avail_type
-            avail_type.checked = true
-          end
         end
       end
     end
