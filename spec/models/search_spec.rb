@@ -34,7 +34,9 @@ describe Search do
   it "should be valid if all fields are populated" do
     @params = { :advanced_search => true,
                 :address => 'T6L5M6 Edmonton Alberta Canada',
-                :availability_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } }}
+                :availability_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } },
+                :certification_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } }
+    }
 
     valid_search = Search.new(@params)
     valid_search.should be_valid
@@ -49,7 +51,7 @@ describe Search do
   end
 
   before(:each) do
-    #create pins full/part/no avail and custom searhc pin, test outcome
+    #create pins full/part/no avail and custom search pin, test outcome
   end
 
 

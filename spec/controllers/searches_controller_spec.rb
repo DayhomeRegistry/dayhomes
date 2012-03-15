@@ -35,6 +35,13 @@ describe SearchesController do
           @fulltime = AvailabilityType.create!({:kind => 'Full-time'})
           @parttime = AvailabilityType.create!({:kind => 'Part-time'})
           @no_availability = AvailabilityType.create!({:kind => 'No Availability'})
+
+          @level_1 = CertificationType.create!({:kind => 'Child Care Level 1'})
+          @level_2 = CertificationType.create!({:kind => 'Child Care Level 2'})
+          @level_3 = CertificationType.create!({:kind => 'Child Care Level 3'})
+          @basic_cpr = CertificationType.create!({:kind => 'Basic First Aid'})
+          @advanced_cpr = CertificationType.create!({:kind => 'Advanced First Aid'})
+          @infant_cpr = CertificationType.create!({:kind => 'Infant CPR'})
         end
 
         it "should exist" do
@@ -58,11 +65,19 @@ describe SearchesController do
           end
         end
 
-      end
+        it "should have certification type checkboxes" do
+          get :index
+          response.should have_selector("form") do |node|
+            node.should have_selector('input', :type => 'checkbox', :value => @level_1.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @level_2.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @level_3.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @basic_cpr.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @advanced_cpr.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @no_availability.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @infant_cpr.id.to_s)
+          end
+        end
 
-      it "should get all of the dayhomes" do
-        get :index
-        flash[:success].should_not be_nil
       end
     end
 
@@ -78,10 +93,19 @@ describe SearchesController do
         response.should be_success
       end
 
-      it "should be successful with query params" do
+      it "should be successful with availability type query params" do
         @params = { :advanced_search => true,
                     :address => 'T6L5M6 Edmonton Alberta Canada',
                     :availability_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } }}
+
+        get :index, :search => @params
+        response.should be_success
+      end
+
+      it "should be successful with availability type query params" do
+        @params = { :advanced_search => true,
+                    :address => 'T6L5M6 Edmonton Alberta Canada',
+                    :certification_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } }}
 
         get :index, :search => @params
         response.should be_success
