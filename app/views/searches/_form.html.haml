@@ -10,6 +10,12 @@
         = 'Availability'
       - @advanced_search.availability_types.each do |avail_type|
         %div
-        = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
-        = avail_type.kind
+          = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
+          = avail_type.kind
+      %h4
+        = 'Certification'
+      - @advanced_search.certification_types.each do |cert_type|
+        %div
+          = check_box_tag "search[certification_types][kind][]", cert_type.id, checked = cert_type.checked, :class => 'checkbox'
+          = cert_type.kind
       = submit_tag "Search", :class => 'btn'

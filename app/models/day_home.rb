@@ -6,8 +6,12 @@ class DayHome < ActiveRecord::Base
                     :check_process => :prevent_geocoding, :address => :address,
                     :msg => 'Cannot find a location matching that query.'
 
+  # availability types
   has_many :day_home_availability_types
   has_many :availability_types, :through => :day_home_availability_types
+  # certification types
+  has_many :day_home_certification_types
+  has_many :certification_types, :through => :day_home_certification_types
 
   # this method is called when creating or updating a dayhome
   # it won't make a call to google maps if we already have a lat long however,

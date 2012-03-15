@@ -3,7 +3,7 @@ class Search
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :address, :availability_types, :advanced_search, :pins
+  attr_accessor :address, :availability_types, :certification_types, :advanced_search, :pins
 
   def initialize(attributes = {}, *day_homes)
     # set each of the attributes
@@ -11,8 +11,9 @@ class Search
         send("#{name}=", value)
     end
 
-    # override the availability types array (checkboxes)) with the actual AvailabilityType models
+    # override the models that were set with the attributes send loop
     self.availability_types = AvailabilityType.order('id asc').all
+    self.certification_types = CertificationType.order('id asc').all
 
     # only do the availability type processing if you've submitted the advanced search form
     if self.advanced_search == 'true'
@@ -35,18 +36,38 @@ private
   end
 
   def update_checkboxes(attributes)
-  # save the checked items in the model
-      if attributes.has_key?(:availability_types)
-        attributes[:availability_types][:kind].each do |parm_avail_type|
-          self.availability_types.each do |avail_type|
+  # clear out any existing values in the availability types
+  # (clearing out any default values or anything of the like)
+  self.availability_types.each do |clear_avail|
+    clear_avail.checked = false
+  end
 
-            # Set the checkboxes if the user has a checkbox checked, otherwise clear it out
-            if avail_type.id.to_s == parm_avail_type
-              avail_type.checked = true
-            end
+  # save the checked items in the model
+    if attributes.has_key?(:availability_types)
+      attributes[:availability_types][:kind].each do |parm_avail_type|
+        self.availability_types.each do |avail_type|
+
+          # Set the checkboxes if the user has a checkbox checked, otherwise clear it out
+          if avail_type.id.to_s == parm_avail_type
+            avail_type.checked = true
           end
         end
       end
+    end
+
+    # save the checked items in the model
+    #if attributes.has_key?(:certification_types)
+    #  attributes[:certification_types][:kind].each do |parm_cert_type|
+    #    self.certification_types.each do |cert_type|
+    #
+    #      # Set the checkboxes if the user has a checkbox checked, otherwise clear it out
+    #      if cert_type.id.to_s == parm_cert_type
+    #        cert_type.checked = true
+    #      end
+    #    end
+    #  end
+    #end
+
   end
 
   def set_default_checkboxes
