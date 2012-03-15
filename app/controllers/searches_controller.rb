@@ -3,8 +3,6 @@ class SearchesController < ApplicationController
   def index
     # user goes directy to index page without search params
     if params[:search].blank?
-      flash.now[:success] = "Displaying all dayhomes"
-
       # display all of the full and part time
       @day_homes = DayHome.select('*').joins(:day_home_availability_types, :availability_types)
         .where("availability_types.kind IN (?)", ['Full-time', 'Part-time']).group("day_homes.id").all.to_gmaps4rails
@@ -34,6 +32,7 @@ class SearchesController < ApplicationController
 
         # apply where clauses
         dayhome_query = apply_availabilty_type_filter(search, dayhome_query)
+        dayhome_query = apply_certification_type_filter(search, dayhome_query)
       else
         dayhome_query = dayhome_query.where("availability_types.kind IN (?)", ['Full-time', 'Part-time'])
       end
@@ -59,11 +58,40 @@ class SearchesController < ApplicationController
         end
       end
 
+      # check for checked certification types
+      search.certification_types.each do |cert_type|
+        if cert_type.checked == true
+          has_cert_types = true
+        end
+      end
+
       # if any are found apply the join
       if has_avail_types
         dayhome_query = dayhome_query.joins(:day_home_availability_types, :availability_types)
       end
-      #  dayhome_query = dayhome_query.joins(:day_home_certification_types, :certification_types)
+      # if any are found apply the join
+      if has_cert_types
+        dayhome_query = dayhome_query.joins(:day_home_certification_types, :certification_types)
+      end
+
+      dayhome_query
+    end
+
+    def apply_certification_type_filter(search, dayhome_query)
+      unless search.certification_types.blank?
+        # tack on any of the checkboxes to the where clause
+        certification_kind_array = []
+        search.certification_types.each do |search_cert_type|
+          if search_cert_type.checked
+            certification_kind_array << "#{search_cert_type.kind}"
+          end
+        end
+
+        # check if any of the certification types are checked, if not we don't need a where clause here
+        unless certification_kind_array.empty?
+          dayhome_query = dayhome_query.where("certification_types.kind IN (?)", certification_kind_array)
+        end
+      end
       dayhome_query
     end
 
@@ -77,14 +105,19 @@ class SearchesController < ApplicationController
           end
         end
 
-        dayhome_query = dayhome_query.where("availability_types.kind IN (?)", availability_kind_array)
+        # check if any of the availability types are checked, if not we don't need a where clause here
+        unless availability_kind_array.empty?
+          dayhome_query = dayhome_query.where("availability_types.kind IN (?)", availability_kind_array)
+        end
       end
+      dayhome_query
     end
 
 
     def create_pins(dayhome_query, search_addy_pin)
       # get all of the dayhomes from the system, convert to JSON array
       day_homes_json = dayhome_query.group("day_homes.id").all.to_gmaps4rails
+
       day_home_array = ActiveSupport::JSON.decode(day_homes_json)
 
       unless search_addy_pin.nil?

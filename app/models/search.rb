@@ -36,13 +36,28 @@ private
   end
 
   def update_checkboxes(attributes)
-  # clear out any existing values in the availability types
-  # (clearing out any default values or anything of the like)
-  self.availability_types.each do |clear_avail|
-    clear_avail.checked = false
+    reset_all_checkboxes
+    availability_checkboxes(attributes)
+    certification_checkboxes(attributes)
   end
 
-  # save the checked items in the model
+  def certification_checkboxes(attributes)
+    # save the checked items in the model
+    if attributes.has_key?(:certification_types)
+      attributes[:certification_types][:kind].each do |parm_cert_type|
+        self.certification_types.each do |cert_type|
+
+          # Set the checkboxes if the user has a checkbox checked, otherwise clear it out
+          if cert_type.id.to_s == parm_cert_type
+            cert_type.checked = true
+          end
+        end
+      end
+    end
+  end
+
+  def availability_checkboxes(attributes)
+    # save the checked items in the model
     if attributes.has_key?(:availability_types)
       attributes[:availability_types][:kind].each do |parm_avail_type|
         self.availability_types.each do |avail_type|
@@ -54,21 +69,20 @@ private
         end
       end
     end
-
-    # save the checked items in the model
-    #if attributes.has_key?(:certification_types)
-    #  attributes[:certification_types][:kind].each do |parm_cert_type|
-    #    self.certification_types.each do |cert_type|
-    #
-    #      # Set the checkboxes if the user has a checkbox checked, otherwise clear it out
-    #      if cert_type.id.to_s == parm_cert_type
-    #        cert_type.checked = true
-    #      end
-    #    end
-    #  end
-    #end
-
   end
+
+  def reset_all_checkboxes
+    # clear out any existing values in the checkboxes
+    # this is clean up after the simple search (set_default_checkboxes)
+    self.availability_types.each do |clear_avail|
+      clear_avail.checked = false
+    end
+
+    self.certification_types.each do |clear_avail|
+      clear_avail.checked = false
+    end
+  end
+
 
   def set_default_checkboxes
     # set the default to part time and fulltime

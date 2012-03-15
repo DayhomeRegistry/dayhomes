@@ -30,7 +30,6 @@ fulltime_addresses = [
   {:postal_code => 'T5S1R5', :street1 => '178 St NW'},
   {:postal_code => 'T6C0P9', :street1 => '79 Avenue Northwest'},
   {:postal_code => 'T5E4E5', :street1 => '128 Avenue Northwest'},
-  {:postal_code => 'T5E4E5', :street1 => '8638 81 Street'}
 ]
 
 part_time_addresses = [
