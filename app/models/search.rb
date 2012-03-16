@@ -177,7 +177,7 @@ private
       search_pin = {:lat => search_address[0][:lat], :lng => search_address[0][:lng], :picture => '/assets/search_pin.png', :width => '32', :height => '37'}.to_json
       search_pin = ActiveSupport::JSON.decode(search_pin)
     rescue
-      flash.now[:error] = "Unable to find dayhomes within that criteria"
+      errors.add(:base,"Unable to find dayhomes within that criteria" )
       search_pin = nil
     end
     search_pin

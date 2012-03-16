@@ -7,9 +7,19 @@ class SearchesController < ApplicationController
       @day_homes = DayHome.joins(:availability_types)
         .where("availability_types.kind IN (?)", ['Full-time', 'Part-time']).group("day_homes.id").all.to_gmaps4rails
     else
+      # apply the params to the search model
       search_model = Search.new(params[:search])
+
       # determine which dayhomes to display
-      @day_homes = search_model.dayhome_filter(params)
+      search_model.dayhome_filter(params)
+
+      # If any errors, show an error message
+      if search_model.errors.count > 0
+        flash.now[:error] = "Unable to find dayhomes within that criteria"
+      end
+
+      # set the pins for gmaps
+      @day_homes = search_model.pins
     end
 
     # make sure the search object keeps its persistance
