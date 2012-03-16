@@ -2,20 +2,23 @@ development:
   container: dayhomes_development
   username: markbennett
   api_key: cb2acd1348d1dccab9ba68ee1eb38229
+  cdn_url: c000000.cdn.rackspacecloud.com
 
 test:
   container: dayhomes_development
   username: markbennett
   api_key: cb2acd1348d1dccab9ba68ee1eb38229
-
+  cdn_url: c000000.cdn.rackspacecloud.com
 
 staging:
   container: dayhomes_staging
   username: markbennett
   api_key: cb2acd1348d1dccab9ba68ee1eb38229
+  cdn_url: c000000.cdn.rackspacecloud.com
 
 
 production:
   container: dayhomes_production
   username: markbennett
   api_key: cb2acd1348d1dccab9ba68ee1eb38229
+  cdn_url: c000000.cdn.rackspacecloud.com

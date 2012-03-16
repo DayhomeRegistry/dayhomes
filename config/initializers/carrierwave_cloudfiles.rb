@@ -10,7 +10,7 @@ CarrierWave.configure do |config|
     :rackspace_servicenet => Rails.env.production? # NOTE - Can only be used on rackspace VPS, see SNET note at top.
   }
   config.fog_directory = cloudfiles_config[:container]
-  config.fog_host = "c000000.cdn.rackspacecloud.com"
+  config.fog_host = cloudfiles_config[:cdn_url]
 end
 
 CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
