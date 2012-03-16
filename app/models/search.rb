@@ -19,8 +19,14 @@ class Search
     if self.advanced_search == 'true'
       update_checkboxes(attributes)
     else
-      # check full and part time (either /searches or a simple search(header))
+      # check full and part time (either /searches or a simple search(header), visual for user)
       set_default_checkboxes
+    end
+
+    # no search params entered
+    unless attributes.blank?
+      # apply filter if we're searching
+      dayhome_filter(attributes)
     end
   end
 
@@ -28,25 +34,22 @@ class Search
     search_addy_pin = nil
     dayhome_query = DayHome.scoped
 
-    # morph the hash into the model
-    search = Search.new(params)
-
     # set the joins based on what the user has
-    dayhome_query = determine_joins(search, dayhome_query)
+    dayhome_query = determine_joins(params, dayhome_query)
 
     # if the user uses the advanced search, we use the values from the availability type checkboxes,
     # otherwise we set the default to full/part time
-    if search.advanced_search
+    if params.has_key?(:advanced_search) && params[:advanced_search] == 'true'
       # apply where clauses
-      dayhome_query = apply_type_filter(:availability_types, search, dayhome_query)
-      dayhome_query = apply_type_filter(:certification_types, search, dayhome_query)
+      dayhome_query = apply_type_filter(:availability_types, params, dayhome_query)
+      dayhome_query = apply_type_filter(:certification_types, params, dayhome_query)
     else
       dayhome_query = dayhome_query.where("availability_types.kind IN (?)", ['Full-time', 'Part-time'])
     end
 
     # create search dayhome pin
-    unless search.address.blank?
-      search_addy_pin = geocode(search.address)
+    if params.has_key?(:address) && !params[:address].blank?
+      search_addy_pin = geocode(params[:address])
     end
 
     # return the gmaps pins variable
@@ -77,7 +80,6 @@ private
           if type.id.to_s == id
             type.checked = true
           end
-
         end
       end
     end
@@ -104,10 +106,10 @@ private
     end
   end
 
-  def determine_joins(search, dayhome_query)
+  def determine_joins(params, dayhome_query)
     # check if their are related entities (by looking for what's been checked), if so, join to that table
-    has_avail_types = check_for_checks(:availability_types, search)
-    has_cert_types = check_for_checks(:certification_types, search)
+    has_avail_types = check_for_checks(:availability_types, params)
+    has_cert_types = check_for_checks(:certification_types, params)
 
     # if any availability types are found apply the join
     if has_avail_types
@@ -121,10 +123,10 @@ private
     dayhome_query
   end
 
-  def check_for_checks(type, search)
+  def check_for_checks(type, params)
     found_checkmark = false
-    # if a search type is found break and return true
-    search.send(type).each do |search_type|
+
+    self.send(type).each do |search_type|
       if search_type.checked == true
         found_checkmark = true
       end
@@ -133,11 +135,11 @@ private
     found_checkmark
   end
 
-  def apply_type_filter(type, search, dayhome_query)
-    unless search.send(type).blank?
+  def apply_type_filter(type, params, dayhome_query)
+    unless self.send(type).blank?
       # tack on any of the checkboxes to the where clause
       kind_array = []
-      search.send(type).each do |search_type|
+      self.send(type).each do |search_type|
         if search_type.checked
           kind_array << "#{search_type.kind}"
         end
@@ -170,23 +172,21 @@ private
       self.pin_count = self.pin_count + 1
     end
 
+    # add error due to no pins found (super restrictive criteria)
+    if self.pin_count == 0
+      errors.add(:base, "No dayhomes found within that criteria, remove some criteria to broden the search range" )
+    end
+
     # convert it back to pure JSON for gmaps (and save it to the model))
     self.pin_json = day_home_array.to_json
   end
 
   def geocode(address)
     begin
-      # check to make sure address is valid
-      Gmaps4rails.geocode(address)
-
-      # grab the geolocation for where they searched
-      search_address = Gmaps4rails.geocode(address)
-
-      # convert hash to json (string)), decode json to ruby object
-      search_pin = {:lat => search_address[0][:lat], :lng => search_address[0][:lng], :picture => '/assets/search_pin.png', :width => '32', :height => '37'}.to_json
-      search_pin = ActiveSupport::JSON.decode(search_pin)
+      # get the json representation of an address
+      search_pin = convert_address(address)
     rescue
-      errors.add(:base,"Unable to find dayhomes within that criteria" )
+      errors.add(:base, "Unable to find dayhomes within that criteria, please try a different address near the location you're searching for" )
       search_pin = nil
     end
     search_pin
