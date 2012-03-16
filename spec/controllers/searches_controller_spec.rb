@@ -112,7 +112,6 @@ describe SearchesController do
       end
     end
 
-
     describe "failure" do
       it "should display 'Unable to find address, no search pin dropped'" do
         get :index, :search => @attr.merge(:address => "1111111111111111111111asdfasdfasdfasdf1111111111111111fail")

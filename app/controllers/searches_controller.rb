@@ -11,7 +11,7 @@ class SearchesController < ApplicationController
       search_model = Search.new(params[:search])
 
       # determine which dayhomes to display
-      search_model.dayhome_filter(params)
+      search_model.dayhome_filter(params[:search])
 
       # If any errors, show an error message
       if search_model.errors.count > 0
@@ -19,7 +19,7 @@ class SearchesController < ApplicationController
       end
 
       # set the pins for gmaps
-      @day_homes = search_model.pins
+      @day_homes = search_model.pin_json
     end
 
     # make sure the search object keeps its persistance

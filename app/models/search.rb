@@ -3,7 +3,7 @@ class Search
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :address, :availability_types, :certification_types, :advanced_search, :pins
+  attr_accessor :address, :availability_types, :certification_types, :advanced_search, :pin_json, :pin_count
 
   def initialize(attributes = {})
     # set each of the attributes
@@ -29,7 +29,7 @@ class Search
     dayhome_query = DayHome.scoped
 
     # morph the hash into the model
-    search = Search.new(params[:search])
+    search = Search.new(params)
 
     # set the joins based on what the user has
     dayhome_query = determine_joins(search, dayhome_query)
@@ -122,14 +122,15 @@ private
   end
 
   def check_for_checks(type, search)
+    found_checkmark = false
     # if a search type is found break and return true
     search.send(type).each do |search_type|
       if search_type.checked == true
-        break true
+        found_checkmark = true
       end
-      # return false if no checks are found
-      false
     end
+
+    found_checkmark
   end
 
   def apply_type_filter(type, search, dayhome_query)
@@ -151,18 +152,26 @@ private
   end
 
   def create_pins(dayhome_query, search_addy_pin)
-    # get all of the dayhomes from the system, convert to JSON array
-    day_homes_json = dayhome_query.group("day_homes.id").all.to_gmaps4rails
+    # get all of the dayhomes from the system
+    day_homes = dayhome_query.uniq.all
 
+    # save the number of pins
+    self.pin_count = day_homes.count
+
+    # convert to JSON array
+    day_homes_json = day_homes.to_gmaps4rails
     day_home_array = ActiveSupport::JSON.decode(day_homes_json)
 
     unless search_addy_pin.nil?
       # add the search pin to the list of pins if it exists
       day_home_array = day_home_array << search_addy_pin
+
+      # add 1 to the pin count
+      self.pin_count = self.pin_count + 1
     end
 
     # convert it back to pure JSON for gmaps (and save it to the model))
-    self.pins = day_home_array.to_json
+    self.pin_json = day_home_array.to_json
   end
 
   def geocode(address)
