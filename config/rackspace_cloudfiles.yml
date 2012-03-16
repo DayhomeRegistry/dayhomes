@@ -1,0 +1,21 @@
+development:
+  container: dayhomes_development
+  username: markbennett
+  api_key: cb2acd1348d1dccab9ba68ee1eb38229
+
+test:
+  container: dayhomes_development
+  username: markbennett
+  api_key: cb2acd1348d1dccab9ba68ee1eb38229
+
+
+staging:
+  container: dayhomes_staging
+  username: markbennett
+  api_key: cb2acd1348d1dccab9ba68ee1eb38229
+
+
+production:
+  container: dayhomes_production
+  username: markbennett
+  api_key: cb2acd1348d1dccab9ba68ee1eb38229

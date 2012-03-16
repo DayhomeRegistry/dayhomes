@@ -11,6 +11,7 @@ gem 'authlogic'
 gem 'kaminari'
 gem 'awesome_print'
 gem 'carrierwave'
+gem 'mini_magick'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'

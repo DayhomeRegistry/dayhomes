@@ -13,4 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require jquery.add_more
 //= require_tree .
+
+function log(text) {
+  if(window && window.console) console.log(text);
+}
