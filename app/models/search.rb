@@ -26,7 +26,7 @@ class Search
 
   def dayhome_filter(params)
     search_addy_pin = nil
-    dayhome_query = DayHome.select('*')
+    dayhome_query = DayHome.scoped
 
     # morph the hash into the model
     search = Search.new(params[:search])
@@ -111,11 +111,11 @@ private
 
     # if any availability types are found apply the join
     if has_avail_types
-      dayhome_query = dayhome_query.joins(:day_home_availability_types, :availability_types)
+      dayhome_query = dayhome_query.joins(:availability_types)
     end
     # if any certification types are found apply the join
     if has_cert_types
-      dayhome_query = dayhome_query.joins(:day_home_certification_types, :certification_types)
+      dayhome_query = dayhome_query.joins(:certification_types)
     end
 
     dayhome_query
