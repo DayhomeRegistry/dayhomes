@@ -1,3 +1,8 @@
+:javascript
+  $(function(){
+    $(".photo_preview").colorbox({rel:'photo_preview'});
+  });
+
 %p
   = link_to 'Create Dayhome', [:new, :admin, :day_home], :class => :btn
 
@@ -13,6 +18,8 @@
         %th
           Address
         %th
+          Photos
+        %th
           Actions
     %tbody
       - @day_homes.each do |day_home|
@@ -21,6 +28,9 @@
             = day_home.name
           %td
             = day_home.address
+          %td
+            - day_home.photos.each do |photo|
+              = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 25px; margin: 0 5px 5px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :title => photo.caption
           %td
             = link_to 'Edit', [:edit, :admin, day_home]
             |

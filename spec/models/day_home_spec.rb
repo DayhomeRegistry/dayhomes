@@ -13,7 +13,6 @@ describe DayHome do
     [:name, :street1, :city, :province, :postal_code].each do |attribute|
       it { should validate_presence_of(attribute)}
     end
-
   end
 
   describe "geolocation" do
