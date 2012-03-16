@@ -4,7 +4,7 @@ class SearchesController < ApplicationController
     # user goes directy to index page without search params
     if params[:search].blank?
       # display all of the full and part time
-      @day_homes = DayHome.select('*').joins(:day_home_availability_types, :availability_types)
+      @day_homes = DayHome.joins(:day_home_availability_types, :availability_types)
         .where("availability_types.kind IN (?)", ['Full-time', 'Part-time']).group("day_homes.id").all.to_gmaps4rails
     else
       # determine which dayhomes to display
