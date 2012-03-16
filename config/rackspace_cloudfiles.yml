@@ -1,0 +1,24 @@
+development:
+  container: dayhomes_development
+  username: markbennett
+  api_key: cb2acd1348d1dccab9ba68ee1eb38229
+  cdn_url: http://c10913533.r33.cf2.rackcdn.com
+
+test:
+  container: dayhomes_development
+  username: markbennett
+  api_key: cb2acd1348d1dccab9ba68ee1eb38229
+  cdn_url: http://c10913533.r33.cf2.rackcdn.com
+
+staging:
+  container: dayhomes_staging
+  username: markbennett
+  api_key: cb2acd1348d1dccab9ba68ee1eb38229
+  cdn_url: http://c10913578.r78.cf2.rackcdn.com
+
+
+production:
+  container: dayhomes_production
+  username: markbennett
+  api_key: cb2acd1348d1dccab9ba68ee1eb38229
+  cdn_url: http://c10913602.r2.cf2.rackcdn.com

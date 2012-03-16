@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Admin::DayHomesController do
   before(:each) do
     @day_home = mock_model(DayHome)
+    @day_home_photo = mock_model(DayHomePhoto)
     login_admin_user
   end
   
@@ -26,8 +27,21 @@ describe Admin::DayHomesController do
       get :new, params
     end
     
+    before(:each) do
+      DayHome.stub!(:new).and_return(@day_home)
+      @day_homes = mock([])
+      @day_home.stub!(:photos).and_return(@day_homes)
+      @day_homes.stub!(:build).and_return(true)
+    end
+    
     it "should create a new instance of DayHome" do
       DayHome.should_receive(:new)
+      do_render
+    end
+    
+    it "should build photos if none of are set" do
+      @day_home.should_receive(:photos)
+      @day_home.photos.should_receive(:build)
       do_render
     end
   end
@@ -56,6 +70,9 @@ describe Admin::DayHomesController do
   describe "edit" do
     before(:each) do
       DayHome.stub!(:find).and_return(@day_home)
+      @day_homes = []
+      @day_home.stub!(:photos).and_return(@day_homes)
+      @day_homes.stub!(:build).and_return(true)
     end
     
     def do_render(params={})
@@ -64,6 +81,12 @@ describe Admin::DayHomesController do
     
     it "should find the dayhome in question" do
       DayHome.should_receive(:find).with('42')
+      do_render
+    end
+    
+    it "should build photos if none of are set" do
+      @day_home.should_receive(:photos)
+      @day_home.photos.should_receive(:build)
       do_render
     end
   end
