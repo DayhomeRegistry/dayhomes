@@ -2,6 +2,7 @@ class Search
   include ActiveModel::Validations
   include ActiveModel::Conversion
   extend ActiveModel::Naming
+  include GoogleMapsJsonHelper
 
   attr_accessor :address, :availability_types, :certification_types, :advanced_search, :pin_json, :pin_count
 

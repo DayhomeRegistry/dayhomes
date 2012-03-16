@@ -1,5 +1,5 @@
 # Converts items to gmaps json
-module GoogleMapsJson
+module GoogleMapsJsonHelper
   def convert_address(address)
     # check to make sure address is valid
     Gmaps4rails.geocode(address)
