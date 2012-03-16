@@ -21,6 +21,7 @@
 /log/
 /public/system/
 /public/assets/
+/public/uploads/
 /tmp/
 **.war
 webrat.log
