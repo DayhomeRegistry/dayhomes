@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe Search do
   before(:all) do
-    AvailabilityType.destroy_all
-    DayHomeAvailabilityType.destroy_all
-    CertificationType.destroy_all
-    DayHomeCertificationType.destroy_all
-
     # create certification types
     @level_1 = CertificationType.create!({:kind => 'Child Care Level 1'})
     @basic_cpr = CertificationType.create!({:kind => 'Basic First Aid'})
@@ -18,6 +13,22 @@ describe Search do
 
   before(:each) do
     @attr = FactoryGirl.attributes_for(:search)
+
+    @dayhome_1 = DayHome.create!({:name => "DayHome 1",
+                                  :gmaps =>  true,
+                                  :city =>  'Edmonton',
+                                  :province =>  'AB',
+                                  :street2 =>  '',
+                                  :postal_code => 'T5N1Y6',
+                                  :street1 => '131 St NW'})
+
+    @dayhome_2 = DayHome.create!({:name => "DayHome 2",
+                                  :gmaps =>  true,
+                                  :city =>  'Edmonton',
+                                  :province =>  'AB',
+                                  :street2 =>  '',
+                                  :postal_code => 'T5S1R5',
+                                  :street1 => '178 St NW'})
   end
 
   it "should create a search model given valid attributes" do
@@ -26,14 +37,14 @@ describe Search do
   end
 
   it "should be valid if all availability types are checked" do
-    @params = { :availability_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } }}
+    @params = { :availability_types => { :kind => [@fulltime.id.to_s, @no_availability.id.to_s]} }
 
     valid_search = Search.new(@params)
     valid_search.should be_valid
   end
 
   it "should be valid if 1 availability types is checked" do
-    @params = { :availability_types => { :kind => { :'1' => 1 } }}
+    @params = { :availability_types => { :kind => [@no_availability.id.to_s]} }
 
     valid_search = Search.new(@params)
     valid_search.should be_valid
@@ -46,13 +57,21 @@ describe Search do
     valid_search.should be_valid
   end
 
-  it "should be valid if a bunch of fields are populated" do
-    @params = { :advanced_search => 'true',
-                :address => 'T6L5M6 Edmonton Alberta Canada',
-                :availability_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } },
-                :certification_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } }
-    }
+  it "should be valid if submitting from the simple search form" do
+    @params = { :address => 'T6L5M6 Edmonton Alberta' }
 
+    valid_search = Search.new(@params)
+    valid_search.should be_valid
+  end
+
+  it "should be valid if no address is submitted" do
+    @params = { :address => ''}
+
+    valid_search = Search.new(@params)
+    valid_search.should be_valid
+  end
+
+  it "should be valid if a bunch of fields are populated" do
     @params = { :advanced_search => 'true',
                 :availability_types => { :kind => [@fulltime.id.to_s, @no_availability.id.to_s]},
                 :certification_types => { :kind => [@level_1.id.to_s, @basic_cpr.id.to_s ]}
@@ -62,50 +81,129 @@ describe Search do
     valid_search.should be_valid
   end
 
-  it "should be valid if all fields not populated" do
-    @params = { :advanced_search => 'true',
-                :address => ''}
+  it "where no values have been entered in the advanced search" do
+    @params = { :advanced_search => 'true' }
 
+    # Create search, check pin count
     valid_search = Search.new(@params)
-    valid_search.should be_valid
-  end
 
+    # should display all dayhomes in the system if no search criteria found
+    valid_search.pin_count.should eql(2)
+  end
 
   describe "should have pins of type" do
     describe "availability pins" do
-      before(:each) do
-        @dayhome_1 = DayHome.create!({:name => "DayHome 1",
-                                     :gmaps =>  true,
-                                     :city =>  'Edmonton',
-                                     :province =>  'AB',
-                                     :street2 =>  '',
-                                     :postal_code => 'T5N1Y6',
-                                     :street1 => '131 St NW'})
-        @dayhome_2 = DayHome.create!({:name => "DayHome 2",
-                                      :gmaps =>  true,
-                                      :city =>  'Edmonton',
-                                      :province =>  'AB',
-                                      :street2 =>  '',
-                                      :postal_code => 'T5S1R5',
-                                      :street1 => '178 St NW'})
+      it "where only 1 dayhome is returned" do
+        @dayhome_1.availability_types << @fulltime
+        @dayhome_2.availability_types << @no_availability
+
+        @params = { :advanced_search => 'true',
+                    :availability_types => { :kind => [@fulltime.id.to_s]}}
+
+        # Create search, check pin count
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(1)
+
       end
 
-      it "where count should be 2" do
+      it "where 2 dayhomes are returned" do
         @dayhome_1.availability_types << @fulltime
         @dayhome_2.availability_types << @no_availability
 
         @params = { :advanced_search => 'true',
                     :availability_types => { :kind => [@fulltime.id.to_s, @no_availability.id.to_s]}}
 
-        # Create search, apply filter
+        # Create search, check pin count
         valid_search = Search.new(@params)
-        valid_search.dayhome_filter(@params)
 
         valid_search.pin_count.should eql(2)
       end
-
-
     end
+
+    describe "certificate pins" do
+      it "where only 1 dayhome is returned" do
+        @dayhome_1.certification_types << @level_1
+        @dayhome_2.certification_types << @basic_cpr
+
+        @params = { :advanced_search => 'true',
+                    :certification_types => { :kind => [@level_1.id.to_s]}}
+
+        # Create search, check pin count
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(1)
+      end
+
+      it "where 2 dayhomes are returned" do
+        @dayhome_1.certification_types << @level_1
+        @dayhome_2.certification_types << @basic_cpr
+
+        @params = { :advanced_search => 'true',
+                    :certification_types => { :kind => [@level_1.id.to_s, @basic_cpr.id.to_s]}}
+
+        # Create search, check pin count
+        valid_search = Search.new(@params)
+
+        valid_search.pin_count.should eql(2)
+      end
+    end
+
+    describe "availability pins & certification pins" do
+      it "where only 1 dayhome is returned if 2 types are entered" do
+        @dayhome_1.availability_types << @fulltime
+        @dayhome_1.certification_types << @level_1
+
+        @dayhome_2.availability_types << @no_availability
+        @dayhome_2.certification_types << @basic_cpr
+
+        @params = { :advanced_search => 'true',
+                    :availability_types => { :kind => [@fulltime.id.to_s ]},
+                    :certification_types => { :kind => [@level_1.id.to_s ]}
+        }
+
+        # Create search, check pin count
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(1)
+      end
+
+      it "where only 1 dayhome is returned if multiple enteres are entered" do
+        @dayhome_1.availability_types << @fulltime
+        @dayhome_1.certification_types << @level_1
+
+        @dayhome_2.availability_types << @no_availability
+        @dayhome_2.certification_types << @basic_cpr
+
+        @params = { :advanced_search => 'true',
+                    :availability_types => { :kind => [@fulltime.id.to_s ]},
+                    :certification_types => { :kind => [@level_1.id.to_s, @basic_cpr.id.to_s ]}
+        }
+
+        # Create search, check pin count
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(1)
+      end
+
+      it "where 0 dayhomes are returned if criteria isn't matched" do
+        @dayhome_1.availability_types << @fulltime
+        @dayhome_1.certification_types << @level_1
+
+        @dayhome_2.availability_types << @no_availability
+        @dayhome_2.certification_types << @basic_cpr
+
+        @params = { :advanced_search => 'true',
+                    :availability_types => { :kind => [@no_availability.id.to_s ]},
+                    :certification_types => { :kind => [@level_1.id.to_s]}
+        }
+
+        # Create search, check pin count
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(0)
+      end
+    end
+
+
+
+
+
 
 
   end

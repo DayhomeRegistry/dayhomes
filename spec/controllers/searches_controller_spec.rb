@@ -113,7 +113,7 @@ describe SearchesController do
     end
 
     describe "failure" do
-      it "should display 'Unable to find address, no search pin dropped'" do
+      it "should display an error if address can't be geocoded'" do
         get :index, :search => @attr.merge(:address => "1111111111111111111111asdfasdfasdfasdf1111111111111111fail")
         flash[:error].should_not be_nil
       end
