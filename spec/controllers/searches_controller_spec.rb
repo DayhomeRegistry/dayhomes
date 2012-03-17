@@ -101,15 +101,6 @@ describe SearchesController do
         get :index, :search => @params
         response.should be_success
       end
-
-      it "should be successful with availability type query params" do
-        @params = { :advanced_search => true,
-                    :address => 'T6L5M6 Edmonton Alberta Canada',
-                    :certification_types => { :kind => { :'1' => 1, :'2' => 2, :'3' => 3  } }}
-
-        get :index, :search => @params
-        response.should be_success
-      end
     end
 
     describe "failure" do
