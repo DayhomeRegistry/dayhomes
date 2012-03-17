@@ -1,0 +1,22 @@
+// position checkboxes
+.bump_left {
+  padding-left:8px;
+}
+
+.search_title {
+  margin-bottom:14px;
+  text-align:center;
+}
+
+.search_section {
+  vertical-align: center;
+  margin-top:10px;
+  margin-bottom:8px;
+  h4 {
+    margin-bottom:3px;
+  }
+  &:last-child {
+    margin-top:10px;
+  }
+
+}

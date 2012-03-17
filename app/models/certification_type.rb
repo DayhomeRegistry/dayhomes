@@ -1,4 +1,4 @@
-class AvailabilityType < ActiveRecord::Base
+class CertificationType < ActiveRecord::Base
   attr_accessor :checked  # used for search checkbox
 
   validates_presence_of :kind

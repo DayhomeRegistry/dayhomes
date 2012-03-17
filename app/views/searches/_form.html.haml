@@ -1,15 +1,26 @@
 = form_for(@advanced_search, :url => searches_path, :method => 'get', :html => {:class => 'well', :id => 'advanced-search'}) do |f|
-  %h3 Dayhome Search
+  .search_title
+    %h2 Dayhome Search
   .control-group
     .controls
       = f.hidden_field(:advanced_search, :value => true)
-      %h4
-        = 'Near'
-      = f.text_field :address
-      %h4
-        = 'Availability'
-      - @advanced_search.availability_types.each do |avail_type|
-        %div
-        = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
-        = avail_type.kind
-      = submit_tag "Search", :class => 'btn'
+      .search_section
+        %h4
+          = 'Near'
+        = f.text_field :address
+      .search_section
+        %h4
+          = 'Availability'
+        - @advanced_search.availability_types.each do |avail_type|
+          %div
+            = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
+            = avail_type.kind
+      .search_section
+        %h4
+          = 'Certification'
+        - @advanced_search.certification_types.each do |cert_type|
+          %div
+            = check_box_tag "search[certification_types][kind][]", cert_type.id, checked = cert_type.checked, :class => 'checkbox'
+            = cert_type.kind
+      .search_section
+        = submit_tag "Search", :class => 'btn'
