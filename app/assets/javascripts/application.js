@@ -13,4 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require jquery.add_more
+//= require jquery.colorbox
 //= require_tree .
+
+function log(text) {
+  if(window && window.console) console.log(text);
+}

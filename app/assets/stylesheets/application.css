@@ -15,3 +15,7 @@
 .field_with_errors input {
   border: 1px solid #b94a48;
 }
+
+.left { float: left; }
+.right { float: right; }
+.clear { clear: both; }

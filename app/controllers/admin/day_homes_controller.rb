@@ -9,6 +9,7 @@ class Admin::DayHomesController < Admin::ApplicationController
 
   def new
     @day_home = DayHome.new
+    @day_home.photos.build
   end
 
   def create
@@ -23,6 +24,7 @@ class Admin::DayHomesController < Admin::ApplicationController
 
   def edit
     @day_home = DayHome.find(params[:id])
+    @day_home.photos.build if @day_home.photos.blank?
   end
 
   def update

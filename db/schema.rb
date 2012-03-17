@@ -11,6 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+
 ActiveRecord::Schema.define(:version => 20120317162332) do
 
   create_table "availability_types", :force => true do |t|
@@ -44,6 +45,16 @@ ActiveRecord::Schema.define(:version => 20120317162332) do
 
   add_index "day_home_certification_types", ["certification_type_id"], :name => "index_day_home_certification_types_on_certification_type_id"
   add_index "day_home_certification_types", ["day_home_id"], :name => "index_day_home_certification_types_on_day_home_id"
+
+  create_table "day_home_photos", :force => true do |t|
+    t.integer  "day_home_id"
+    t.string   "photo"
+    t.string   "caption"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "day_home_photos", ["day_home_id"], :name => "index_day_home_photos_on_day_home_id"
 
   create_table "day_homes", :force => true do |t|
     t.string   "name"
