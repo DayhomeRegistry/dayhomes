@@ -109,8 +109,8 @@ private
 
   def determine_joins(params, dayhome_query)
     # check if their are related entities (by looking for what's been checked), if so, join to that table
-    has_avail_types = check_for_checks(:availability_types, params)
-    has_cert_types = check_for_checks(:certification_types, params)
+    has_avail_types = check_for_checks(:availability_types)
+    has_cert_types = check_for_checks(:certification_types)
 
     # if any availability types are found apply the join
     if has_avail_types
@@ -124,7 +124,7 @@ private
     dayhome_query
   end
 
-  def check_for_checks(type, params)
+  def check_for_checks(type)
     found_checkmark = false
 
     self.send(type).each do |search_type|
@@ -158,19 +158,13 @@ private
     # get all of the dayhomes from the system
     day_homes = dayhome_query.uniq.all
 
-    # save the number of pins
-    self.pin_count = day_homes.count
-
-    # convert to JSON array
-    day_homes_json = day_homes.to_gmaps4rails
-    day_home_array = ActiveSupport::JSON.decode(day_homes_json)
-
-    unless search_addy_pin.nil?
-      # add the search pin to the list of pins if it exists
-      day_home_array = day_home_array << search_addy_pin
-
-      # add 1 to the pin count
-      self.pin_count = self.pin_count + 1
+    # check if the user has entered to be near
+    if search_addy_pin.nil?
+      # save the number of pins
+      self.pin_count = day_homes.count
+    else
+      # address exists, add 1 to the pin count
+      self.pin_count = day_homes.count + 1
     end
 
     # add error due to no pins found (super restrictive criteria)
@@ -178,8 +172,8 @@ private
       errors.add(:base, "No dayhomes found within that criteria, remove some criteria to broden the search range" )
     end
 
-    # convert it back to pure JSON for gmaps (and save it to the model))
-    self.pin_json = day_home_array.to_json
+    # combine AR collection / near search pin (if entered)
+    self.pin_json = combine_coll_json(day_homes, search_addy_pin)
   end
 
   def geocode(address)
