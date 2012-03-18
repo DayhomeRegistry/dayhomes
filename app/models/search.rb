@@ -4,7 +4,7 @@ class Search
   extend ActiveModel::Naming
   include GoogleMapsJsonHelper
 
-  attr_accessor :address, :availability_types, :certification_types, :advanced_search, :pin_json, :pin_count
+  attr_accessor :address, :availability_types, :certification_types, :advanced_search, :pin_json, :pin_count, :dayhomes
 
   def initialize(attributes = {})
     # set each of the attributes
@@ -36,7 +36,7 @@ class Search
     dayhome_query = DayHome.scoped
 
     # set the joins based on what the user has
-    dayhome_query = determine_joins(params, dayhome_query)
+    dayhome_query = determine_joins(dayhome_query)
 
     # if the user uses the advanced search, we use the values from the availability type checkboxes,
     # otherwise we set the default to full/part time
@@ -107,7 +107,7 @@ private
     end
   end
 
-  def determine_joins(params, dayhome_query)
+  def determine_joins(dayhome_query)
     # check if their are related entities (by looking for what's been checked), if so, join to that table
     has_avail_types = check_for_checks(:availability_types)
     has_cert_types = check_for_checks(:certification_types)
@@ -156,15 +156,15 @@ private
 
   def create_pins(dayhome_query, search_addy_pin)
     # get all of the dayhomes from the system
-    day_homes = dayhome_query.uniq.all
+    self.dayhomes = dayhome_query.uniq.all
 
     # check if the user has entered to be near
     if search_addy_pin.nil?
       # save the number of pins
-      self.pin_count = day_homes.count
+      self.pin_count = self.dayhomes.count
     else
       # address exists, add 1 to the pin count
-      self.pin_count = day_homes.count + 1
+      self.pin_count = self.dayhomes.count + 1
     end
 
     # add error due to no pins found (super restrictive criteria)
@@ -173,7 +173,7 @@ private
     end
 
     # combine AR collection / near search pin (if entered)
-    self.pin_json = combine_coll_json(day_homes, search_addy_pin)
+    self.pin_json = combine_coll_json(self.dayhomes, search_addy_pin)
   end
 
   def geocode(address)

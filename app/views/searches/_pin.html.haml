@@ -1,0 +1,13 @@
+.dayhome_bubble
+  .name
+    %h4=link_to(dayhome.name, day_home_path(dayhome.id))
+  .bubble_pic
+    =link_to(dayhome.photos.empty? ? '' : image_tag(dayhome.photos.first.photo_url(:thumb)), day_home_path(dayhome.id))
+  %div
+    =dayhome.city  + ' , ' + dayhome.province
+  %div
+    =dayhome.postal_code
+  %div
+    =dayhome.street1
+
+

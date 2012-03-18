@@ -13,5 +13,18 @@
 }
 
 .map_container img {
-    max-width: none;
+  max-width: none;
 }
+
+.dayhome_bubble {
+  display:block;
+  width:280px;
+    .name {
+      margin-bottom:10px;
+    }
+  .bubble_pic {
+    float:right;
+    width:50%
+  }
+}
+
