@@ -11,6 +11,12 @@ CarrierWave.configure do |config|
   }
   config.fog_directory = cloudfiles_config[:container]
   config.fog_host = cloudfiles_config[:cdn_url]
+
+  # hack fix for windows machine due to tmp file permission error
+  # per https://github.com/jnicklas/carrierwave/issues/220/
+  if ENV['RAILS_ENV'] != 'production' || 'test'
+    config.delete_tmp_file_after_storage = false
+  end
 end
 
 CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
