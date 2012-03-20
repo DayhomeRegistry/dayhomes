@@ -18,13 +18,20 @@
 
 .dayhome_bubble {
   display:block;
-  width:280px;
+  padding-right:14px;
     .name {
       margin-bottom:10px;
     }
   .bubble_pic {
     float:right;
-    width:50%
   }
+}
+
+.bubble_without_pic {
+  width:200px;
+}
+
+.bubble_with_pic {
+  width:250px;
 }
 

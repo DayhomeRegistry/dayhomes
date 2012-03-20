@@ -1,4 +1,4 @@
-.dayhome_bubble
+.dayhome_bubble{:class => dayhome.photos.empty? ? 'bubble_without_pic' : 'bubble_with_pic' }
   .name
     %h4=link_to(dayhome.name, day_home_path(dayhome.id))
   .bubble_pic
