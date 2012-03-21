@@ -2,4 +2,7 @@
   .span4
     =render 'form'
   .span8
-    =gmaps4rails(@day_homes)
+    =gmaps(:map_options => { :center_latitude => @search.search_pin.nil? ? 53.543564 : @search.search_pin["lat"],
+                             :center_longitude => @search.search_pin.nil? ? -113.507074 : @search.search_pin["lng"],
+                             :zoom => @search.search_pin.nil? ? 11 : 12},
+           :markers     => { :data => @day_homes })

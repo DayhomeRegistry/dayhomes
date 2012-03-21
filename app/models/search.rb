@@ -4,7 +4,8 @@ class Search
   extend ActiveModel::Naming
   include GoogleMapsJsonHelper
 
-  attr_accessor :address, :availability_types, :certification_types, :advanced_search, :pin_json, :pin_count, :dayhomes
+  attr_accessor :address, :availability_types, :certification_types, :advanced_search, :pin_count, :dayhomes,
+                :search_pin
 
   def initialize(attributes = {})
     # set each of the attributes
@@ -42,8 +43,8 @@ class Search
     # otherwise we set the default to full/part time
     if params.has_key?(:advanced_search) && params[:advanced_search] == 'true'
       # apply where clauses
-      dayhome_query = apply_type_filter(:availability_types, params, dayhome_query)
-      dayhome_query = apply_type_filter(:certification_types, params, dayhome_query)
+      dayhome_query = apply_type_filter(:availability_types, dayhome_query)
+      dayhome_query = apply_type_filter(:certification_types, dayhome_query)
     else
       dayhome_query = dayhome_query.where("availability_types.kind IN (?)", ['Full-time', 'Part-time'])
     end
@@ -136,7 +137,7 @@ private
     found_checkmark
   end
 
-  def apply_type_filter(type, params, dayhome_query)
+  def apply_type_filter(type, dayhome_query)
     unless self.send(type).blank?
       # tack on any of the checkboxes to the where clause
       kind_array = []
@@ -165,6 +166,9 @@ private
     else
       # address exists, add 1 to the pin count
       self.pin_count = self.dayhomes.count + 1
+
+      # save the search pin within search
+      self.search_pin = search_addy_pin
     end
 
     # add error due to no pins found (super restrictive criteria)
@@ -172,8 +176,6 @@ private
       errors.add(:base, "No dayhomes found within that criteria, remove some criteria to broden the search range" )
     end
 
-    # combine AR collection / near search pin (if entered)
-    self.pin_json = combine_coll_json(self.dayhomes, search_addy_pin)
   end
 
   def geocode(address)

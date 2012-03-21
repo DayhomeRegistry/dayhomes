@@ -7,29 +7,34 @@ class SearchesController < ApplicationController
       day_homes = DayHome.with_availability_uniq(['Full-time', 'Part-time']).all
     else
       # apply the params to the search model
-      search_model = Search.new(params[:search])
+      @search = Search.new(params[:search])
 
       # If any errors, show an error message
-      if search_model.errors.count > 0
+      if @search.errors.count > 0
         flash.now[:error] = "Unable to find dayhomes within that criteria, please modifying the critera to be less restrictive"
       end
 
       # set the pins for gmaps
-      day_homes = search_model.dayhomes
+      day_homes = @search.dayhomes
     end
 
     # style and generate pins
-    style_dayhomes(day_homes)
+    @day_homes = style_dayhomes(day_homes)
 
     # make sure the search object keeps its persistance
-    @advanced_search = params.has_key?(:search) ? search_model : Search.new
+    @advanced_search = params.has_key?(:search) ? @search : Search.new
   end
 
 private
   def style_dayhomes(day_homes)
-    @day_homes = day_homes.to_gmaps4rails do |dayhome, marker|
+    day_homes.to_gmaps4rails do |dayhome, marker|
       marker.infowindow render_to_string(:partial => "pin", :locals => { :dayhome => dayhome})
       marker.title dayhome.name
+      marker.picture({ :picture => "/assets/dayhome.png",
+                       :width => 32,
+                       :height => 37
+                     })
+
     end
   end
 
