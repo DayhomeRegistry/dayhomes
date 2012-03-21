@@ -7,6 +7,8 @@ class Search
   attr_accessor :address, :availability_types, :certification_types, :advanced_search, :pin_count, :dayhomes,
                 :search_pin
 
+  EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
+
   def initialize(attributes = {})
     # set each of the attributes
     attributes.each do |name, value|
