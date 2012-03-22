@@ -84,6 +84,10 @@ no_availability_addresses.each_with_index  do |street_and_postal, index|
                       }.merge(street_and_postal))
   d.availability_types << no_availability
   d.certification_types << advanced_cpr
+  if index.odd?
+    d.dietary_accommodations = true
+    d.save!
+  end
 end
 
 

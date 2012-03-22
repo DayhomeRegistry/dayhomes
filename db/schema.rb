@@ -11,8 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
-ActiveRecord::Schema.define(:version => 20120317162332) do
+ActiveRecord::Schema.define(:version => 20120322012923) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -61,13 +60,14 @@ ActiveRecord::Schema.define(:version => 20120317162332) do
     t.float    "lat"
     t.float    "lng"
     t.boolean  "gmaps"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
     t.string   "city"
     t.string   "province"
     t.string   "street1"
     t.string   "street2"
     t.string   "postal_code"
+    t.boolean  "dietary_accommodations"
   end
 
   create_table "users", :force => true do |t|

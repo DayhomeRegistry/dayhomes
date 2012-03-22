@@ -93,6 +93,12 @@ describe SearchesController do
         response.should be_success
       end
 
+      it "should be successful with dietary accomodations" do
+        get :index, :search => @attr.merge(:advanced_search => true,
+                                           :dietary_accommodations => '1')
+        response.should be_success
+      end
+
       it "should be successful with availability type query params" do
         @params = { :advanced_search => true,
                     :address => 'T6L5M6 Edmonton Alberta Canada',

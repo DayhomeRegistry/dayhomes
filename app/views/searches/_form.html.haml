@@ -23,4 +23,9 @@
             = check_box_tag "search[certification_types][kind][]", cert_type.id, checked = cert_type.checked, :class => 'checkbox'
             = cert_type.kind
       .search_section
+        %h4
+          = 'Dietary Accomodations'
+        = f.check_box :dietary_accommodations
+        = 'Accommodates for Food Allergies'
+      .search_section
         = submit_tag "Search", :class => 'btn'
