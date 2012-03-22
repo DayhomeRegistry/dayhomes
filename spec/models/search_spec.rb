@@ -28,7 +28,8 @@ describe Search do
                                   :province =>  'AB',
                                   :street2 =>  '',
                                   :postal_code => 'T5S1R5',
-                                  :street1 => '178 St NW'})
+                                  :street1 => '178 St NW',
+                                  :dietary_accommodations => true})
   end
 
   it "should create a search model given valid attributes" do
@@ -66,6 +67,14 @@ describe Search do
 
   it "should be valid if no address is submitted" do
     @params = { :address => ''}
+
+    valid_search = Search.new(@params)
+    valid_search.should be_valid
+  end
+
+  it "should be valid if dietary acoomodations is checked" do
+    @params = { :dietary_accommodations => '1',
+                :advanced_search => 'true' }
 
     valid_search = Search.new(@params)
     valid_search.should be_valid
@@ -200,11 +209,35 @@ describe Search do
       end
     end
 
+    describe "dietary accomodation pins" do
+      it "where 1 dayhome is returned if dietary accommodations is checked" do
+        @params = { :dietary_accommodations => '1',
+                    :advanced_search => 'true' }
 
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(1)
+      end
 
+      it "where 1 dayhome is returned if dietary accommodations and an availability type are checked" do
+        @dayhome_1.availability_types << @fulltime
+        @dayhome_1.availability_types << @no_availability
 
+        @params = { :dietary_accommodations => '0',
+                    :availability_types => { :kind => [@no_availability.id.to_s ]},
+                    :advanced_search => 'true' }
 
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(1)
+      end
 
+      it "where 2 dayhomes are returned if dietary accommodations is not checked" do
+        @params = { :dietary_accommodations => '0',
+            :advanced_search => 'true' }
+
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(2)
+      end
+    end
 
   end
 end

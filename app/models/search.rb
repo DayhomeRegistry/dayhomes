@@ -4,8 +4,8 @@ class Search
   extend ActiveModel::Naming
   include GoogleMapsJsonHelper
 
-  attr_accessor :address, :availability_types, :certification_types, :advanced_search, :pin_count, :dayhomes,
-                :search_pin
+  attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
+                :advanced_search, :pin_count, :dayhomes, :search_pin
 
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
 
@@ -47,6 +47,7 @@ class Search
       # apply where clauses
       dayhome_query = apply_type_filter(:availability_types, dayhome_query)
       dayhome_query = apply_type_filter(:certification_types, dayhome_query)
+      dayhome_query = apply_boolean_filter(:dietary_accommodations, dayhome_query)
     else
       dayhome_query = dayhome_query.where("availability_types.kind IN (?)", ['Full-time', 'Part-time'])
     end
@@ -61,6 +62,17 @@ class Search
   end
 
 private
+
+  def apply_boolean_filter(boolean_column, dayhome_query)
+    unless self.send(boolean_column).blank?
+      # check if it's true
+      if self.send(boolean_column) == '1'
+        # tack on where clause
+        dayhome_query = dayhome_query.where("day_homes.#{boolean_column} = true")
+      end
+    end
+    dayhome_query
+  end
 
   def persisted?
     false
@@ -131,7 +143,7 @@ private
     found_checkmark = false
 
     self.send(type).each do |search_type|
-      if search_type.checked == true
+      if search_type.checked
         found_checkmark = true
       end
     end
