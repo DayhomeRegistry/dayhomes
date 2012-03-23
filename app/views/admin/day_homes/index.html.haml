@@ -20,6 +20,8 @@
         %th
           Photos
         %th
+          Featured?
+        %th
           Actions
     %tbody
       - @day_homes.each do |day_home|
@@ -31,6 +33,8 @@
           %td
             - day_home.photos.each do |photo|
               = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 25px; margin: 0 5px 5px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :title => photo.caption
+          %td
+            = yes_no(day_home.featured)
           %td
             = link_to 'Edit', [:edit, :admin, day_home]
             |

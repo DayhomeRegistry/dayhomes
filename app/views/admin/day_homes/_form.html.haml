@@ -8,6 +8,10 @@
 = form_for [:admin, @day_home] do |f|
   = f.label :name
   = f.text_field :name
+  
+  = f.label :featured, :class => 'checkbox' do
+    = f.check_box :featured
+    Feature on homepage?
 
   = f.label :street1, 'Street 1'
   = f.text_field :street1

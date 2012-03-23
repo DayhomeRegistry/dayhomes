@@ -49,7 +49,7 @@ class Search
       dayhome_query = apply_type_filter(:certification_types, dayhome_query)
       dayhome_query = apply_boolean_filter(:dietary_accommodations, dayhome_query)
     else
-      dayhome_query = dayhome_query.where("availability_types.kind IN (?)", ['Full-time', 'Part-time'])
+      dayhome_query = dayhome_query.where("availability_types.kind IN (?)", ['Full-time', 'Part-time']).includes(:availability_types)
     end
 
     # create search dayhome pin
