@@ -17,7 +17,7 @@
           = gmaps(:map_options => { :center_latitude => @day_home.lat,
                                    :center_longitude => @day_home.lng,
                                    :zoom => 16},
-                 :markers     => { :data => @styled_day_homes })
+                 :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
                                                                       
   .span5
     %h4

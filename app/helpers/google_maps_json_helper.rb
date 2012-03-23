@@ -24,4 +24,16 @@ module GoogleMapsJsonHelper
 
     collection_array.to_json
   end
+  
+  def gmap_prepare_dayhomes(day_homes)
+    day_homes.to_gmaps4rails do |dayhome, marker|
+      marker.infowindow render(:partial => "/searches/pin", :locals => { :dayhome => dayhome})
+      marker.title dayhome.name
+      marker.picture({ :picture => "/assets/dayhome.png",
+                       :width => 32,
+                       :height => 37
+                     })
+
+    end
+  end
 end
