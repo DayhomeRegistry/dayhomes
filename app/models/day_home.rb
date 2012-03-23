@@ -9,6 +9,8 @@ class DayHome < ActiveRecord::Base
     where("availability_types.kind IN (?)", availability_types).
     uniq
   }
+  
+  scope :featured, where(:featured => true)
 
   # availability types
   has_many :day_home_availability_types
@@ -30,7 +32,11 @@ class DayHome < ActiveRecord::Base
   def prevent_geocoding
     (!lat.blank? && !lng.blank?)
   end
-
+  
+  def featured_photo
+    photos.first
+  end
+  
   # this method is called when updating the lat long (this is what's fed to google maps)
   def address
     "#{city}, #{province}, Canada #{postal_code}"

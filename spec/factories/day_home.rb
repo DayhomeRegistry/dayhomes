@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :day_home do
     name 'Awesome Day Home'
     gmaps true
+    featured true
     city 'Edmonton'
     province 'AB'
     street1 '793 blackburn place'
