@@ -1,7 +1,9 @@
 Dayhomes::Application.routes.draw do
-  root :to => 'pages#home'
+  root :to => 'pages#index'
 
   resources :searches
+  resources :day_homes
+  resources :pages
   
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout

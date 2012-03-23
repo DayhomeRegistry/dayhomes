@@ -1,1 +1,32 @@
-= debug @day_home
+:javascript
+  $(function(){
+    $(".photo_preview").colorbox({rel:'photo_preview'});
+  });
+  
+%h2
+  = @day_home.name
+
+.row
+  .span5
+    %ul.unstyled
+      %li
+        %h4
+          Location
+        %p
+          = @day_home.address
+          = gmaps(:map_options => { :center_latitude => @day_home.lat,
+                                   :center_longitude => @day_home.lng,
+                                   :zoom => 16},
+                 :markers     => { :data => @styled_day_homes })
+                                                                      
+  .span5
+    %h4
+      = @day_home.name
+      Photos
+    
+    - if @day_home.photos.blank?
+      %p
+        No photos available.
+    - else
+      - @day_home.photos.each do |photo|
+        = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 250px; margin: 0 10px 10px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :title => photo.caption

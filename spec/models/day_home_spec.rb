@@ -14,7 +14,17 @@ describe DayHome do
       it { should validate_presence_of(attribute)}
     end
   end
-
+  
+  describe "featured_photo" do
+    it "shoud grab the first phot" do
+      @day_home = FactoryGirl.create(:day_home)
+      @photo1 = FactoryGirl.create(:day_home_photo)
+      @photo2 = FactoryGirl.create(:day_home_photo)
+      @day_home.stub!(:photos).and_return([@photo1, @photo2])
+      @day_home.featured_photo.should == @photo1
+    end
+  end
+  
   describe "geolocation" do
     before(:each) do
       @ryan_house = DayHome.create!(@attr)

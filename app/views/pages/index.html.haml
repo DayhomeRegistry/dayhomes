@@ -1,0 +1,26 @@
+%p.right
+  - if current_user
+    = current_user.full_name
+    = "-"
+    %strong= link_to "Your Account", user_path(current_user)
+    |
+    %strong= link_to 'Logout', logout_path
+  - else
+    %strong= link_to 'Login', login_path
+    |
+    %strong= link_to 'Sign Up', new_user_path
+
+%h2
+  Featured Day Homes
+  
+- if @featured_day_homes.blank?
+  %p
+    There are no featured Day Homes yet!
+- else
+  .row
+    - @featured_day_homes.each do |day_home|
+      .span3
+        %h3
+          = link_to day_home.name, day_home
+        - if day_home.featured_photo
+          = link_to image_tag(day_home.featured_photo.photo), day_home, :alt => day_home.name
