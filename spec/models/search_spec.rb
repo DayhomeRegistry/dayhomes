@@ -100,6 +100,74 @@ describe Search do
     valid_search.pin_count.should eql(2)
   end
 
+  describe "auto_adjust" do
+    describe "should be true" do
+      it "dayhomes found" do
+        @dayhome_1.availability_types << @full_time_full_days
+
+        @params = { :advanced_search => 'true',
+                    :availability_types => { :kind => [@full_time_full_days.id.to_s]}}
+
+        valid_search = Search.new(@params)
+        valid_search.search_pin.should be_nil
+        valid_search.auto_adjust.should be_true
+      end
+    end
+
+    describe "should be false" do
+      it "when no dayhomes found" do
+        @params = { :advanced_search => 'true',
+                    :availability_types => { :kind => [@part_time_morning.id.to_s]} }
+
+        valid_search = Search.new(@params)
+        valid_search.auto_adjust.should be_false
+      end
+
+      it "when search pin is entered" do
+        @params = { :address => 't6l5m6' }
+
+        valid_search = Search.new(@params)
+        valid_search.auto_adjust.should be_false
+      end
+    end
+  end
+
+  describe "zoom" do
+    it "should be 11 if search pin is nil" do
+      @params = { :advanced_search => 'true',
+                  :availability_types => { :kind => [@part_time_morning.id.to_s]} }
+
+      valid_search = Search.new(@params)
+      valid_search.zoom.should eql(11)
+    end
+
+    it "should be 12 if search pin is populated" do
+      @params = { :address => 't6l5m6' }
+
+      valid_search = Search.new(@params)
+      valid_search.zoom.should eql(12)
+    end
+  end
+
+  describe "center latitude and center longitude" do
+    it "should be equal to the search pin" do
+      @params = { :address => 't6l5m6' }
+
+      valid_search = Search.new(@params)
+      valid_search.center_latitude.should eql(53.47759199999999)
+      valid_search.center_longitude.should eql(-113.395897)
+    end
+
+    it "should be set to edmonton" do
+      @params = { :advanced_search => 'true',
+                  :availability_types => { :kind => [@part_time_morning.id.to_s]} }
+
+      valid_search = Search.new(@params)
+      valid_search.center_latitude.should eql(53.543564)
+      valid_search.center_longitude.should eql(-113.507074)
+    end
+  end
+
   describe "should have pins of type" do
     describe "availability pins" do
       it "where only 1 dayhome is returned" do

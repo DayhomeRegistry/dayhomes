@@ -1,42 +1,42 @@
 = form_for(@advanced_search, :url => searches_path, :method => 'get', :html => {:class => 'well', :id => 'advanced-search'}) do |f|
   .search_title
-    %h2 Dayhome Search
+    %h3 Dayhome Search
   .control-group
     .controls
       = f.hidden_field(:advanced_search, :value => true)
       .search_section
-        %h4
-          = 'Near'
+        %h5
+          = 'Dayhomes Near'
         = f.text_field :address
       .search_section
-        %h4
-          = 'Availability'
-          %h5
-            ='Full-time'
-          - @advanced_search.availability_types.each do |avail_type|
-            %div
+        %h5
+          ='Full-time Availability'
+        - @advanced_search.availability_types.each do |avail_type|
+          %div.bump_left
             - if avail_type.availability == 'Full-time'
               = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
               = avail_type.kind
-          %h5
-            ='Part-time'
-          - @advanced_search.availability_types.each do |avail_type|
-            %div
+      .search_section
+        %h5
+          ='Part-time Availability'
+        - @advanced_search.availability_types.each do |avail_type|
+          %div.bump_left
             - if avail_type.availability == 'Part-time'
               = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
               = avail_type.kind
 
       .search_section
-        %h4
+        %h5
           = 'Certification'
         - @advanced_search.certification_types.each do |cert_type|
-          %div
+          %div.bump_left
             = check_box_tag "search[certification_types][kind][]", cert_type.id, checked = cert_type.checked, :class => 'checkbox'
             = cert_type.kind
       .search_section
-        %h4
+        %h5
           = 'Dietary Accomodations'
-        = f.check_box :dietary_accommodations, :class => 'checkbox'
-        = 'Accommodates for Food Allergies'
+        %div.bump_left
+          = f.check_box :dietary_accommodations, :class => 'checkbox'
+          = 'Accommodates for Food Allergies'
       .search_section
-        = submit_tag "Search", :class => 'btn'
+        = submit_tag "Search", :class => 'btn btn-primary span3'
