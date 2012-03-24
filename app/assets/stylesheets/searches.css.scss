@@ -9,13 +9,15 @@
 }
 
 .search_section {
-  vertical-align: center;
-  margin-top:10px;
+  margin-top:8px;
   margin-bottom:8px;
-  h4 {
-    margin-bottom:3px;
+  h5 {
+    margin-top:4px;
+    margin-bottom:2px;
   }
   &:last-child {
-    margin-top:10px;
+    margin-top:20px;
+    margin-bottom:0px;
+    text-align:center;
   }
 }

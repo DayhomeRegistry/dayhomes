@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120322232639) do
+ActiveRecord::Schema.define(:version => 20120324171609) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "availability"
   end
 
   create_table "certification_types", :force => true do |t|

@@ -5,8 +5,10 @@ class Search
   include GoogleMapsJsonHelper
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
-                :advanced_search, :pin_count, :dayhomes, :search_pin
+                :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
+                :center_longitude, :zoom
 
+  DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => 'Full Days'}
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
 
   def initialize(attributes = {})
@@ -32,6 +34,9 @@ class Search
       # apply filter if we're searching
       dayhome_filter(attributes)
     end
+
+    # determine map settings
+    calibrate_map
   end
 
   def dayhome_filter(params)
@@ -42,14 +47,14 @@ class Search
     dayhome_query = determine_joins(dayhome_query)
 
     # if the user uses the advanced search, we use the values from the availability type checkboxes,
-    # otherwise we set the default to full/part time
+    # otherwise we set the default to full/part time (simple search)
     if params.has_key?(:advanced_search) && params[:advanced_search] == 'true'
       # apply where clauses
       dayhome_query = apply_type_filter(:availability_types, dayhome_query)
       dayhome_query = apply_type_filter(:certification_types, dayhome_query)
       dayhome_query = apply_boolean_filter(:dietary_accommodations, dayhome_query)
     else
-      dayhome_query = dayhome_query.where("availability_types.kind IN (?)", ['Full-time', 'Part-time']).includes(:availability_types)
+      dayhome_query = dayhome_query.where("availability_types.availability IN (?) AND availability_types.kind = ?", DEFAULT_AVAILABILITY_TYPES[:availability], DEFAULT_AVAILABILITY_TYPES[:kind]).includes(:availability_types)
     end
 
     # create search dayhome pin
@@ -62,6 +67,30 @@ class Search
   end
 
 private
+
+  def calibrate_map
+    # determine the autozoom
+    if self.day_homes.blank? || self.search_pin
+      # disable auto adjust so we can focus in on a location (either edmonton, or the search pin location)
+      self.auto_adjust = false
+    elsif self.day_homes || self.search_pin.nil?
+      # no search pin entered and dayhomes are found, let the map position itself around the pins
+      self.auto_adjust = true
+    end
+
+    # check where to position the map
+    if self.search_pin.nil?
+      # if the search pin isn't found send it to the center of edmonton
+      self.center_latitude = Search::EDMONTON_GEO[:lat]
+      self.center_longitude = Search::EDMONTON_GEO[:lng]
+      self.zoom = 11
+    else
+      # send them to the lat long of where they searched
+      self.center_latitude = self.search_pin["lat"]
+      self.center_longitude = self.search_pin["lng"]
+      self.zoom = 12
+    end
+  end
 
   def apply_boolean_filter(boolean_column, dayhome_query)
     unless self.send(boolean_column).blank?
@@ -114,9 +143,9 @@ private
   end
 
   def set_default_checkboxes
-    # set the default to part time and fulltime
+    # set the default checkboxes (no search params entered))
     self.availability_types.each do |default_avail_types|
-      if default_avail_types.kind == 'Full-time' || default_avail_types.kind == 'Part-time'
+      if DEFAULT_AVAILABILITY_TYPES[:kind] =~ /^#{default_avail_types.kind}/
         default_avail_types.checked = true
       end
     end
@@ -154,33 +183,31 @@ private
   def apply_type_filter(type, dayhome_query)
     unless self.send(type).blank?
       # tack on any of the checkboxes to the where clause
-      kind_array = []
+      id_array = []
       self.send(type).each do |search_type|
         if search_type.checked
-          kind_array << "#{search_type.kind}"
+          id_array << "#{search_type.id}"
         end
       end
 
-      # check if any of the certification types are checked, if not we don't need a where clause here
-      unless kind_array.empty?
-        dayhome_query = dayhome_query.where("#{type}.kind IN (?)", kind_array)
+      # check if any of the types are checked, if not we don't need a where clause here
+      unless id_array.empty?
+        dayhome_query = dayhome_query.where("#{type}.id IN (?)", id_array)
       end
+
     end
     dayhome_query
   end
 
   def create_pins(dayhome_query, search_addy_pin)
     # get all of the dayhomes from the system
-    self.dayhomes = dayhome_query.uniq.all
+    self.day_homes = dayhome_query.uniq.all
+
+    # record the number of pins
+    self.pin_count = self.day_homes.count
 
     # check if the user has entered to be near
-    if search_addy_pin.nil?
-      # save the number of pins
-      self.pin_count = self.dayhomes.count
-    else
-      # address exists, add 1 to the pin count
-      self.pin_count = self.dayhomes.count + 1
-
+    unless search_addy_pin.nil?
       # save the search pin within search
       self.search_pin = search_addy_pin
     end
