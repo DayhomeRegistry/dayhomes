@@ -11,10 +11,21 @@
       .search_section
         %h4
           = 'Availability'
-        - @advanced_search.availability_types.each do |avail_type|
-          %div
-            = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
-            = avail_type.kind
+          %h5
+            ='Full-time'
+          - @advanced_search.availability_types.each do |avail_type|
+            %div
+            - if avail_type.availability == 'Full-time'
+              = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
+              = avail_type.kind
+          %h5
+            ='Part-time'
+          - @advanced_search.availability_types.each do |avail_type|
+            %div
+            - if avail_type.availability == 'Part-time'
+              = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
+              = avail_type.kind
+
       .search_section
         %h4
           = 'Certification'

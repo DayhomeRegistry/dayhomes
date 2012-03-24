@@ -8,7 +8,7 @@ class Search
                 :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
                 :center_longitude, :zoom
 
-  DEFAULT_AVAILABILITY_TYPES = ['Full-time', 'Morning']
+  DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => 'Full Days'}
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
 
   def initialize(attributes = {})
@@ -47,14 +47,14 @@ class Search
     dayhome_query = determine_joins(dayhome_query)
 
     # if the user uses the advanced search, we use the values from the availability type checkboxes,
-    # otherwise we set the default to full/part time
+    # otherwise we set the default to full/part time (simple search)
     if params.has_key?(:advanced_search) && params[:advanced_search] == 'true'
       # apply where clauses
       dayhome_query = apply_type_filter(:availability_types, dayhome_query)
       dayhome_query = apply_type_filter(:certification_types, dayhome_query)
       dayhome_query = apply_boolean_filter(:dietary_accommodations, dayhome_query)
     else
-      dayhome_query = dayhome_query.where("availability_types.kind IN (?)", DEFAULT_AVAILABILITY_TYPES).includes(:availability_types)
+      dayhome_query = dayhome_query.where("availability_types.availability IN (?) AND availability_types.kind = ?", DEFAULT_AVAILABILITY_TYPES[:availability], DEFAULT_AVAILABILITY_TYPES[:kind]).includes(:availability_types)
     end
 
     # create search dayhome pin
@@ -145,10 +145,8 @@ private
   def set_default_checkboxes
     # set the default checkboxes (no search params entered))
     self.availability_types.each do |default_avail_types|
-      DEFAULT_AVAILABILITY_TYPES.select do |def_avail|
-        if def_avail =~ /^#{default_avail_types.kind}/
-          default_avail_types.checked = true
-        end
+      if DEFAULT_AVAILABILITY_TYPES[:kind] =~ /^#{default_avail_types.kind}/
+        default_avail_types.checked = true
       end
     end
   end
@@ -185,17 +183,18 @@ private
   def apply_type_filter(type, dayhome_query)
     unless self.send(type).blank?
       # tack on any of the checkboxes to the where clause
-      kind_array = []
+      id_array = []
       self.send(type).each do |search_type|
         if search_type.checked
-          kind_array << "#{search_type.kind}"
+          id_array << "#{search_type.id}"
         end
       end
 
-      # check if any of the certification types are checked, if not we don't need a where clause here
-      unless kind_array.empty?
-        dayhome_query = dayhome_query.where("#{type}.kind IN (?)", kind_array)
+      # check if any of the types are checked, if not we don't need a where clause here
+      unless id_array.empty?
+        dayhome_query = dayhome_query.where("#{type}.id IN (?)", id_array)
       end
+
     end
     dayhome_query
   end
