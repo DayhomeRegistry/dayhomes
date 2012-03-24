@@ -32,9 +32,14 @@ describe SearchesController do
 
       describe "advanced search form" do
         before(:each) do
-          @fulltime = AvailabilityType.create!({:kind => 'Full-time'})
-          @parttime = AvailabilityType.create!({:kind => 'Part-time'})
-          @no_availability = AvailabilityType.create!({:kind => 'No Availability'})
+          @full_time_full_days = AvailabilityType.create!({:availability => 'Full-time', :kind => 'Full Days'})
+          @full_time_after_school = AvailabilityType.create!({:availability => 'Full-time', :kind => 'After School'})
+          @full_time_before_school = AvailabilityType.create!({:availability => 'Full-time', :kind => 'Before School'})
+          @part_time_full_days = AvailabilityType.create!({:availability => 'Part-time', :kind => 'Full Days'})
+          @part_time_morning = AvailabilityType.create!({:availability => 'Part-time', :kind => 'Morning'})
+          @part_time_afternoon = AvailabilityType.create!({:availability => 'Part-time', :kind => 'Afternoon'})
+          @part_time_after_school = AvailabilityType.create!({:availability => 'Part-time', :kind => 'After School'})
+          @part_time_before_school = AvailabilityType.create!({:availability => 'Part-time', :kind => 'Before School'})
 
           @level_1 = CertificationType.create!({:kind => 'Child Care Level 1'})
           @level_2 = CertificationType.create!({:kind => 'Child Care Level 2'})
@@ -59,9 +64,14 @@ describe SearchesController do
         it "should have availability type checkboxes" do
           get :index
           response.should have_selector("form") do |node|
-            node.should have_selector('input', :type => 'checkbox', :value => @fulltime.id.to_s)
-            node.should have_selector('input', :type => 'checkbox', :value => @parttime.id.to_s)
-            node.should have_selector('input', :type => 'checkbox', :value => @no_availability.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @full_time_full_days.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @full_time_after_school.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @full_time_before_school.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @part_time_full_days.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @part_time_morning.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @part_time_afternoon.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @part_time_after_school.id.to_s)
+            node.should have_selector('input', :type => 'checkbox', :value => @part_time_before_school.id.to_s)
           end
         end
 
@@ -73,7 +83,6 @@ describe SearchesController do
             node.should have_selector('input', :type => 'checkbox', :value => @level_3.id.to_s)
             node.should have_selector('input', :type => 'checkbox', :value => @basic_cpr.id.to_s)
             node.should have_selector('input', :type => 'checkbox', :value => @advanced_cpr.id.to_s)
-            node.should have_selector('input', :type => 'checkbox', :value => @no_availability.id.to_s)
             node.should have_selector('input', :type => 'checkbox', :value => @infant_cpr.id.to_s)
           end
         end

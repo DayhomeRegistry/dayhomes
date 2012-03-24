@@ -4,7 +4,7 @@ class SearchesController < ApplicationController
     # user goes directy to index page without search params
     if params[:search].blank?
       # display all of the full and part time
-      @day_homes = DayHome.with_availability_uniq(['Full-time', 'Part-time']).all
+      @day_homes = DayHome.with_availability_uniq(Search::DEFAULT_AVAILABILITY_TYPES).all
     else
       # apply the params to the search model
       @search = Search.new(params[:search])
@@ -15,7 +15,7 @@ class SearchesController < ApplicationController
       end
 
       # set the pins for gmaps
-      @day_homes = @search.dayhomes
+      @day_homes = @search.day_homes
     end
 
     # make sure the search object keeps its persistance
