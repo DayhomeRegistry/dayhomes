@@ -5,8 +5,9 @@ class Search
   include GoogleMapsJsonHelper
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
-                :advanced_search, :pin_count, :dayhomes, :search_pin
+                :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust
 
+  DEFAULT_AVAILABILITY_TYPES = ['Full-time', 'Morning']
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
 
   def initialize(attributes = {})
@@ -32,6 +33,9 @@ class Search
       # apply filter if we're searching
       dayhome_filter(attributes)
     end
+
+    # determine map settings
+    calibrate_map
   end
 
   def dayhome_filter(params)
@@ -49,7 +53,7 @@ class Search
       dayhome_query = apply_type_filter(:certification_types, dayhome_query)
       dayhome_query = apply_boolean_filter(:dietary_accommodations, dayhome_query)
     else
-      dayhome_query = dayhome_query.where("availability_types.kind IN (?)", ['Full-time', 'Part-time']).includes(:availability_types)
+      dayhome_query = dayhome_query.where("availability_types.kind IN (?)", DEFAULT_AVAILABILITY_TYPES).includes(:availability_types)
     end
 
     # create search dayhome pin
@@ -62,6 +66,17 @@ class Search
   end
 
 private
+
+  def calibrate_map
+    #determine the autozoom
+    if self.day_homes.nil?
+      # no dayhomes found, focus in on edmonton
+      self.auto_adjust = false
+    elsif self.search_pin.nil?
+      self.auto_adjust = true
+    end
+    #@search.auto_adjust
+  end
 
   def apply_boolean_filter(boolean_column, dayhome_query)
     unless self.send(boolean_column).blank?
@@ -114,10 +129,12 @@ private
   end
 
   def set_default_checkboxes
-    # set the default to part time and fulltime
+    # set the default checkboxes (no search params entered))
     self.availability_types.each do |default_avail_types|
-      if default_avail_types.kind == 'Full-time' || default_avail_types.kind == 'Part-time'
-        default_avail_types.checked = true
+      DEFAULT_AVAILABILITY_TYPES.select do |def_avail|
+        if def_avail =~ /^#{default_avail_types.kind}/
+          default_avail_types.checked = true
+        end
       end
     end
   end
@@ -171,15 +188,15 @@ private
 
   def create_pins(dayhome_query, search_addy_pin)
     # get all of the dayhomes from the system
-    self.dayhomes = dayhome_query.uniq.all
+    self.day_homes = dayhome_query.uniq.all
 
     # check if the user has entered to be near
     if search_addy_pin.nil?
       # save the number of pins
-      self.pin_count = self.dayhomes.count
+      self.pin_count = self.day_homes.count
     else
       # address exists, add 1 to the pin count
-      self.pin_count = self.dayhomes.count + 1
+      self.pin_count = self.day_homes.count + 1
 
       # save the search pin within search
       self.search_pin = search_addy_pin

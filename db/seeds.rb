@@ -21,8 +21,10 @@ infant_cpr = CertificationType.create!({:kind => 'Infant CPR'})
 
 # create availability types
 fulltime = AvailabilityType.create!({:kind => 'Full-time'})
-parttime = AvailabilityType.create!({:kind => 'Part-time'})
-no_availability = AvailabilityType.create!({:kind => 'No Availability'})
+morning = AvailabilityType.create!({:kind => 'Morning'})
+afternoon = AvailabilityType.create!({:kind => 'Afternoon'})
+after_school = AvailabilityType.create!({:kind => 'After school'})
+waitlist = AvailabilityType.create!({:kind => 'Waitlist'})
 
 # address hashes
 fulltime_addresses = [
@@ -56,7 +58,7 @@ fulltime_addresses.each_with_index  do |street_and_postal, index|
   d.certification_types << level_2
   d.certification_types << advanced_cpr
   if index.odd?
-    d.availability_types << parttime
+    d.availability_types << morning
     d.certification_types << level_3
     d.certification_types << infant_cpr
   end
@@ -70,7 +72,7 @@ part_time_addresses.each_with_index  do |street_and_postal, index|
                    :province =>  'AB',
                    :street2 =>  ''
                   }.merge(street_and_postal))
-  d.availability_types << parttime
+  d.availability_types << morning
   d.certification_types << basic_cpr
 end
 
@@ -82,7 +84,7 @@ no_availability_addresses.each_with_index  do |street_and_postal, index|
                        :province =>  'AB',
                        :street2 =>  ''
                       }.merge(street_and_postal))
-  d.availability_types << no_availability
+  d.availability_types << afternoon
   d.certification_types << advanced_cpr
   if index.odd?
     d.dietary_accommodations = true

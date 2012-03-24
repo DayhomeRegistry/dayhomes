@@ -25,7 +25,7 @@
       .search_section
         %h4
           = 'Dietary Accomodations'
-        = f.check_box :dietary_accommodations
+        = f.check_box :dietary_accommodations, :class => 'checkbox'
         = 'Accommodates for Food Allergies'
       .search_section
         = submit_tag "Search", :class => 'btn'

@@ -8,7 +8,7 @@ describe Search do
 
     # create availability types
     @fulltime = AvailabilityType.create!({:kind => 'Full-time'})
-    @no_availability = AvailabilityType.create!({:kind => 'No Availability'})
+    @morning = AvailabilityType.create!({:kind => 'Morning'})
   end
 
   before(:each) do
@@ -38,14 +38,14 @@ describe Search do
   end
 
   it "should be valid if all availability types are checked" do
-    @params = { :availability_types => { :kind => [@fulltime.id.to_s, @no_availability.id.to_s]} }
+    @params = { :availability_types => { :kind => [@fulltime.id.to_s, @morning.id.to_s]} }
 
     valid_search = Search.new(@params)
     valid_search.should be_valid
   end
 
   it "should be valid if 1 availability types is checked" do
-    @params = { :availability_types => { :kind => [@no_availability.id.to_s]} }
+    @params = { :availability_types => { :kind => [@morning.id.to_s]} }
 
     valid_search = Search.new(@params)
     valid_search.should be_valid
@@ -82,7 +82,7 @@ describe Search do
 
   it "should be valid if a bunch of fields are populated" do
     @params = { :advanced_search => 'true',
-                :availability_types => { :kind => [@fulltime.id.to_s, @no_availability.id.to_s]},
+                :availability_types => { :kind => [@fulltime.id.to_s, @morning.id.to_s]},
                 :certification_types => { :kind => [@level_1.id.to_s, @basic_cpr.id.to_s ]}
     }
 
@@ -104,7 +104,7 @@ describe Search do
     describe "availability pins" do
       it "where only 1 dayhome is returned" do
         @dayhome_1.availability_types << @fulltime
-        @dayhome_2.availability_types << @no_availability
+        @dayhome_2.availability_types << @morning
 
         @params = { :advanced_search => 'true',
                     :availability_types => { :kind => [@fulltime.id.to_s]}}
@@ -117,10 +117,10 @@ describe Search do
 
       it "where 2 dayhomes are returned" do
         @dayhome_1.availability_types << @fulltime
-        @dayhome_2.availability_types << @no_availability
+        @dayhome_2.availability_types << @morning
 
         @params = { :advanced_search => 'true',
-                    :availability_types => { :kind => [@fulltime.id.to_s, @no_availability.id.to_s]}}
+                    :availability_types => { :kind => [@fulltime.id.to_s, @morning.id.to_s]}}
 
         # Create search, check pin count
         valid_search = Search.new(@params)
@@ -161,7 +161,7 @@ describe Search do
         @dayhome_1.availability_types << @fulltime
         @dayhome_1.certification_types << @level_1
 
-        @dayhome_2.availability_types << @no_availability
+        @dayhome_2.availability_types << @morning
         @dayhome_2.certification_types << @basic_cpr
 
         @params = { :advanced_search => 'true',
@@ -178,7 +178,7 @@ describe Search do
         @dayhome_1.availability_types << @fulltime
         @dayhome_1.certification_types << @level_1
 
-        @dayhome_2.availability_types << @no_availability
+        @dayhome_2.availability_types << @morning
         @dayhome_2.certification_types << @basic_cpr
 
         @params = { :advanced_search => 'true',
@@ -195,11 +195,11 @@ describe Search do
         @dayhome_1.availability_types << @fulltime
         @dayhome_1.certification_types << @level_1
 
-        @dayhome_2.availability_types << @no_availability
+        @dayhome_2.availability_types << @morning
         @dayhome_2.certification_types << @basic_cpr
 
         @params = { :advanced_search => 'true',
-                    :availability_types => { :kind => [@no_availability.id.to_s ]},
+                    :availability_types => { :kind => [@morning.id.to_s ]},
                     :certification_types => { :kind => [@level_1.id.to_s]}
         }
 
@@ -220,10 +220,10 @@ describe Search do
 
       it "where 1 dayhome is returned if dietary accommodations and an availability type are checked" do
         @dayhome_1.availability_types << @fulltime
-        @dayhome_1.availability_types << @no_availability
+        @dayhome_1.availability_types << @morning
 
         @params = { :dietary_accommodations => '0',
-                    :availability_types => { :kind => [@no_availability.id.to_s ]},
+                    :availability_types => { :kind => [@morning.id.to_s ]},
                     :advanced_search => 'true' }
 
         valid_search = Search.new(@params)
