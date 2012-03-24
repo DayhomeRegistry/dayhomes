@@ -5,7 +5,8 @@ class Search
   include GoogleMapsJsonHelper
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
-                :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust
+                :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
+                :center_longitude, :zoom
 
   DEFAULT_AVAILABILITY_TYPES = ['Full-time', 'Morning']
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
@@ -68,14 +69,27 @@ class Search
 private
 
   def calibrate_map
-    #determine the autozoom
-    if self.day_homes.nil?
-      # no dayhomes found, focus in on edmonton
+    # determine the autozoom
+    if self.day_homes.blank? || self.search_pin
+      # disable auto adjust so we can focus in on a location (either edmonton, or the search pin location)
       self.auto_adjust = false
-    elsif self.search_pin.nil?
+    elsif self.day_homes || self.search_pin.nil?
+      # no search pin entered and dayhomes are found, let the map position itself around the pins
       self.auto_adjust = true
     end
-    #@search.auto_adjust
+
+    # check where to position the map
+    if self.search_pin.nil?
+      # if the search pin isn't found send it to the center of edmonton
+      self.center_latitude = Search::EDMONTON_GEO[:lat]
+      self.center_longitude = Search::EDMONTON_GEO[:lng]
+      self.zoom = 11
+    else
+      # send them to the lat long of where they searched
+      self.center_latitude = self.search_pin["lat"]
+      self.center_longitude = self.search_pin["lng"]
+      self.zoom = 12
+    end
   end
 
   def apply_boolean_filter(boolean_column, dayhome_query)
@@ -190,14 +204,11 @@ private
     # get all of the dayhomes from the system
     self.day_homes = dayhome_query.uniq.all
 
-    # check if the user has entered to be near
-    if search_addy_pin.nil?
-      # save the number of pins
-      self.pin_count = self.day_homes.count
-    else
-      # address exists, add 1 to the pin count
-      self.pin_count = self.day_homes.count + 1
+    # record the number of pins
+    self.pin_count = self.day_homes.count
 
+    # check if the user has entered to be near
+    unless search_addy_pin.nil?
       # save the search pin within search
       self.search_pin = search_addy_pin
     end

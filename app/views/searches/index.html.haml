@@ -2,9 +2,9 @@
   .span4
     =render 'form'
   .span8
-    =gmaps(:map_options => { :center_latitude => @search.search_pin.nil? ? Search::EDMONTON_GEO[:lat] : @search.search_pin["lat"],
-                             :center_longitude => @search.search_pin.nil? ? Search::EDMONTON_GEO[:lng] : @search.search_pin["lng"],
-                             :zoom => @search.search_pin.nil? ? 11 : 12,
+    =gmaps(:map_options => { :center_latitude => @search.center_latitude,
+                             :center_longitude => @search.center_longitude,
+                             :zoom => @search.zoom,
                              :auto_adjust =>  @search.auto_adjust,
                              :auto_zoom => false},
            :markers     => { :data => gmap_prepare_dayhomes(@day_homes), :options => { :do_clustering => true,
