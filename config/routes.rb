@@ -2,7 +2,9 @@ Dayhomes::Application.routes.draw do
   root :to => 'pages#index'
 
   resources :searches
-  resources :day_homes
+  resources :day_homes do
+    resources :reviews
+  end
   resources :pages
   resources :reviews
   
