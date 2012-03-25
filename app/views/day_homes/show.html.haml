@@ -30,3 +30,8 @@
     - else
       - @day_home.photos.each do |photo|
         = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 250px; margin: 0 10px 10px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :title => photo.caption
+
+.row
+  .span5
+    Reviews:
+    =render 'reviews/_form'

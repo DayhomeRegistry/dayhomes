@@ -21,6 +21,8 @@ class DayHome < ActiveRecord::Base
   has_many :day_home_certification_types
   has_many :certification_types, :through => :day_home_certification_types
 
+  has_many :reviews
+
   validates :name, :street1, :city, :province, :postal_code, :presence => true
   validates_associated :photos
   

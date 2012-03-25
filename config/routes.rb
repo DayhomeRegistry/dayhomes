@@ -4,6 +4,7 @@ Dayhomes::Application.routes.draw do
   resources :searches
   resources :day_homes
   resources :pages
+  resources :reviews
   
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
