@@ -4,7 +4,9 @@
       .title
         Rating:
       .starz
-        - for i in 0..5
-          =radio_button_tag "star#{rev.id.to_s}", i.to_s, rev.rating == i ? true : false, {:class => "star", :disabled => "disabled"}
+        - (1..5).each do |i|
+          =radio_button_tag "star#{rev.id.to_s}", i.to_s, rev.rating == i, {:class => "star", :disabled => "disabled"}
+    .clearer
     .review_content
       =rev.content
+  .clearer

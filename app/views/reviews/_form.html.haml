@@ -2,7 +2,7 @@
   = f.label :content
   = f.text_field :content
 
-  - for i in 0..5
+  - (1..5).each do |i|
     = radio_button_tag 'star', i.to_s, false, :class => "star"
 
   = submit_tag "Submit Review", :class => 'btn'

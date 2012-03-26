@@ -2,6 +2,7 @@
   h4 {
     margin-bottom:4px;
   }
+  height:auto;
   .review {
     height:auto;
     min-height:36px;
@@ -20,14 +21,14 @@
 
     .review_content {
       width: 940px;
-      float:left;
+
       height:auto;
     }
   }
 }
 
 .create_review {
-  float:left;
+
 }
 
 .white {
@@ -36,4 +37,8 @@
 
 .grey {
   background-color: #FFFFFF;
+}
+
+.clearer {
+  clear: both;
 }
