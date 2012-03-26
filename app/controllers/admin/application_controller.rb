@@ -1,5 +1,4 @@
 class Admin::ApplicationController < ApplicationController
-  http_basic_authenticate_with :name => "dayhomes4admin", :password => "dayhomes4admin" if Rails.env.production?
   layout 'admin'
   helper_method :current_user_session, :current_user
   before_filter :require_user
