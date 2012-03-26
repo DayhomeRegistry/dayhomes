@@ -1,0 +1,10 @@
+-@day_home.reviews.each_with_index do |rev, index|
+  .review{:class => index.even? ? "white" : "grey"}
+    .review_rating
+      .title
+        Rating:
+      .starz
+        - for i in 0..5
+          =radio_button_tag "star#{rev.id.to_s}", i.to_s, rev.rating == i ? true : false, {:class => "star", :disabled => "disabled"}
+    .review_content
+      =rev.content

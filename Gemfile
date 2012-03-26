@@ -13,6 +13,7 @@ gem 'awesome_print'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
+gem 'jquery-star-rating-rails'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'

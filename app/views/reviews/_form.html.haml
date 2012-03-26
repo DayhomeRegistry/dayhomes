@@ -1,6 +1,8 @@
-= form_for @review do |f|
+= form_for ([@day_home, @review]) do |f|
   = f.label :content
   = f.text_field :content
 
-  = f.label :rating, 'Rating'
-  = f.text_field :rating
+  - for i in 0..5
+    = radio_button_tag 'star', i.to_s, false, :class => "star"
+
+  = submit_tag "Submit Review", :class => 'btn'

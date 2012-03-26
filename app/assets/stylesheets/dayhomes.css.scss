@@ -1,0 +1,39 @@
+.reviews {
+  h4 {
+    margin-bottom:4px;
+  }
+  .review {
+    height:auto;
+    min-height:36px;
+    width: 940px;
+    .review_rating {
+      width: 940px;
+      .starz {
+        width:890px;
+        float:left;
+      }
+      .title {
+        width:50px;
+        float:left;
+      }
+    }
+
+    .review_content {
+      width: 940px;
+      float:left;
+      height:auto;
+    }
+  }
+}
+
+.create_review {
+  float:left;
+}
+
+.white {
+  background-color: #f5f5f5;
+}
+
+.grey {
+  background-color: #FFFFFF;
+}
