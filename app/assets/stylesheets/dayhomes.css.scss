@@ -1,6 +1,6 @@
 .reviews {
   h4 {
-    margin-bottom:4px;
+    margin-bottom:8px;
   }
   height:auto;
   .review {
@@ -9,26 +9,44 @@
     width: 940px;
     .review_rating {
       width: 940px;
+      margin-top:6px;
       .starz {
         width:890px;
         float:left;
+        margin-bottom: 10px;
       }
       .title {
         width:50px;
         float:left;
       }
     }
-
     .review_content {
       width: 940px;
-
       height:auto;
     }
   }
 }
 
 .create_review {
-
+  h4 {
+    margin-bottom:6px;
+  }
+  .title {
+    width:50px;
+    float:left;
+  }
+  .starz {
+    width:890px;
+    float:left;
+    margin-bottom: 8px;
+  }
+  .content {
+    width:500px;
+    height:200px;
+    textarea {
+      width: 500px;
+    }
+  }
 }
 
 .white {

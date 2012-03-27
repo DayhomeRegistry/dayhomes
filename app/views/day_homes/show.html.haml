@@ -36,8 +36,10 @@
     .reviews
       %h4
         Reviews:
-      =render 'reviews/show'
-    .create_review
-      %h4
-        Create Review:
-      =render 'reviews/form'
+      =render 'reviews/show', :reviews => @reviews
+      =paginate @reviews
+    -if current_user
+      .create_review
+        %h4
+          Create Review:
+        =render 'reviews/form'

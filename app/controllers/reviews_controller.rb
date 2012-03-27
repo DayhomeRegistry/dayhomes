@@ -12,19 +12,23 @@ class ReviewsController < ApplicationController
     @day_home = DayHome.find(params[:day_home_id])
     @review = Review.new(params[:review])
 
-    unless params[:star].nil?
-      @review.rating = params[:star]
-    else
+    if params[:star].blank?
       @review.rating = 0
+    else
+      @review.rating = params[:star]
     end
 
+    # populate review id's
+    @review.user = current_user
+    @review.day_home = @day_home
+
     if @review.save
-      current_user.reviews << @review
-      @day_home.reviews << @review
       flash[:notice] = "Review posted!"
       redirect_to :back
     else
-      render :action => :new
+      # TODO clean up errors here
+      flash[:error] = @review.errors.first
+      redirect_to :back
     end
   end
 
