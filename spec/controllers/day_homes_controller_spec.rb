@@ -13,4 +13,7 @@ describe DayHomesController do
       do_render
     end
   end
+
+
+
 end

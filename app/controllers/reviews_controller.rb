@@ -26,8 +26,11 @@ class ReviewsController < ApplicationController
       flash[:notice] = "Review posted!"
       redirect_to :back
     else
-      # TODO clean up errors here
-      flash[:error] = @review.errors.first
+      error_msg = ''
+      @review.errors.full_messages.each do |err|
+        error_msg += "#{err}\n"
+      end
+      flash[:error] = error_msg
       redirect_to :back
     end
   end
