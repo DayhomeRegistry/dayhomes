@@ -1,5 +1,6 @@
 class Review < ActiveRecord::Base
   validates_presence_of :day_home_id, :user_id, :content, :rating
+  validates_uniqueness_of :user_id, :scope =>  :day_home_id, :message => 'review already exists for this dayhome!'
 
   belongs_to :user
   belongs_to :day_home
