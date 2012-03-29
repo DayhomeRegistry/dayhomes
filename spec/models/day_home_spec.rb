@@ -10,20 +10,30 @@ describe DayHome do
   end
   
   describe "validations" do
-    [:name, :street1, :city, :province, :postal_code].each do |attribute|
+    [:name, :street1, :city, :province, :postal_code, :slug].each do |attribute|
       it { should validate_presence_of(attribute)}
     end
+
   end
   
   describe "featured_photo" do
-    it "shoud grab the first phot" do
+    it "shoud grab the first photo" do
       @day_home = FactoryGirl.create(:day_home)
-      @photo1 = FactoryGirl.create(:day_home_photo)
-      @photo2 = FactoryGirl.create(:day_home_photo)
+      @photo1 = FactoryGirl.create(:day_home_photo, :day_home => @day_home)
+      @photo2 = FactoryGirl.create(:day_home_photo, :day_home => @day_home)
       @day_home.stub!(:photos).and_return([@photo1, @photo2])
       @day_home.featured_photo.should == @photo1
+    end 
+  end
+  
+  describe "to_param" do
+    it "should return slug if set otherwise a default" do
+      @day_home = FactoryGirl.build(:day_home)
+      @day_home.stub!(:id).and_return(42)
+      @day_home.to_param.should == '42-awesome-day-home'
     end
   end
+  
   
   describe "geolocation" do
     before(:each) do
