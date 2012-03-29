@@ -49,7 +49,15 @@ User.connection.execute('ALTER TABLE users AUTO_INCREMENT = 1')
 
 # Create Default Admin User
 admin_user = User.create!({:email => 'dayadmin@dayhomeregistry.com', :password => 'day4admin', :password_confirmation => 'day4admin', :first_name => 'DayHome', :last_name => 'Admin', :admin => true})
-regular_user = User.create!({:email => 'test@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
+user0 = User.create!({:email => 'test0@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
+user1 = User.create!({:email => 'test1@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
+user2 = User.create!({:email => 'test2@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
+user3 = User.create!({:email => 'test3@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
+user4 = User.create!({:email => 'test4@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
+user5 = User.create!({:email => 'test5@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
+user6 = User.create!({:email => 'test6@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
+
+users = [ user0, user1, user2, user3, user4, user5, user6]
 
 # address hashes
 fulltime_addresses = [
@@ -80,8 +88,8 @@ day_home_with_reviews = DayHome.create!({:name => "DayHome With Reviews",
 day_home_with_reviews.availability_types << full_time_full_days
 
 # add reviews to day_home_with_reviews
-reviews.each do |rev|
-  rev.user = regular_user
+reviews.each_with_index do |rev, index|
+  rev.user = users[index]
   rev.day_home = day_home_with_reviews
   rev.save!
 end
