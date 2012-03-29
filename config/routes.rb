@@ -29,6 +29,7 @@ Dayhomes::Application.routes.draw do
 
   resources :day_homes, :only => [:index, :show]
   
+  # NOTE: This needs to stay at the very bottom always; since it's last priority that this gets matched.
   match '/:slug' => "day_homes#show", :as => :day_home_slug
 
   # The priority is based upon order of creation:
