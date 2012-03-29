@@ -21,8 +21,9 @@ class DayHome < ActiveRecord::Base
   has_many :day_home_certification_types
   has_many :certification_types, :through => :day_home_certification_types
 
-  validates :name, :street1, :city, :province, :postal_code, :presence => true
+  validates :name, :street1, :city, :province, :postal_code, :slug, :presence => true
   validates_associated :photos
+  validates_uniqueness_of :slug
   
   accepts_nested_attributes_for :photos, :reject_if => :all_blank, :allow_destroy => true
 
@@ -41,5 +42,9 @@ class DayHome < ActiveRecord::Base
   def address
     "#{city}, #{province}, Canada #{postal_code}"
   end
-
+  
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+  
 end
