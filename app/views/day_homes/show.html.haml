@@ -11,7 +11,8 @@
     %ul.unstyled
       %li
         %h4
-          Location
+          Contact Information / Location
+        = mail_to(@day_home.email, 'Click to Contact', encode: 'javascript')
         %p
           = @day_home.address
           = gmaps(:map_options => { :center_latitude => @day_home.lat,
