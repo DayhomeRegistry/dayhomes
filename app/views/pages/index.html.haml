@@ -23,4 +23,4 @@
         %h3
           = link_to day_home.name, day_home
         - if day_home.featured_photo
-          = link_to image_tag(day_home.featured_photo.photo), day_home, :alt => day_home.name
+          = link_to image_tag(day_home.featured_photo.photo), day_home_slug_path(day_home.slug), :alt => day_home.name
