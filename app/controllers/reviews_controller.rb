@@ -12,9 +12,7 @@ class ReviewsController < ApplicationController
     @day_home = DayHome.find(params[:day_home_id])
     @review = Review.new(params[:review])
 
-    if params[:star].blank?
-      @review.rating = 0
-    else
+    unless params[:star].blank?
       @review.rating = params[:star]
     end
 
@@ -23,14 +21,13 @@ class ReviewsController < ApplicationController
     @review.day_home = @day_home
 
     if @review.save
-      flash[:notice] = "Review posted!"
-      redirect_to :back
+      redirect_to :back, :notice => "Review posted!"
     else
-      error_msg = ''
+      error_msg = []
       @review.errors.full_messages.each do |err|
-        error_msg += "#{err}\n"
+        error_msg << err
       end
-      flash[:error] = error_msg
+      flash[:error] = error_msg.join("<br/>").html_safe
       redirect_to :back
     end
   end
