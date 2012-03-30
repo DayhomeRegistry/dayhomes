@@ -9,8 +9,7 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
-
+# It's strongly recommended to check this file into your version control system
 ActiveRecord::Schema.define(:version => 20120329184141) do
 
   create_table "availability_types", :force => true do |t|
@@ -75,11 +74,11 @@ ActiveRecord::Schema.define(:version => 20120329184141) do
 
   create_table "reviews", :force => true do |t|
     t.text     "content"
-    t.integer  "rating"
+    t.integer  "rating",      :default => 0
     t.integer  "day_home_id"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   add_index "reviews", ["day_home_id"], :name => "index_reviews_on_day_home_id"

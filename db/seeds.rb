@@ -80,6 +80,7 @@ day_home_with_reviews = DayHome.create!({:name => "DayHome With Reviews",
                        :province =>  'AB',
                        :street1 => '4138 36st NW',
                        :street2 =>  '',
+                       :slug => 'DayHomesWithReviews',
                        :postal_code => 'T6L5M6'})
 day_home_with_reviews.availability_types << full_time_full_days
 
@@ -97,7 +98,8 @@ fulltime_addresses.each_with_index  do |street_and_postal, index|
                    :gmaps =>  true,
                    :city =>  'Edmonton',
                    :province =>  'AB',
-                   :street2 =>  ''
+                   :street2 =>  '',
+                   :slug => "DayHome#{index}single"
                }.merge(street_and_postal))
 
   d.availability_types << full_time_full_days
@@ -117,7 +119,8 @@ part_time_addresses.each_with_index  do |street_and_postal, index|
                    :gmaps =>  true,
                    :city =>  'Edmonton',
                    :province =>  'AB',
-                   :street2 =>  ''
+                   :street2 =>  '',
+                   :slug => "DayHome#{index}partime"
                   }.merge(street_and_postal))
   d.availability_types << part_time_morning
   d.certification_types << basic_cpr
@@ -132,7 +135,8 @@ no_availability_addresses.each_with_index  do |street_and_postal, index|
                        :gmaps =>  true,
                        :city =>  'Edmonton',
                        :province =>  'AB',
-                       :street2 =>  ''
+                       :street2 =>  '',
+                       :slug => "DayHome#{index}noavail"
                       }.merge(street_and_postal))
   d.availability_types << part_time_before_school
   d.availability_types << full_time_after_school
