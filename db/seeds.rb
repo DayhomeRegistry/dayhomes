@@ -7,7 +7,9 @@ Review.destroy_all
 DayHome.destroy_all
 User.destroy_all
 
+
 # Reset the primary key increment count; so it starts counting from 1 again.
+User.connection.execute('ALTER TABLE users AUTO_INCREMENT = 1')
 DayHome.connection.execute('ALTER TABLE day_homes AUTO_INCREMENT = 1')
 AvailabilityType.connection.execute('ALTER TABLE availability_types AUTO_INCREMENT = 1')
 CertificationType.connection.execute('ALTER TABLE availability_types AUTO_INCREMENT = 1')
@@ -40,12 +42,6 @@ review_6 = Review.new({:content => 'Speck spare ribs shoulder ground round prosc
 review_7 = Review.new({:content => 'Pancetta speck ribeye, ham hock pork loin spare ribs brisket ball tip.', :rating => 1})
 
 reviews = [review_1, review_2, review_3, review_4, review_5, review_6, review_7]
-
-# Destroy all existing users
-User.destroy_all
-
-# Reset the primary key increment count; so it starts counting from 1 again.
-User.connection.execute('ALTER TABLE users AUTO_INCREMENT = 1')
 
 # Create Default Admin User
 admin_user = User.create!({:email => 'dayadmin@dayhomeregistry.com', :password => 'day4admin', :password_confirmation => 'day4admin', :first_name => 'DayHome', :last_name => 'Admin', :admin => true})
@@ -147,17 +143,5 @@ no_availability_addresses.each_with_index  do |street_and_postal, index|
     d.save!
   end
 end
-
-
-# Destroy all existing users
-User.destroy_all
-
-# Reset the primary key increment count; so it starts counting from 1 again.
-User.connection.execute('ALTER TABLE users AUTO_INCREMENT = 1')
-
-# Create Default Admin User
-User.create!({:email => 'dayadmin@dayhomeregistry.com', :password => 'day4admin', :password_confirmation => 'day4admin', :first_name => 'DayHome', :last_name => 'Admin', :admin => true})
-
-
 
 

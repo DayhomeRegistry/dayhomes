@@ -33,16 +33,6 @@ describe Review do
       valid_review.should_not be_valid
     end
 
-    it "should fail without rating" do
-      @attr.delete(:rating)
-      valid_review = Review.new(@attr.merge(:content => 'I am a review'))
-
-      valid_review.user = @user
-      valid_review.day_home = @day_home
-
-      valid_review.should_not be_valid
-    end
-
     it "should fail with content < 5" do
       valid_review = Review.new(@attr.merge(:content => '123',
                                             :rating => 5))
