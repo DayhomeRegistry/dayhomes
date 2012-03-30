@@ -1,0 +1,12 @@
+-reviews.each_with_index do |rev, index|
+  .review{:class => index.even? ? "white" : "grey"}
+    .review_rating
+      .title
+        Rating:
+      .starz
+        - (1..5).each do |i|
+          =radio_button_tag "star#{rev.id.to_s}", i.to_s, rev.rating == i, {:class => "star", :disabled => "disabled"}
+    .clearer
+    .review_content
+      =rev.content
+  .clearer
