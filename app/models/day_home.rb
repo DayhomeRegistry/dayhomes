@@ -23,8 +23,11 @@ class DayHome < ActiveRecord::Base
 
   has_many :reviews
 
-  validates :name, :street1, :city, :province, :postal_code, :presence => true
+  validates :name, :street1, :city, :province, :postal_code, :slug, :presence => true
+
   validates_associated :photos
+  validates_uniqueness_of :slug
+  validates_format_of :slug, :with => /[a-z0-9]+/
   
   accepts_nested_attributes_for :photos, :reject_if => :all_blank, :allow_destroy => true
 
@@ -43,5 +46,9 @@ class DayHome < ActiveRecord::Base
   def address
     "#{city}, #{province}, Canada #{postal_code}"
   end
-
+  
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+  
 end

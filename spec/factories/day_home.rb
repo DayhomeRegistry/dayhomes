@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :day_home do
     name 'Awesome Day Home'
+    slug 'awesome_day_home'
     gmaps true
     featured true
     city 'Edmonton'
