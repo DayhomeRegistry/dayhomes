@@ -13,6 +13,7 @@ class DayHomesController < ApplicationController
 
   def email_dayhome
     @contact  = DayHomeContact.new(params[:day_home_contact])
+    redirect_to :back
   end
 
 

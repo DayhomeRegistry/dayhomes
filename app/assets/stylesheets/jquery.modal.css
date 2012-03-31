@@ -2,6 +2,7 @@
   display: none;
   width: 400px;
   overflow:visible !important;
+  max-height:1000px !important;
   background: #fff;
   padding: 15px 30px;
   -webkit-border-radius: 8px;

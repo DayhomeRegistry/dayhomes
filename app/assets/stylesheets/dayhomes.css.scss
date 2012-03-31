@@ -63,6 +63,7 @@
 
 #contact-form {
   width:410px;
+  height:auto;
   h4 {
     margin-bottom: 10px;
   }
@@ -74,6 +75,13 @@
     height:250px;
   }
   .submit {
+  padding-top: 10px;
   text-align: center;
+  }
+
+  .remember{
+    label {
+      display:inline !important;
+    }
   }
 }

@@ -14,6 +14,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
 gem 'jquery-star-rating-rails'
+gem 'client_side_validations'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
