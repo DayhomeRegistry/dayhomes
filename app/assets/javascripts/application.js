@@ -16,6 +16,8 @@
 //= require jquery.add_more
 //= require jquery.colorbox
 //= require jquery-star-rating
+//= require jquery.modal.min
+//= require rails.validations
 //= require_tree .
 
 function log(text) {

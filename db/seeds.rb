@@ -81,6 +81,7 @@ day_home_with_reviews = DayHome.create!({:name => "DayHome With Reviews",
                        :street1 => '4138 36st NW',
                        :street2 =>  '',
                        :slug => 'DayHomesWithReviews',
+                       :email => 'withreviews@dayhomeregistry.com',
                        :postal_code => 'T6L5M6'})
 day_home_with_reviews.availability_types << full_time_full_days
 
@@ -99,7 +100,8 @@ fulltime_addresses.each_with_index  do |street_and_postal, index|
                    :city =>  'Edmonton',
                    :province =>  'AB',
                    :street2 =>  '',
-                   :slug => "DayHome#{index}single"
+                   :slug => "DayHome#{index}single",
+                   :email => "dhf#{index}@dayhomeregistry.com"
                }.merge(street_and_postal))
 
   d.availability_types << full_time_full_days
@@ -120,7 +122,8 @@ part_time_addresses.each_with_index  do |street_and_postal, index|
                    :city =>  'Edmonton',
                    :province =>  'AB',
                    :street2 =>  '',
-                   :slug => "DayHome#{index}partime"
+                   :slug => "DayHome#{index}partime",
+                   :email => "dhp#{index}@dayhomeregistry.com"
                   }.merge(street_and_postal))
   d.availability_types << part_time_morning
   d.certification_types << basic_cpr
@@ -136,7 +139,8 @@ no_availability_addresses.each_with_index  do |street_and_postal, index|
                        :city =>  'Edmonton',
                        :province =>  'AB',
                        :street2 =>  '',
-                       :slug => "DayHome#{index}noavail"
+                       :slug => "DayHome#{index}noavail",
+                       :email => "dhn#{index}@dayhomeregistry.com"
                       }.merge(street_and_postal))
   d.availability_types << part_time_before_school
   d.availability_types << full_time_after_school
