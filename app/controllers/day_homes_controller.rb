@@ -7,6 +7,13 @@ class DayHomesController < ApplicationController
     else
       @review = Review.new
       @reviews = @day_home.reviews.page(params[:page]).per(5)
+      @contact = DayHomeContact.new({:day_home_email => @day_home.email})
     end
   end
+
+  def email_dayhome
+    @contact  = DayHomeContact.new(params[:day_home_contact])
+  end
+
+
 end

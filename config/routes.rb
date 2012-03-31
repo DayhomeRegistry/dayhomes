@@ -17,7 +17,8 @@ Dayhomes::Application.routes.draw do
   match 'reset_password_instructions/:id' => 'password_resets#edit', :as => :reset_password_instructions
   match 'reset_password_instructions/:id/update' => 'password_resets#update', :as => :update_reset_password_instructions
   resources :password_resets
-  
+
+  match 'email_dayhome' => 'day_homes#email_dayhome', :via => :post
   
   namespace :admin do
     root :to => 'day_homes#index'

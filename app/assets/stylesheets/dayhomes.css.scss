@@ -60,3 +60,20 @@
 .clearer {
   clear: both;
 }
+
+#contact-form {
+  width:410px;
+  h4 {
+    margin-bottom: 10px;
+  }
+  h5 {
+    margin-bottom: 6px;
+  }
+  textarea {
+    width:400px;
+    height:250px;
+  }
+  .submit {
+  text-align: center;
+  }
+}

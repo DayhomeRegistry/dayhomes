@@ -9,7 +9,8 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system
+# It's strongly recommended to check this file into your version control system.
+
 ActiveRecord::Schema.define(:version => 20120329184141) do
 
   create_table "availability_types", :force => true do |t|
@@ -69,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20120329184141) do
     t.string   "postal_code"
     t.boolean  "dietary_accommodations"
     t.boolean  "featured",               :default => false
+    t.string   "email"
     t.string   "slug"
   end
 

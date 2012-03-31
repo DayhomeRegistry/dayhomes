@@ -1,6 +1,17 @@
 :javascript
   $(function(){
     $(".photo_preview").colorbox({rel:'photo_preview'});
+
+    $.modal.defaults = {
+      overlay: "#000",        // Overlay color
+      opacity: 0.75,          // Overlay opacity
+      zIndex: 1,              // Overlay z-index.
+      escapeClose: true,      // Allows the user to close the modal by pressing `ESC`
+      clickClose: true,       // Allows the user to close the modal by clicking the overlay
+      closeText: 'Close',     // Text content for the close <a> tag.
+      showClose: true         // Shows a (X) icon/link in the top-right corner
+      modalClass: "modal",    // CSS class added to the element being displayed in the modal.
+    };
   });
   
 %h2
@@ -12,7 +23,25 @@
       %li
         %h4
           Contact Information / Location
-        = mail_to(@day_home.email, 'Click to Contact', encode: 'javascript')
+        %a(title="Contact Us" href="#contact-form" rel="modal:open") Contact Us
+
+        #contact-form.modal
+          %h3 Contacting
+          %h5 #{@day_home.name}
+          = form_for @contact, :url => email_dayhome_path do |cf|
+            = cf.label "Your name:"
+            = cf.text_field :name
+
+            = cf.label "Regarding:"
+            = cf.text_field :subject
+
+            = cf.label "Message:"
+            = cf.text_area :message, :cols => 90, :rows => 10
+
+            = cf.hidden_field :day_home_email, :value => @contact.day_home_email
+            .submit
+              = cf.submit "Contact", :class => 'btn btn-primary span3'
+
         %p
           = @day_home.address
           = gmaps(:map_options => { :center_latitude => @day_home.lat,
