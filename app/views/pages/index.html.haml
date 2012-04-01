@@ -4,6 +4,12 @@
     = "-"
     %strong= link_to "Your Account", user_path(current_user)
     |
+    - if current_user.admin?
+      %strong= link_to "Admin", admin_root_path
+      |
+    - if current_user.day_home_owner?
+      %strong= link_to "My Day Homes", day_homes_path
+      |
     %strong= link_to 'Logout', logout_path
   - else
     %strong= link_to 'Login', login_path

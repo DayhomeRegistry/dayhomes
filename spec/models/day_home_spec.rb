@@ -53,6 +53,28 @@ describe DayHome do
     end
   end
   
+  describe "assign_availability_type_ids=" do
+    it "should find all the availability_types in question and assign them to the day_home" do
+      @day_home = FactoryGirl.build(:day_home)
+      @availability_type = FactoryGirl.build(:availability_type)
+      AvailabilityType.stub!(:find_all_by_id).and_return([@availability_type])
+      @day_home.availability_types.should == []
+      @day_home.assign_availability_type_ids = [42]
+      @day_home.availability_types.should == [@availability_type]
+    end
+  end
+  
+  describe "assign_certification_type_ids=" do
+    it "should find all the certification_types in question and assign them to the day_home" do
+      @day_home = FactoryGirl.build(:day_home)
+      @certification_type = FactoryGirl.build(:certification_type)
+      CertificationType.stub!(:find_all_by_id).and_return([@certification_type])
+      @day_home.certification_types.should == []
+      @day_home.assign_certification_type_ids = [42]
+      @day_home.certification_types.should == [@certification_type]
+    end
+  end
+  
   describe "all_for_select" do
     it "should return a formatted array to be used in a rails select helper" do
       @day_home = FactoryGirl.build(:day_home)
