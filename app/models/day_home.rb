@@ -23,6 +23,9 @@ class DayHome < ActiveRecord::Base
 
   has_many :reviews
 
+  has_many :user_day_homes, :dependent => :destroy
+  has_many :users, :through => :user_day_homes
+
   validates :name, :street1, :city, :province, :postal_code, :slug, :presence => true
 
   validates_associated :photos
@@ -49,6 +52,10 @@ class DayHome < ActiveRecord::Base
   
   def to_param
     "#{id}-#{name.parameterize}"
+  end
+  
+  def self.all_for_select
+    all.collect {|day_home| [ day_home.name, day_home.id ] }
   end
   
 end

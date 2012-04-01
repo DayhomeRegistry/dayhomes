@@ -9,8 +9,9 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system
-ActiveRecord::Schema.define(:version => 20120329184141) do
+# It's strongly recommended to check this file into your version control system.
+
+ActiveRecord::Schema.define(:version => 20120401165649) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -74,15 +75,26 @@ ActiveRecord::Schema.define(:version => 20120329184141) do
 
   create_table "reviews", :force => true do |t|
     t.text     "content"
-    t.integer  "rating",      :default => 0
+    t.integer  "rating"
     t.integer  "day_home_id"
     t.integer  "user_id"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "reviews", ["day_home_id"], :name => "index_reviews_on_day_home_id"
   add_index "reviews", ["user_id"], :name => "index_reviews_on_user_id"
+
+  create_table "user_day_homes", :force => true do |t|
+    t.integer  "day_home_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "user_day_homes", ["day_home_id", "user_id"], :name => "index_user_day_homes_on_day_home_id_and_user_id"
+  add_index "user_day_homes", ["day_home_id"], :name => "index_user_day_homes_on_day_home_id"
+  add_index "user_day_homes", ["user_id"], :name => "index_user_day_homes_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                  :null => false

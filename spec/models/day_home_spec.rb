@@ -52,5 +52,14 @@ describe DayHome do
       @ryan_house.address.should == 'Edmonton, AB, Canada T6W1C3'
     end
   end
+  
+  describe "all_for_select" do
+    it "should return a formatted array to be used in a rails select helper" do
+      @day_home = FactoryGirl.build(:day_home)
+      @day_home.stub!(:id).and_return(42)
+      DayHome.stub!(:all).and_return([@day_home])
+      DayHome.all_for_select.should == [["Awesome Day Home", 42]]
+    end
+  end
 
 end
