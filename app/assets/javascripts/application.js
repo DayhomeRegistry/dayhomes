@@ -20,6 +20,12 @@
 //= require rails.validations
 //= require_tree .
 
+$.ajaxSetup({
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader("Accept", "text/javascript");
+    }
+});
+
 function log(text) {
   if(window && window.console) console.log(text);
 }

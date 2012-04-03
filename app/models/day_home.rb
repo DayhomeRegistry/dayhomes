@@ -22,6 +22,7 @@ class DayHome < ActiveRecord::Base
   has_many :certification_types, :through => :day_home_certification_types
 
   has_many :reviews
+  has_many :events
 
   validates :name, :street1, :city, :province, :postal_code, :slug, :presence => true
 

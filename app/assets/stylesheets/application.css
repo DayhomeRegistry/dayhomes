@@ -10,7 +10,10 @@
  *
  *= require_self
  *= require jquery-star-rating
+  *= require calendar/calendar
  *= require jquery.modal
+ *= require calendar/datepicker
+ *= require calendar/fullcalendar
  *= require_tree .
 */
 

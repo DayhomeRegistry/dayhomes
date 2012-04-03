@@ -7,6 +7,7 @@ Dayhomes::Application.routes.draw do
   end
   resources :pages
   resources :reviews
+  resources :events
   
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
@@ -19,7 +20,8 @@ Dayhomes::Application.routes.draw do
   resources :password_resets
 
   match 'email_dayhome' => 'day_homes#email_dayhome', :via => :post
-  
+  match 'calendar' => 'day_homes#calendar'
+
   namespace :admin do
     root :to => 'day_homes#index'
     

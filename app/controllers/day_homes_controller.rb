@@ -23,5 +23,9 @@ class DayHomesController < ApplicationController
     redirect_to :back, :notice => "Dayhome has been contacted!"
   end
 
+  def calendar
+    @event = Event.new
+
+  end
 
 end

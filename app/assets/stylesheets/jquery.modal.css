@@ -1,6 +1,7 @@
 .modal {
   display: none;
-  width: 400px;
+  width:400px  !important;
+  z-index: 100  !important;
   overflow:visible !important;
   max-height:1000px !important;
   background: #fff;

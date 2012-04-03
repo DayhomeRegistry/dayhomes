@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120329184141) do
+ActiveRecord::Schema.define(:version => 20120401194842) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -73,6 +73,19 @@ ActiveRecord::Schema.define(:version => 20120329184141) do
     t.string   "email"
     t.string   "slug"
   end
+
+  create_table "events", :force => true do |t|
+    t.string   "title"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean  "all_day"
+    t.text     "description"
+    t.integer  "day_home_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "events", ["day_home_id"], :name => "index_events_on_day_home_id"
 
   create_table "reviews", :force => true do |t|
     t.text     "content"
