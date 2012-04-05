@@ -18,3 +18,7 @@
     = f.text_field :description, :prefix => pre
   #ajax_submit.actions
     = f.submit button_text
+
+-if pre == 'edit'
+  = button_to('Destroy', '/day_homes/1/events/stub', :confirm => 'Delete event?',
+                         :method => "delete", :remote => true, :id => 'delete_event')

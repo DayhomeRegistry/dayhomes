@@ -58,7 +58,8 @@
           // http://arshaw.com/fullcalendar/docs/mouse/eventClick/
           eventClick: function(event, jsEvent, view){
             // update the form action's id
-            $('form').attr('action', '/day_homes/#{@dayhome.id}/events/' + event.id);
+            // this updates both the form AND the delete button
+            $('#edit-event-form form').attr('action', '/day_homes/#{@dayhome.id}/events/' + event.id);
 
             $.read(
               '/day_homes/#{@dayhome.id}/events/' + event.id,

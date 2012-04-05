@@ -65,12 +65,11 @@ class EventsController < ApplicationController
 
 
   def destroy
-    @event = Event.find(params[:id])
+    @event = Event.where('id = ? AND day_home_id = ?', params[:id], params[:day_home_id]).first
     @event.destroy
 
     respond_to do |format|
-      format.html { redirect_to(events_url) }
-      format.xml  { head :ok }
+      format.js  { }
     end
   end
 end
