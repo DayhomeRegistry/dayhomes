@@ -24,8 +24,8 @@ class DayHomesController < ApplicationController
   end
 
   def calendar
+    @dayhome = DayHome.find(params[:id])
     @event = Event.new
-
   end
 
 end

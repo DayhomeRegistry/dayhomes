@@ -1,20 +1,20 @@
-= form_for(@event, :validate => true, :remote => true) do |f|
+= form_for(@event, :url => url, :method => type, :validate => true, :remote => true, :html =>{:id => id, :class => the_class}) do |f|
   #error_explanation
 
   .field
-    = f.label :title
-    = f.text_field :title
+    = f.label :title, :prefix => pre
+    = f.text_field :title, :prefix => pre
   .field
-    = f.label :starts_at
-    = f.text_field :starts_at, :class => 'datetimepicker'
+    = f.label :starts_at, :prefix => pre
+    = f.text_field :starts_at, :class => 'datetimepicker', :prefix => pre
   .field
     = f.label :ends_at
-    = f.text_field :ends_at, :class => 'datetimepicker'
+    = f.text_field :ends_at, :class => 'datetimepicker', :prefix => pre
   .field
-    = f.label :all_day
-    = f.check_box :all_day
+    = f.label :all_day, :prefix => pre
+    = f.check_box :all_day, :prefix => pre
   .field
-    = f.label :description
-    = f.text_field :description
+    = f.label :description, :prefix => pre
+    = f.text_field :description, :prefix => pre
   #ajax_submit.actions
-    = f.submit
+    = f.submit button_text

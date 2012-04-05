@@ -36,7 +36,7 @@
 
           // a future calendar might have many sources.
           eventSources: [{
-              url: '/events',
+              url: '/day_homes/#{@dayhome.id}/events',
               color: 'blue',
               textColor: 'white',
               ignoreTimezone: false
@@ -57,19 +57,22 @@
 
           // http://arshaw.com/fullcalendar/docs/mouse/eventClick/
           eventClick: function(event, jsEvent, view){
+            // update the form action's id
+            $('form').attr('action', '/day_homes/#{@dayhome.id}/events/' + event.id);
+
             $.read(
-              '/events/' + event.id,
+              '/day_homes/#{@dayhome.id}/events/' + event.id,
               function (event) {
                 // populate the edit form
-                $("#event_title").val(event.title);
-                $("#event_starts_at").val(event.start);
-                $("#event_ends_at").val(event.end);
-                $("#event_description").val(event.description);
-                $("#event_all_day").val(event.allDay);
+                $("#edit_event_title").val(event.title);
+                $("#edit_event_starts_at").val(event.start);
+                $("#edit_event_ends_at").val(event.end);
+                $("#edit_event_description").val(event.description);
+                $("#edit_event_all_day").val(event.allDay);
               }
             );
 
-            $('#event-form').modal();
+            $('#edit-event-form').modal();
           },
       });
 
@@ -83,7 +86,7 @@
 
   function updateEvent(the_event) {
       $.update(
-        "/events/" + the_event.id,
+        "/day_homes/#{@dayhome.id}/events/" + the_event.id,
         { event: { title: the_event.title,
                    starts_at: "" + the_event.start,
                    ends_at: "" + the_event.end,
@@ -94,8 +97,10 @@
   };
 
 #event-form.modal
-  %h3 New Event
-  = render 'events/form'
+  = render 'events/new'
+
+#edit-event-form.modal
+  = render 'events/edit'
 
 %a(title="New Event" href="#event-form" rel="modal:open") New Event
 #calendar

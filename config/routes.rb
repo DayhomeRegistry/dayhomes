@@ -4,6 +4,7 @@ Dayhomes::Application.routes.draw do
   resources :searches
   resources :day_homes do
     resources :reviews
+    resources :events
   end
   resources :pages
   resources :reviews
@@ -20,7 +21,7 @@ Dayhomes::Application.routes.draw do
   resources :password_resets
 
   match 'email_dayhome' => 'day_homes#email_dayhome', :via => :post
-  match 'calendar' => 'day_homes#calendar'
+  match 'day_homes/:id/calendar/' => 'day_homes#calendar', :via => :get
 
   namespace :admin do
     root :to => 'day_homes#index'
@@ -32,8 +33,6 @@ Dayhomes::Application.routes.draw do
     match 'login' => 'user_sessions#new', :as => :login
     match 'logout' => 'user_sessions#destroy', :as => :logout
   end
-
-  resources :day_homes, :only => [:index, :show]
   
   # NOTE: This needs to stay at the very bottom always; since it's last priority that this gets matched.
   match '/:slug' => "day_homes#show", :as => :day_home_slug
