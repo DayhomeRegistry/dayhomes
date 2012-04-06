@@ -6,7 +6,7 @@ DayHomeCertificationType.destroy_all
 Review.destroy_all
 DayHome.destroy_all
 User.destroy_all
-
+Event.destroy_all
 
 # Reset the primary key increment count; so it starts counting from 1 again.
 User.connection.execute('ALTER TABLE users AUTO_INCREMENT = 1')
@@ -152,4 +152,7 @@ no_availability_addresses.each_with_index  do |street_and_postal, index|
   end
 end
 
+#create a user related to a dayhome
+day_home = DayHome.first
+user6 = User.create!({:email => 'test6@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
 

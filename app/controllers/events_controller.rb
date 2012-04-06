@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   def index
     @events = Event.scoped
-    @events.where('day_home_id = ?', params[:day_home_id])
+    @events.find_by_day_home_id(params[:day_home_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -11,7 +11,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.where('id = ? AND day_home_id = ?', params[:id], params[:day_home_id]).first
+    @event = Event.calendar_event(params[:id], params[:day_home_id]).first
 
     respond_to do |format|
       format.js { render :json => @event.to_json }
@@ -52,7 +52,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.where('id = ? AND day_home_id = ?', params[:id], params[:day_home_id]).first
+    @event = Event.calendar_event(params[:id], params[:day_home_id]).first
 
     respond_to do |format|
       if @event.update_attributes(params[:event])
@@ -65,7 +65,7 @@ class EventsController < ApplicationController
 
 
   def destroy
-    @event = Event.where('id = ? AND day_home_id = ?', params[:id], params[:day_home_id]).first
+    @event = Event.calendar_event(params[:id], params[:day_home_id]).first
     @event.destroy
 
     respond_to do |format|

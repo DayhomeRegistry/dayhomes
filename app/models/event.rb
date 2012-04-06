@@ -1,10 +1,10 @@
 class Event < ActiveRecord::Base
 
-  scope :before, lambda {|end_time| {:conditions => ["ends_at < ?", Event.format_date(end_time)] }}
-  scope :after, lambda {|start_time| {:conditions => ["starts_at > ?", Event.format_date(start_time)] }}
+  scope :calendar_event, lambda { |id, day_home_id|
+    where('id = ? AND day_home_id = ?', id, day_home_id)
+ }
 
   validates_presence_of :title, :starts_at, :ends_at
-
 
   belongs_to :day_home
 
