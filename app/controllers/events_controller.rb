@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  before_filter :require_user_to_be_day_home_owner, :except => [:show, :index]
+
   def index
     @events = Event.scoped
     @events.find_by_day_home_id(params[:day_home_id])
@@ -70,6 +72,14 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       format.js  { }
+    end
+  end
+
+  private
+
+  def require_user_to_be_day_home_owner
+    unless current_user.day_home_owner?
+      redirect_to root_path
     end
   end
 end

@@ -1,5 +1,40 @@
 :javascript
   $(document).ready(function() {
+      $('#edit-event-form').on($.modal.BEFORE_CLOSE, function(event, modal) {
+        // error clean up (user gets an error and closes form, want to remove those errors)
+        $('#edit_event_title').removeData("changed");
+        $('#edit_event_starts_at').removeData("changed");
+        $('#edit_event_ends_at').removeData("changed");
+        $('#edit_event_title').removeData("valid");
+        $('#edit_event_starts_at').removeData("valid");
+        $('#edit_event_ends_at').removeData("valid");
+        $('#edit_event_title').trigger('element:validate:pass')
+        $('#edit_event_starts_at').trigger('element:validate:pass')
+        $('#edit_event_ends_at').trigger('element:validate:pass')
+        $(".errors").remove();
+
+        //reset form fields
+        $('#edit_event')[0].reset();
+      });
+
+      $('#new-event-form').on($.modal.BEFORE_CLOSE, function(event, modal) {
+        // error clean up (user gets an error and closes form, want to remove those errors)
+        $('#new_event_title').removeData("changed");
+        $('#new_event_starts_at').removeData("changed");
+        $('#new_event_ends_at').removeData("changed");
+        $('#new_event_title').removeData("valid");
+        $('#new_event_starts_at').removeData("valid");
+        $('#new_event_ends_at').removeData("valid");
+        $('#new_event_title').trigger('element:validate:pass')
+        $('#new_event_starts_at').trigger('element:validate:pass')
+        $('#new_event_ends_at').trigger('element:validate:pass')
+        $(".errors").remove();
+
+        //reset form fields
+        $('#new_event')[0].reset();
+      });
+
+
       $.modal.defaults = {
           overlay: "#000",        // Overlay color
           opacity: 0.75,          // Overlay opacity

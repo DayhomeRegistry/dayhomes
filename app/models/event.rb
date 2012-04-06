@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
  }
 
   validates_presence_of :title, :starts_at, :ends_at
+  validate :start_must_be_before_end_time
 
   belongs_to :day_home
 
@@ -26,5 +27,11 @@ class Event < ActiveRecord::Base
 
   def self.format_date(date_time)
     Time.at(date_time.to_i).to_formatted_s(:db)
+  end
+
+private
+  def start_must_be_before_end_time
+    errors.add(:starts_at, "date & time must be greater than or equal to the end date & time") if
+        self.ends_at < self.starts_at
   end
 end

@@ -7,17 +7,9 @@
     <% end %>
 
     // Display errors before the form
-    $('<div />').addClass('errors').html(errors).prependTo("#error_explanation");
+    $('<div />').addClass('errors').html(errors).prependTo("#edit_error_explanation");
 
 <% else %>
-
     $.modal.close();
-    // clear out the form
-    $('#edit_event').each (function(){
-        this.reset();
-    });
     $('#calendar').fullCalendar('refetchEvents');
-
-    // error clean up
-    $('#error_explanation').removeClass("errors").html('');
 <% end %>
