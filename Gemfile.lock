@@ -94,6 +94,11 @@ GEM
     formatador (0.2.1)
     gmaps4rails (1.4.8)
       json
+    guard (1.0.0)
+      ffi (>= 0.5.0)
+      thor (~> 0.14.6)
+    guard-rspec (0.6.0)
+      guard (>= 0.10.0)
     haml (3.1.4)
     highline (1.6.11)
     hike (1.2.1)
@@ -237,6 +242,7 @@ DEPENDENCIES
   fog
   foreman
   gmaps4rails
+  guard-rspec
   haml
   jquery-rails
   jquery-star-rating-rails
