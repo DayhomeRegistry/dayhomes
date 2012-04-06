@@ -1,8 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :availability_type do
-    availability "Full-Time"
-    kind 'Full Days'
+  factory :certification_type do
+    kind "Child Care Level 1"
   end
 end

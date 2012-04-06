@@ -13,16 +13,19 @@ class DayHome < ActiveRecord::Base
   scope :featured, where(:featured => true)
 
   # availability types
-  has_many :day_home_availability_types
+  has_many :day_home_availability_types, :dependent => :destroy
   has_many :availability_types, :through => :day_home_availability_types
-  has_many :photos, :class_name => 'DayHomePhoto', :dependent => :destroy
 
   # certification types
-  has_many :day_home_certification_types
+  has_many :day_home_certification_types, :dependent => :destroy
   has_many :certification_types, :through => :day_home_certification_types
 
+  has_many :photos, :class_name => 'DayHomePhoto', :dependent => :destroy
   has_many :reviews
   has_many :events
+
+  has_many :user_day_homes, :dependent => :destroy
+  has_many :users, :through => :user_day_homes
 
   validates :name, :street1, :city, :province, :postal_code, :slug, :presence => true
 
@@ -50,6 +53,20 @@ class DayHome < ActiveRecord::Base
   
   def to_param
     "#{id}-#{name.parameterize}"
+  end
+  
+  def assign_availability_type_ids=(availability_type_id_attrs=[])
+    self.day_home_availability_types = []
+    self.availability_types = AvailabilityType.find_all_by_id(availability_type_id_attrs)
+  end
+  
+  def assign_certification_type_ids=(certification_type_id_attrs=[])
+    self.day_home_certification_types = []
+    self.certification_types = CertificationType.find_all_by_id(certification_type_id_attrs)
+  end
+  
+  def self.all_for_select
+    all.collect {|day_home| [ day_home.name, day_home.id ] }
   end
   
 end
