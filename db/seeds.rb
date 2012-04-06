@@ -154,5 +154,5 @@ end
 
 #create a user related to a dayhome
 day_home = DayHome.first
-user6 = User.create!({:email => 'test6@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
-
+user_related_to_dayhome = User.create!({:email => 'WaffleNinja@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Waffle', :last_name => 'Ninja', :admin => false})
+user_related_to_dayhome.day_homes << day_home

@@ -17,7 +17,7 @@
       var y = date.getFullYear();
 
       $('#calendar').fullCalendar({
-          editable: true,
+          editable: #{@day_home_admin},
           header: {
               left: 'prev,next today',
               center: 'title',
@@ -59,21 +59,24 @@
           eventClick: function(event, jsEvent, view){
             // update the form action's id
             // this updates both the form AND the delete button
-            $('#edit-event-form form').attr('action', '/day_homes/#{@dayhome.id}/events/' + event.id);
+            if (#{@day_home_admin} == true)
+            {
+              $('#edit-event-form form').attr('action', '/day_homes/#{@dayhome.id}/events/' + event.id);
 
-            $.read(
-              '/day_homes/#{@dayhome.id}/events/' + event.id,
-              function (event) {
-                // populate the edit form
-                $("#edit_event_title").val(event.title);
-                $("#edit_event_starts_at").val(event.start);
-                $("#edit_event_ends_at").val(event.end);
-                $("#edit_event_description").val(event.description);
-                $("#edit_event_all_day").val(event.allDay);
-              }
-            );
+              $.read(
+                '/day_homes/#{@dayhome.id}/events/' + event.id,
+                function (event) {
+                  // populate the edit form
+                  $("#edit_event_title").val(event.title);
+                  $("#edit_event_starts_at").val(event.start);
+                  $("#edit_event_ends_at").val(event.end);
+                  $("#edit_event_description").val(event.description);
+                  $("#edit_event_all_day").val(event.allDay);
+                }
+              );
 
-            $('#edit-event-form').modal();
+              $('#edit-event-form').modal();
+            }
           },
       });
 
@@ -97,11 +100,14 @@
       );
   };
 
-#event-form.modal
+#new-event-form.modal
   = render 'events/new'
 
 #edit-event-form.modal
   = render 'events/edit'
 
-%a(title="New Event" href="#event-form" rel="modal:open") New Event
+#new-event-button
+  -if @day_home_admin
+    %a(title="New Event" href="#new-event-form" rel="modal:open" class="btn btn-success") New Event
+
 #calendar

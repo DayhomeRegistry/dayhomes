@@ -1,6 +1,6 @@
 class DayHomesController < ApplicationController
-  before_filter :require_user, :except => :show
-  before_filter :require_user_to_be_day_home_owner, :except => :show
+  before_filter :require_user, :except => [:show, :email_dayhome, :calendar]
+  before_filter :require_user_to_be_day_home_owner, :except => [:show, :email_dayhome, :calendar]
     
   def index
     @day_homes = current_user.day_homes
@@ -33,6 +33,24 @@ class DayHomesController < ApplicationController
   def calendar
     @dayhome = DayHome.find(params[:id])
     @event = Event.new
+
+    # check if a user is logged in
+    if current_user
+      # check if the user has a dayhome that's related with this id
+      @day_home_admin = false
+      current_user.day_homes.each do |day_home|
+        if day_home.id == @dayhome.id
+          # the user is related to the dayhome, admin found!
+          @day_home_admin = true
+          break
+        else
+          @day_home_admin = false
+        end
+      end
+    else
+      # no logged in user
+      @day_home_admin = false
+    end
   end
 
 

@@ -27,7 +27,12 @@
       %li
         %h4
           Contact Information / Location
-        %a(title="Contact Us" href="#contact-form" rel="modal:open") Contact Us
+        .contact_info
+          = mail_to @day_home.email, "Email Us", :encode => "javascript"
+          = ' / '
+          %a(title="Contact Form" href="#contact-form" rel="modal:open") Contact Form
+        .calendar.pull_right
+          = link_to('View Calendar', "/day_homes/#{@day_home.id}/calendar")
         #contact-form.modal
           %h3 Contacting
           %h5 #{@day_home.name}
