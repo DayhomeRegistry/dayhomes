@@ -6,7 +6,7 @@ class DayHomePhotoUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  storage :fog
+  storage(Rails.env.production? ? :fog : :file)
   
   process :resize_to_limit => [1024, 768]
   
