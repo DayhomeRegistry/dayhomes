@@ -157,8 +157,8 @@ describe Search do
       @params = { :address => 't6l5m6' }
 
       valid_search = Search.new(@params)
-      valid_search.center_latitude.should eql(53.47759199999999)
-      valid_search.center_longitude.should eql(-113.395897)
+      valid_search.center_latitude.should eql(33)
+      valid_search.center_longitude.should eql(33)
     end
 
     it "should be set to edmonton" do
