@@ -28,17 +28,17 @@ header{
 	background:#fdfdf9;
 }
 header .span4{
-	background:url('../images/logo.png') left bottom no-repeat;
+	background:url('logo.png') left bottom no-repeat;
 	height:195px;
 }
 header .span8{
-	background:url('../images/findDayhome.png') right bottom no-repeat;
+	background:url('findDayhome.png') right bottom no-repeat;
 	height:195px;
 }
 #searchBox{
 	width:324px;
 	height:93px;
-	background:url('../images/searchBox.png') no-repeat;
+	background:url('searchBox.png') no-repeat;
 	margin-top:81px;
 }
 #searchBox a{
@@ -55,7 +55,7 @@ header .span8{
 #submit{
 	height:45px;
 	width:102px;
-	background: url('../images/sprites.png') top left;
+	background: url('sprites.png') top left;
 	border:none;
 	margin:16px 0 -24px 0px;
 }
@@ -70,7 +70,7 @@ header .span8{
 nav{
 	width:100%;
 	height:59px;
-	background:#fdfdf9 	url('../images/navShadow.png') left top repeat-x;
+	background:#fdfdf9 	url('navShadow.png') left top repeat-x;
 	margin-top:-4px;
 	font-size:24px;
 	font-weight:bold;
@@ -101,7 +101,7 @@ nav li{
 }
 #mainContent{
 	width:100%;
-	background:#52be60 url('../images/bgGrad.png') center top repeat-x;
+	background:#52be60 url('bgGrad.png') center top repeat-x;
 	margin-top:-3px;
 	clear:both;
 	float:left;
@@ -109,7 +109,7 @@ nav li{
 }
 
 .content{
-	background:url('../images/contentPattern.png') left top repeat;
+	background:url('contentPattern.png') left top repeat;
 	border:1px solid #e6e6e3;
 	border-top:none;
 	margin-bottom:30px;
@@ -120,14 +120,14 @@ nav li{
 #contentShadow{
 	width:941px;
 	height:17px;
-	background:url('../images/contentShadow.png') bottom left no-repeat;
+	background:url('contentShadow.png') bottom left no-repeat;
 	position:relative;
 	float:left;
 	margin:-33px 0 0 21.5px;
 }
 .featured{
 	height:570px;
-	background:url('../images/featureBg.png') top left no-repeat;
+	background:url('featureBg.png') top left no-repeat;
 	margin:24px 40px 0 0px;
 }
 .featured h2{
@@ -140,7 +140,7 @@ nav li{
 .callToAction{
 	height:400px;
 	margin-top:160px;
-	background:url('../images/dayhomeOwner.png') top left no-repeat;
+	background:url('dayhomeOwner.png') top left no-repeat;
 	float:right;
 }
 .callToAction h3{
@@ -155,7 +155,7 @@ nav li{
 	float:right;
 	margin:-16px 36px 18px 0;
 	text-indent:-9999px;
-	background:url('../images/sprites.png') -107px top no-repeat;
+	background:url('sprites.png') -107px top no-repeat;
 }
 #signUp:hover{
 	background-position: -107px -56px;
@@ -174,14 +174,14 @@ nav li{
 .footerShadow{
 	width:941px;
 	height:17px;
-	background:url('../images/fatFooterShadow.png') top left no-repeat;
+	background:url('fatFooterShadow.png') top left no-repeat;
 	position:relative;
 	float:left;
 }
 footer{
 	height:60px;
 	width:100%;
-	background:url('../images/footerShadow.png') left bottom repeat-x;
+	background:url('footerShadow.png') left bottom repeat-x;
 	margin-top:-13px;
 	float:left;
 	clear:both;
