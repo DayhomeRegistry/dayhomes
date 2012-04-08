@@ -20,7 +20,6 @@ class Event < ActiveRecord::Base
         :end => self.ends_at.rfc822,
         :allDay => self.all_day,
         :recurring => false
-        #:url => Rails.application.routes.url_helpers.event_path(id)
     }
 
   end
@@ -31,8 +30,12 @@ class Event < ActiveRecord::Base
 
 private
   def start_must_be_before_end_time
-    if self.ends_at < self.starts_at
-      errors.add(:starts_at, "date & time must be greater than or equal to the end date & time")
+    if ends_at.blank? || starts_at.blank?
+        errors.add(:starts_at, " or ends_at cannot be null")
+    else
+      if ends_at < starts_at
+        errors.add(:starts_at, "date & time must be greater than or equal to the end date & time")
+      end
     end
   end
 end

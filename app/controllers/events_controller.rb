@@ -6,8 +6,6 @@ class EventsController < ApplicationController
     @events.find_by_day_home_id(params[:day_home_id])
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @events }
       format.js  { render :json => @events }
     end
   end
@@ -18,18 +16,6 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.js { render :json => @event.to_json }
     end
-  end
-
-  def new
-    @event = Event.new
-
-    respond_to do |format|
-      format.xml  { render :xml => @event }
-    end
-  end
-
-  def edit
-    @event = Event.find(params[:id])
   end
 
   def create
@@ -78,7 +64,7 @@ class EventsController < ApplicationController
   private
 
   def require_user_to_be_day_home_owner
-    unless current_user.day_home_owner?
+    unless current_user && current_user.day_home_owner?
       redirect_to root_path
     end
   end
