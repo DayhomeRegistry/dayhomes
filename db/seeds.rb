@@ -73,6 +73,17 @@ no_availability_addresses = [
     {:postal_code => 'T5S1S5', :street1 => '10070 178 Street NW'}
 ]
 
+def add_photos_to_dayhome(photos, day_home)
+  puts "Adding photos to #{day_home.name}..."
+  photos.map do |photo|
+    photo[:photo] = File.open(File.dirname(__FILE__) + "/seeds/dayhomes/" + photo[:photo]) unless photo[:photo].respond_to?(:read)
+    photo
+  end
+  photos.each do |photo|
+    day_home.photos.create!(photo)
+  end
+end
+
 # Create a dayhome with reviews
 day_home_with_reviews = DayHome.create!({:name => "DayHome With Reviews",
                        :gmaps =>  true,
@@ -82,8 +93,17 @@ day_home_with_reviews = DayHome.create!({:name => "DayHome With Reviews",
                        :street2 =>  '',
                        :slug => 'DayHomesWithReviews',
                        :email => 'withreviews@dayhomeregistry.com',
-                       :postal_code => 'T6L5M6'})
+                       :postal_code => 'T6L5M6',
+                       :featured => true })
 day_home_with_reviews.availability_types << full_time_full_days
+photos = [
+  { :caption => "Six and counting.", :photo => "counting.jpg"},
+  { :caption => "We provide arts and crafts.", :photo => "crayons.jpg"},
+  { :caption => "There are activities for all children.", :photo => "playdoe.jpg"},
+  { :caption => "Outdoor playground", :photo => "swing.jpg" }
+]
+add_photos_to_dayhome(photos, day_home_with_reviews)
+
 
 # add reviews to day_home_with_reviews
 reviews.each_with_index do |rev, index|
@@ -94,6 +114,12 @@ end
 
 
 # Create a couple of dayhomes with full time
+photos = [
+  { :caption => "Tasty snacks.", :photo => "cereal.jpg"},
+  { :caption => "We provide arts and crafts.", :photo => "crafts.jpg"},
+  { :caption => "Activities for all ages.", :photo => "finger_painting.jpg"},
+  { :caption => "Healthy food alternatives.", :photo => "fruit_salad.jpg" }
+]
 fulltime_addresses.each_with_index  do |street_and_postal, index|
   d = DayHome.create!({:name => "DayHome #{index}",
                    :gmaps =>  true,
@@ -101,7 +127,8 @@ fulltime_addresses.each_with_index  do |street_and_postal, index|
                    :province =>  'AB',
                    :street2 =>  '',
                    :slug => "DayHome#{index}single",
-                   :email => "dhf#{index}@dayhomeregistry.com"
+                   :email => "dhf#{index}@dayhomeregistry.com",
+                   :featured => true
                }.merge(street_and_postal))
 
   d.availability_types << full_time_full_days
@@ -113,9 +140,16 @@ fulltime_addresses.each_with_index  do |street_and_postal, index|
     d.certification_types << level_3
     d.certification_types << infant_cpr
   end
+  add_photos_to_dayhome(photos, d)
 end
 
 # Create a couple of dayhomes with part time
+photos = [
+  { :caption => "Fun all day long", :photo => "laughing_outside.jpg" },
+  { :caption => "Group activities", :photo => "playing_kids.jpg" },
+  { :caption => "Homemade lunches", :photo => "mac_and_cheese.jpg" },
+  { :caption => "Stimulating activities.", :photo => "lego.jpg" },
+]
 part_time_addresses.each_with_index  do |street_and_postal, index|
   d = DayHome.create!({:name => "DayHome #{index}",
                    :gmaps =>  true,
@@ -123,13 +157,15 @@ part_time_addresses.each_with_index  do |street_and_postal, index|
                    :province =>  'AB',
                    :street2 =>  '',
                    :slug => "DayHome#{index}partime",
-                   :email => "dhp#{index}@dayhomeregistry.com"
+                   :email => "dhp#{index}@dayhomeregistry.com",
+                   :featured => true
                   }.merge(street_and_postal))
   d.availability_types << part_time_morning
   d.certification_types << basic_cpr
   if index.odd?
     d.availability_types << part_time_afternoon
-  end
+  end 
+  add_photos_to_dayhome(photos, d)
 end
 
 # Create a couple of dayhomes with no availability

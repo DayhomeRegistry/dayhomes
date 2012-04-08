@@ -41,11 +41,11 @@ describe DayHome do
     end
 
     it "should contain a latitude" do
-      @ryan_house.lat.should == 53.429691
+      @ryan_house.lat.should == 33
     end
 
     it "should contain a longitude" do
-      @ryan_house.lng.should == -113.496868
+      @ryan_house.lng.should == 33
     end
 
     it "should have a google styled address" do

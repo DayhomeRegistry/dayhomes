@@ -33,6 +33,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'spork', '~> 1.0rc'
   gem 'capybara'
+  gem 'guard-rspec'
 end
 
 group :production do
