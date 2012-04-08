@@ -127,7 +127,7 @@ nav li{
 }
 .featured{
 	height:570px;
-	background:url('featureBg.png') top left no-repeat;
+	background:url('featureBG.png') top left no-repeat;
 	margin:24px 40px 0 0px;
 }
 .featured h2{
