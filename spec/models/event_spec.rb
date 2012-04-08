@@ -1,5 +1,14 @@
 require 'spec_helper'
 
 describe Event do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    @attr = FactoryGirl.attributes_for(:event)
+  end
+
+  it "should create a valid event given valid attributes" do
+    valid_event = Event.new(@attr)
+    valid_event.should be_valid
+  end
+
+
 end

@@ -156,3 +156,6 @@ end
 day_home = DayHome.first
 user_related_to_dayhome = User.create!({:email => 'WaffleNinja@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Waffle', :last_name => 'Ninja', :admin => false})
 user_related_to_dayhome.day_homes << day_home
+
+
+#Event.new({:title => 'test', :description => 'test', :starts_at => DateTime.now, :ends_at => DateTime.now + 10, :all_day => false })
