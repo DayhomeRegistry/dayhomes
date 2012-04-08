@@ -1,26 +1,186 @@
-%p.right
-  - if current_user
-    = current_user.full_name
-    = "-"
-    %strong= link_to "Your Account", user_path(current_user)
-    |
-    %strong= link_to 'Logout', logout_path
-  - else
-    %strong= link_to 'Login', login_path
-    |
-    %strong= link_to 'Sign Up', new_user_path
-
-%h2
-  Featured Day Homes
-  
-- if @featured_day_homes.blank?
-  %p
-    There are no featured Day Homes yet!
-- else
-  .row
-    - @featured_day_homes.each do |day_home|
-      .span3
-        %h3
-          = link_to day_home.name, day_home
-        - if day_home.featured_photo
-          = link_to image_tag(day_home.featured_photo.photo), day_home, :alt => day_home.name
+!!!
+%head
+  %title Dayhome Registry
+  %link{:href => "styles/main.css", :rel => "stylesheet", :type => "text/css"}/
+  %link{:href => "styles/bootstrap.css", :rel => "stylesheet", :type => "text/css"}/
+  %link{:href => "styles/bootstrap-responsive.css", :rel => "stylesheet", :type => "text/css"}/
+  %link{:href => "styles/bootstrap-responsive.min.css", :rel => "stylesheet", :type => "text/css"}/
+  %link{:href => "styles/bootstrap.min.css", :rel => "stylesheet", :type => "text/css"}/
+  %link{:href => "styles/slider.css", :rel => "stylesheet", :type => "text/css"}/
+  %script{:src => "js/compressed.js", :type => "text/javascript"}
+  %script{:src => "js/slider.js", :type => "text/javascript"}
+%body
+  %header
+    .wrapper
+      .row
+        .span4
+        / span4
+        .span8
+          #searchBox
+            %form#serach{:name => "search"}
+              %input#searchQuery{:type => "text"}
+                %input#submit{:border => "0", :type => "submit", :value => ""}
+            %a{:href => "#"} Advanced Search
+        / /span8
+      / row
+    / wrapper
+  %nav
+    .wrapper
+      %ul
+        %li
+          %a#active{:href => "#"} home
+        %li
+          %a{:href => "#"} about
+        %li
+          %a{:href => "#"} contact
+    / wrapper
+  #mainContent
+    .wrapper
+      .row
+        .content.span12
+          .featured.span7
+            %h2 Featured Dayhome
+            %h3 Wonderful Dayhome - 123 Fake St Edmonton, AB
+            / Jquery Slider
+            %ul#slideshow
+              %li
+                %h3 TinySlideshow v1
+                %span images/photos/orange-fish.jpg
+                %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
+                %a{:href => "#"}
+                  %img{:alt => "Orange Fish", :src => "images/thumbnails/orange-fish-thumb.jpg"}/
+              %li
+                %h3 Sea Turtle
+                %span images/photos/sea-turtle.jpg
+                %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
+                %img{:alt => "Sea Turtle", :src => "images/thumbnails/sea-turtle-thumb.jpg"}/
+              %li
+                %h3 Red Coral
+                %span images/photos/red-coral.jpg
+                %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
+                %a{:href => "#"}
+                  %img{:alt => "Red Coral", :src => "images/thumbnails/red-coral-thumb.jpg"}/
+              %li
+                %h3 Coral Reef
+                %span images/photos/coral-reef.jpg
+                %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
+                %a{:href => "#"}
+                  %img{:alt => "Coral Reef", :src => "images/thumbnails/coral-reef-thumb.jpg"}/
+              %li
+                %h3 Blue Fish
+                %span images/photos/blue-fish.jpg
+                %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
+                %img{:alt => "Blue Fish", :src => "images/thumbnails/blue-fish-thumb.jpg"}/
+              %li
+                %h3 TinySlideshow v.2
+                %span images/photos/yellow-fish.jpg
+                %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
+                %a{:href => "#"}
+                  %img{:alt => "Yellow Fish", :src => "images/thumbnails/yellow-fish-thumb.jpg"}/
+              %li
+                %h3 Squid
+                %span images/photos/squid.jpg
+                %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
+                %a{:href => "#"}
+                  %img{:alt => "Squid", :src => "images/thumbnails/squid-thumb.jpg"}/
+              %li
+                %h3 Small Fish
+                %span images/photos/small-fish.jpg
+                %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
+                %a{:href => "#"}
+                  %img{:alt => "Small Fish", :src => "images/thumbnails/small-fish-thumb.jpg"}/
+            #sliderWrapper
+              #fullsize
+                #imgprev.imgnav{:title => "Previous Image"}
+                #imglink
+                #imgnext.imgnav{:title => "Next Image"}
+                #image
+                #information
+                  %h3
+                  %p
+              #thumbnails
+                #slideleft{:title => "Slide Left"}
+                #slidearea
+                  #slider
+                #slideright{:title => "Slide Right"}
+            / sliderWrapper
+            / end of slider
+          / featured
+          .callToAction.span4
+            %h3 Dayhome Owner?
+            %p
+              Are you a dayhome owner? Would you like a fast, easy
+              way for parents to find your  company?
+              %br/
+              Register your dayhome today for easy access to a whole new client base.
+            %a#signUp{:href => "#"}
+              %p Sign Up!
+          / callToAction
+        / content
+        #contentShadow
+      / row
+    / wrapper
+  / mainContent
+  .wrapper
+    .footerShadow
+    #footerInfo
+      .row
+        .span12
+          .about.span3
+            %h2 About Us
+            %p Dayhome Registry is your answer for all of your dayhome searching needs!
+            %p Being a parent is busy enough. The mission of Dayhome Registry is to make being a parent a little easier.
+          / about
+          .contact.span3
+            %h2 Contact Us
+            %p Have any questions or concerns about Dayhome Registry? We'd love to hear from you.
+            %p
+              Email us at
+              %a{:href => "#"} contact@dayhomeregistry.com
+          / contact
+          .social.span3
+            %h2 We're Social
+            %p
+              %img{:src => "images/icons/facebook.png"}
+                %a{:href => "#"} Friend Us
+                on Facebook
+            %p
+              %img{:src => "images/icons/twitter-2.png"}
+                %a{:href => "#"} Follow Us
+                on Twitter
+            %p
+              %img{:src => "images/icons/google-plus.png"}
+                %a{:href => "#"} Plus Us
+                on Google+
+            %p
+              %img{:src => "images/icons/pinterest.png"}
+                %a{:href => "#"} Pin Us
+                on Pinterest
+          / social
+        / footerInfo
+      / span12
+    / row
+  / wrapper
+  %footer
+    %p
+      \©
+      %a{:href => "#"} Dayhome Registry 2012
+      | Read our
+      %a{:href => "#"} Privacy Policy
+  :javascript
+    $('slideshow').style.display='none';
+    $('sliderWrapper').style.display='block';
+    var slideshow=new TINY.slideshow("slideshow");
+    window.onload=function(){
+      slideshow.auto=true;
+      slideshow.speed=5;
+      slideshow.link="linkhover";
+      slideshow.info="information";
+      slideshow.thumbs="slider";
+      slideshow.left="slideleft";
+      slideshow.right="slideright";
+      slideshow.scrollSpeed=4;
+      slideshow.spacing=5;
+      slideshow.active="#fff";
+      slideshow.init("slideshow","image","imgprev","imgnext","imglink");
+    }
