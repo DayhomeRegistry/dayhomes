@@ -29,7 +29,7 @@
       - @day_homes.each do |day_home|
         %tr
           %td
-            = day_home.name
+            = link_to day_home.name, day_home_slug_path(day_home.slug)
           %td
             = day_home.address
           %td
