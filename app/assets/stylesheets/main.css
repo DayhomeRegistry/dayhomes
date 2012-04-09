@@ -101,11 +101,11 @@ nav li{
 }
 #mainContent{
 	width:100%;
-	background:#52be60 url('bgGrad.png') center top repeat-x;
+	background:url('bgGrad.png') center top;
 	margin-top:-3px;
 	clear:both;
 	float:left;
-
+	overflow:hidden;
 }
 
 .content{
