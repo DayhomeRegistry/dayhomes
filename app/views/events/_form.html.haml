@@ -1,0 +1,23 @@
+= form_for(@event, :url => url, :method => type, :validate => true, :remote => true, :html =>{:id => id, :class => the_class}) do |f|
+  .field
+    = f.label :title, :prefix => pre
+    = f.text_field :title, :prefix => pre
+  .field
+    = f.label :starts_at, :prefix => pre
+    = f.text_field :starts_at, :class => 'datetimepicker', :prefix => pre
+  .field
+    = f.label :ends_at
+    = f.text_field :ends_at, :class => 'datetimepicker', :prefix => pre
+  .field
+    = f.label :all_day, :prefix => pre
+    = f.check_box :all_day, :prefix => pre
+  .field
+    = f.label :description, :prefix => pre
+    = f.text_field :description, :prefix => pre
+  #ajax_submit
+    = f.submit button_text, :class => 'btn btn-success pull-left'
+
+-if pre == 'edit'
+  .delete.pull-left
+    = button_to('Destroy', '/day_homes/1/events/stub', :confirm => 'Delete event?',
+                         :method => "delete", :remote => true, :id => 'delete_event', :class => 'btn btn-danger')
