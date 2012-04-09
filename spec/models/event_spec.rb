@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Event do
   before do
     @attr = FactoryGirl.attributes_for(:event)
+    @day_home = FactoryGirl.create(:day_home)
+    @attr.merge!({:day_home_id => @day_home.id })
   end
 
   it "should create a valid event given valid attributes" do

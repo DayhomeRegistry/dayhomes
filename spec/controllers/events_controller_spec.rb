@@ -7,6 +7,8 @@ describe EventsController do
     @event = FactoryGirl.create(:event)
     @attr = FactoryGirl.attributes_for(:event)
     @day_home = FactoryGirl.create(:day_home)
+    @attr.merge!({:day_home_id => @day_home.id })
+
   end
 
   describe "public user access" do

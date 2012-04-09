@@ -31,10 +31,8 @@ class EventsController < ApplicationController
         @event.day_home = @day_home
         @event.save!
         format.js {}
-        format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
         format.js {}
-        format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
     end
   end

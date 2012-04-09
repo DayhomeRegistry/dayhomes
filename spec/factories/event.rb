@@ -5,5 +5,6 @@ FactoryGirl.define do
     starts_at DateTime.now
     ends_at DateTime.now + 10
     all_day false
+    day_home_id 1
   end
 end

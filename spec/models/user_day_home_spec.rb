@@ -6,7 +6,6 @@ describe UserDayHome do
   end
   
   it "should create a user dayhome join given valid attributes" do
-    puts @attr.inspect
     UserDayHome.create!(@attr)
   end
 end

@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
     where('id = ? AND day_home_id = ?', id, day_home_id)
  }
 
-  validates_presence_of :title, :starts_at, :ends_at
+  validates_presence_of :title, :starts_at, :ends_at, :day_home_id
   validate :start_must_be_before_end_time
 
   belongs_to :day_home
