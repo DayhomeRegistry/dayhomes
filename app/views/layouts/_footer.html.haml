@@ -18,7 +18,8 @@
         .social.span3
           %h2 We're Social
           %p
-            %img{:src => "images/icons/facebook.png"}
+          image_tag("icons/facebook.png")
+            # => <img alt="Facebook" src="assets/images/icons/facebook.png" />
               %a{:href => "#"} Friend Us
               on Facebook
           %p
