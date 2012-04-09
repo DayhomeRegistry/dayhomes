@@ -1,0 +1,16 @@
+<% if @event.errors.any? %>
+    // Create a list of errors
+    var errors = $('<ul />');
+
+    <% @event.errors.full_messages.each do |error| %>
+    errors.append('<li><%= escape_javascript(error) %></li>');
+    <% end %>
+
+    // Display errors before the form
+    $('<div />').addClass('errors').html(errors).prependTo("#new_error_explanation");
+
+<% else %>
+
+    $.modal.close();
+    $('#calendar').fullCalendar('refetchEvents');
+<% end %>

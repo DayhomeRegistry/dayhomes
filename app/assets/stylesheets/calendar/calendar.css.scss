@@ -1,0 +1,45 @@
+#new-event-form.modal{
+  width:250px  !important;
+  z-index: 100  !important;
+}
+
+#edit-event-form.modal{
+  width:250px  !important;
+  z-index: 100  !important;
+}
+
+.event-form-style {
+  h3 {
+    margin-bottom: 20px;
+  }
+
+  label {
+    margin-bottom:2px;
+  }
+  input {
+    margin-bottom: 2px;
+  }
+
+  .all_day_inline {
+    label {
+      display:inline;
+    }
+  }
+
+  .field {
+    margin-bottom: 6px;
+  }
+
+}
+
+#new-event-button {
+  padding-bottom: 4px;
+}
+
+#ajax_submit {
+  display:inline;
+}
+
+#edit_event {
+  margin:0 0 0;
+}

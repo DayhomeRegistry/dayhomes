@@ -8,6 +8,7 @@ FactoryGirl.define do
     province 'AB'
     street1 '793 blackburn place'
     street2 ''
+    email 'email@dayhomeregistry.com'
     postal_code 'T6W1C3'
   end
 end
