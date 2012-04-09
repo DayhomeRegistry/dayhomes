@@ -118,7 +118,9 @@
       $( ".datetimepicker" ).datetimepicker({
         ampm: true,
         stepMinute: 15,
-        dateFormat: 'dd/mm/yy'
+        dateFormat: 'dd/mm/yy',
+        addSliderAccess: true,
+        sliderAccessArgs: { touchonly: false }
       });
 
   });

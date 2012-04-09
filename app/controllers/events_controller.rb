@@ -26,10 +26,10 @@ class EventsController < ApplicationController
     @event.starts_at = DateTime.parse(params[:event][:starts_at])
     @event.ends_at = DateTime.parse(params[:event][:ends_at])
 
+    # set the event id
+    @event.day_home = @day_home
     respond_to do |format|
       if @event.save
-        @event.day_home = @day_home
-        @event.save!
         format.js {}
       else
         format.js {}
