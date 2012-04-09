@@ -46,3 +46,5 @@
             = link_to 'View Day Home', day_home
             |
             = link_to 'Edit', [:edit, day_home]
+            |
+            = link_to('View Calendar', "/day_homes/#{day_home.id}/calendar")

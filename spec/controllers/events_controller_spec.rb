@@ -7,8 +7,6 @@ describe EventsController do
     @event = FactoryGirl.create(:event)
     @attr = FactoryGirl.attributes_for(:event)
     @day_home = FactoryGirl.create(:day_home)
-    @attr.merge!({:day_home_id => @day_home.id })
-
   end
 
   describe "public user access" do
@@ -28,7 +26,7 @@ describe EventsController do
 
     describe "create" do
       it "should redirect due to no permissions if trying to create an event" do
-        post :create, :day_home_id => @day_home.id, :format => :js
+        post :create, :day_home_id => @day_home.id, :event => @attr, :format => :js
         assert_response 302
       end
     end
