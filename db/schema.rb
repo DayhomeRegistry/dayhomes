@@ -70,8 +70,8 @@ ActiveRecord::Schema.define(:version => 20120401194842) do
     t.string   "postal_code"
     t.boolean  "dietary_accommodations"
     t.boolean  "featured",               :default => false
-    t.string   "email"
     t.string   "slug"
+    t.string   "email"
   end
 
   create_table "events", :force => true do |t|
@@ -89,11 +89,11 @@ ActiveRecord::Schema.define(:version => 20120401194842) do
 
   create_table "reviews", :force => true do |t|
     t.text     "content"
-    t.integer  "rating",      :default => 0
+    t.integer  "rating"
     t.integer  "day_home_id"
     t.integer  "user_id"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "reviews", ["day_home_id"], :name => "index_reviews_on_day_home_id"
