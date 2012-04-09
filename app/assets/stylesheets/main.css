@@ -139,7 +139,7 @@ nav li{
  }
 .callToAction{
 	height:400px;
-	margin-top:160px;
+	margin:160px 18px 0 0;
 	background:url('dayhomeOwner.png') top left no-repeat;
 	float:right;
 }
