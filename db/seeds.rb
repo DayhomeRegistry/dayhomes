@@ -201,7 +201,9 @@ Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.
 Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 3.hours, :ends_at => DateTime.now + 5.hours, :all_day => false, :day_home_id => first_day_home.id })
 Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 6.hours, :ends_at => DateTime.now + 8.hours, :all_day => false, :day_home_id => first_day_home.id })
 Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 5, :ends_at => DateTime.now + 8, :all_day => false, :day_home_id => first_day_home.id })
-Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now +10, :ends_at => DateTime.now + 11, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 10, :ends_at => DateTime.now + 11, :all_day => false, :day_home_id => first_day_home.id })
 Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 10 + 3.hours, :ends_at => DateTime.now + 12, :all_day => false, :day_home_id => first_day_home.id })
 Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 10 + 7.hours, :ends_at => DateTime.now + 12, :all_day => false, :day_home_id => first_day_home.id })
 Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now, :ends_at => DateTime.now + 20, :all_day => false, :day_home_id => first_day_home.id })
+
+puts "Seed Complete"
