@@ -180,11 +180,9 @@ nav li{
 }
 footer{
 	height:60px;
-	width:100%;
+	width:100% !important;
 	background:url('footerShadow.png') left bottom repeat-x;
 	margin-top:-13px;
-	position:relative;
-	z-index:100;
 	float:left;
 	clear:both;
 	overflow:visible;
