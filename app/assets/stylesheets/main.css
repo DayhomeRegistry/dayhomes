@@ -185,7 +185,7 @@ footer{
 	margin-top:-13px;
 	float:left;
 	clear:both;
-	overflow:hidden;
+	overflow:visible;
 }
 footer p{
 	margin-top:24px;
