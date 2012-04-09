@@ -8,8 +8,6 @@ class DayHomePhotoUploader < CarrierWave::Uploader::Base
   # Choose what kind of storage to use for this uploader:
   storage(Rails.env.production? ? :fog : :file)
   
-  process :resize_to_limit => [1024, 768]
-  
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
@@ -29,10 +27,11 @@ class DayHomePhotoUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  version :thumb do
-    process :resize_to_fit => [125, 125]
-  end
+  process :resize_to_fit => [500, 300]
 
+  version :thumb do
+    process :resize_to_fill => [125, 75]
+  end
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
