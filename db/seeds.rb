@@ -6,7 +6,7 @@ DayHomeCertificationType.destroy_all
 Review.destroy_all
 DayHome.destroy_all
 User.destroy_all
-
+Event.destroy_all
 
 # Reset the primary key increment count; so it starts counting from 1 again.
 User.connection.execute('ALTER TABLE users AUTO_INCREMENT = 1')
@@ -92,6 +92,7 @@ day_home_with_reviews = DayHome.create!({:name => "DayHome With Reviews",
                        :street1 => '4138 36st NW',
                        :street2 =>  '',
                        :slug => 'DayHomesWithReviews',
+                       :email => 'withreviews@dayhomeregistry.com',
                        :postal_code => 'T6L5M6',
                        :featured => true })
 day_home_with_reviews.availability_types << full_time_full_days
@@ -126,6 +127,7 @@ fulltime_addresses.each_with_index  do |street_and_postal, index|
                    :province =>  'AB',
                    :street2 =>  '',
                    :slug => "DayHome#{index}single",
+                   :email => "dhf#{index}@dayhomeregistry.com",
                    :featured => true
                }.merge(street_and_postal))
 
@@ -155,6 +157,7 @@ part_time_addresses.each_with_index  do |street_and_postal, index|
                    :province =>  'AB',
                    :street2 =>  '',
                    :slug => "DayHome#{index}partime",
+                   :email => "dhp#{index}@dayhomeregistry.com",
                    :featured => true
                   }.merge(street_and_postal))
   d.availability_types << part_time_morning
@@ -172,7 +175,8 @@ no_availability_addresses.each_with_index  do |street_and_postal, index|
                        :city =>  'Edmonton',
                        :province =>  'AB',
                        :street2 =>  '',
-                       :slug => "DayHome#{index}noavail"
+                       :slug => "DayHome#{index}noavail",
+                       :email => "dhn#{index}@dayhomeregistry.com"
                       }.merge(street_and_postal))
   d.availability_types << part_time_before_school
   d.availability_types << full_time_after_school
@@ -184,4 +188,9 @@ no_availability_addresses.each_with_index  do |street_and_postal, index|
   end
 end
 
+#create a user related to a dayhome
+day_home = DayHome.first
+user_related_to_dayhome = User.create!({:email => 'dayhomeadmin@dayhomes.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'dayhome', :last_name => 'admin', :admin => false})
+user_related_to_dayhome.day_homes << day_home
 
+#Event.new({:title => 'test', :description => 'test', :starts_at => DateTime.now, :ends_at => DateTime.now + 10, :all_day => false })

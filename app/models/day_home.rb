@@ -22,6 +22,7 @@ class DayHome < ActiveRecord::Base
 
   has_many :photos, :class_name => 'DayHomePhoto', :dependent => :destroy
   has_many :reviews
+  has_many :events
 
   has_many :user_day_homes, :dependent => :destroy
   has_many :users, :through => :user_day_homes
@@ -29,7 +30,7 @@ class DayHome < ActiveRecord::Base
   validates :name, :street1, :city, :province, :postal_code, :slug, :presence => true
 
   validates_associated :photos
-  validates_uniqueness_of :slug
+  validates_uniqueness_of :slug, :email
   validates_format_of :slug, :with => /[a-z0-9]+/
   
   accepts_nested_attributes_for :photos, :reject_if => :all_blank, :allow_destroy => true

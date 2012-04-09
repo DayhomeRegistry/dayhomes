@@ -3,7 +3,12 @@ module UserMacros
   # ==========================
   # = Regular Front End User =
   # ==========================
-  
+
+  def login_day_home_admin_user
+    login_user
+    @user.stub!(:day_home_owner?).and_return(true)
+  end
+
   def login_admin_user
     login_user
     @user.stub!(:admin?).and_return(true)
