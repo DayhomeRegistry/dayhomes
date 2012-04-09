@@ -188,9 +188,20 @@ no_availability_addresses.each_with_index  do |street_and_postal, index|
   end
 end
 
-#create a user related to a dayhome
-day_home = DayHome.first
+# create a user related to a dayhome
+first_day_home = DayHome.first
 user_related_to_dayhome = User.create!({:email => 'dayhomeadmin@dayhomes.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'dayhome', :last_name => 'admin', :admin => false})
-user_related_to_dayhome.day_homes << day_home
+user_related_to_dayhome.day_homes << first_day_home
 
-#Event.new({:title => 'test', :description => 'test', :starts_at => DateTime.now, :ends_at => DateTime.now + 10, :all_day => false })
+# create events for the above dayhome
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now - 3, :ends_at => DateTime.now - 2, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now - 3, :ends_at => DateTime.now - 2 + 3.hours, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now, :ends_at => DateTime.now + 3, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now, :ends_at => DateTime.now + 1, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 3.hours, :ends_at => DateTime.now + 5.hours, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 6.hours, :ends_at => DateTime.now + 8.hours, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 5, :ends_at => DateTime.now + 8, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now +10, :ends_at => DateTime.now + 11, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 10 + 3.hours, :ends_at => DateTime.now + 12, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 10 + 7.hours, :ends_at => DateTime.now + 12, :all_day => false, :day_home_id => first_day_home.id })
+Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now, :ends_at => DateTime.now + 20, :all_day => false, :day_home_id => first_day_home.id })
