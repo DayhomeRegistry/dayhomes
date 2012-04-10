@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120401194842) do
+ActiveRecord::Schema.define(:version => 20120410004511) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -55,6 +55,25 @@ ActiveRecord::Schema.define(:version => 20120401194842) do
   end
 
   add_index "day_home_photos", ["day_home_id"], :name => "index_day_home_photos_on_day_home_id"
+
+  create_table "day_home_signup_requests", :force => true do |t|
+    t.string   "day_home_name"
+    t.string   "day_home_slug"
+    t.string   "day_home_city"
+    t.string   "day_home_province"
+    t.string   "day_home_street1"
+    t.string   "day_home_street2"
+    t.string   "day_home_postal_code"
+    t.string   "day_home_phone_number"
+    t.text     "day_home_blurb"
+    t.string   "contact_name"
+    t.string   "contact_phone_number"
+    t.string   "contact_email"
+    t.string   "preferred_time_to_contact"
+    t.text     "comments"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
 
   create_table "day_homes", :force => true do |t|
     t.string   "name"

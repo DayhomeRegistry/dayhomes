@@ -26,7 +26,7 @@ class DayHomesController < ApplicationController
 
     # send email
     @contact = DayHomeContact.new(params[:day_home_contact])
-    DayHomeContactMailer.contact_day_home(@contact).deliver
+    DayHomeMailer.contact_day_home(@contact).deliver
     redirect_to :back, :notice => "Dayhome has been contacted!"
   end
 
