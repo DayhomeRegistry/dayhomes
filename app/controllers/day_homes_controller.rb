@@ -26,9 +26,9 @@ class DayHomesController < ApplicationController
     @day_home_contact = DayHomeContact.new(params[:day_home_contact].merge(:day_home_id => @day_home.id))
     
     if @day_home_contact.save
-      redirect_to :back, :notice => "Dayhome has been contacted!"
+      redirect_to day_home_slug_path(@day_home.slug), :notice => "Dayhome has been contacted!"
     else
-      redirect_to :back, :notice => "Dayhome has been contacted!"
+      redirect_to day_home_slug_path(@day_home.slug), :error => "Something went wrong while sending your contact - please try again."
     end
   end
 
