@@ -6,6 +6,10 @@ Dayhomes::Application.routes.draw do
   resources :day_homes do
     resources :reviews
     resources :events
+    
+    member do
+      post :contact
+    end
   end
   resources :pages
   resources :reviews
@@ -20,7 +24,6 @@ Dayhomes::Application.routes.draw do
   match 'reset_password_instructions/:id/update' => 'password_resets#update', :as => :update_reset_password_instructions
   resources :password_resets
 
-  match 'email_dayhome' => 'day_homes#email_dayhome', :via => :post
   match 'day_homes/:id/calendar/' => 'day_homes#calendar', :via => :get
 
   namespace :admin do

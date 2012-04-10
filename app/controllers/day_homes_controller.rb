@@ -1,6 +1,6 @@
 class DayHomesController < ApplicationController
-  before_filter :require_user, :except => [:show, :email_dayhome, :calendar]
-  before_filter :require_user_to_be_day_home_owner, :except => [:show, :email_dayhome, :calendar]
+  before_filter :require_user, :except => [:show, :contact, :calendar]
+  before_filter :require_user_to_be_day_home_owner, :except => [:show, :contact, :calendar]
     
   def index
     @day_homes = current_user.day_homes
@@ -16,18 +16,20 @@ class DayHomesController < ApplicationController
       @reviews = @day_home.reviews.page(params[:page]).per(5)
 
       # simple email protection from spammers
-      @contact = DayHomeContact.new({:day_home_email => Base64::encode64(@day_home.email)})
+      @day_home_contact = DayHomeContact.new({:day_home_email => Base64::encode64(@day_home.email)})
     end
   end
 
-  def email_dayhome
-    # decode email
+  def contact
     params[:day_home_contact][:day_home_email] = Base64::decode64(params[:day_home_contact][:day_home_email])
-
-    # send email
-    @contact = DayHomeContact.new(params[:day_home_contact])
-    DayHomeMailer.contact_day_home(@contact).deliver
-    redirect_to :back, :notice => "Dayhome has been contacted!"
+    @day_home = DayHome.find(params[:id])
+    @day_home_contact = DayHomeContact.new(params[:day_home_contact].merge(:day_home_id => @day_home.id))
+    
+    if @day_home_contact.save
+      redirect_to :back, :notice => "Dayhome has been contacted!"
+    else
+      redirect_to :back, :notice => "Dayhome has been contacted!"
+    end
   end
 
   def calendar
