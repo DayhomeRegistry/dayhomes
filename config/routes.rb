@@ -5,6 +5,10 @@ Dayhomes::Application.routes.draw do
   resources :day_homes do
     resources :reviews
     resources :events
+
+    member do
+      get 'calendar'
+    end
   end
   resources :pages
   resources :reviews
@@ -20,7 +24,6 @@ Dayhomes::Application.routes.draw do
   resources :password_resets
 
   match 'email_dayhome' => 'day_homes#email_dayhome', :via => :post
-  match 'day_homes/:id/calendar/' => 'day_homes#calendar', :via => :get
 
   namespace :admin do
     root :to => 'day_homes#index'
