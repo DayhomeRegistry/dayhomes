@@ -15,6 +15,7 @@ gem 'mini_magick'
 gem 'fog'
 gem 'jquery-star-rating-rails'
 gem 'client_side_validations'
+gem 'forum_monster'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'

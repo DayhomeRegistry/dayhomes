@@ -14,6 +14,7 @@
  *= require jquery.modal
  *= require calendar/datepicker
  *= require calendar/fullcalendar
+ *= require forum-monster
  *= require_tree .
 */
 
