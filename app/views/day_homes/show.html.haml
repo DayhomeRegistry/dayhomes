@@ -32,7 +32,7 @@
           = ' / '
           %a(title="Contact Form" href="#contact-form" rel="modal:open") Contact Form
         .calendar.pull_right
-          = link_to('View Calendar', "/day_homes/#{@day_home.id}/calendar")
+          = link_to('View Calendar', calendar_day_home(@day_home))
         #contact-form.modal
           %h3 Contacting
           %h5 #{@day_home.name}
