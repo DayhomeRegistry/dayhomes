@@ -206,4 +206,58 @@ Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.
 Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now + 10 + 7.hours, :ends_at => DateTime.now + 12, :all_day => false, :day_home_id => first_day_home.id })
 Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.now, :ends_at => DateTime.now + 20, :all_day => false, :day_home_id => first_day_home.id })
 
+# forum seed data
+#create the categories
+cat_day = Category.create!({:title => 'Dayhomes', :state => 1, :position => 0})
+cat_nut = Category.create!({:title => 'Nutrition', :state => 1, :position => 0})
+cat_act = Category.create!({:title => 'Activities', :state => 1, :position => 0})
+
+#create the forums under each category
+main_forum = Forum.create!({:category_id => cat_day.id, :title => 'General Discussion', :state => 1, :position => 0, :description => 'Chat about your dayhome!'})
+nutrition_age_0 = Forum.create!({:category_id => cat_nut.id, :title => 'Age 0 - 1', :state => 1, :position => 0, :description => 'Discuss meals & snacks for ages 0 - 1'})
+Forum.create!({:category_id => cat_nut.id, :title => 'Age 1 - 2', :state => 1, :position => 0, :description => 'Discuss meals & snacks for ages 1 - 0'})
+Forum.create!({:category_id => cat_act.id, :title => 'Morning', :state => 1, :position => 0, :description => 'What activities do you do during the morning?'})
+Forum.create!({:category_id => cat_act.id, :title => 'Recess', :state => 1, :position => 0, :description => 'What activities do you do during recess?'})
+Forum.create!({:category_id => cat_act.id, :title => 'Afternoon', :state => 1, :position => 0, :description => 'What activities do you do during the afternoon?'})
+
+# create some forum topics
+t0 = Topic.new({:title => '(Sticky) Items that should be banned?', :sticky => true,  :locked => false, :body => 'Does anyone have a list of banned items for parents?'})
+t0.forum = main_forum
+t0.user = user_related_to_dayhome
+t0.save!
+
+t1 = Topic.new({:title => 'Where do you put your shoes?', :sticky => false,  :locked => false, :body => 'On a rack??'})
+t1.forum = main_forum
+t1.user = user_related_to_dayhome
+t1.save!
+
+t2 = Topic.new({:title => 'Allergic reaction scare!', :sticky => false,  :locked => false, :body => "Don't buy special brand bars! Have nuts!!!"})
+t2.forum = nutrition_age_0
+t2.user = user_related_to_dayhome
+t2.save!
+
+# create some responses to the above topics
+p1 = Post.new({:body => "Here's a list of banned items we have: knives, sharp pens, gameboys."})
+p1.forum = main_forum
+p1.user = user_related_to_dayhome
+p1.topic = t0
+p1.save!
+
+# create some responses to the above topics
+p1 = Post.new({:body => "We've had to ban lead covered toys and pens."})
+p1.forum = main_forum
+p1.user = user_related_to_dayhome
+p1.topic = t0
+p1.save!
+
+# create some responses to the above topics
+p1 = Post.new({:body => "We store them in a closet and have a child have an ID."})
+p1.forum = main_forum
+p1.user = user_related_to_dayhome
+p1.topic = t1
+p1.save!
+
+
+
+
 puts "Seed Complete"

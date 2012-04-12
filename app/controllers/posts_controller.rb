@@ -1,4 +1,6 @@
-class PostsController < ApplicationController    
+class PostsController < ApplicationController
+  before_filter :require_user_to_be_day_home_owner
+
   def new
     @topic = Topic.find(params[:topic_id])
     @post = Post.new
@@ -6,7 +8,7 @@ class PostsController < ApplicationController
     if params[:quote]
       quote_post = Post.find(params[:quote])
       if quote_post
-        @post.body = quote_post.body
+        @post.body = "[quote]#{quote_post.body}[/quote]"
       end
     end
   end
@@ -51,6 +53,15 @@ class PostsController < ApplicationController
         flash[:notice] = "Topic was successfully deleted."
         redirect_to forum_path(@post.forum)
       end
+    end
+  end
+
+
+  private
+
+  def require_user_to_be_day_home_owner
+    unless current_user && current_user.day_home_owner?
+      redirect_to root_path
     end
   end
 end

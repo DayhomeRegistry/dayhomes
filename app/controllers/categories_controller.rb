@@ -1,4 +1,7 @@
-class CategoriesController < ApplicationController  
+class CategoriesController < ApplicationController
+  before_filter :require_user_to_be_site_admin, :except => [:show, :index]
+  before_filter :require_user_to_be_day_home_owner
+
   def index
     @categories = Category.all
   end
@@ -37,6 +40,20 @@ class CategoriesController < ApplicationController
     if @category.destroy
       flash[:notice] = "Category was deleted."
       redirect_to forums_url
+    end
+  end
+
+  private
+
+  def require_user_to_be_site_admin
+    unless current_user && current_user.admin?
+      redirect_to root_path
+    end
+  end
+
+  def require_user_to_be_day_home_owner
+    unless current_user && current_user.day_home_owner?
+      redirect_to root_path
     end
   end
 end

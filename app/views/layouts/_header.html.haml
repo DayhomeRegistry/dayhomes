@@ -10,6 +10,9 @@
             %a{:href => "#about"} About
           %li
             %a{:href => "#contact"} Contact
+          - if current_user && current_user.day_home_owner?
+            %li
+              = link_to 'Forums', forums_path
       =form_for @search, :url => searches_path, :method => 'get', :html => {:class => 'navbar-search pull-right', :id => 'simple-search'} do |f|
         =f.text_field :address, :class => "search-query", :placeholder => 'Search near...', :id => 'test'
         =f.submit "Search"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411022341) do
+ActiveRecord::Schema.define(:version => 20120411030423) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"

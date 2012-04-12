@@ -1,19 +1,9 @@
 <div id="forum_header">
     <div id="logo">
-      <%= image_tag "rails.png" %>
+      <%= image_tag "logo.png" %>
       <h1>Day Homes Message board</h1>
       A message board for dayhomes and parents
       <div class="clear"></div>
-    </div>
-    <div id="menu_wrapper">
-      <ul>
-        <li><%= link_to "Forum Index", forums_path %></li>
-        <% if current_user %>
-            <li><%= link_to "Logout", logout_path, :method => :delete, :class => "pull-right" %></li>
-        <% else %>
-            <li><%= link_to "Login", login_path, :class => "pull-right" %></li>
-        <% end %>
-      </ul>
     </div>
 </div>
 <div class="controls">
