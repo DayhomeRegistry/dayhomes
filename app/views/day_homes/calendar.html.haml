@@ -137,6 +137,9 @@
       );
   };
 
+/ Needed for jquery REST
+= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect}"
+
 #new-event-form.modal
   = render 'events/new'
 
