@@ -1,26 +1,19 @@
-
-%body
-  %header
-    .wrapper
-      .row
-        .span4
-        / span4
-        .span8
-          #searchBox
-            %form#search{:name => "search"}
-              %input#searchQuery{:type => "text"}
-                %input#submit{:border => "0", :type => "submit", :value => ""}
-            %a{:href => "#"} Advanced Search
-        / /span8
-      / row
-    / wrapper
-  %nav
-    .wrapper
-      %ul
-        %li
-          %a#active{:href => "#"} home
-        %li
-          %a{:href => "#"} about
-        %li
-          %a{:href => "#"} contact
-    / wrapper
+%header
+  .wrapper
+    .row
+      .span4
+      .span8
+        #searchBox
+          %form#search{:name => "search"}
+            %input#searchQuery{:type => "text"}
+              %input#submit{:border => "0", :type => "submit", :value => ""}
+          %a{:href => "#"} Advanced Search
+%nav
+  .wrapper
+    %ul
+      %li
+        %a#active= link_to 'home', root_path
+      %li
+        %a{:href => "#"} about
+      %li
+        %a{:href => "#"} contact
