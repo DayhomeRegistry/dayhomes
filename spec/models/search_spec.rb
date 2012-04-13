@@ -20,7 +20,9 @@ describe Search do
                                   :province =>  'AB',
                                   :street2 =>  '',
                                   :postal_code => 'T5N1Y6',
-                                  :street1 => '131 St NW'})
+                                  :street1 => '131 St NW',
+                                  :slug => 'day_home_1'
+                                  })
 
     @dayhome_2 = DayHome.create!({:name => "DayHome 2",
                                   :gmaps =>  true,
@@ -29,7 +31,8 @@ describe Search do
                                   :street2 =>  '',
                                   :postal_code => 'T5S1R5',
                                   :street1 => '178 St NW',
-                                  :dietary_accommodations => true})
+                                  :dietary_accommodations => true,
+                                  :slug => 'day_home_2'})
   end
 
   it "should create a search model given valid attributes" do
@@ -154,8 +157,8 @@ describe Search do
       @params = { :address => 't6l5m6' }
 
       valid_search = Search.new(@params)
-      valid_search.center_latitude.should eql(53.47759199999999)
-      valid_search.center_longitude.should eql(-113.395897)
+      valid_search.center_latitude.should eql(33)
+      valid_search.center_longitude.should eql(33)
     end
 
     it "should be set to edmonton" do

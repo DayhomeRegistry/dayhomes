@@ -1,0 +1,50 @@
+:javascript
+  $(function(){
+    $(".photo_preview").colorbox({rel:'photo_preview'});
+  });
+  
+%h2
+  My Day Homes
+
+- if @day_homes.blank?
+  %p
+    No day homes have been assigned to you yet!
+- else
+  %table.table-striped.table{:cellpadding => '5'}
+    %thead
+      %tr
+        %th
+          Name
+        %th
+          Address
+        %th
+          Photos
+        %th
+          Featured?
+        %th
+          Owners
+        %th
+          Actions
+    %tbody
+      - @day_homes.each do |day_home|
+        %tr
+          %td
+            = link_to day_home.name, day_home
+          %td
+            = day_home.address
+          %td
+            - if day_home.photos.blank?
+              None
+            - else
+              - day_home.photos.each do |photo|
+                = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 25px; margin: 0 5px 5px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :title => photo.caption
+          %td
+            = yes_no(day_home.featured?)
+          %td
+            = day_home.users.map(&:full_name).join(', ')
+          %td
+            = link_to 'View Day Home', day_home
+            |
+            = link_to 'Edit', [:edit, day_home]
+            |
+            = link_to('View Calendar', "/day_homes/#{day_home.id}/calendar")

@@ -1,3 +1,9 @@
+:javascript
+  $(function(){
+    add_another_mangement();
+  });
+
+- @user.user_day_homes.build if @user.user_day_homes.blank? 
 = form_for [:admin, @user] do |f|
   = f.label :first_name
   = f.text_field :first_name
@@ -13,10 +19,20 @@
   
   = f.label :password_confirmation, 'Confirm Password'
   = f.password_field :password_confirmation
-  
+
   = f.label :admin, :class => :checkbox do
     = f.check_box :admin
     Has admin access?
+  
+  = f.label :assign_day_home_ids, "Assigned Day Homes"
+  
+  - f.object.user_day_homes.each do |user_day_home|
+    .add_multiples.clear{'data-group' => 'assign_day_home_ids'}
+      = select_tag 'user[assign_day_home_ids][]', options_for_select([['None', nil]] + DayHome.all_for_select, user_day_home.day_home_id)
+      = link_to 'Remove', '#', :class => 'remove_fieldset_link'
+      %br
+  = link_to 'Assign Another Day Home', '#', :class => 'add_multiples_link', 'data-group' => 'assign_day_home_ids', 'data-attribute-key' => 'assign_day_home_ids_attributes'
+  %br
   
   %br
   = f.submit 'Save', :class => 'btn'

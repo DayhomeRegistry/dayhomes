@@ -1,0 +1,153 @@
+:javascript
+  $(document).ready(function() {
+      $('#edit-event-form').on($.modal.BEFORE_CLOSE, function(event, modal) {
+        // error clean up (user gets an error and closes form, want to remove those errors)
+        $('#edit_event_title').removeData("changed");
+        $('#edit_event_starts_at').removeData("changed");
+        $('#edit_event_ends_at').removeData("changed");
+        $('#edit_event_title').removeData("valid");
+        $('#edit_event_starts_at').removeData("valid");
+        $('#edit_event_ends_at').removeData("valid");
+        $('#edit_event_title').trigger('element:validate:pass')
+        $('#edit_event_starts_at').trigger('element:validate:pass')
+        $('#edit_event_ends_at').trigger('element:validate:pass')
+        $(".errors").remove();
+
+        //reset form fields
+        $('#edit_event')[0].reset();
+      });
+
+      $('#new-event-form').on($.modal.BEFORE_CLOSE, function(event, modal) {
+        // error clean up (user gets an error and closes form, want to remove those errors)
+        $('#new_event_title').removeData("changed");
+        $('#new_event_starts_at').removeData("changed");
+        $('#new_event_ends_at').removeData("changed");
+        $('#new_event_title').removeData("valid");
+        $('#new_event_starts_at').removeData("valid");
+        $('#new_event_ends_at').removeData("valid");
+        $('#new_event_title').trigger('element:validate:pass')
+        $('#new_event_starts_at').trigger('element:validate:pass')
+        $('#new_event_ends_at').trigger('element:validate:pass')
+        $(".errors").remove();
+
+        //reset form fields
+        $('#new_event')[0].reset();
+      });
+
+
+      $.modal.defaults = {
+          overlay: "#000",        // Overlay color
+          opacity: 0.75,          // Overlay opacity
+          zIndex: 99,              // Overlay z-index.
+          escapeClose: true,      // Allows the user to close the modal by pressing `ESC`
+          clickClose: true,       // Allows the user to close the modal by clicking the overlay
+          closeText: 'Close',     // Text content for the close <a> tag.
+          showClose: true,         // Shows a (X) icon/link in the top-right corner
+          modalClass: "modal",    // CSS class added to the element being displayed in the modal.
+      };
+
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
+
+      $('#calendar').fullCalendar({
+          editable: #{@day_home_admin},
+          header: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'month,agendaWeek,agendaDay'
+          },
+          defaultView: 'month',
+          height: 500,
+          slotMinutes: 15,
+
+          loading: function(bool){
+              if (bool)
+                  $('#loading').show();
+              else
+                  $('#loading').hide();
+          },
+
+          // a future calendar might have many sources.
+          eventSources: [{
+              url: '/day_homes/#{@dayhome.id}/events',
+              color: 'blue',
+              textColor: 'white',
+              ignoreTimezone: false
+          }],
+
+          timeFormat: 'h:mm t{ - h:mm t} ',
+          dragOpacity: "0.5",
+
+          //http://arshaw.com/fullcalendar/docs/event_ui/eventDrop/
+          eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
+              updateEvent(event);
+          },
+
+          // http://arshaw.com/fullcalendar/docs/event_ui/eventResize/
+          eventResize: function(event, dayDelta, minuteDelta, revertFunc){
+              updateEvent(event);
+          },
+
+          // http://arshaw.com/fullcalendar/docs/mouse/eventClick/
+          eventClick: function(event, jsEvent, view){
+            // update the form action's id
+            // this updates both the form AND the delete button
+            if (#{@day_home_admin} == true)
+            {
+              $('#edit-event-form form').attr('action', '/day_homes/#{@dayhome.id}/events/' + event.id);
+
+              $.read(
+                '/day_homes/#{@dayhome.id}/events/' + event.id,
+                function (event) {
+                  // populate the edit form
+                  $("#edit_event_title").val(event.title);
+                  $("#edit_event_starts_at").val(event.start);
+                  $("#edit_event_ends_at").val(event.end);
+                  $("#edit_event_description").val(event.description);
+                  $("#edit_event_all_day").val(event.allDay);
+                }
+              );
+
+              $('#edit-event-form').modal();
+            }
+          },
+      });
+
+      $( ".datetimepicker" ).datetimepicker({
+        ampm: true,
+        stepMinute: 15,
+        dateFormat: 'dd/mm/yy',
+        addSliderAccess: true,
+        sliderAccessArgs: { touchonly: false }
+      });
+
+  });
+
+  function updateEvent(the_event) {
+      $.update(
+        "/day_homes/#{@dayhome.id}/events/" + the_event.id,
+        { event: { title: the_event.title,
+                   starts_at: "" + the_event.start,
+                   ends_at: "" + the_event.end,
+                   description: the_event.description
+                 }
+        }
+      );
+  };
+
+/ Needed for jquery REST
+= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect}"
+
+#new-event-form.modal
+  = render 'events/new'
+
+#edit-event-form.modal
+  = render 'events/edit'
+
+#new-event-button
+  -if @day_home_admin
+    %a(title="New Event" href="#new-event-form" rel="modal:open" class="btn btn-success") New Event
+
+#calendar

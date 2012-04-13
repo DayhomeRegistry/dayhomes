@@ -12,7 +12,7 @@
         %h5
           ='Full-time Availability'
         - @advanced_search.availability_types.each do |avail_type|
-          %div.bump_left
+          %label.checkbox
             - if avail_type.availability == 'Full-time'
               = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
               = avail_type.kind
@@ -20,7 +20,7 @@
         %h5
           ='Part-time Availability'
         - @advanced_search.availability_types.each do |avail_type|
-          %div.bump_left
+          %label.checkbox
             - if avail_type.availability == 'Part-time'
               = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
               = avail_type.kind
@@ -29,13 +29,13 @@
         %h5
           = 'Certification'
         - @advanced_search.certification_types.each do |cert_type|
-          %div.bump_left
+          %label.checkbox
             = check_box_tag "search[certification_types][kind][]", cert_type.id, checked = cert_type.checked, :class => 'checkbox'
             = cert_type.kind
       .search_section
         %h5
           = 'Dietary Accomodations'
-        %div.bump_left
+        %label.checkbox
           = f.check_box :dietary_accommodations, :class => 'checkbox'
           = 'Accommodates for Food Allergies'
       .search_section

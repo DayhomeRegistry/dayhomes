@@ -13,10 +13,12 @@ gem 'awesome_print'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
+gem 'jquery-star-rating-rails'
+gem 'client_side_validations'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
-  gem 'bootstrap-sass', '~> 2.0.1'
+  gem 'bootstrap-sass', '~> 2.0.2'
 
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
@@ -31,6 +33,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'spork', '~> 1.0rc'
   gem 'capybara'
+  gem 'guard-rspec'
 end
 
 group :production do

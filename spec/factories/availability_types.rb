@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :availability_type do
-    kind "Full-Time"
+    availability "Full-Time"
+    kind 'Full Days'
   end
 end

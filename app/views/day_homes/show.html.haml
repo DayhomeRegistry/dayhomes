@@ -1,8 +1,23 @@
 :javascript
+  $(document).ready(function() {
+    $('[rel=tooltip]').tooltip({placement:'right'});
+
+    $.modal.defaults = {
+        overlay: "#000",        // Overlay color
+        opacity: 0.75,          // Overlay opacity
+        zIndex: 1,              // Overlay z-index.
+        escapeClose: true,      // Allows the user to close the modal by pressing `ESC`
+        clickClose: true,       // Allows the user to close the modal by clicking the overlay
+        closeText: 'Close',     // Text content for the close <a> tag.
+        showClose: true,         // Shows a (X) icon/link in the top-right corner
+        modalClass: "modal",    // CSS class added to the element being displayed in the modal.
+    };
+  });
+
   $(function(){
     $(".photo_preview").colorbox({rel:'photo_preview'});
   });
-  
+
 %h2
   = @day_home.name
 
@@ -11,7 +26,32 @@
     %ul.unstyled
       %li
         %h4
-          Location
+          Contact Information / Location
+        .contact_info
+          = mail_to @day_home.email, "Email Us", :encode => "javascript"
+          = ' / '
+          %a(title="Contact Form" href="#contact-form" rel="modal:open") Contact Form
+        .calendar.pull_right
+          = link_to('View Calendar', calendar_day_home_path(@day_home))
+        #contact-form.modal
+          %h3 Contacting
+          %h5 #{@day_home.name}
+          = form_for @contact, :url => email_dayhome_path, :validate => true do |cf|
+            = cf.label "Your name:"
+            = cf.text_field :name, :class=>"required"
+
+            = cf.label "Regarding:"
+            = cf.text_field :subject
+
+            .remember
+              = cf.label "Message:"
+              %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
+            = cf.text_area :message, :cols => 90, :rows => 10
+
+            = cf.hidden_field :day_home_email, :value => @contact.day_home_email
+            .submit
+              = cf.submit "Contact", :class => 'btn btn-primary span3'
+
         %p
           = @day_home.address
           = gmaps(:map_options => { :center_latitude => @day_home.lat,
@@ -30,3 +70,16 @@
     - else
       - @day_home.photos.each do |photo|
         = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 250px; margin: 0 10px 10px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :title => photo.caption
+
+.row
+  .span12
+    .reviews
+      %h4
+        Reviews:
+      =render 'reviews/show', :reviews => @reviews
+      =paginate @reviews
+    -if current_user
+      .create_review
+        %h4
+          Create Review:
+        =render 'reviews/form'

@@ -1,64 +1,50 @@
 .row
   .content.span12
+    %p.right{:style => 'margin: 25px 25px 0 0;'}
+      - if current_user
+        = current_user.full_name
+        = "-"
+        %strong= link_to "Your Account", user_path(current_user)
+        |
+        - if current_user.admin?
+          %strong= link_to "Admin", admin_root_path
+          |
+        - if current_user.day_home_owner?
+          %strong= link_to "My Day Homes", day_homes_path
+          |
+        %strong= link_to 'Logout', logout_path
+      - else
+        %strong= link_to 'Login', login_path
+        |
+        %strong= link_to 'Sign Up', new_user_path
+    
     .featured.span7
       #featureTop
       #featureDetails
         %h2 Featured Dayhome
         %h3
-          %a{:href => "#"} Wonderful Dayhome
-          \- 123 Fake St Edmonton, AB
-        %h3 780-555-5555
-        %p
-          Wonderful Dayhome is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.
-          %a{:href => "#"} Read more...
-        / Jquery Slider
+          = link_to @featured_day_home.name, day_home_slug_path(@featured_day_home.slug)
+          = "- #{@featured_day_home.address}"
+        
+        - if @featured_day_home.phone_number.present?
+          %h3= @featured_day_home.phone_number
+        
+        - if @featured_day_home.blurb 
+          %p
+            = @featured_day_home.blurb
+            
+          %p{:style => 'font-size: 12px'}
+            = link_to 'View DayHome', day_home_slug_path(@featured_day_home.slug)
         %ul#slideshow
-          %li
-            %h3 TinySlideshow v1
-            %span assets/photos/orange-fish.jpg
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
-            %a{:href => "#"}
-              %img{:alt => "Orange Fish", :src => "assets/thumbnails/orange-fish-thumb.jpg"}/
-          %li
-            %h3 Sea Turtle
-            %span assets/photos/sea-turtle.jpg
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
-            %img{:alt => "Sea Turtle", :src => "assets/thumbnails/sea-turtle-thumb.jpg"}/
-          %li
-            %h3 Red Coral
-            %span assets/photos/red-coral.jpg
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
-            %a{:href => "#"}
-              %img{:alt => "Red Coral", :src => "assets/thumbnails/red-coral-thumb.jpg"}/
-          %li
-            %h3 Coral Reef
-            %span assets/photos/coral-reef.jpg
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
-            %a{:href => "#"}
-              %img{:alt => "Coral Reef", :src => "assets/thumbnails/coral-reef-thumb.jpg"}/
-          %li
-            %h3 Blue Fish
-            %span assets/photos/blue-fish.jpg
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
-            %img{:alt => "Blue Fish", :src => "assets/thumbnails/blue-fish-thumb.jpg"}/
-          %li
-            %h3 TinySlideshow v.2
-            %span assets/photos/yellow-fish.jpg
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
-            %a{:href => "#"}
-              %img{:alt => "Yellow Fish", :src => "assets/thumbnails/yellow-fish-thumb.jpg"}/
-          %li
-            %h3 Squid
-            %span assets/photos/squid.jpg
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
-            %a{:href => "#"}
-              %img{:alt => "Squid", :src => "assets/thumbnails/squid-thumb.jpg"}/
-          %li
-            %h3 Small Fish
-            %span assets/photos/small-fish.jpg
-            %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut urna. Mauris nulla. Donec nec mauris. Proin nulla dolor, bibendum et, dapibus in, euismod ut, felis.
-            %a{:href => "#"}
-              %img{:alt => "Small Fish", :src => "assets/thumbnails/small-fish-thumb.jpg"}/
+          - @featured_day_home.photos.each do |photo|
+            %li
+              %h3
+                = @featured_day_home.name
+              %span= photo.photo_url
+              %p
+                = photo.caption
+              = link_to image_tag(photo.photo_url(:thumb)), day_home_slug_path(@featured_day_home.slug), :alt => photo.caption
+
         #sliderWrapper
           #fullsize
             #imgprev.imgnav{:title => "Previous Image"}
@@ -73,11 +59,9 @@
             #slidearea
               #slider
             #slideright{:title => "Slide Right"}
-        / sliderWrapper
-        / end of slider
-      / featuredDetails
+
       #featureBtm
-    / featured
+
     .callToAction.span4
       %h3 Dayhome Owner?
       %p
@@ -87,8 +71,6 @@
         Register your dayhome today for easy access to a whole new client base.
       %a#signUp{:href => "#"}
         %p Sign Up!
-    / callToAction
-  / content
   #contentShadow
 
 :javascript

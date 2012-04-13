@@ -2,12 +2,27 @@
   $(function(){
     add_another_mangement();
     $(".photo_preview").colorbox({rel:'photo_preview'});
+    
+    $('#day_home_name').keyup(function(e) {
+      var parsed_subdomain = $(this).attr('value').replace(/[^a-z0-9]/gi,'').toLowerCase();
+      $('#day_home_slug').empty().attr('value', parsed_subdomain);
+    });
+    
   });
   
 
 = form_for [:admin, @day_home] do |f|
   = f.label :name
   = f.text_field :name
+  
+  = f.label :slug, 'http://dayhomeregistry.com/<strong>DAYHOME-URL</strong>'.html_safe
+  = f.text_field :slug
+  
+  = f.label :phone_number
+  = f.text_field :phone_number
+  
+  = f.label :blurb
+  = f.text_area :blurb
   
   = f.label :featured, :class => 'checkbox' do
     = f.check_box :featured
@@ -41,9 +56,35 @@
       = p.file_field :photo
       = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link'
   .clear
-  %br
   %strong= link_to 'Add Another Photo', '#', :class => 'add_multiples_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
   %br
+  %br
+  = f.label :availability_types, 'Full-time Availability', :style => 'font-weight: bold'
+  
+  - AvailabilityType.full_time.each do |availability|
+    = f.label availability.kind, :class => :checkbox do 
+      = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
+      = availability.kind
+  
+  = f.label :availability_types, 'Part-time Availability', :style => 'font-weight: bold'
+  - AvailabilityType.part_time.each do |availability|
+    = f.label availability.kind, :class => :checkbox do 
+      = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
+      = availability.kind
+  
+  = f.label :certification_types, 'Certification', :style => 'font-weight: bold'
+  - CertificationType.all.each do |certification|
+    = f.label certification.kind, :class => :checkbox do 
+      = check_box_tag 'day_home[assign_certification_type_ids][]', certification.id, @day_home.certification_type_ids.include?(certification.id)
+      = certification.kind
+  
+  
+  = f.label :dietary_accommodations, 'Dietary Accommodations', :style => 'font-weight: bold'
+  = f.label :dietary_accommodations, 'Dietary Accommodations', :class => :checkbox do
+    = f.check_box :dietary_accommodations
+    Accommodates for Food Allergies
+  
+  
   %br
   = f.submit 'Save', :class => 'btn'
   |

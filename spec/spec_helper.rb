@@ -51,6 +51,7 @@ end
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'rspec/mocks/standalone'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'selenium-webdriver'
@@ -80,4 +81,10 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+
+  # Stub out geocoding, we don't want Google banning us
+  config.before(:each) do
+    Gmaps4rails.stub(:geocode).
+      and_return([{:lat => 33, :lng => 33, :matched_address => ""}])
+  end
 end
