@@ -36,11 +36,17 @@
         #contact-form.modal
           %h3 Contacting
           %h5 #{@day_home.name}
-          = form_for @contact, :url => email_dayhome_path, :validate => true do |cf|
-            = cf.label "Your name:"
-            = cf.text_field :name, :class=>"required"
+          = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
+            = cf.label :name, "Your name:"
+            = cf.text_field :name, :class => "required"
 
-            = cf.label "Regarding:"
+            = cf.label :name, "Your email:"
+            = cf.text_field :email, :class => "required"
+            
+            = cf.label :name, "Your phone (optional):"
+            = cf.text_field :phone
+            
+            = cf.label :subject, "Regarding:"
             = cf.text_field :subject
 
             .remember
@@ -48,7 +54,7 @@
               %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
             = cf.text_area :message, :cols => 90, :rows => 10
 
-            = cf.hidden_field :day_home_email, :value => @contact.day_home_email
+            = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
             .submit
               = cf.submit "Contact", :class => 'btn btn-primary span3'
 

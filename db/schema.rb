@@ -12,6 +12,10 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20120413153348) do
+<<<<<<< Updated upstream
+ActiveRecord::Schema.define(:version => 20120410160633) do
+=======
+>>>>>>> Stashed changes
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
