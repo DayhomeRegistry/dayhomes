@@ -118,7 +118,9 @@
       $( ".datetimepicker" ).datetimepicker({
         ampm: true,
         stepMinute: 15,
-        dateFormat: 'dd/mm/yy'
+        dateFormat: 'dd/mm/yy',
+        addSliderAccess: true,
+        sliderAccessArgs: { touchonly: false }
       });
 
   });
@@ -134,6 +136,9 @@
         }
       );
   };
+
+/ Needed for jquery REST
+= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect}"
 
 #new-event-form.modal
   = render 'events/new'
