@@ -18,7 +18,10 @@
 
 %h2
   Featured Day Homes
-  
+
+%p
+  = link_to 'Add Your DayHome »', [:new, :day_home_signup_request], :class => 'btn js-btn'
+
 - if @featured_day_homes.blank?
   %p
     There are no featured Day Homes yet!
@@ -30,3 +33,4 @@
           = link_to day_home.name, day_home
         - if day_home.featured_photo
           = link_to image_tag(day_home.featured_photo.photo), day_home_slug_path(day_home.slug), :alt => day_home.name
+
