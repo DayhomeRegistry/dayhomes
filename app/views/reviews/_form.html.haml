@@ -1,10 +1,9 @@
 = form_for ([@day_home, @review]) do |f|
-  .title
-    Rating:
-  .starz
-    - (1..5).each do |i|
-      = radio_button_tag 'star', i.to_s, false, :class => "star"
-  .content
-    = f.text_area :content, { :size => "50x9"}
-  .submit
-    = submit_tag "Submit Review", :class => 'btn'
+  .your_rating
+    %strong Your Rating
+  - (1..5).each do |i|
+    = radio_button_tag 'star', i.to_s, false, :class => "star"
+  %br
+  = f.text_area :content, :size => "150x9", :style => 'width: 825px;'
+  %br
+  = submit_tag "Submit Review", :class => 'btn'
