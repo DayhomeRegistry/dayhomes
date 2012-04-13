@@ -101,8 +101,9 @@ nav li{
 }
 #mainContent{
 	width:100%;
-	background:url('bgGrad.png') center top repeat-x;
+	background:#52be60 url('bgGrad.png') center top repeat-x;
 	margin-top:-3px;
+	padding-bottom:12px;
 	clear:both;
 	float:left;
 	overflow:hidden;
@@ -125,16 +126,27 @@ nav li{
 	float:left;
 	margin:-33px 0 0 21.5px;
 }
-.featured{
-	height:570px;
-	background:url('featureBG.png') top left no-repeat;
-	margin:24px 40px 0 18px;
+#featureTop{
+	height:8px;
+	margin-top:-8px;
+	background:url('featureTop.png') top left no-repeat;
 }
-.featured h2{
-	margin:12px 21px;
+#featureBtm{
+	height:8px;
+	margin-top:112px;
+	margin-bottom:-20px;
+	background:url('featureBottom.png') top left no-repeat;
+}
+.featured{
+	margin:24px 24px 0 18px;
+	padding-bottom:12px;
+	background:url('featureBG.png') top left repeat-y;
+}
+.featured h2, .featured p{
+	margin:12px 21px 4px 21px;
 }
  .featured h3{
- 	margin:0 21px -32px 21px;
+ 	margin:8px 21px 0px 21px;
  	font-weight:normal;
  }
 .callToAction{
@@ -185,18 +197,18 @@ footer{
 	margin-top:-13px;
 	float:left;
 	clear:both;
-	overflow:visible;
+	overflow:hidden;
 }
 footer p{
 	margin-top:24px;
 	line-height:60px;
 	text-align:center;
 }
-#footerInfo a{
+#footerInfo a, .featured a{
 	color:#c94248;
 	text-decoration:underline;
 }
-#footerInfo a:hover{
+#footerInfo a:hover, .featured a:hover{
 	color:#79489f;
 }
 .social p{
