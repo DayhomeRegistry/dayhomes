@@ -13,12 +13,17 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require fullcalendar
+//= require_tree ./gmaps4rails
+//= require jquery.ui
+//= require jquery.ui.timepicker
 //= require jquery.add_more
 //= require jquery.colorbox
-//= require jquery-star-rating
-//= require jquery.modal.min
+//= require jquery.slider
+//= require jquery.modal
+//= require jquery.rest
 //= require rails.validations
-//= require_tree .
+//= require jquery-star-rating
 
 $.ajaxSetup({
     beforeSend: function(xhr) {

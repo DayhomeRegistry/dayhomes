@@ -24,6 +24,11 @@
 .row
   .span5
     %ul.unstyled
+      - if @day_home.blurb.present?
+        %li
+          %h4
+            About
+          = @day_home.blurb
       %li
         %h4
           Contact Information / Location
@@ -32,7 +37,7 @@
           = ' / '
           %a(title="Contact Form" href="#contact-form" rel="modal:open") Contact Form
         .calendar.pull_right
-          = link_to('View Calendar', calendar_day_home(@day_home))
+          = link_to('View Calendar', calendar_day_home_path(@day_home))
         #contact-form.modal
           %h3 Contacting
           %h5 #{@day_home.name}
@@ -60,6 +65,10 @@
 
         %p
           = @day_home.address
+          - if @day_home.phone_number?
+            %br
+            Phone Number:
+            = @day_home.phone_number
           = gmaps(:map_options => { :center_latitude => @day_home.lat,
                                    :center_longitude => @day_home.lng,
                                    :zoom => 16},
@@ -78,14 +87,25 @@
         = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 250px; margin: 0 10px 10px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :title => photo.caption
 
 .row
-  .span12
-    .reviews
-      %h4
-        Reviews:
-      =render 'reviews/show', :reviews => @reviews
-      =paginate @reviews
-    -if current_user
-      .create_review
-        %h4
-          Create Review:
-        =render 'reviews/form'
+  .span11
+    .list_reviews
+      %h3
+        Reviews
+      - if @reviews.blank?
+        %p{:style => 'font-size: 12px'}
+          No one has left a review for this day home yet.
+      - else
+        = render 'reviews/show', :reviews => @reviews
+        = paginate @reviews
+    .create_review
+      %h3
+        Create Review
+      - if current_user
+        = render 'reviews/form'
+      - else
+        %p
+          Please
+          = link_to 'Login', login_path
+          or 
+          = link_to 'Sign Up', new_user_path
+          to leave a review.

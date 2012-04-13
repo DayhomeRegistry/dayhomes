@@ -1,0 +1,23 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: dayhomes_dev
+  pool: 5
+  username: root
+  password: ber7rand
+  host: localhost
+
+test:
+ adapter: mysql2
+ encoding: utf8
+ database: dayhomes_test
+ pool: 5
+ username: root
+ password: ber7rand
+ host: localhost
+
+production:
+  adapter: sqlite3
+  database: db/production.sqlite3
+  pool: 5
+  timeout: 5000
