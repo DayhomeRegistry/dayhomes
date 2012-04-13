@@ -71,6 +71,8 @@
   %p
     = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp'
 
+= content_for :header_scripts do
+  = javascript_include_tag 'jquery.home_slider'
 
 :javascript
   $('slideshow').style.display='none';

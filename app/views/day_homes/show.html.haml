@@ -82,7 +82,7 @@
     .reviews
       %h4
         Reviews:
-      =render 'reviews/show', :reviews => @reviews
+      = render 'reviews/show', :reviews => @reviews
       =paginate @reviews
     -if current_user
       .create_review

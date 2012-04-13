@@ -1,3 +1,4 @@
+// This breaks the rest of the JS on other pages ...
 var TINY={};
 
 function $(i){return document.getElementById(i)}
