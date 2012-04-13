@@ -4,10 +4,10 @@
       .span4
       .span8
         #searchBox
-          %form#search{:name => "search"}
-            %input#searchQuery{:type => "text"}
-              %input#submit{:border => "0", :type => "submit", :value => ""}
-          %a{:href => "#"} Advanced Search
+          = form_for @search, :url => searches_path, :method => 'get', :html => {:id => :search} do |f|
+            = f.search_field :address, :id => 'searchQuery'
+            = f.submit "Search", :id => 'submit', :style => 'text-indent: -9999999px;', :border => '0'
+          = link_to 'Advanced Search', searches_path
 %nav
   .wrapper
     %ul

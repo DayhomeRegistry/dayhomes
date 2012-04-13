@@ -7,14 +7,12 @@
           %h2 About Us
           %p Dayhome Registry is your answer for all of your dayhome searching needs!
           %p Being a parent is busy enough. The mission of Dayhome Registry is to make being a parent a little easier.
-        / about
         .contact.span3
           %h2 Contact Us
           %p Have any questions or concerns about Dayhome Registry? We'd love to hear from you.
           %p
             Email us at
             %a{:href => "#"} contact@dayhomeregistry.com
-        / contact
         .social.span3
           %h2 We're Social
           %p
@@ -33,15 +31,11 @@
             %img{:src => "assets/icons/pinterest.png"}
               %a{:href => "#"} Pin Us
               on Pinterest
-        / social
-      / footerInfo
-    / span12
-  / row
-/ wrapper
 %footer
   %p
-    \©
-    %a{:href => "#"} Dayhome Registry 2012
+    &copy;
+    = link_to "Dayhome Registry #{Date.today.year}", root_path
     | Read our
-    %a{:href => "#"} Privacy Policy
+    = link_to 'Privacy Policy', '#'
+
 = yield :scripts
