@@ -18,6 +18,12 @@
   = f.label :slug, 'http://dayhomeregistry.com/<strong>DAYHOME-URL</strong>'.html_safe
   = f.text_field :slug
   
+  = f.label :phone_number
+  = f.text_field :phone_number
+  
+  = f.label :blurb
+  = f.text_area :blurb
+  
   = f.label :featured, :class => 'checkbox' do
     = f.check_box :featured
     Feature on homepage?

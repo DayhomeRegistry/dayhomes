@@ -48,7 +48,7 @@ class DayHome < ActiveRecord::Base
   
   # this method is called when updating the lat long (this is what's fed to google maps)
   def address
-    "#{city}, #{province}, Canada #{postal_code}"
+    "#{street1}#{street2}, #{city}, #{province}, #{postal_code}"
   end
   
   def to_param

@@ -16,21 +16,78 @@
     |
     %strong= link_to 'Sign Up', new_user_path
 
-%h2
-  Featured Day Homes
+.featured.span7
+  #featureTop
+  #featureDetails
+    %h2 Featured Dayhome
+    %h3
+      = link_to @featured_day_home.name, day_home_slug_path(@featured_day_home.slug)
+      = "- #{@featured_day_home.address}"
+    
+    - if @featured_day_home.phone_number.present?
+      %h3= @featured_day_home.phone_number
+    
+    - if @featured_day_home.blurb 
+      %p
+        = @featured_day_home.blurb
+        
+      %p{:style => 'font-size: 12px'}
+        = link_to 'View', day_home_slug_path(@featured_day_home.slug)
+    %ul#slideshow
+      - @featured_day_home.photos.each do |photo|
+        %li
+          %h3
+            = @featured_day_home.name
+          %span= photo.photo_url
+          %p
+            = photo.caption
+          = link_to image_tag(photo.photo_url(:thumb)), day_home_slug_path(@featured_day_home.slug), :alt => photo.caption
 
-%p
-  = link_to 'Add Your DayHome »', [:new, :day_home_signup_request], :class => 'btn js-btn'
+    #sliderWrapper
+      #fullsize
+        #imgprev.imgnav{:title => "Previous Image"}
+        #imglink
+        #imgnext.imgnav{:title => "Next Image"}
+        #image
+        #information
+          %h3
+          %p
+      #thumbnails
+        #slideleft{:title => "Slide Left"}
+        #slidearea
+          #slider
+        #slideright{:title => "Slide Right"}
 
-- if @featured_day_homes.blank?
+  #featureBtm
+
+.callToAction.span4
+  %h3 Dayhome Owner?
   %p
-    There are no featured Day Homes yet!
-- else
-  .row
-    - @featured_day_homes.each do |day_home|
-      .span3
-        %h3
-          = link_to day_home.name, day_home
-        - if day_home.featured_photo
-          = link_to image_tag(day_home.featured_photo.photo), day_home_slug_path(day_home.slug), :alt => day_home.name
+    Are you a dayhome owner? Would you like a fast, easy
+    way for parents to find your  company?
+    %br/
+    Register your dayhome today for easy access to a whole new client base.
+  
+  %p
+    = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp'
 
+= content_for :header_scripts do
+  = javascript_include_tag 'jquery.home_slider'
+
+:javascript
+  $('slideshow').style.display='none';
+  $('sliderWrapper').style.display='block';
+  var slideshow=new TINY.slideshow("slideshow");
+  window.onload=function(){
+    slideshow.auto=true;
+    slideshow.speed=5;
+    slideshow.link="linkhover";
+    slideshow.info="information";
+    slideshow.thumbs="slider";
+    slideshow.left="slideleft";
+    slideshow.right="slideright";
+    slideshow.scrollSpeed=4;
+    slideshow.spacing=5;
+    slideshow.active="#fff";
+    slideshow.init("slideshow","image","imgprev","imgnext","imglink");
+  }

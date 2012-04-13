@@ -48,7 +48,7 @@ describe DayHome do
     end
 
     it "should have a google styled address" do
-      @ryan_house.address.should == 'Edmonton, AB, Canada T6W1C3'
+      @ryan_house.address.should == '793 blackburn place, Edmonton, AB, T6W1C3'
     end
   end
   

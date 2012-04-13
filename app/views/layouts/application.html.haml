@@ -5,9 +5,14 @@
     = stylesheet_link_tag :application, :media => :all
     = javascript_include_tag :application
     = csrf_meta_tags
+    = yield :header_scripts
   %body
     = render 'layouts/header'
-    .container
-      = render 'layouts/flash_msgs'
-      = yield
+    #mainContent
+      .wrapper
+        .row
+          .content.span12
+            = render 'layouts/flash_msgs'
+            = yield
+          #contentShadow
     = render 'layouts/footer'
