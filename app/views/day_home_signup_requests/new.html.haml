@@ -1,0 +1,67 @@
+:javascript
+  $(function(){
+    $('#day_home_signup_request_day_home_name').keyup(function(e) {
+      var parsed_subdomain = $(this).attr('value').replace(/[^a-z0-9]/gi,'').toLowerCase();
+      $('#day_home_signup_request_day_home_slug').empty().attr('value', parsed_subdomain);
+    });
+    
+  });
+
+%h2
+  Add Your DayHome
+
+= form_for @day_home_signup_request do |f|
+
+  %h3
+    DayHome Details
+  
+  = f.label :day_home_name, 'DayHome Name'
+  = f.text_field :day_home_name
+
+  = f.label :day_home_slug, 'http://dayhomeregistry.com/<strong>DAYHOME-URL</strong>'.html_safe
+  = f.text_field :day_home_slug
+  
+  = f.label :day_home_city, 'City'
+  = f.text_field :day_home_city
+  
+  = f.label :day_home_province, 'Province'
+  = f.state_select :day_home_province, 'CA'
+  
+  = f.label :day_home_street1, 'Street1'
+  = f.text_field :day_home_street1
+  
+  = f.label :day_home_street2, 'Street2'
+  = f.text_field :day_home_street2
+  
+  = f.label :day_home_postal_code, 'Postal Code'
+  = f.text_field :day_home_postal_code
+
+  = f.label :day_home_phone_number, 'Phone Number'
+  = f.text_field :day_home_phone_number
+
+  = f.label :day_home_blurb, 'Description'
+  = f.text_area :day_home_blurb, :rows => 4
+  
+  %h3
+    DayHome Contact
+  
+  = f.label :contact_name, 'Full Name'
+  = f.text_field :contact_name
+
+  = f.label :contact_phone_number, 'Phone Number'
+  = f.text_field :contact_phone_number
+
+  = f.label :contact_email, 'Email'
+  = f.text_field :contact_email
+
+  = f.label :preferred_time_to_contact, 'Preferred Time to Contact'
+  = f.text_field :preferred_time_to_contact
+
+  = f.label :comments, 'Comments or Questions?'
+  = f.text_area :preferred_time_to_contact, :rows => 4
+  
+  %br
+
+  = f.submit 'Add DayHome', :class => :btn
+  |
+  = link_to 'Cancel', root_path
