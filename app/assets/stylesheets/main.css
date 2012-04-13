@@ -114,9 +114,12 @@ nav li{
 	border:1px solid #e6e6e3;
 	border-top:none;
 	margin-bottom:30px;
-	padding-bottom:24px;
 	clear:both;
 	float:left;
+	width: 940px;
+  padding: 24px;
+  w\idth: 892px;
+  min-height: 400px;
 }
 #contentShadow{
 	width:941px;
@@ -138,7 +141,7 @@ nav li{
 	background:url('featureBottom.png') top left no-repeat;
 }
 .featured{
-	margin:24px 24px 0 18px;
+	margin: 0;
 	padding-bottom:12px;
 	background:url('featureBG.png') top left repeat-y;
 }

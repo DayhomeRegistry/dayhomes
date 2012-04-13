@@ -1,77 +1,76 @@
-.row
-  .content.span12
-    %p.right{:style => 'margin: 25px 25px 0 0;'}
-      - if current_user
-        = current_user.full_name
-        = "-"
-        %strong= link_to "Your Account", user_path(current_user)
-        |
-        - if current_user.admin?
-          %strong= link_to "Admin", admin_root_path
-          |
-        - if current_user.day_home_owner?
-          %strong= link_to "My Day Homes", day_homes_path
-          |
-        %strong= link_to 'Logout', logout_path
-      - else
-        %strong= link_to 'Login', login_path
-        |
-        %strong= link_to 'Sign Up', new_user_path
+%p.right
+  - if current_user
+    = current_user.full_name
+    = "-"
+    %strong= link_to "Your Account", user_path(current_user)
+    |
+    - if current_user.admin?
+      %strong= link_to "Admin", admin_root_path
+      |
+    - if current_user.day_home_owner?
+      %strong= link_to "My Day Homes", day_homes_path
+      |
+    %strong= link_to 'Logout', logout_path
+  - else
+    %strong= link_to 'Login', login_path
+    |
+    %strong= link_to 'Sign Up', new_user_path
+
+.featured.span7
+  #featureTop
+  #featureDetails
+    %h2 Featured Dayhome
+    %h3
+      = link_to @featured_day_home.name, day_home_slug_path(@featured_day_home.slug)
+      = "- #{@featured_day_home.address}"
     
-    .featured.span7
-      #featureTop
-      #featureDetails
-        %h2 Featured Dayhome
-        %h3
-          = link_to @featured_day_home.name, day_home_slug_path(@featured_day_home.slug)
-          = "- #{@featured_day_home.address}"
-        
-        - if @featured_day_home.phone_number.present?
-          %h3= @featured_day_home.phone_number
-        
-        - if @featured_day_home.blurb 
-          %p
-            = @featured_day_home.blurb
-            
-          %p{:style => 'font-size: 12px'}
-            = link_to 'View DayHome', day_home_slug_path(@featured_day_home.slug)
-        %ul#slideshow
-          - @featured_day_home.photos.each do |photo|
-            %li
-              %h3
-                = @featured_day_home.name
-              %span= photo.photo_url
-              %p
-                = photo.caption
-              = link_to image_tag(photo.photo_url(:thumb)), day_home_slug_path(@featured_day_home.slug), :alt => photo.caption
-
-        #sliderWrapper
-          #fullsize
-            #imgprev.imgnav{:title => "Previous Image"}
-            #imglink
-            #imgnext.imgnav{:title => "Next Image"}
-            #image
-            #information
-              %h3
-              %p
-          #thumbnails
-            #slideleft{:title => "Slide Left"}
-            #slidearea
-              #slider
-            #slideright{:title => "Slide Right"}
-
-      #featureBtm
-
-    .callToAction.span4
-      %h3 Dayhome Owner?
+    - if @featured_day_home.phone_number.present?
+      %h3= @featured_day_home.phone_number
+    
+    - if @featured_day_home.blurb 
       %p
-        Are you a dayhome owner? Would you like a fast, easy
-        way for parents to find your  company?
-        %br/
-        Register your dayhome today for easy access to a whole new client base.
-      %a#signUp{:href => "#"}
-        %p Sign Up!
-  #contentShadow
+        = @featured_day_home.blurb
+        
+      %p{:style => 'font-size: 12px'}
+        = link_to 'View', day_home_slug_path(@featured_day_home.slug)
+    %ul#slideshow
+      - @featured_day_home.photos.each do |photo|
+        %li
+          %h3
+            = @featured_day_home.name
+          %span= photo.photo_url
+          %p
+            = photo.caption
+          = link_to image_tag(photo.photo_url(:thumb)), day_home_slug_path(@featured_day_home.slug), :alt => photo.caption
+
+    #sliderWrapper
+      #fullsize
+        #imgprev.imgnav{:title => "Previous Image"}
+        #imglink
+        #imgnext.imgnav{:title => "Next Image"}
+        #image
+        #information
+          %h3
+          %p
+      #thumbnails
+        #slideleft{:title => "Slide Left"}
+        #slidearea
+          #slider
+        #slideright{:title => "Slide Right"}
+
+  #featureBtm
+
+.callToAction.span4
+  %h3 Dayhome Owner?
+  %p
+    Are you a dayhome owner? Would you like a fast, easy
+    way for parents to find your  company?
+    %br/
+    Register your dayhome today for easy access to a whole new client base.
+  
+  %p
+    = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp'
+
 
 :javascript
   $('slideshow').style.display='none';
