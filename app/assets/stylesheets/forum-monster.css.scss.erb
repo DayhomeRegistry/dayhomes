@@ -1,6 +1,10 @@
+@import "bootstrap";
+
 /* Modules
 --------------------------------------------------------------------------------------------------*/
-.module { border:1px solid #e2e2e2; margin:.8em 0; background-color:#fff; overflow:auto; }
+.module { border:1px solid #e2e2e2; margin:.8em 0; background-color:#fff; overflow:auto;
+          font-family: Verdana, Helvetica, Arial;
+          font-size: 12px;}
 .module_controls { padding:.8em; }
 .module_header { color:#fff; padding:.7em .7em .7em 1.4em; background-color:#000; }
 .module_header a { color:#fff; }
@@ -11,12 +15,25 @@
 
 /* Form Fields & Labels
 --------------------------------------------------------------------------------------------------*/
-.module .fieldset { width:100%; }
+.module .fieldset { width:100%;}
 .module .fieldset .indent { width:16em; }
-.module .fieldset .label { font-weight:bold; text-align:right; display:block; float:left; padding:6px 0px 2px 1em; }
-.module .fieldset .label small { font-weight:normal; }
+.module .fieldset .label { font-weight:bold; text-align:right; display:block; float:left;
+                           padding:6px 0px 2px 1em; background-color: #ffffff; color:black;
+                           label {
+                               margin-bottom:-3px !important;
+                           }
+                         }
+.module .fieldset .label small { font-weight:normal; background-color: #ffffff; font-size: 80%; color:black;}
 .module .fieldset .input { padding:.2em 1em; display:block; float:left; }
 
+.fieldset {
+    input[type=text] {
+        @extend .span7;
+    }
+    textarea {
+        @extend .span7;
+    }
+}
 /* Common
 --------------------------------------------------------------------------------------------------*/
 .module .clear { clear: both; height: 0; overflow: hidden; }
@@ -36,7 +53,7 @@ table td:last-child { border-right:0px; }
 table .icon { width:26px; text-align:center; }
 table .counts { width:8%; text-align:center; }
 table .last_post { padding-left:10px; }
-table .description { width:55%; text-align:left; padding-left:20px; }
+table .description { width:55%; text-align:left; padding-left:10px; }
 
 /* Post View Table
 --------------------------------------------------------------------------------------------------*/

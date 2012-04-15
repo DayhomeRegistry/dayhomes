@@ -51,9 +51,4 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def require_user_to_be_day_home_owner
-    unless current_user && current_user.day_home_owner?
-      redirect_to root_path
-    end
-  end
 end

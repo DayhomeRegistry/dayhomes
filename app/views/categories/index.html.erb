@@ -27,14 +27,13 @@
     <div>
       <table>
         <tr class="smaller">
-          <th colspan="2" align="left">Forum</th>
+          <th colspan="1" align="left">Forum</th>
           <th>Topics</th>
           <th>Posts</th>
           <th class="last_post" align="left">Last Post</th>
         </tr>
         <% category.forums.each do |forum| %>
         <tr>
-          <td class="icon"><%= image_tag 'rails.png' %></td>
           <td class="description">
             <%= link_to forum.title, forum_path(forum) %><br />
             <span class="smaller"><%= forum.description %></span><br />

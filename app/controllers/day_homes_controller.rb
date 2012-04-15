@@ -67,12 +67,5 @@ class DayHomesController < ApplicationController
       render :action => :edit
     end
   end
-  
-  private
-  
-  def require_user_to_be_day_home_owner
-    unless current_user.day_home_owner?
-      redirect_to root_path
-    end
-  end
+
 end

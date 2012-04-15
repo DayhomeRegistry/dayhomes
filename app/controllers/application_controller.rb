@@ -51,6 +51,11 @@ class ApplicationController < ActionController::Base
     ajax_request_types = ['text/javascript', 'application/json', 'text/xml']
     request.accepts.sort! { |x, y| ajax_request_types.include?(y.to_s) ? 1 : -1 } if request.xhr?
   end
-  
+
+  def require_user_to_be_day_home_owner
+    unless current_user && current_user.day_home_owner?
+      redirect_to root_path
+    end
+  end
 
 end

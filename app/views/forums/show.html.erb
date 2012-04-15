@@ -13,14 +13,13 @@
   <div>
     <table>
       <tr class="smaller">
-        <th colspan="2" align="left">Topic</th>
+        <th colspan="1" align="left">Topic</th>
         <th>Replies</th>
         <th>Views</th>
         <th class="last_post" align="left">Last Post</th>
       </tr>
       <% @forum.topics.each do |topic| %>
       <tr>
-        <td class="icon"><%= image_tag 'rails.png' %></td>
         <td class="description">
           <%= link_to topic.title, topic_path(topic) %><br />
           <span class="smaller">by <%= topic.user.first_name %></span>
