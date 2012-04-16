@@ -208,17 +208,17 @@ Event.create!({:title => 'Test', :description => 'Test', :starts_at => DateTime.
 
 # forum seed data
 #create the categories
-cat_day = Category.create!({:title => 'Dayhomes', :state => 1, :position => 0})
-cat_nut = Category.create!({:title => 'Nutrition', :state => 1, :position => 0})
-cat_act = Category.create!({:title => 'Activities', :state => 1, :position => 0})
+cat_day = Category.create!({:title => 'Dayhomes', :position => 0})
+cat_nut = Category.create!({:title => 'Nutrition', :position => 0})
+cat_act = Category.create!({:title => 'Activities', :position => 0})
 
 #create the forums under each category
-main_forum = Forum.create!({:category_id => cat_day.id, :title => 'General Discussion', :state => 1, :position => 0, :description => 'Chat about your dayhome!'})
-nutrition_age_0 = Forum.create!({:category_id => cat_nut.id, :title => 'Age 0 - 1', :state => 1, :position => 0, :description => 'Discuss meals & snacks for ages 0 - 1'})
-Forum.create!({:category_id => cat_nut.id, :title => 'Age 1 - 2', :state => 1, :position => 0, :description => 'Discuss meals & snacks for ages 1 - 0'})
-Forum.create!({:category_id => cat_act.id, :title => 'Morning', :state => 1, :position => 0, :description => 'What activities do you do during the morning?'})
-Forum.create!({:category_id => cat_act.id, :title => 'Recess', :state => 1, :position => 0, :description => 'What activities do you do during recess?'})
-Forum.create!({:category_id => cat_act.id, :title => 'Afternoon', :state => 1, :position => 0, :description => 'What activities do you do during the afternoon?'})
+main_forum = Forum.create!({:category_id => cat_day.id, :title => 'General Discussion', :position => 0, :description => 'Chat about your dayhome!'})
+nutrition_age_0 = Forum.create!({:category_id => cat_nut.id, :title => 'Age 0 - 1', :position => 0, :description => 'Discuss meals & snacks for ages 0 - 1'})
+Forum.create!({:category_id => cat_nut.id, :title => 'Age 1 - 2', :position => 0, :description => 'Discuss meals & snacks for ages 1 - 0'})
+Forum.create!({:category_id => cat_act.id, :title => 'Morning', :position => 0, :description => 'What activities do you do during the morning?'})
+Forum.create!({:category_id => cat_act.id, :title => 'Recess', :position => 0, :description => 'What activities do you do during recess?'})
+Forum.create!({:category_id => cat_act.id, :title => 'Afternoon', :position => 0, :description => 'What activities do you do during the afternoon?'})
 
 # create some forum topics
 t0 = Topic.new({:title => '(Sticky) Items that should be banned?', :sticky => true,  :locked => false, :body => 'Does anyone have a list of banned items for parents?'})

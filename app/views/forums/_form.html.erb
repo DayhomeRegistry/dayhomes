@@ -1,8 +1,5 @@
 <div class="module">
   <div class="module_header"><%= action_name.humanize %> Forum</div>
-    <div class="module_subheader smaller">
-      <em>To create a category, leave the category field unselected.</em>
-    </div>
     <div class="module_body">
       <%= form_for @forum do |f| %>
       <% if @forum.errors.any? %>
@@ -39,14 +36,6 @@
           <%= f.label :position %>
         </span>
         <span class="input indent smaller"><%= f.text_field :position %></span>
-        <div class="clear"></div>
-      </div>
-      <div class="fieldset">
-        <span class="label indent smaller"></span>
-        <span class="input indent smaller">
-          <%= f.check_box :state %>
-          <%= f.label :state %>
-        </span>
         <div class="clear"></div>
       </div>
     </div>
