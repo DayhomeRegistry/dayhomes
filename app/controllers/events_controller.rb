@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_filter :require_user_to_be_day_home_owner, :except => [:show, :index]
+  before_filter :require_user_to_be_day_home_owner_or_admin, :except => [:show, :index]
 
   def index
     @events = Event.scoped

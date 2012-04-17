@@ -1,6 +1,6 @@
 class DayHomesController < ApplicationController
   before_filter :require_user, :except => [:show, :email_dayhome, :calendar]
-  before_filter :require_user_to_be_day_home_owner, :except => [:show, :email_dayhome, :calendar]
+  before_filter :require_user_to_be_day_home_owner_or_admin, :except => [:show, :email_dayhome, :calendar]
     
   def index
     @day_homes = current_user.day_homes

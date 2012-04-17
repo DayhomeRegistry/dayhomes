@@ -1,5 +1,5 @@
 <div class="right controls"><%= link_to "New Forum/Category", new_forum_path %></div>
-<% @categories.each do |category| %>
+<% Category.all.each do |category| %>
   <div class="module">
     <div class="module_header">
       <%= category.title %>
