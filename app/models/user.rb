@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
   has_many :user_day_homes, :dependent => :destroy
   has_many :day_homes, :through => :user_day_homes
 
+  has_many :topics, :dependent => :destroy
+  has_many :posts, :dependent => :destroy
+
   def full_name
     "#{first_name} #{last_name}"
   end

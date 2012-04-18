@@ -20,6 +20,13 @@ ActiveRecord::Schema.define(:version => 20120413153348) do
     t.string   "availability"
   end
 
+  create_table "categories", :force => true do |t|
+    t.string   "title"
+    t.integer  "position",   :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
   create_table "certification_types", :force => true do |t|
     t.string   "kind"
     t.datetime "created_at", :null => false
@@ -103,8 +110,8 @@ ActiveRecord::Schema.define(:version => 20120413153348) do
     t.string   "postal_code"
     t.boolean  "dietary_accommodations"
     t.boolean  "featured",               :default => false
-    t.string   "slug"
     t.string   "email"
+    t.string   "slug"
     t.string   "phone_number"
     t.text     "blurb"
   end
@@ -122,17 +129,49 @@ ActiveRecord::Schema.define(:version => 20120413153348) do
 
   add_index "events", ["day_home_id"], :name => "index_events_on_day_home_id"
 
+  create_table "forums", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "topics_count", :default => 0
+    t.integer  "posts_count",  :default => 0
+    t.integer  "position",     :default => 0
+    t.integer  "category_id"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  create_table "posts", :force => true do |t|
+    t.text     "body"
+    t.integer  "forum_id"
+    t.integer  "topic_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "reviews", :force => true do |t|
     t.text     "content"
-    t.integer  "rating"
+    t.integer  "rating",      :default => 0
     t.integer  "day_home_id"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   add_index "reviews", ["day_home_id"], :name => "index_reviews_on_day_home_id"
   add_index "reviews", ["user_id"], :name => "index_reviews_on_user_id"
+
+  create_table "topics", :force => true do |t|
+    t.string   "title"
+    t.integer  "hits",        :default => 0
+    t.boolean  "sticky",      :default => false
+    t.boolean  "locked",      :default => false
+    t.integer  "posts_count"
+    t.integer  "forum_id"
+    t.integer  "user_id"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
 
   create_table "user_day_homes", :force => true do |t|
     t.integer  "day_home_id"
@@ -164,6 +203,8 @@ ActiveRecord::Schema.define(:version => 20120413153348) do
     t.string   "last_login_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.integer  "topics_count",        :default => 0
+    t.integer  "posts_count",         :default => 0
   end
 
 end

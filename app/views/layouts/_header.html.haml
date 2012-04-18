@@ -17,3 +17,6 @@
         %a{:href => "#"} about
       %li
         %a{:href => "#"} contact
+      - if current_user && current_user.day_home_owner? || current_user && current_user.admin?
+        %li
+          = link_to 'forums', forums_path

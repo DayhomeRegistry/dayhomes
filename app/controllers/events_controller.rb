@@ -1,7 +1,8 @@
 class EventsController < ApplicationController
+  before_filter :require_user_to_be_day_home_owner_or_admin, :except => [:show, :index]
   before_filter :correct_safari_and_ie_accept_headers
   after_filter :set_xhr_flash
-  before_filter :require_user_to_be_day_home_owner, :except => [:show, :index]
+
 
   def index
     @events = Event.scoped
