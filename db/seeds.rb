@@ -94,7 +94,10 @@ day_home_with_reviews = DayHome.create!({:name => "DayHome With Reviews",
                        :slug => 'DayHomesWithReviews',
                        :email => 'withreviews@dayhomeregistry.com',
                        :postal_code => 'T6L5M6',
-                       :featured => true })
+                       :featured => true,
+                       :phone_number => '780-555-5555',
+                       :blurb => 'Dayhome With Reviews is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.'
+                        })
 day_home_with_reviews.availability_types << full_time_full_days
 photos = [
   { :caption => "Six and counting.", :photo => "counting.jpg"},
@@ -128,7 +131,10 @@ fulltime_addresses.each_with_index  do |street_and_postal, index|
                    :street2 =>  '',
                    :slug => "DayHome#{index}single",
                    :email => "dhf#{index}@dayhomeregistry.com",
-                   :featured => true
+                   :featured => true,
+                   :phone_number => '780-555-5555',
+                   :blurb => "DayHome #{index} is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it."
+                   
                }.merge(street_and_postal))
 
   d.availability_types << full_time_full_days

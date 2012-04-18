@@ -10,5 +10,7 @@ FactoryGirl.define do
     street2 ''
     email 'email@dayhomeregistry.com'
     postal_code 'T6W1C3'
+    phone_number '780-555-5555'
+    blurb 'This is a blurb describing this dayhome'
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411030423) do
+ActiveRecord::Schema.define(:version => 20120413153348) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -53,6 +53,20 @@ ActiveRecord::Schema.define(:version => 20120411030423) do
   add_index "day_home_certification_types", ["certification_type_id"], :name => "index_day_home_certification_types_on_certification_type_id"
   add_index "day_home_certification_types", ["day_home_id"], :name => "index_day_home_certification_types_on_day_home_id"
 
+  create_table "day_home_contacts", :force => true do |t|
+    t.string   "day_home_email"
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "subject"
+    t.text     "message"
+    t.integer  "day_home_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "day_home_contacts", ["day_home_id"], :name => "index_day_home_contacts_on_day_home_id"
+
   create_table "day_home_photos", :force => true do |t|
     t.integer  "day_home_id"
     t.string   "photo"
@@ -62,6 +76,25 @@ ActiveRecord::Schema.define(:version => 20120411030423) do
   end
 
   add_index "day_home_photos", ["day_home_id"], :name => "index_day_home_photos_on_day_home_id"
+
+  create_table "day_home_signup_requests", :force => true do |t|
+    t.string   "day_home_name"
+    t.string   "day_home_slug"
+    t.string   "day_home_city"
+    t.string   "day_home_province"
+    t.string   "day_home_street1"
+    t.string   "day_home_street2"
+    t.string   "day_home_postal_code"
+    t.string   "day_home_phone_number"
+    t.text     "day_home_blurb"
+    t.string   "contact_name"
+    t.string   "contact_phone_number"
+    t.string   "contact_email"
+    t.string   "preferred_time_to_contact"
+    t.text     "comments"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
 
   create_table "day_homes", :force => true do |t|
     t.string   "name"
@@ -77,8 +110,10 @@ ActiveRecord::Schema.define(:version => 20120411030423) do
     t.string   "postal_code"
     t.boolean  "dietary_accommodations"
     t.boolean  "featured",               :default => false
-    t.string   "email"
     t.string   "slug"
+    t.string   "email"
+    t.string   "phone_number"
+    t.text     "blurb"
   end
 
   create_table "events", :force => true do |t|
@@ -116,11 +151,11 @@ ActiveRecord::Schema.define(:version => 20120411030423) do
 
   create_table "reviews", :force => true do |t|
     t.text     "content"
-    t.integer  "rating",      :default => 0
+    t.integer  "rating"
     t.integer  "day_home_id"
     t.integer  "user_id"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "reviews", ["day_home_id"], :name => "index_reviews_on_day_home_id"

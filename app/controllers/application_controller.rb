@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
   before_filter :create_search
-  before_filter :correct_safari_and_ie_accept_headers
-  after_filter :set_xhr_flash
   protect_from_forgery
 
   def create_search

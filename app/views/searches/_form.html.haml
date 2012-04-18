@@ -7,7 +7,7 @@
       .search_section
         %h5
           = 'Dayhomes Near'
-        = f.text_field :address
+        = f.text_field :address, :style => 'width: 175px'
       .search_section
         %h5
           ='Full-time Availability'
@@ -39,4 +39,4 @@
           = f.check_box :dietary_accommodations, :class => 'checkbox'
           = 'Accommodates for Food Allergies'
       .search_section
-        = submit_tag "Search", :class => 'btn btn-primary span3'
+        = submit_tag "Search", :class => 'btn btn-primary span2'
