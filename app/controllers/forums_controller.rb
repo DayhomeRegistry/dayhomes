@@ -1,5 +1,6 @@
 class ForumsController < ApplicationController
   before_filter :require_user_to_be_day_home_owner_or_admin
+  before_filter :require_user_to_be_site_admin, :except => [:index, :show]
 
   def show
     @forum = Forum.find(params[:id])

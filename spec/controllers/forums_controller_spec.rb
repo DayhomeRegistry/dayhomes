@@ -75,21 +75,21 @@ describe ForumsController do
     describe "create" do
       it "should create a forum" do
         post :create, :forum => @attr
-        response.should be_success
+        response.should redirect_to(root_path)
       end
     end
 
     describe "update" do
       it "should update a forum" do
         put :update, :id => @forum.id, :forum => @attr
-        response.should redirect_to("/forums/#{@forum.id}")
+        response.should redirect_to(root_path)
       end
     end
 
     describe "destroy" do
       it "should delete the forum" do
         delete :destroy, :id => @forum.id
-        response.should redirect_to(forums_url)
+        response.should redirect_to(root_path)
       end
     end
   end

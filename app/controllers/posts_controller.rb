@@ -34,9 +34,11 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
 
-    if @post.update_attributes(params[:post])
-      flash[:notice] = "Post was successfully updated."
-      redirect_to topic_path(@post.topic)
+    if @post.user_id == current_user.id
+      if @post.update_attributes(params[:post])
+        flash[:notice] = "Post was successfully updated."
+        redirect_to topic_path(@post.topic)
+      end
     end
   end
   

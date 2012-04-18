@@ -56,4 +56,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_user_to_be_site_admin
+    unless current_user && current_user.admin?
+      redirect_to root_path
+    end
+  end
+
 end

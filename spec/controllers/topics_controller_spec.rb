@@ -66,14 +66,14 @@ describe TopicsController do
     describe "update" do
       it "should update a topic" do
         put :update, :id => @topic.id, :topic => @attr
-        response.should redirect_to("/topics/#{@topic.id}")
+        response.should redirect_to(root_path)
       end
     end
 
     describe "destroy" do
       it "should delete the topic" do
         delete :destroy, :id => @topic.id
-        response.should redirect_to("/forums/#{@forum.id}")
+        response.should redirect_to(root_path)
       end
     end
   end

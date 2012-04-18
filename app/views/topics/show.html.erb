@@ -28,9 +28,9 @@
           <span class="right controls">
             <% if post.user_id == current_user.id %>
                 <%= link_to "Edit", edit_post_path(post) %>
-                <%= link_to "Reply", new_topic_post_path(@topic) %>
-                <%= link_to "Quote", new_topic_post_path(@topic, :quote => post)%>
             <% end %>
+            <%= link_to "Reply", new_topic_post_path(@topic) %>
+            <%= link_to "Quote", new_topic_post_path(@topic, :quote => post)%>
           <% if current_user && current_user.admin?  %>
             <%= link_to "Delete", post, :confirm => "Are you sure?", :method => :delete %>
           <% end %>
