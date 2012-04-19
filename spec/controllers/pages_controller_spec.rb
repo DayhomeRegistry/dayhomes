@@ -16,4 +16,11 @@ describe PagesController do
       get :index
     end
   end
+  
+  describe "about" do
+    it "should render an about page" do
+      get :about
+    end
+  end
+  
 end
