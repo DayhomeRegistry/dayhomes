@@ -52,10 +52,6 @@ header .span8{
 #searchBox a:hover, footer a:hover{
 	color:#79489f;
 }
-#searchQuery{
-	font-style:italic;
-	opacity:.6;
-}
 #submit{
 	height:45px;
 	width:102px;
@@ -227,4 +223,9 @@ footer p{
 .aboutPhoto{
 	float:right;
 	margin:0 0 14px 16px;
+}
+/* Form styles */
+::-webkit-input-placeholder, :-moz-placeholder {
+	font-style:italic;
+	opacity:.6;
 }
