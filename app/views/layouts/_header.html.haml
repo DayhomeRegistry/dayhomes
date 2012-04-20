@@ -4,10 +4,13 @@
       .span4
       .span8
         #searchBox
-          = form_for @search, :url => searches_path, :method => 'get', :html => {:id => :search} do |f|
-            = f.search_field :address, :id => 'searchQuery'
+          = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
+            = f.search_field :address, :id => 'searchQuery', :value => "Enter an Address"
             = f.submit "Search", :id => 'submit', :style => 'text-indent: -9999999px;', :border => '0'
           = link_to 'Advanced Search', searches_path
+          :javascript
+            $("#searchQuery").focus();
+
 %nav
   .wrapper
     %ul
@@ -16,7 +19,7 @@
       %li
         %a{:href => "#"} about
       %li
-        %a{:href => "#"} contact
+        %a{:href => "mailto:contact@dayhomeregistry.com"} contact
       - if current_user && current_user.day_home_owner? || current_user && current_user.admin?
         %li
           = link_to 'forums', forums_path
