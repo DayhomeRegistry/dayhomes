@@ -9,5 +9,14 @@
     =dayhome.postal_code
   %div
     =dayhome.street1
-
+  %div.availability
+    Availability:
+    - avail = dayhome.availability
+    -if avail.empty?
+      =image_tag("circle-empty.png", :title=> "Closed")
+    -else
+      -if avail.include? "Full-time"
+        =image_tag("circle-full.png", :title=> "Full-time")
+      -if avail.include? "Part-time"
+        =image_tag("circle-half.png", :title=> "Part-time")
 
