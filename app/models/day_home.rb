@@ -41,6 +41,17 @@ class DayHome < ActiveRecord::Base
   def prevent_geocoding
     (!lat.blank? && !lng.blank?)
   end
+
+  # return a unique string array of availability
+  def availability
+    avail_type = []
+
+    availability_types.each do |avt|
+      avail_type << avt.availability
+    end
+
+    avail_type.uniq
+  end
   
   def featured_photo
     photos.first

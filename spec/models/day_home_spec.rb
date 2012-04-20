@@ -83,4 +83,13 @@ describe DayHome do
     end
   end
 
+  describe "get availability" do
+    it "should return a unique array of availability types" do
+      @day_home = FactoryGirl.build(:day_home)
+      @availability_type = FactoryGirl.build(:availability_type)
+      @day_home.stub!(:availability).and_return([@availability_type.availability])
+      @day_home.availability.should == ["Full-time"]
+    end
+  end
+
 end
