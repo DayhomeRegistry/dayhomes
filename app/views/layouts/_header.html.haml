@@ -17,7 +17,7 @@
       %li
         %a#active= link_to 'home', root_path
       %li
-        %a{:href => "#"} about
+        %a= link_to 'about', about_pages_path
       %li
         %a{:href => "mailto:contact@dayhomeregistry.com"} contact
       - if current_user && current_user.day_home_owner? || current_user && current_user.admin?
