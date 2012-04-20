@@ -24,7 +24,7 @@
           </span>
         </td>
         <td class="post_header">
-          <span class="left post_date smaller">Posted <%= post.created_at %></span>
+          <span class="left post_date smaller">Posted <%= distance_of_time_in_words(DateTime.now, post.created_at) %> ago</span>
           <span class="right controls">
             <% if post.user_id == current_user.id %>
                 <%= link_to "Edit", edit_post_path(post) %>
