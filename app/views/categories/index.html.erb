@@ -42,8 +42,8 @@
           <td class="counts smaller"><%= forum.posts.size - forum.topics.size %></td>
           <td class="last_post smaller">
             <% if forum.posts.size > 0 %>
-              <%= forum.posts.last.created_at %><br />
-              <%= forum.posts.last.user.first_name %>
+              <%= distance_of_time_in_words(DateTime.now, forum.posts.last.created_at) %> ago<br />
+              By: <%= forum.posts.last.user.first_name %>
             <% else %>
               No Topics / Posts
             <% end %>
