@@ -10,7 +10,7 @@ p{
 h2{
 	font-size:24px !important;
 	font-weight:bold !important;
-	margin-bottom:12px !important;
+	margin-bottom:9px !important;
 }
 h3{
 	font-size:20px !important;
@@ -118,7 +118,7 @@ nav li{
 	float:left;
 	width: 940px;
   padding: 24px;
-  w\idth: 892px;
+  width: 892px;
   min-height: 400px;
 }
 #contentShadow{
@@ -146,7 +146,7 @@ nav li{
 	background:url('featureBG.png') top left repeat-y;
 }
 .featured h2, .featured p{
-	margin:12px 21px 4px 21px;
+	margin:12px 21px 0px 21px;
 }
  .featured h3{
  	margin:8px 21px 0px 21px;
@@ -159,7 +159,7 @@ nav li{
 	float:right;
 }
 .callToAction h3{
-	padding:18px 24px 12px 24px;
+	padding:18px 24px 9px 24px;
 }
 .callToAction p{
 	margin:0 36px 14px 24px;
@@ -207,11 +207,11 @@ footer p{
 	line-height:60px;
 	text-align:center;
 }
-#footerInfo a, .featured a{
+#footerInfo a, .featured a, .right a{
 	color:#c94248;
 	text-decoration:underline;
 }
-#footerInfo a:hover, .featured a:hover{
+#footerInfo a:hover, .featured a:hover, .right a:hover{
 	color:#79489f;
 }
 .social p{
@@ -219,4 +219,13 @@ footer p{
 }
 .social img{
 	margin-right:18px;
+}
+.aboutPhoto{
+	float:right;
+	margin:0 0 14px 16px;
+}
+/* Form styles */
+::-webkit-input-placeholder, :-moz-placeholder {
+	font-style:italic;
+	opacity:.6;
 }
