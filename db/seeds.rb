@@ -7,6 +7,10 @@ Review.destroy_all
 DayHome.destroy_all
 User.destroy_all
 Event.destroy_all
+Post.destroy_all
+Topic.destroy_all
+Forum.destroy_all
+Category.destroy_all
 
 # Reset the primary key increment count; so it starts counting from 1 again.
 User.connection.execute('ALTER TABLE users AUTO_INCREMENT = 1')
