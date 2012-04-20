@@ -23,7 +23,11 @@ Dayhomes::Application.routes.draw do
       get 'calendar'
     end
   end
-  resources :pages
+  resources :pages do
+    collection do
+      get :about
+    end
+  end
   resources :reviews
   
   match 'login' => 'user_sessions#new', :as => :login
