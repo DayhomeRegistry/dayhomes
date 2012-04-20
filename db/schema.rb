@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413153348) do
+ActiveRecord::Schema.define(:version => 20120420020953) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -140,6 +140,8 @@ ActiveRecord::Schema.define(:version => 20120413153348) do
     t.datetime "updated_at",                  :null => false
   end
 
+  add_index "forums", ["category_id"], :name => "index_forums_on_category_id"
+
   create_table "posts", :force => true do |t|
     t.text     "body"
     t.integer  "forum_id"
@@ -148,6 +150,10 @@ ActiveRecord::Schema.define(:version => 20120413153348) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "posts", ["forum_id"], :name => "index_posts_on_forum_id"
+  add_index "posts", ["topic_id"], :name => "index_posts_on_topic_id"
+  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
   create_table "reviews", :force => true do |t|
     t.text     "content"
@@ -172,6 +178,9 @@ ActiveRecord::Schema.define(:version => 20120413153348) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
+
+  add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"
+  add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
 
   create_table "user_day_homes", :force => true do |t|
     t.integer  "day_home_id"
