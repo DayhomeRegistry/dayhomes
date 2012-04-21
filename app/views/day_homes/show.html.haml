@@ -36,7 +36,7 @@
           = mail_to @day_home.email, "Email Us", :encode => "javascript"
           = ' / '
           %a(title="Contact Form" href="#contact-form" rel="modal:open") Contact Form
-        .calendar.pull_right
+          = ' / '
           = link_to('View Calendar', calendar_day_home_path(@day_home))
         #contact-form.modal
           %h3 Contacting
@@ -63,12 +63,23 @@
             .submit
               = cf.submit "Contact", :class => 'btn btn-primary span3'
 
-        %p
+        %div
           = @day_home.address
           - if @day_home.phone_number?
             %br
             Phone Number:
             = @day_home.phone_number
+        %div.availability
+          Availability:
+          - avail = @day_home.availability
+          -if avail.empty?
+            =image_tag("circle-empty.png", :title=> "Closed")
+          -else
+            -if avail.include? "Full-time"
+              =image_tag("circle-full.png", :title=> "Full-time")
+            -if avail.include? "Part-time"
+              =image_tag("circle-half.png", :title=> "Part-time")
+        %div
           = gmaps(:map_options => { :center_latitude => @day_home.lat,
                                    :center_longitude => @day_home.lng,
                                    :zoom => 16},
