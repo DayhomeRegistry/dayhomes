@@ -17,6 +17,7 @@ gem 'jquery-star-rating-rails'
 gem 'client_side_validations'
 gem 'forum_monster'
 gem 'bb-ruby'
+gem 'rack-google_analytics'
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
