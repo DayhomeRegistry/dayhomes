@@ -8,7 +8,7 @@
       %strong= link_to "Admin", admin_root_path
       |
     - if current_user.day_home_owner?
-      %strong= link_to "My Day Homes", day_homes_path
+      %strong= link_to "My day homes", day_homes_path
       |
     %strong= link_to 'Logout', logout_path
   - else
@@ -19,7 +19,7 @@
 .featured.span7
   #featureTop
   #featureDetails
-    %h2 Featured Dayhome
+    %h2 Featured day home
     %h3
       = link_to @featured_day_home.name, day_home_slug_path(@featured_day_home.slug)
       = "- #{@featured_day_home.address}"
@@ -61,12 +61,12 @@
   #featureBtm
 
 .callToAction.span4
-  %h3 Dayhome Owner?
+  %h3 Day home owner?
   %p
-    Are you a dayhome owner? Would you like a fast, easy
+    Are you a day home owner? Would you like a fast, easy
     way for parents to find your  company?
     %br/
-    Register your dayhome today for easy access to a whole new client base.
+    Register your day home today for easy access to a whole new client base.
   
   %p
     = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp'
