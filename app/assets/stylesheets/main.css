@@ -3,7 +3,7 @@ html, body{
 	color:#414040;
 	background:#52be60 ;
 }
-p{
+p, li{
 	font-size:16px !important;
 	line-height:22px !important;
 }
@@ -16,6 +16,10 @@ h3{
 	font-size:20px !important;
 	line-height:22px;
 	font-weight:bold;
+}
+h4{
+	font-size:17px;
+	margin-top:12px;
 }
 
 .wrapper{
@@ -72,7 +76,6 @@ nav{
 	height:59px;
 	background:#fdfdf9 	url('navShadow.png') left top repeat-x;
 	margin-top:-4px;
-	font-size:24px;
 	font-weight:bold;
 	position:relative;
 	z-index:1;
@@ -98,6 +101,7 @@ nav ul{
 nav li{
 	float:left;
 	margin-right:30px;
+	font-size:24px !important;
 }
 #mainContent{
 	width:100%;
@@ -207,11 +211,11 @@ footer p{
 	line-height:60px;
 	text-align:center;
 }
-#footerInfo a, .featured a, .right a{
+#footerInfo a, .featured a, .right a, .contact_info a, .create_review a, .calendar a{
 	color:#c94248;
 	text-decoration:underline;
 }
-#footerInfo a:hover, .featured a:hover, .right a:hover{
+#footerInfo a:hover, .featured a:hover, .right a:hover, .contact_info a:hover, .create_review a:hover, .calendar a:hover{
 	color:#79489f;
 }
 .social p{
@@ -228,4 +232,26 @@ footer p{
 ::-webkit-input-placeholder, :-moz-placeholder {
 	font-style:italic;
 	opacity:.6;
+}
+
+/*Single Dayhome Page */
+.singleViewAbout{
+	margin-bottom:8px;
+}
+.contact_info a, .create_review a, .calendar a{
+	font-size:14px;
+}
+.pagination{
+	background:none !important;
+}
+.pagination ul{
+	margin-top:0 !important;
+}
+.list_review{
+	margin-bottom:14px;
+	display:block;
+}
+.create_review{
+	display:block;
+	clear:left;
 }

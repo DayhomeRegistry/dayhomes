@@ -26,8 +26,9 @@
     %ul.unstyled
       - if @day_home.blurb.present?
         %li
-          %h4
-            About
+          %h3
+            .singleViewAbout
+              About
           = @day_home.blurb
       %li
         %h4
@@ -36,7 +37,7 @@
           = mail_to @day_home.email, "Email Us", :encode => "javascript"
           = ' / '
           %a(title="Contact Form" href="#contact-form" rel="modal:open") Contact Form
-          = ' / '
+        .calendar.pull_right
           = link_to('View Calendar', calendar_day_home_path(@day_home))
         #contact-form.modal
           %h3 Contacting
@@ -63,33 +64,19 @@
             .submit
               = cf.submit "Contact", :class => 'btn btn-primary span3'
 
-        %div
+        %p
           = @day_home.address
           - if @day_home.phone_number?
             %br
             Phone Number:
             = @day_home.phone_number
-        %div.availability
-          %h4
-            Open Availability
-            - avail = @day_home.availability
-            -if avail.empty?
-              =image_tag("circle-empty.png", :title=> "Closed")
-            -else
-              -if avail.include? "Full-time"
-                =image_tag("circle-full.png", :title=> "Full-time")
-              -if avail.include? "Part-time"
-                =image_tag("circle-half.png", :title=> "Part-time")
-          - @day_home.availability_types.order("id asc").each do |av|
-            = "#{av.availability} -  #{av.kind}"
-        %div
           = gmaps(:map_options => { :center_latitude => @day_home.lat,
                                    :center_longitude => @day_home.lng,
                                    :zoom => 16},
                  :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
                                                                       
   .span5
-    %h4
+    %h3
       = @day_home.name
       Photos
     
@@ -97,8 +84,30 @@
       %p
         No photos available.
     - else
-      - @day_home.photos.each do |photo|
-        = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 250px; margin: 0 10px 10px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :title => photo.caption
+      %ul#slideshow
+        - @day_home.photos.each do |photo|
+          %li
+            %h3
+              = @day_home.name
+            %span= photo.photo_url
+            %p
+              = photo.caption
+            = link_to image_tag(photo.photo_url(:thumb)), day_home_slug_path(@day_home.slug), :alt => photo.caption
+
+    #sliderWrapper
+      #fullsize
+        #imgprev.imgnav{:title => "Previous Image"}
+        #imglink
+        #imgnext.imgnav{:title => "Next Image"}
+        #image
+        #information
+          %h3
+          %p
+      #thumbnails
+        #slideleft{:title => "Slide Left"}
+        #slidearea
+          #slider
+        #slideright{:title => "Slide Right"}
 
 .row
   .span11
@@ -123,3 +132,24 @@
           or 
           = link_to 'Sign Up', new_user_path
           to leave a review.
+
+= content_for :header_scripts do
+  = javascript_include_tag 'jquery.home_slider'
+
+:javascript
+  $('slideshow').style.display='none';
+  $('sliderWrapper').style.display='block';
+  var slideshow=new TINY.slideshow("slideshow");
+  window.onload=function(){
+    slideshow.auto=true;
+    slideshow.speed=5;
+    slideshow.link="linkhover";
+    slideshow.info="information";
+    slideshow.thumbs="slider";
+    slideshow.left="slideleft";
+    slideshow.right="slideright";
+    slideshow.scrollSpeed=4;
+    slideshow.spacing=5;
+    slideshow.active="#fff";
+    slideshow.init("slideshow","image","imgprev","imgnext","imglink");
+  }
