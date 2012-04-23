@@ -7,30 +7,26 @@
           %h2 About Us
           %p Dayhome Registry is your answer for all of your dayhome searching needs!
           %p Being a parent is busy enough. The mission of Dayhome Registry is to make being a parent a little easier.
+          %p 
+            %a= link_to 'Read More...', about_pages_path
         .contact.span3
           %h2 Contact Us
           %p Have any questions or concerns about Dayhome Registry? We'd love to hear from you.
           %p
             Email us at
-            %a{:href => "#"} contact@dayhomeregistry.com
+            %a{:href => "mailto:contact@dayhomeregistry.com"} contact@dayhomeregistry.com
         .social.span3
           %h2 We're Social
-          %p
-            = image_tag 'icons/facebook.png'
-            %a{:href => "#"} Friend Us
-            on Facebook
-          %p
-            = image_tag 'icons/twitter-2.png'
-            %a{:href => "#"} Follow Us
-            on Twitter
-          %p
-            = image_tag 'icons/google-plus.png'
-            %a{:href => "#"} Plus Us
-            on Google+
-          %p
-            = image_tag 'icons/pinterest.png'
-            %a{:href => "#"} Pin Us
-            on Pinterest
+          %p Join the conversation and connect with other dayhomes and parents in your area.
+          %a{:href => "http://www.facebook.com/DayhomeRegistry", :target => "_blank"}
+            %p 
+              = image_tag 'icons/facebook.png' 
+              %span Friend Us on Facebook
+          %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
+            %p
+              = image_tag 'icons/twitter-2.png'
+              %span Follow Us on Twitter
+
 %footer
   %p
     &copy;

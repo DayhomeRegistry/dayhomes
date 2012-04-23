@@ -19,7 +19,7 @@
 .featured.span7
   #featureTop
   #featureDetails
-    %h2 Featured Dayhome
+    %h2 Featured Dayhomes
     %h3
       = link_to @featured_day_home.name, day_home_slug_path(@featured_day_home.slug)
       = "- #{@featured_day_home.address}"
@@ -32,7 +32,7 @@
         = @featured_day_home.blurb
         
       %p{:style => 'font-size: 12px'}
-        = link_to 'View', day_home_slug_path(@featured_day_home.slug)
+        = link_to 'Details', day_home_slug_path(@featured_day_home.slug)
     %ul#slideshow
       - @featured_day_home.photos.each do |photo|
         %li
