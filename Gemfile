@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.2'
 gem 'mysql2'
-#gem 'sqlite3'
 gem 'haml'
 gem 'gmaps4rails'
 gem 'jquery-rails'
@@ -36,7 +35,7 @@ group :development, :test do
   gem 'spork', '~> 1.0rc'
   gem 'capybara'
   gem 'guard-rspec'
-  gem 'eventmachine', '1.0.0.beta.4.1', :platforms => [:mswin, :mingw]
+  gem 'eventmachine', '1.0.0.beta.4'
   gem 'thin'
 end
 
