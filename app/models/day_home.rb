@@ -4,12 +4,12 @@ class DayHome < ActiveRecord::Base
                     :check_process => :prevent_geocoding, :address => :address,
                     :msg => 'Cannot find a location matching that query.'
 
+  # scopes
   scope :with_availability_uniq, lambda { |default_availability_types|
     joins(:availability_types).
     where("availability_types.availability IN (?) AND availability_types.kind = ?", default_availability_types[:availability], default_availability_types[:kind]).
     uniq
   }
-  
   scope :featured, where(:featured => true)
 
   # availability types
