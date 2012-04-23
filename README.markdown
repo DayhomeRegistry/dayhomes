@@ -1,4 +1,16 @@
-# Dayhomes
+# Day Home Registry
+
+> Day Home Registry is your answer for all of your day home searching needs!
+> 
+> Being a parent is busy enough. The mission of the Day Home Registry is to make being a parent a little easier.
+> 
+> _Faye and Jon Holt (Day Home Registry owners)_
+
+This application provides a registry and social platform to connect day homes with each other and with their customers.
+
+## Vocabulary
+
+ * _day home_ - a centre providing care for children. These can be licensed or unclicensed and have different certifications and avilability.
 
 ## The Team
 
