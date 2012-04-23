@@ -35,7 +35,7 @@ group :development, :test do
   gem 'spork', '~> 1.0rc'
   gem 'capybara'
   gem 'guard-rspec'
-  gem 'eventmachine', '1.0.0.beta.4.1', :platforms => [:mswin, :mingw]
+  gem 'eventmachine', '1.0.0.beta.4'
   gem 'thin'
 end
 
