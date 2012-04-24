@@ -37,4 +37,22 @@ describe User do
       @user.day_homes.should == [@day_home]
     end
   end
+  
+  describe "self.new_from_fb_user" do
+    it "should create a new user based on the fb_user objects that come in" do
+      SecureRandom.stub!(:hex).and_return('random_password')
+      fb_user = { 'first_name' => 'Jim', 'last_name' => 'Doe', 'email' => 'jim@doe.com' }
+      fb_access_token = 'token_like'
+      fb_expires_in = '123456'
+      
+      @user = User.new_from_fb_user(fb_user, fb_access_token, fb_expires_in)
+      
+      @user.first_name.should == 'Jim'
+      @user.last_name.should == 'Doe'
+      @user.email.should == 'jim@doe.com'
+      @user.password.should == 'random_password'
+      @user.facebook_access_token.should == 'token_like'
+      @user.facebook_access_token_expires_in.should == '123456'
+    end
+  end
 end
