@@ -14,7 +14,7 @@ CarrierWave.configure do |config|
 
   # hack fix for windows machine due to tmp file permission error
   # per https://github.com/jnicklas/carrierwave/issues/220/
-  if ENV['RAILS_ENV'] != 'production' || 'test'
+  if ENV['RAILS_ENV'] != 'production' || ENV['RAILS_ENV'] != 'test'
     config.delete_tmp_file_after_storage = false
   end
 end
