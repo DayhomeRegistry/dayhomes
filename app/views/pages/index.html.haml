@@ -30,12 +30,12 @@
     - if @featured_day_home.phone_number.present?
       %h3= @featured_day_home.phone_number
     
-    - if @featured_day_home.blurb 
+    - if @featured_day_home.blurb.present?
       %p
         = @featured_day_home.blurb
         
-      %p{:style => 'font-size: 12px'}
-        = link_to 'View', day_home_slug_path(@featured_day_home.slug)
+    %p{:style => 'font-size: 12px'}
+      = link_to "View #{@featured_day_home.name}", day_home_slug_path(@featured_day_home.slug)
     %ul#slideshow
       - @featured_day_home.photos.each do |photo|
         %li

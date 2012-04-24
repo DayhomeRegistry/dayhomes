@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     @search = Search.new
   end
   
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :gmaps_api_key
   # ===============================
   # = User Authentication Related =
   # ===============================
@@ -41,15 +41,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_xhr_flash
-    flash.discard if request.xhr?
-  end
-
-  def correct_safari_and_ie_accept_headers
-    ajax_request_types = ['text/javascript', 'application/json', 'text/xml']
-    request.accepts.sort! { |x, y| ajax_request_types.include?(y.to_s) ? 1 : -1 } if request.xhr?
-  end
-
   def require_user_to_be_day_home_owner_or_admin
     unless (current_user && current_user.day_home_owner?) || (current_user && current_user.admin?)
       redirect_to root_path
@@ -62,4 +53,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def gmaps_api_key
+    if Rails.env.production?
+      # return prod api key
+      "AIzaSyB03go-dPecYfIzMYc1c9WFkK53QTiDwTA"
+    else
+      # return test/dev key
+      "AIzaSyB03go-dPecYfIzMYc1c9WFkK53QTiDwTA"
+    end
+  end
 end
