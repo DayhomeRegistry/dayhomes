@@ -6,7 +6,8 @@
                              :center_longitude => @search.center_longitude,
                              :zoom => @search.zoom,
                              :auto_adjust =>  @search.auto_adjust,
-                             :auto_zoom => false},
+                             :auto_zoom => false,
+                             :provider_key => gmaps_api_key},
            :markers     => { :data => gmap_prepare_dayhomes(@day_homes), :options => { :do_clustering => true,
                                                                                        :clusterer_maxZoom => 6,
                                                                                        }})

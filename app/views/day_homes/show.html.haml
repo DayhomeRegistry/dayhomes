@@ -85,7 +85,9 @@
         %div
           = gmaps(:map_options => { :center_latitude => @day_home.lat,
                                    :center_longitude => @day_home.lng,
-                                   :zoom => 16},
+                                   :zoom => 16,
+                                   :auto_zoom => false,
+                                   :provider_key => gmaps_api_key},
                  :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
                                                                       
   .span5
