@@ -17,6 +17,12 @@ gem 'client_side_validations'
 gem 'forum_monster'
 gem 'bb-ruby'
 
+# le windows
+platforms :mswin, :mingw do
+  gem 'eventmachine', '1.0.0.beta.4.1'
+  gem 'thin'
+end
+
 group :assets do
   gem 'sass-rails', '~> 3.1'
   gem 'bootstrap-sass', '~> 2.0.2'
@@ -35,8 +41,6 @@ group :development, :test do
   gem 'spork', '~> 1.0rc'
   gem 'capybara'
   gem 'guard-rspec'
-  gem 'eventmachine', '1.0.0.beta.4'
-  gem 'thin'
 end
 
 group :production do
