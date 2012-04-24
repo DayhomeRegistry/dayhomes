@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.2'
 gem 'mysql2'
-#gem 'sqlite3'
 gem 'haml'
 gem 'gmaps4rails'
 gem 'jquery-rails'
@@ -17,6 +16,12 @@ gem 'jquery-star-rating-rails'
 gem 'client_side_validations'
 gem 'forum_monster'
 gem 'bb-ruby'
+
+# le windows
+platforms :mswin, :mingw do
+  gem 'eventmachine', '1.0.0.beta.4.1'
+  gem 'thin'
+end
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
