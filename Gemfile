@@ -16,6 +16,7 @@ gem 'jquery-star-rating-rails'
 gem 'client_side_validations'
 gem 'forum_monster'
 gem 'bb-ruby'
+gem 'koala'
 
 # le windows
 platforms :mswin, :mingw do
