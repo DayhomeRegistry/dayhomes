@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120420020953) do
+ActiveRecord::Schema.define(:version => 20120424030417) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -110,10 +110,11 @@ ActiveRecord::Schema.define(:version => 20120420020953) do
     t.string   "postal_code"
     t.boolean  "dietary_accommodations"
     t.boolean  "featured",               :default => false
-    t.string   "slug"
     t.string   "email"
+    t.string   "slug"
     t.string   "phone_number"
     t.text     "blurb"
+    t.boolean  "licensed"
   end
 
   create_table "events", :force => true do |t|
@@ -157,11 +158,11 @@ ActiveRecord::Schema.define(:version => 20120420020953) do
 
   create_table "reviews", :force => true do |t|
     t.text     "content"
-    t.integer  "rating"
+    t.integer  "rating",      :default => 0
     t.integer  "day_home_id"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   add_index "reviews", ["day_home_id"], :name => "index_reviews_on_day_home_id"

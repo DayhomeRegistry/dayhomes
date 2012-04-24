@@ -6,7 +6,7 @@ class Search
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
                 :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
-                :center_longitude, :zoom
+                :center_longitude, :zoom, :licensed, :unlicensed
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => 'Full Days'}
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
@@ -25,7 +25,7 @@ class Search
     if self.advanced_search == 'true'
       update_checkboxes(attributes)
     else
-      # check full and part time (either /searches or a simple search(header), visual for user)
+      # check full and part time (either /searches or a simple search(header))
       set_default_checkboxes
     end
 
@@ -148,6 +148,9 @@ private
       if DEFAULT_AVAILABILITY_TYPES[:kind] =~ /^#{default_avail_types.kind}/
         default_avail_types.checked = true
       end
+
+      self.licensed = true
+      self.unlicensed = true
     end
   end
 

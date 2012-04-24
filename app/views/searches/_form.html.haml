@@ -39,4 +39,13 @@
           = f.check_box :dietary_accommodations, :class => 'checkbox'
           = 'Accommodates for Food Allergies'
       .search_section
+        %h5
+          = 'Licensed / Unlicensed'
+        %label.checkbox
+          = f.check_box :licensed, :class => 'checkbox'
+          = 'Licensed'
+        %label.checkbox
+          = f.check_box :unlicensed, :class => 'checkbox'
+          = 'Unlicensed'
+      .search_section
         = submit_tag "Search", :class => 'btn btn-primary span2'
