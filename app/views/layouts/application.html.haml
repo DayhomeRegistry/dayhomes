@@ -6,6 +6,7 @@
     = javascript_include_tag :application
     = csrf_meta_tags
     = yield :header_scripts
+    %link{:href => "assets/icons/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
   %body
     = render 'layouts/header'
     #mainContent
