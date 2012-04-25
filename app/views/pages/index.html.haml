@@ -26,19 +26,18 @@
 
         
     %ul#slideshow
-      - @featured_day_home.photos.each do |photo|
+      - @featured_day_homes.each do |featured_day_home|
         %li
           %h3
-            = @featured_day_home.name
-          %span= photo.photo_url
-          - if @featured_day_home.blurb 
-            %p
-              = @featured_day_home.address
+            = featured_day_home.name
+          %span= featured_day_home.photos.first.photo_url
+          %p
+            = featured_day_home.address
+            - if featured_day_home.blurb.present?
               %br
-              = @featured_day_home.blurb
-              %br
-              = link_to 'Details', day_home_slug_path(@featured_day_home.slug)
-              
+              = featured_day_home.blurb
+            %br
+            = link_to 'Details', day_home_slug_path(featured_day_home.slug)
 
     #sliderWrapper
       #fullsize
