@@ -1,4 +1,16 @@
-# Dayhomes
+# Day Home Registry
+
+> Day Home Registry is your answer for all of your day home searching needs!
+> 
+> Being a parent is busy enough. The mission of the Day Home Registry is to make being a parent a little easier.
+> 
+> _Faye and Jon Holt (Day Home Registry owners)_
+
+This application provides a registry and social platform to connect day homes with each other and with their customers.
+
+## Vocabulary
+
+ * _day home_ - a centre providing care for children. These can be licensed or unclicensed and have different certifications and avilability.
 
 ## The Team
 
@@ -23,13 +35,21 @@ Once the pull request is merged into master, the continuous integration server w
 
 After the change has been merged and the pull request closed, please mark your story as finished and delivered. Well demo the story to the product owner at the next team demo and they’ll either accept it or reject it. Accepted stories will be deployed to production on a schedule set by the client.
 
+To summarize each state transition:
+
+ * _start_ - this means you've cut a branch and begun work on a story
+ * _finish_ - this menas your code has been pushed to a branch on GitHub and a pull request has been merged. If it's finished it can be immediately deployed to staging
+ * _deliver_ - this story has been deployed to staging and is ready for review
+ * _accept_ - this story has been reviewed on staging and is clear for production deployment
+ * _reject_ - this story in not accepted and more work needs to be done before it can be deployed to production
+
+## Installing
+
 Before you can run Dayhomes in development, you need to install and be running
 the following on your system:
 
   * MySQL 5.5
   * Redis 2.4.8
-
-## Installing
 
 Begin by cloning the dayhomes repository from GitHub to get access to the
 projects source code and build assets.

@@ -93,7 +93,7 @@ nav ul{
 	list-style:none;
 	float:left;
 	margin-top:21px;
-	margin-left:0;
+	margin-left:18px;
 }
 nav li{
 	float:left;
@@ -206,18 +206,24 @@ footer p{
 	line-height:60px;
 	text-align:center;
 }
-#footerInfo a, .featured a, .right a{
+#footerInfo span, .featured a, .right a, .contact a, .about a{
 	color:#c94248;
 	text-decoration:underline;
 }
-#footerInfo a:hover, .featured a:hover, .right a:hover{
+#footerInfo span:hover, .featured a:hover, .right a:hover, .contact a:hover, .about a:hover{
 	color:#79489f;
 }
+.social a{
+	text-decoration:none;
+}
 .social p{
-	line-height:28px !important;
+	line-height:24px !important;
 }
 .social img{
 	margin-right:18px;
+}
+.social a img{
+	text-decoration:none;
 }
 .aboutPhoto{
 	float:right;

@@ -2,9 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.2'
 gem 'mysql2'
-#gem 'sqlite3'
 gem 'haml'
-gem 'gmaps4rails'
+gem 'gmaps4rails', :git => 'git@github.com:RyanonRails/Google-Maps-for-Rails.git'
 gem 'jquery-rails'
 gem 'carmen'
 gem 'authlogic'
@@ -17,6 +16,13 @@ gem 'jquery-star-rating-rails'
 gem 'client_side_validations'
 gem 'forum_monster'
 gem 'bb-ruby'
+gem 'koala'
+
+# le windows
+platforms :mswin, :mingw do
+  gem 'eventmachine', '1.0.0.beta.4.1'
+  gem 'thin'
+end
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
@@ -36,8 +42,6 @@ group :development, :test do
   gem 'spork', '~> 1.0rc'
   gem 'capybara'
   gem 'guard-rspec'
-  gem 'eventmachine', '1.0.0.beta.4.1', :platforms => [:mswin, :mingw]
-  gem 'thin'
 end
 
 group :production do
