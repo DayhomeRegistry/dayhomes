@@ -136,12 +136,11 @@ nav li{
 }
 #featureBtm{
 	height:8px;
-	margin-top:112px;
 	margin-bottom:-20px;
 	background:url('featureBottom.png') top left no-repeat;
 }
 .featured{
-	margin: 0;
+	margin: 24px 0 0 0;
 	padding-bottom:12px;
 	background:url('featureBG.png') top left repeat-y;
 }
@@ -154,7 +153,7 @@ nav li{
  }
 .callToAction{
 	height:400px;
-	margin:160px 18px 0 0;
+	margin:35px 18px 0 0;
 	background:url('dayhomeOwner.png') top left no-repeat;
 	float:right;
 }
@@ -168,7 +167,7 @@ nav li{
 	height:54px;
 	width:124px;
 	float:right;
-	margin:-16px 36px 18px 0;
+	margin-top:-16px;
 	text-indent:-9999px;
 	background:url('sprites.png') -107px top no-repeat;
 }
@@ -229,6 +228,9 @@ footer p{
 .aboutPhoto{
 	float:right;
 	margin:0 0 14px 16px;
+}
+p.right{
+	max-width:150px;
 }
 /* Form styles */
 ::-webkit-input-placeholder, :-moz-placeholder {
