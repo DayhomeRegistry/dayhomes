@@ -235,5 +235,4 @@ p.right{
 /* Form styles */
 ::-webkit-input-placeholder, :-moz-placeholder {
 	font-style:italic;
-	opacity:.6;
 }
