@@ -21,7 +21,8 @@ describe Search do
                                   :street2 =>  '',
                                   :postal_code => 'T5N1Y6',
                                   :street1 => '131 St NW',
-                                  :slug => 'day_home_1'
+                                  :slug => 'day_home_1',
+                                  :licensed => true
                                   })
 
     @dayhome_2 = DayHome.create!({:name => "DayHome 2",
@@ -32,7 +33,8 @@ describe Search do
                                   :postal_code => 'T5S1R5',
                                   :street1 => '178 St NW',
                                   :dietary_accommodations => true,
-                                  :slug => 'day_home_2'})
+                                  :slug => 'day_home_2',
+                                  :licensed => false})
   end
 
   it "should create a search model given valid attributes" do
@@ -307,6 +309,44 @@ describe Search do
 
         valid_search = Search.new(@params)
         valid_search.pin_count.should eql(2)
+      end
+    end
+
+    describe "licensed pins" do
+      it "where 1 dayhome is returned if licensed is checked" do
+        @params = { :license_group => 'licensed',
+                    :advanced_search => 'true' }
+
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(1)
+      end
+
+      it "where 1 dayhome is returned if unlicensed is checked" do
+        @params = { :license_group => 'unlicensed',
+                    :advanced_search => 'true' }
+
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(1)
+      end
+
+      it "where 2 dayhomes are returned if both are checked" do
+        @params = { :license_group => 'both_license_types',
+                    :advanced_search => 'true' }
+
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(2)
+      end
+
+      it "where 1 dayhome is returned if licesed and an availability type are checked" do
+        @dayhome_1.availability_types << @full_time_full_days
+        @dayhome_1.availability_types << @part_time_morning
+
+        @params = { :license_group => 'licensed',
+                    :availability_types => { :kind => [@part_time_morning.id.to_s ]},
+                    :advanced_search => 'true' }
+
+        valid_search = Search.new(@params)
+        valid_search.pin_count.should eql(1)
       end
     end
 

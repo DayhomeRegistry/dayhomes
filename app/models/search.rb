@@ -6,7 +6,7 @@ class Search
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
                 :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
-                :center_longitude, :zoom
+                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => 'Full Days'}
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
@@ -23,10 +23,16 @@ class Search
 
     # only do the availability type processing if you've submitted the advanced search form
     if self.advanced_search == 'true'
-      update_checkboxes(attributes)
+      # update search vars based on checkboxes
+      update_check_boxes(attributes)
+
+      # update the search vars based on the license radio button group
+      unless self.license_group.blank?
+        self.send("#{self.license_group}=", true)
+      end
     else
-      # check full and part time (either /searches or a simple search(header), visual for user)
-      set_default_checkboxes
+      # set search defaults (either /searches or a simple search(header))
+      set_defaults
     end
 
     # no search params entered
@@ -46,15 +52,17 @@ class Search
     # set the joins based on what the user has
     dayhome_query = determine_joins(dayhome_query)
 
-    # if the user uses the advanced search, we use the values from the availability type checkboxes,
-    # otherwise we set the default to full/part time (simple search)
+    # if the user uses the advanced search, we use the values from the search screen
+    # otherwise we use the defaults (defined in set_defaults)
     if params.has_key?(:advanced_search) && params[:advanced_search] == 'true'
       # apply where clauses
       dayhome_query = apply_type_filter(:availability_types, dayhome_query)
       dayhome_query = apply_type_filter(:certification_types, dayhome_query)
       dayhome_query = apply_boolean_filter(:dietary_accommodations, dayhome_query)
+      dayhome_query = apply_licensed_filter(dayhome_query)
     else
       dayhome_query = dayhome_query.where("availability_types.availability IN (?) AND availability_types.kind = ?", DEFAULT_AVAILABILITY_TYPES[:availability], DEFAULT_AVAILABILITY_TYPES[:kind]).includes(:availability_types)
+      dayhome_query = dayhome_query.where(:licensed => [true, false])
     end
 
     # create search dayhome pin
@@ -94,7 +102,7 @@ private
 
   def apply_boolean_filter(boolean_column, dayhome_query)
     unless self.send(boolean_column).blank?
-      # check if it's true
+      # check if the box is checked on the screen
       if self.send(boolean_column) == '1'
         # tack on where clause
         dayhome_query = dayhome_query.where("day_homes.#{boolean_column} = true")
@@ -103,11 +111,25 @@ private
     dayhome_query
   end
 
+  # apply the where clauses based on which radio button is selected
+  def apply_licensed_filter(dayhome_query)
+    if !self.licensed.blank? && self.licensed  == true
+      dayhome_query = dayhome_query.where("day_homes.licensed = true")
+    elsif !self.unlicensed.blank? && self.unlicensed == true
+      dayhome_query = dayhome_query.where("day_homes.licensed = false")
+    elsif !self.both_license_types.blank? && self.both_license_types == true
+      # if the other 2 aren't set, it must be both
+      dayhome_query = dayhome_query.where(:licensed => [true, false])
+    end
+
+    dayhome_query
+  end
+
   def persisted?
     false
   end
 
-  def update_checkboxes(attributes)
+  def update_check_boxes(attributes)
     reset_all_checkboxes
     apply_checks(:availability_types, attributes)
     apply_checks(:certification_types, attributes)
@@ -132,7 +154,7 @@ private
 
   def reset_all_checkboxes
     # clear out any existing values in the checkboxes
-    # this is clean up after the simple search (set_default_checkboxes)
+    # this is clean up after the simple search (set_defaults)
     self.availability_types.each do |clear_avail|
       clear_avail.checked = false
     end
@@ -142,13 +164,15 @@ private
     end
   end
 
-  def set_default_checkboxes
-    # set the default checkboxes (no search params entered))
+  # set the defaults (no search params entered))
+  def set_defaults
     self.availability_types.each do |default_avail_types|
       if DEFAULT_AVAILABILITY_TYPES[:kind] =~ /^#{default_avail_types.kind}/
         default_avail_types.checked = true
       end
     end
+
+    self.both_license_types = true
   end
 
   def determine_joins(dayhome_query)
