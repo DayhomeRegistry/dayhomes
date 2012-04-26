@@ -41,11 +41,16 @@
       .search_section
         %h5
           = 'Licensed / Unlicensed'
-        %label.checkbox
-          = f.check_box :licensed, :class => 'checkbox'
+        %label.radio.inline
+          = radio_button_tag "search[license_group]", "licensed", checked = @advanced_search.licensed.nil? ? false : true, :class => 'radio'
           = 'Licensed'
-        %label.checkbox
-          = f.check_box :unlicensed, :class => 'checkbox'
+        %br
+        %label.radio.inline
+          = radio_button_tag "search[license_group]", "unlicensed",  checked = @advanced_search.unlicensed.nil? ? false : true, :class => 'radio'
           = 'Unlicensed'
+        %br
+        %label.radio.inline
+          = radio_button_tag "search[license_group]", "both_licensed", checked = @advanced_search.both_licensed.nil? ? false : true, :class => 'radio'
+          = 'Both'
       .search_section
         = submit_tag "Search", :class => 'btn btn-primary span2'

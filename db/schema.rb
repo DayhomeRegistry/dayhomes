@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(:version => 20120424030417) do
     t.string   "slug"
     t.string   "phone_number"
     t.text     "blurb"
-    t.boolean  "licensed"
+    t.boolean  "licensed",               :default => false, :null => false
   end
 
   create_table "events", :force => true do |t|
