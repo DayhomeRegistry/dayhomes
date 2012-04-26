@@ -211,11 +211,11 @@ footer p{
 	line-height:60px;
 	text-align:center;
 }
-#footerInfo a, .featured a, .right a, .contact_info a, .create_review a, .calendar a{
+#footerInfo a, .featured a, .right a, .contact_info a, .create_review a, .calendar a, .span4 li a{
 	color:#c94248;
 	text-decoration:underline;
 }
-#footerInfo a:hover, .featured a:hover, .right a:hover, .contact_info a:hover, .create_review a:hover, .calendar a:hover{
+#footerInfo a:hover, .featured a:hover, .right a:hover, .contact_info a:hover, .create_review a:hover, .calendar a:hover, .span4 li a:hover{
 	color:#79489f;
 }
 .social p{
@@ -236,11 +236,21 @@ footer p{
 
 /*Single Dayhome Page */
 .singleViewH3{
-	margin-bottom:8px;
+	margin-bottom:4px;
+	margin-top:14px;
 }
 .contact_info a, .create_review a, .calendar a{
 	font-size:14px;
 }
+.availability{
+	margin:0 0 14px 0 !important;
+	font-size:16px;
+}
+.mediaAlignRight {
+	float:right;
+	width:508px !important;
+}
+
 .pagination{
 	background:none !important;
 }
@@ -259,6 +269,23 @@ footer p{
 	display:block;
 	clear:left;
 }
-.singleViewSlider #sliderWrapper{
-	float:left;
+.mediaAlignRight .gmaps4rails_map{
+	width:506px !important;
+	height:300px !important;
+	float:right!important;
+}
+.mediaAlignRight .map_container{
+	width:506px !important;
+	margin-bottom:14px;
+	float:right;
+}
+#contactFormButton{
+	width:124px;
+	height:50px;
+	display:block;
+	background:url('sprites.png') -234px top no-repeat;
+	text-indent:-9999px;
+}
+#contactFormButton:hover{
+	background:url('sprites.png') -234px -51px no-repeat;
 }

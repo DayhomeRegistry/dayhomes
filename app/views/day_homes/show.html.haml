@@ -22,58 +22,105 @@
   = @day_home.name
 
 .row
-  .span5
+  .span4
+    %div.availability
+      %h3.singleViewH3
+        Open Availability
+        - avail = @day_home.availability
+        -if avail.empty?
+          =image_tag("circle-empty.png", :title=> "Closed")
+        -else
+          -if avail.include? "Full-time"
+            =image_tag("circle-full.png", :title=> "Full-time")
+          -if avail.include? "Part-time"
+            =image_tag("circle-half.png", :title=> "Part-time")
+      - @day_home.availability_types.order("id asc").each do |av|
+        = "#{av.availability} -  #{av.kind}"
+
+    %p
+      = link_to 'Contact Day Home'.html_safe, [:new, :day_home_signup_request], :id => 'contactFormButton', :href => '#contact-form', :rel => 'modal:open'
+      
+      #contact-form.modal
+        %h3 Contacting
+        %h5 #{@day_home.name}
+        = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
+          = cf.label :name, "Your name:"
+          = cf.text_field :name, :class => "required"
+
+          = cf.label :name, "Your email:"
+          = cf.text_field :email, :class => "required"
+          
+          = cf.label :name, "Your phone (optional):"
+          = cf.text_field :phone
+          
+          = cf.label :subject, "Regarding:"
+          = cf.text_field :subject
+
+          .remember
+            = cf.label "Message:"
+            %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
+          = cf.text_area :message, :cols => 90, :rows => 10
+
+          = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
+          .submit
+            = cf.submit "Contact", :class => 'btn btn-primary span3'
+
     %ul.unstyled
       - if @day_home.blurb.present?
         %li
           %h3.singleViewH3
             About
           = @day_home.blurb
+
       %li
-        %h4
-          Contact Information / Location
+        %h3.singleViewH3
+          Contact Information
         .contact_info
-          = mail_to @day_home.email, "Email Us", :encode => "javascript"
-          = ' / '
-          %a(title="Contact Form" href="#contact-form" rel="modal:open") Contact Form
-        .calendar.pull_right
-          = link_to('View Calendar', calendar_day_home_path(@day_home))
-        #contact-form.modal
-          %h3 Contacting
-          %h5 #{@day_home.name}
-          = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
-            = cf.label :name, "Your name:"
-            = cf.text_field :name, :class => "required"
+          %p
+            = @day_home.address
+            - if @day_home.phone_number?
+              %br
+              Phone Number:
+              = @day_home.phone_number        
 
-            = cf.label :name, "Your email:"
-            = cf.text_field :email, :class => "required"
-            
-            = cf.label :name, "Your phone (optional):"
-            = cf.text_field :phone
-            
-            = cf.label :subject, "Regarding:"
-            = cf.text_field :subject
+          .calendar.pull_right
+            = link_to('View Calendar', calendar_day_home_path(@day_home))
+            = mail_to @day_home.email, "Email Us", :encode => "javascript"
 
-            .remember
-              = cf.label "Message:"
-              %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
-            = cf.text_area :message, :cols => 90, :rows => 10
-
-            = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
-            .submit
-              = cf.submit "Contact", :class => 'btn btn-primary span3'
-
+      %li
+        %h3.singleViewH3
+          Certification
         %p
-          = @day_home.address
-          - if @day_home.phone_number?
-            %br
-            Phone Number:
-            = @day_home.phone_number
+          = @day_home.name
+          has various certifications.
 
+      %li
+        %h3.singleViewH3
+          Dietary Accomodations
+        %p
+          = @day_home.name
+          is nut free with vegetarian options.
         
-          
+      %li
+        %h3
+          Social Media
+        %p
+          Connect with 
+          = @day_home.name
+          through their social media.
+        %p
+          = image_tag 'icons/facebook.png'
+          %a{:href => "#"} Friend Us
+          on Facebook
+        %p
+          = image_tag 'icons/twitter-2.png'
+          %a{:href => "#"} Follow Us
+          on Twitter
                                                                       
-  .span6
+
+
+
+  .mediaAlignRight
     %h3.singleViewH3
       Find Us
     = gmaps(:map_options => { :center_latitude => @day_home.lat,
@@ -81,8 +128,6 @@
                                  :zoom => 16},
                :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
 
-.row
-  .span7.singleViewSlider
     %h3.singleViewH3
       = @day_home.name
       Photos
