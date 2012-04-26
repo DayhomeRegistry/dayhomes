@@ -33,7 +33,12 @@ Dayhomes::Application.routes.draw do
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
   resources :users
-  resources :user_sessions
+  resources :user_sessions do
+    collection do
+      get :fb_connect
+      get :fb_connect_callback
+    end
+  end
   
   match 'reset_password' => 'password_resets#new', :as => :reset_password
   match 'reset_password_instructions/:id' => 'password_resets#edit', :as => :reset_password_instructions

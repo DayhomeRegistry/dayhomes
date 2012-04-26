@@ -19,7 +19,7 @@ h3{
 }
 
 .wrapper{
-	width:940px;
+	width:960px;
 	margin:0 auto;
 }
 header{
@@ -93,7 +93,7 @@ nav ul{
 	list-style:none;
 	float:left;
 	margin-top:21px;
-	margin-left:0;
+	margin-left:18px;
 }
 nav li{
 	float:left;
@@ -104,25 +104,17 @@ nav li{
 	background:#52be60 url('bgGrad.png') center top repeat-x;
 	margin-top:-3px;
 	padding-bottom:12px;
-	clear:both;
-	float:left;
 	overflow:hidden;
 }
 
 .content{
 	background:url('contentPattern.png') left top repeat;
-	border:1px solid #e6e6e3;
-	border-top:none;
 	margin-bottom:30px;
-	clear:both;
-	float:left;
-	width: 940px;
-  padding: 24px;
-  width: 892px;
-  min-height: 400px;
+  	min-height: 400px;
+  	padding:11px !important;
 }
 #contentShadow{
-	width:941px;
+	width:963px;
 	height:17px;
 	background:url('contentShadow.png') bottom left no-repeat;
 	position:relative;
@@ -136,12 +128,11 @@ nav li{
 }
 #featureBtm{
 	height:8px;
-	margin-top:112px;
 	margin-bottom:-20px;
 	background:url('featureBottom.png') top left no-repeat;
 }
 .featured{
-	margin: 0;
+	margin: 24px 0 0 36px;
 	padding-bottom:12px;
 	background:url('featureBG.png') top left repeat-y;
 }
@@ -154,7 +145,7 @@ nav li{
  }
 .callToAction{
 	height:400px;
-	margin:160px 18px 0 0;
+	margin:35px 0 0 0;
 	background:url('dayhomeOwner.png') top left no-repeat;
 	float:right;
 }
@@ -168,7 +159,7 @@ nav li{
 	height:54px;
 	width:124px;
 	float:right;
-	margin:-16px 36px 18px 0;
+	margin-top:-16px;
 	text-indent:-9999px;
 	background:url('sprites.png') -107px top no-repeat;
 }
@@ -179,6 +170,7 @@ nav li{
 	background:#fdfdf9;
 	clear:both;
 	float:left;
+	width:960px;
 	overflow:visible;
 	padding-top:16px;
 	padding-bottom:16px;
@@ -187,7 +179,7 @@ nav li{
 	margin-left:60px;
 }
 .footerShadow{
-	width:941px;
+	width:963px;
 	height:17px;
 	background:url('fatFooterShadow.png') top left no-repeat;
 	position:relative;
@@ -207,25 +199,65 @@ footer p{
 	line-height:60px;
 	text-align:center;
 }
-#footerInfo a, .featured a, .right a{
+#footerInfo span, .featured a, .right a, .contact a, .about a{
 	color:#c94248;
 	text-decoration:underline;
 }
-#footerInfo a:hover, .featured a:hover, .right a:hover{
+#footerInfo span:hover, .featured a:hover, .right a:hover, .contact a:hover, .about a:hover{
 	color:#79489f;
 }
+.social a{
+	text-decoration:none;
+}
 .social p{
-	line-height:28px !important;
+	line-height:24px !important;
 }
 .social img{
 	margin-right:18px;
+}
+.social a img{
+	text-decoration:none;
 }
 .aboutPhoto{
 	float:right;
 	margin:0 0 14px 16px;
 }
+
 /* Form styles */
 ::-webkit-input-placeholder, :-moz-placeholder {
 	font-style:italic;
-	opacity:.6;
+}
+/* Admin Section*/
+.adminPanel{
+
+	padding-top:18px;
+	margin-top:-14px;
+	margin-right:14px;
+	height:25px;
+	float:right;
+	font-size:14px;
+	line-height:25px;
+}
+.adminPanel ul{
+	list-style:none;
+	float:right;
+}
+.adminPanel li{
+	float:right;
+	margin-right:8px;
+	font-weight:bold;
+}
+.adminPanel li.first{
+	float:left;
+}
+.adminPanel img{
+	float:right;
+	margin-left:8px;
+}
+/* About Page */
+.aboutPage{
+	width:920px;
+	padding:0 10px;
+	float:left;
+	display:inline-block;
 }
