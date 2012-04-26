@@ -6,7 +6,7 @@ class Search
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
                 :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
-                :center_longitude, :zoom, :licensed, :unlicensed, :both_licensed, :license_group
+                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => 'Full Days'}
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
@@ -27,7 +27,9 @@ class Search
       update_check_boxes(attributes)
 
       # update the search vars based on the license radio button group
-      self.send("#{self.license_group}=", true)
+      unless self.license_group.blank?
+        self.send("#{self.license_group}=", true)
+      end
     else
       # set search defaults (either /searches or a simple search(header))
       set_defaults
@@ -115,7 +117,7 @@ private
       dayhome_query = dayhome_query.where("day_homes.licensed = true")
     elsif !self.unlicensed.blank? && self.unlicensed == true
       dayhome_query = dayhome_query.where("day_homes.licensed = false")
-    elsif !self.both_licensed.blank? && self.both_licensed == true
+    elsif !self.both_license_types.blank? && self.both_license_types == true
       # if the other 2 aren't set, it must be both
       dayhome_query = dayhome_query.where(:licensed => [true, false])
     end
@@ -170,7 +172,7 @@ private
       end
     end
 
-    self.both_licensed = true
+    self.both_license_types = true
   end
 
   def determine_joins(dayhome_query)

@@ -50,7 +50,7 @@
           = 'Unlicensed'
         %br
         %label.radio.inline
-          = radio_button_tag "search[license_group]", "both_licensed", checked = @advanced_search.both_licensed.nil? ? false : true, :class => 'radio'
+          = radio_button_tag "search[license_group]", "both_license_types", checked = @advanced_search.both_license_types.nil? ? false : true, :class => 'radio'
           = 'Both'
       .search_section
         = submit_tag "Search", :class => 'btn btn-primary span2'
