@@ -1,67 +1,47 @@
-%p.right
-  - if current_user
-    = current_user.full_name
-    = "-"
-    %strong= link_to "Your Account", user_path(current_user)
-    |
-    - if current_user.admin?
-      %strong= link_to "Admin", admin_root_path
-      |
-    - if current_user.day_home_owner?
-      %strong= link_to "My Day Homes", day_homes_path
-      |
-    %strong= link_to 'Logout', logout_path
-  - else
-    = fb_connect_button
-    %br
-    %br
-    %strong= link_to 'Login', login_path
-    |
-    %strong= link_to 'Sign Up', new_user_path
+.row
+  .featured.span7
+    #featureTop
+    #featureDetails
+      %h2 Featured Dayhomes
 
-.featured.span7
-  #featureTop
-  #featureDetails
-    %h2 Featured Dayhomes
-
-        
-    %ul#slideshow
-      - @featured_day_homes.each do |featured_day_home|
-        %li
-          %h3
-            = featured_day_home.name
-          %span= featured_day_home.photos.first.photo_url
-          %p
-            = featured_day_home.address
-            - if featured_day_home.blurb.present?
+          
+      %ul#slideshow
+        - @featured_day_homes.each do |featured_day_home|
+          %li
+            %h3
+              = featured_day_home.name
+            %span= featured_day_home.photos.first.photo_url
+            %p
+              = featured_day_home.address
+              - if featured_day_home.blurb.present?
+                %br
+                = featured_day_home.blurb
               %br
-              = featured_day_home.blurb
-            %br
-            = link_to 'Details', day_home_slug_path(featured_day_home.slug)
+              = link_to 'Details', day_home_slug_path(featured_day_home.slug)
 
-    #sliderWrapper
-      #fullsize
-        #imgprev.imgnav{:title => "Previous Image"}
-        #imglink
-        #imgnext.imgnav{:title => "Next Image"}
-        #image
-        #information
-          %h3
-          %p
+      #sliderWrapper
+        #fullsize
+          #imgprev.imgnav{:title => "Previous Image"}
+          #imglink
+          #imgnext.imgnav{:title => "Next Image"}
+          #image
+          #information
+            %h3
+            %p
 
 
-  #featureBtm
+    #featureBtm
 
-.callToAction.span4
-  %h3 Day home owner?
-  %p
-    Are you a day home owner? Would you like a fast, easy
-    way for parents to find your  company?
-    %br/
-    Register your day home today for easy access to a whole new client base.
-  
-  %p
-    = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp'
+  .callToAction.span4
+    %h3 Day home owner?
+    %p
+      Are you a day home owner? Would you like a fast, easy
+      way for parents to find your  company?
+      %br/
+      Register your day home today for easy access to a whole new client base.
+    
+    %p
+      = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp'
 
 = content_for :header_scripts do
   = javascript_include_tag 'jquery.home_slider'
