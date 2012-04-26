@@ -235,7 +235,7 @@ footer p{
 }
 
 /*Single Dayhome Page */
-.singleViewAbout{
+.singleViewH3{
 	margin-bottom:8px;
 }
 .contact_info a, .create_review a, .calendar a{
@@ -247,11 +247,18 @@ footer p{
 .pagination ul{
 	margin-top:0 !important;
 }
-.list_review{
+.list_reviews{
 	margin-bottom:14px;
+	margin-top:24px;
+	padding-top:14px;
 	display:block;
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
 }
 .create_review{
 	display:block;
 	clear:left;
+}
+.singleViewSlider #sliderWrapper{
+	float:left;
 }

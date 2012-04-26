@@ -26,9 +26,8 @@
     %ul.unstyled
       - if @day_home.blurb.present?
         %li
-          %h3
-            .singleViewAbout
-              About
+          %h3.singleViewH3
+            About
           = @day_home.blurb
       %li
         %h4
@@ -70,13 +69,21 @@
             %br
             Phone Number:
             = @day_home.phone_number
-          = gmaps(:map_options => { :center_latitude => @day_home.lat,
-                                   :center_longitude => @day_home.lng,
-                                   :zoom => 16},
-                 :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
+
+        
+          
                                                                       
-  .span5
-    %h3
+  .span6
+    %h3.singleViewH3
+      Find Us
+    = gmaps(:map_options => { :center_latitude => @day_home.lat,
+                                 :center_longitude => @day_home.lng,
+                                 :zoom => 16},
+               :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
+
+.row
+  .span7.singleViewSlider
+    %h3.singleViewH3
       = @day_home.name
       Photos
     
@@ -97,17 +104,11 @@
     #sliderWrapper
       #fullsize
         #imgprev.imgnav{:title => "Previous Image"}
-        #imglink
         #imgnext.imgnav{:title => "Next Image"}
         #image
         #information
           %h3
           %p
-      #thumbnails
-        #slideleft{:title => "Slide Left"}
-        #slidearea
-          #slider
-        #slideright{:title => "Slide Right"}
 
 .row
   .span11
@@ -143,11 +144,7 @@
   window.onload=function(){
     slideshow.auto=true;
     slideshow.speed=5;
-    slideshow.link="linkhover";
     slideshow.info="information";
-    slideshow.thumbs="slider";
-    slideshow.left="slideleft";
-    slideshow.right="slideright";
     slideshow.scrollSpeed=4;
     slideshow.spacing=5;
     slideshow.active="#fff";
