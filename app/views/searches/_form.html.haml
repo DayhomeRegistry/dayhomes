@@ -39,4 +39,18 @@
           = f.check_box :dietary_accommodations, :class => 'checkbox'
           = 'Accommodates for Food Allergies'
       .search_section
+        %h5
+          = 'Licensed / Unlicensed'
+        %label.radio.inline
+          = radio_button_tag "search[license_group]", "licensed", checked = @advanced_search.licensed.nil? ? false : true, :class => 'radio'
+          = 'Licensed'
+        %br
+        %label.radio.inline
+          = radio_button_tag "search[license_group]", "unlicensed",  checked = @advanced_search.unlicensed.nil? ? false : true, :class => 'radio'
+          = 'Unlicensed'
+        %br
+        %label.radio.inline
+          = radio_button_tag "search[license_group]", "both_license_types", checked = @advanced_search.both_license_types.nil? ? false : true, :class => 'radio'
+          = 'Both'
+      .search_section
         = submit_tag "Search", :class => 'btn btn-primary span2'

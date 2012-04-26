@@ -108,6 +108,18 @@ describe SearchesController do
         response.should be_success
       end
 
+      it "should be successful with licensed set" do
+        get :index, :search => @attr.merge(:advanced_search => true,
+                                           :license_group => 'licensed')
+        response.should be_success
+      end
+
+      it "should be successful with both types of licenses set" do
+        get :index, :search => @attr.merge(:advanced_search => true,
+                                           :license_group => 'both_license_types')
+        response.should be_success
+      end
+
       it "should be successful with availability type query params" do
         @params = { :advanced_search => true,
                     :address => 'T6L5M6 Edmonton Alberta Canada',
