@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   def index
-    @featured_day_home = DayHome.featured.first(:offset => rand(DayHome.featured.count))
+    @featured_day_homes = DayHome.featured.reject{|day_home| day_home.photos.blank? }
   end
   
   def about

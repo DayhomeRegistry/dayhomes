@@ -146,6 +146,7 @@ fulltime_addresses.each_with_index  do |street_and_postal, index|
   d.certification_types << level_2
   d.certification_types << advanced_cpr
   if index.odd?
+    d.licensed = true
     d.availability_types << part_time_after_school
     d.certification_types << level_3
     d.certification_types << infant_cpr
@@ -173,6 +174,7 @@ part_time_addresses.each_with_index  do |street_and_postal, index|
   d.availability_types << part_time_morning
   d.certification_types << basic_cpr
   if index.odd?
+    d.licensed = true
     d.availability_types << part_time_afternoon
   end 
   add_photos_to_dayhome(photos, d)

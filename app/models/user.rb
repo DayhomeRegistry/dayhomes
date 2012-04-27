@@ -25,4 +25,18 @@ class User < ActiveRecord::Base
     self.user_day_homes = []
     self.day_homes = DayHome.find_all_by_id(day_home_id_attrs)
   end
+  
+  def self.new_from_fb_user(fb_user, fb_access_token, fb_expires_in)
+    random_password = SecureRandom.hex(12)
+    new({
+      :first_name => fb_user['first_name'],
+      :last_name => fb_user['last_name'],
+      :email => fb_user['email'],
+      :password => random_password,
+      :password_confirmation => random_password,
+      :facebook_access_token => fb_access_token,
+      :facebook_access_token_expires_in => fb_expires_in
+    })
+  end
+  
 end

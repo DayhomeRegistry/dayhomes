@@ -12,5 +12,6 @@ FactoryGirl.define do
     postal_code 'T6W1C3'
     phone_number '780-555-5555'
     blurb 'This is a blurb describing this dayhome'
+    licensed false
   end
 end

@@ -24,15 +24,6 @@
 //= require jquery.rest
 //= require rails.validations
 //= require jquery-star-rating
+//= require common
 //= require externals/modernizr
 //= require externals/html5support/jquery.html5support
-
-$.ajaxSetup({
-    beforeSend: function(xhr) {
-        xhr.setRequestHeader("Accept", "text/javascript");
-    }
-});
-
-function log(text) {
-  if(window && window.console) console.log(text);
-}

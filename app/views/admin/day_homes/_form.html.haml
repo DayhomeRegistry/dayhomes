@@ -83,7 +83,11 @@
   = f.label :dietary_accommodations, 'Dietary Accommodations', :class => :checkbox do
     = f.check_box :dietary_accommodations
     Accommodates for Food Allergies
-  
+
+  = f.label :licensed, 'Licensed', :style => 'font-weight: bold'
+  = f.label :licensed, 'Licensed', :class => :checkbox do
+    = f.check_box :licensed
+    Licensed
   
   %br
   = f.submit 'Save', :class => 'btn'
