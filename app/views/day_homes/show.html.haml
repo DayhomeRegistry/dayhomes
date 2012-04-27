@@ -22,16 +22,43 @@
   = @day_home.name
 
 .row
-  .span5
+  .span4
+    %p
+      #contact-form.modal
+        %h3 Contacting
+        %h5 #{@day_home.name}
+        = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
+          = cf.label :name, "Your name:"
+          = cf.text_field :name, :class => "required"
+
+          = cf.label :name, "Your email:"
+          = cf.text_field :email, :class => "required"
+          
+          = cf.label :name, "Your phone (optional):"
+          = cf.text_field :phone
+          
+          = cf.label :subject, "Regarding:"
+          = cf.text_field :subject
+
+          .remember
+            = cf.label "Message:"
+            %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
+          = cf.text_area :message, :cols => 90, :rows => 10
+
+          = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
+          .submit
+            = cf.submit "Contact", :class => 'btn btn-primary span3'
+
     %ul.unstyled
       - if @day_home.blurb.present?
         %li
-          %h4
+          %h3.singleViewH3
             About
           = @day_home.blurb
+
       %li
-        %h4
-          Contact Information / Location
+        %h3.singleViewH3
+          Contact Information
         .contact_info
           = mail_to @day_home.email, "Email Us", :encode => "javascript"
           = ' / '
@@ -82,25 +109,39 @@
                 =image_tag("circle-half.png", :title=> "Part-time")
           - @day_home.availability_types.order("id asc").each do |av|
             = "#{av.availability} -  #{av.kind}"
-        %div
-          = gmaps(:map_options => { :center_latitude => @day_home.lat,
-                                   :center_longitude => @day_home.lng,
-                                   :zoom => 16,
-                                   :auto_zoom => false,
-                                   :provider_key => gmaps_api_key},
-                 :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
-                                                                      
-  .span5
-    %h4
-      = @day_home.name
+      = link_to 'Contact Day Home'.html_safe, [:new, :day_home_signup_request], :id => 'contactFormButton', :href => '#contact-form', :rel => 'modal:open'
+
+  .mediaAlignRight
+    %h3.singleViewH3
+      Find Us
+    = gmaps(:map_options => { :center_latitude => @day_home.lat,
+                                 :center_longitude => @day_home.lng,
+                                 :zoom => 16},
+               :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
+
+    %h3.singleViewH3
       Photos
     
     - if @day_home.photos.blank?
       %p
         No photos available.
     - else
-      - @day_home.photos.each do |photo|
-        = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 250px; margin: 0 10px 10px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :title => photo.caption
+      %ul#slideshow
+        - @day_home.photos.each do |photo|
+          %li
+            %h3
+              = photo.caption
+            %span= photo.photo_url
+            = image_tag(photo.photo_url)
+
+      #sliderWrapper
+        #fullsize
+          #imgprev.imgnav{:title => "Previous Image"}
+          #imglink
+          #imgnext.imgnav{:title => "Next Image"}
+          #image
+          #information
+            %h3
 
 .row
   .span11
@@ -125,3 +166,20 @@
           or 
           = link_to 'Sign Up', new_user_path
           to leave a review.
+
+= content_for :header_scripts do
+  = javascript_include_tag 'jquery.home_slider'
+
+:javascript
+  $('slideshow').style.display='none';
+  $('sliderWrapper').style.display='block';
+  var slideshow=new TINY.slideshow("slideshow");
+  window.onload=function(){
+    slideshow.auto=true;
+    slideshow.speed=5;
+    slideshow.info="information";
+    slideshow.scrollSpeed=4;
+    slideshow.spacing=5;
+    slideshow.active="#fff";
+    slideshow.init("slideshow","image","imgprev","imgnext","imglink");
+  }
