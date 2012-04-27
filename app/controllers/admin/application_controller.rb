@@ -19,13 +19,13 @@ class Admin::ApplicationController < ApplicationController
   
   # Make sure they are an admin!
   def require_user
+    if current_user && !current_user.admin?
+      redirect_to admin_logout_path
+      return false
+    end
+
     unless current_user
-     if current_user && !current_user.admin?
-       redirect_to admin_logout_path
-     else
-       redirect_to admin_login_path
-     end
- 
+     redirect_to admin_login_path
      return false
     end
   end
