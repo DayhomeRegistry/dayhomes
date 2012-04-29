@@ -19,7 +19,7 @@
 //= require jquery.ui.timepicker
 //= require jquery.add_more
 //= require jquery.colorbox
-//= require jquery.slider
+//= require coin-slider.min
 //= require jquery.modal
 //= require jquery.rest
 //= require rails.validations
