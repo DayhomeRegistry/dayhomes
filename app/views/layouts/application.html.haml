@@ -1,7 +1,7 @@
 !!! Strict
 %html{:lang =>"en"}
   %head
-    %title Day Home Registry
+    %title Dayhome Registry
     = stylesheet_link_tag :application, :media => :all
     = javascript_include_tag :application
     = csrf_meta_tags
@@ -25,7 +25,7 @@
                     %li= link_to "Admin", admin_root_path
                     
                   - if current_user.day_home_owner?
-                    %li= link_to "My Day Homes", day_homes_path
+                    %li= link_to "My Dayhomes", day_homes_path
                     
                   %li= link_to 'Logout', logout_path
                 - else

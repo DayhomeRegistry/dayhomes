@@ -1,12 +1,12 @@
 = form_for(@advanced_search, :url => searches_path, :method => 'get', :html => {:class => 'well', :id => 'advanced-search'}) do |f|
   .search_title
-    %h3 Day home search
+    %h3 Dayhome search
   .control-group
     .controls
       = f.hidden_field(:advanced_search, :value => true)
       .search_section
         %h5
-          = 'Day homes near'
+          = 'Dayhomes near'
         = f.text_field :address, :style => 'width: 175px'
       .search_section
         %h5

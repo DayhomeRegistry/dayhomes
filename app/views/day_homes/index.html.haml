@@ -4,11 +4,11 @@
   });
   
 %h2
-  My day homes
+  My dayhomes
 
 - if @day_homes.blank?
   %p
-    No day homes have been assigned to you yet!
+    No dayhomes have been assigned to you yet!
 - else
   %table.table-striped.table{:cellpadding => '5'}
     %thead
@@ -43,7 +43,7 @@
           %td
             = day_home.users.map(&:full_name).join(', ')
           %td
-            = link_to 'View day home', day_home
+            = link_to 'View dayhome', day_home
             |
             = link_to 'Edit', [:edit, day_home]
             |
