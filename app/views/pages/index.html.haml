@@ -1,63 +1,42 @@
-.row
-  .featured.span7
-    #featureTop
-    #featureDetails
-      %h2 Featured Dayhomes
-
-          
-      %ul#slideshow
-        - @featured_day_homes.each do |featured_day_home|
-          %li
-            %h3
-              = featured_day_home.name
-            %span= featured_day_home.photos.first.photo_url
-            %p
-              = featured_day_home.address
-              - if featured_day_home.blurb.present?
-                %br
-                = featured_day_home.blurb
-              %br
-              = link_to 'Details', day_home_slug_path(featured_day_home.slug)
-
-      #sliderWrapper
-        #fullsize
-          #imgprev.imgnav{:title => "Previous Image"}
-          #imglink
-          #imgnext.imgnav{:title => "Next Image"}
-          #image
-          #information
-            %h3
-            %p
-
-
-    #featureBtm
-
-  .callToAction.span4
-    %h3 Are you a dayhome owner?
-    %p
-      Would you like a fast, easy way for
-      parents to find your company, and tools to keep them informed
-      once they have found you?
-    %p
-      Register your dayhome today for easy access to a whole new
-      client base.
-    
-    %p
-      = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp'
-
-= content_for :header_scripts do
-  = javascript_include_tag 'jquery.home_slider'
-
 :javascript
-  $('slideshow').style.display='none';
-  $('sliderWrapper').style.display='block';
-  var slideshow=new TINY.slideshow("slideshow");
-  window.onload=function(){
-    slideshow.auto=true;
-    slideshow.speed=5;
-    slideshow.info="information";
-    slideshow.scrollSpeed=2;
-    slideshow.spacing=5;
-    slideshow.active="#fff";
-    slideshow.init("slideshow","image","imgprev","imgnext","imglink");
-  }
+  $(document).ready(function() {
+    $('#coin-slider').coinslider({  width: 500,
+                                    effect: 'straight',
+                                    height: 300,
+                                    navigation: true,
+                                    delay: 5000,
+                                    titleSpeed: 700 });
+  });
+
+
+
+.featured.span7
+  #featureTop
+  #featureDetails
+    %h2 Featured Dayhomes
+
+  #coin-container
+    #coin-slider
+      #homes
+        - @featured_day_homes.each do |featured_day_home|
+          %a{:href => day_home_slug_path(featured_day_home.slug), :target => "_blank"}
+            %img{:src=>"#{featured_day_home.photos.first.photo_url(:reg)}"}
+            %span
+              %h4
+                = featured_day_home.name
+              - if featured_day_home.blurb.present?
+                %p
+                  = featured_day_home.blurb
+  #featureBtm
+.callToAction.span4
+  %h3 Day home owner?
+  %p
+    Are you a day home owner? Would you like a fast, easy way for
+    parents to find your company, and tools to keep them informed
+    once they have found you?
+  %p
+    Register your day home today for easy access to a whole new
+    client base.
+  %p
+    = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp'
+
