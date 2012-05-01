@@ -16,4 +16,9 @@ describe PagesController do
     end
   end
   
+  describe "privacy" do
+    it "should render an privacy page" do
+      get :privacy
+    end
+  end
 end
