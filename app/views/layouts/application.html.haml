@@ -8,6 +8,15 @@
     = yield :header_scripts
     %link{:href => "assets/icons/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
   %body
+    :plain
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=371277729589519";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
     = render 'layouts/header'
     #mainBG
       .container

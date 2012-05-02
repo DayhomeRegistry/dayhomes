@@ -56,6 +56,11 @@ header .span8{
 #searchBox a:hover, footer a:hover{
 	color:#79489f;
 }
+
+#searchBox ::-webkit-input-placeholder  { color:#828282; }
+#searchBox input:-moz-placeholder { color:#828282; }
+
+
 #submit{
 	height:45px;
 	width:102px;
