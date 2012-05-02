@@ -126,7 +126,7 @@
                 =image_tag("circle-half.png", :title=> "Part-time")
           - @day_home.availability_types.order("id asc").each do |av|
             = "#{av.availability} -  #{av.kind}"
-      = link_to 'Contact Day Home'.html_safe, [:new, :day_home_signup_request], :id => 'contactFormButton', :href => '#contact-form', :rel => 'modal:open'
+      = link_to 'Contact Dayhome'.html_safe, [:new, :day_home_signup_request], :id => 'contactFormButton', :href => '#contact-form', :rel => 'modal:open'
 
   .mediaAlignRight
     %h3.singleViewH3
@@ -169,7 +169,7 @@
         Reviews
       - if @reviews.blank?
         %p{:style => 'font-size: 12px'}
-          No one has left a review for this day home yet.
+          No one has left a review for this dayhome yet.
       - else
         = render 'reviews/show', :reviews => @reviews
         = paginate @reviews
