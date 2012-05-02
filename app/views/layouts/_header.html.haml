@@ -5,7 +5,7 @@
       .span8
         #searchBox
           = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
-            = f.search_field :address, :id => 'searchQuery', :placeholder => "Enter an Address"
+            = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
             = f.submit "Search", :id => 'submit', :style => 'text-indent: -9999999px;', :border => '0'
           = link_to 'Advanced Search', searches_path
 
