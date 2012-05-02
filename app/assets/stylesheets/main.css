@@ -109,7 +109,7 @@ nav li{
 	margin-right:30px;
 	font-size:24px !important;
 }
-#mainContent{
+#mainBG{
 	width:100%;
 	background:#52be60 url('bgGrad.png') center top repeat-x;
 	margin-top:-3px;
@@ -121,7 +121,7 @@ nav li{
 	background:url('contentPattern.png') left top repeat;
 	margin-bottom:30px;
   	min-height: 400px;
-  	padding:11px !important;
+  	padding:11px 11px 24px 11px !important;
 }
 #contentShadow{
 	width:963px;
@@ -142,7 +142,7 @@ nav li{
 	background:url('featureBottom.png') top left no-repeat;
 }
 .featured{
-	margin: 24px 0 0 36px;
+	margin: 24px 0 0 28px;
 	padding-bottom:12px;
 	background:url('featureBG.png') top left repeat-y;
 }
@@ -154,10 +154,19 @@ nav li{
  	font-weight:normal;
  }
 .callToAction{
-	height:400px;
-	margin:35px 0 0 0;
-	background:url('dayhomeOwner.png') top left no-repeat;
-	float:right;
+	margin:65px 0 0 62px;
+	background:url('callToAction.png') top left repeat-y;
+}
+.callToActionTop{
+	height:6px;
+	margin-top:-6px;
+	background:url('callToActionTop.png') top left no-repeat;
+}
+.callToActionBottom{
+	height:6px;
+	margin-bottom:-20px;
+	clear:right;
+	background:url('callToActionBottom.png') top left no-repeat;
 }
 .callToAction h3{
 	padding:18px 24px 9px 24px;
@@ -168,8 +177,8 @@ nav li{
 #signUp{
 	height:54px;
 	width:124px;
-	float:right;
 	margin-top:-16px;
+	margin-bottom:14px;
 	text-indent:-9999px;
 	background:url('sprites.png') -107px top no-repeat;
 }
@@ -178,11 +187,12 @@ nav li{
 }
 .footerInfo{
 	background:#fdfdf9;
-    width:960px;
-    padding-top:16px;
-    padding-bottom:16px;
+	padding:11px 11px 24px 11px !important;
 }
-.footerShadow{
+.footerInfo p, .footerInfo h2{
+	margin:0 10px;
+}
+#footerShadow{
 	width:963px;
 	height:17px;
 	background:url('fatFooterShadow.png') top left no-repeat;
