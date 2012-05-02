@@ -3,7 +3,7 @@
     &copy;
     = link_to "Day Home Registry #{Date.today.year}", root_path
     | Read our
-    = link_to 'Privacy Policy', '#'
+    = link_to 'Privacy Policy', [:privacy, :pages]
 
 = yield :scripts
 - if Rails.env.production?
