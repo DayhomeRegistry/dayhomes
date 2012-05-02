@@ -16,6 +16,7 @@
  *= require calendar/datepicker
  *= require calendar/fullcalendar
  *= require forum-monster
+ *= require coin-slider-styles
  *= require_tree .
 */
 

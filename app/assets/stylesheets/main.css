@@ -56,6 +56,11 @@ header .span8{
 #searchBox a:hover, footer a:hover{
 	color:#79489f;
 }
+
+#searchBox ::-webkit-input-placeholder  { color:#828282; }
+#searchBox input:-moz-placeholder { color:#828282; }
+
+
 #submit{
 	height:45px;
 	width:102px;
@@ -70,6 +75,7 @@ header .span8{
 	height:30px;
 	width:177px;
 	margin:27px 0px -17px 18px;
+
 }
 nav{
 	width:100%;
@@ -170,17 +176,11 @@ nav li{
 #signUp:hover{
 	background-position: -107px -56px;
 }
-#footerInfo{
+.footerInfo{
 	background:#fdfdf9;
-	clear:both;
-	float:left;
-	width:960px;
-	overflow:visible;
-	padding-top:16px;
-	padding-bottom:16px;
-}
-#footerInfo .span3{
-	margin-left:60px;
+    width:960px;
+    padding-top:16px;
+    padding-bottom:16px;
 }
 .footerShadow{
 	width:963px;
@@ -193,7 +193,7 @@ footer{
 	height:60px;
 	width:100%;
 	background:url('footerShadow.png') left bottom repeat-x;
-	margin-top:-13px;
+	margin-top:-25px;
 	float:left;
 	clear:both;
 	overflow:hidden;
@@ -281,31 +281,11 @@ footer p{
 }
 
 /* Admin Section*/
-.adminPanel{
-
-	padding-top:18px;
-	margin-top:-14px;
-	margin-right:14px;
-	height:25px;
-	float:right;
-	font-size:14px;
-	line-height:25px;
-}
-.adminPanel ul{
-	list-style:none;
-	float:right;
-}
-.adminPanel li{
-	float:right;
-	margin-right:8px;
-	font-weight:bold;
-}
-.adminPanel li.first{
-	float:left;
-}
-.adminPanel img{
-	float:right;
-	margin-left:8px;
+.logstyle{
+    margin-right:8px;
+    font-weight:bold;
+    font-size:14px;
+    margin-bottom:10px;
 }
 
 /* About Page */
@@ -315,3 +295,7 @@ footer p{
 	float:left;
 	display:inline-block;
 }
+
+/* placeholder darkness */
+:-moz-placeholder{color:#333333;}
+::-webkit-input-placeholder{color:#333333;}

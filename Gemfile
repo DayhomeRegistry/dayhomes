@@ -17,6 +17,7 @@ gem 'client_side_validations'
 gem 'forum_monster'
 gem 'bb-ruby'
 gem 'koala'
+gem 'airbrake'
 
 # le windows
 platforms :mswin, :mingw do
