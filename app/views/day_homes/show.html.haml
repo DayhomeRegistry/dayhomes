@@ -39,7 +39,7 @@
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
       
 .row
-  .span4
+  .span5
     %p
       #contact-form.modal
         %h3 Contacting
@@ -126,9 +126,31 @@
                 =image_tag("circle-half.png", :title=> "Part-time")
           - @day_home.availability_types.order("id asc").each do |av|
             = "#{av.availability} -  #{av.kind}"
-      = link_to 'Contact Day Home'.html_safe, [:new, :day_home_signup_request], :id => 'contactFormButton', :href => '#contact-form', :rel => 'modal:open'
+      
+      %li
+        %h3.singleViewH3
+          Certifications 
+        .certifications
+          %p
+            = @day_home.name
+            has the following certifications.
+      %li
+        %h3.singleViewH3
+          Dietary Accomodations
+        .dietaryAccomodations
+          %p
+            = @day_home.name
+            is mindful of children with the following dietary concerns.
+      %li
+        %h3.singleViewH3
+          Licensed
+        .licensed
+          %p
+            = @day_home.name
+            is licensed.
+      = link_to 'Contact Dayhome'.html_safe, [:new, :day_home_signup_request], :id => 'contactFormButton', :href => '#contact-form', :rel => 'modal:open'
 
-  .mediaAlignRight
+  .mediaAlign.span7
     %h3.singleViewH3
       Find Us
     = gmaps(:map_options => { :center_latitude => @day_home.lat,
@@ -140,11 +162,11 @@
 
     %h3.singleViewH3
       Photos
-    
     - if @day_home.photos.blank?
       %p
         No photos available.
-    - else
+    - else    
+
       %ul#slideshow
         - @day_home.photos.each do |photo|
           %li
@@ -163,7 +185,7 @@
             %h3
 
 .row
-  .span11
+  .span12
     .list_reviews
       %h3
         Reviews
