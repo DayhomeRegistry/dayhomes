@@ -328,7 +328,6 @@ footer p{
 	text-shadow:1px 1px 0px #b23e35;
 	margin-left: auto;
 	margin-right: auto;
-	width: 90px;
 	text-align: center;
 }.callToActionButton:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00) );
@@ -342,16 +341,7 @@ footer p{
 }
 
 #signUp{
-	height:54px;
-	width:124px;
-	text-indent:-9999px;
-	display:block;
-	background:url('sprites.png') -107px top no-repeat;
-	margin-left: auto;
-	margin-right: auto;
-}
-#signUp:hover{
-	background-position: -107px -56px;
+	width:100px;
 }
 
 /* placeholder darkness */
