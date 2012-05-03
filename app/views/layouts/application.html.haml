@@ -1,5 +1,10 @@
 !!! Strict
-%html{:lang =>"en"}
+/[if lt IE 7] <html lang="en-us" class="lt-ie9 lt-ie8 lt-ie7">
+/[if IE 7] <html lang="en-us" class="lt-ie9 lt-ie8">
+/[if IE 8] <html lang="en-us" class="lt-ie9">
+/ [if gt IE 8]><!
+%html{:lang => "en-us"}
+  / <![endif]
   %head
     %title Day Home Registry
     = stylesheet_link_tag :application, :media => :all
