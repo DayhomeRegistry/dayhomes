@@ -56,3 +56,7 @@ rails_best_practices_output.html
 
 # Ignore bins installed by bundler
 /bin/*
+
+# Ignore Sublime project file
+*.sublime-project
+*.sublime-workspace
