@@ -102,12 +102,18 @@ nav ul{
 	list-style:none;
 	float:left;
 	margin-top:21px;
-	margin-left:18px;
+}
+nav ul.pull-right{
+	float:right;
 }
 nav li{
 	float:left;
-	margin-right:30px;
-	font-size:24px !important;
+	margin-right:20px;
+	font-size:18px;
+}
+ul.pull-right li {
+	margin-right: 0;
+	margin-left: 20px;
 }
 #mainBG{
 	width:100%;
@@ -130,52 +136,6 @@ nav li{
 	position:relative;
 	float:left;
 	margin:-33px 0 0 21.5px;
-}
-#featureTop{
-	height:8px;
-	margin-top:-8px;
-	background:url('featureTop.png') top left no-repeat;
-}
-#featureBtm{
-	height:8px;
-	margin-bottom:-20px;
-	background:url('featureBottom.png') top left no-repeat;
-}
-.featured{
-	margin: 24px 0 0 28px;
-	padding-bottom:12px;
-	background:url('featureBG.png') top left repeat-y;
-}
-.featured h2, .featured p{
-	margin:12px 21px 0px 21px;
-}
- .featured h3{
- 	margin:8px 21px 0px 21px;
- 	font-weight:normal;
- }
-.callToAction{
-	margin:24px 0 0 62px;
-	background:url('callToAction.png') top left repeat-y;
-}
-.callToActionTop{
-	height:6px;
-	margin-top:-6px;
-	background:url('callToActionTop.png') top left no-repeat;
-}
-.callToActionBottom{
-	height:6px;
-	margin-bottom:-20px;
-	clear:right;
-	background:url('callToActionBottom.png') top left no-repeat;
-}
-.callToAction h3{
-	padding:18px 24px 9px 24px;
-}
-.callToAction p{
-	margin:0 36px 14px 24px;
-}
-.callToAction .socialButtons{
-	margin:0px 36px 14px 24px !important;
 }
 
 #signUp{

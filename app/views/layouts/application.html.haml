@@ -21,26 +21,6 @@
     #mainBG
       .container
         .content.span12
-          .row
-            .span12
-              .pull-right.logstyle
-                - if current_user
-                  = current_user.full_name
-                  = "-"
-                  = link_to "Your Account", user_path(current_user)
-
-                  - if current_user.admin?
-                    = link_to "Admin", admin_root_path
-
-                  - if current_user.day_home_owner?
-                    = link_to "My Day Homes", day_homes_path
-
-                  = link_to 'Logout', logout_path
-                - else
-                  = link_to 'Login', login_path
-                  = " / "
-                  = link_to 'Sign Up', new_user_path
-                  = fb_connect_button
           = render 'layouts/flash_msgs'
           = yield
         #contentShadow
@@ -68,9 +48,9 @@
               %a{:href => "http://www.facebook.com/DayhomeRegistry", :target => "_blank"}
                 %p
                   = image_tag 'icons/facebook.png'
-                  %span Friend Us on Facebook
+                  %span Like us on Facebook
               %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
                 %p
                   = image_tag 'icons/twitter-2.png'
-                  %span Follow Us on Twitter
+                  %span Follow us on Twitter
     = render 'layouts/footer'
