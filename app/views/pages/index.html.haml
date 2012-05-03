@@ -30,19 +30,19 @@
                       = featured_day_home.blurb
       .bottom
     
-  .callToAction.span4.offset1
-    .callToActionTop
-    %h3 Dayhome owner?
-    %p
-      Are you a day home owner? Would you like a fast, easy way for
-      parents to find your company, and tools to keep them informed
-      once they have found you?
-    %p
-      Register your day home today for easy access to a whole new
-      client base.
-    %p
-      = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp', :class => 'pull-right'
-      .callToActionBottom
+  .span5
+    .callToAction
+      .top
+      %h3 Dayhome owner?
+      %p
+        We believe all children should have the best care possible.
+        We believe Dayhomes provide that level of care.
+        But, caring for children can be a tough job.
+      %p
+        Let us make that job a little easier for you.
+      %p
+        = link_to 'Register!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp'
+      .bottom
       
 .row
   .span12

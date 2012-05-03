@@ -136,18 +136,6 @@ ul.pull-right li {
 	margin-left: auto;
 	margin-right: auto;
 }
-
-#signUp{
-	height:54px;
-	width:124px;
-	margin-top:-16px;
-	margin-bottom:14px;
-	text-indent:-9999px;
-	background:url('sprites.png') -107px top no-repeat;
-}
-#signUp:hover{
-	background-position: -107px -56px;
-}
 .footer{
 	background:#fdfdf9;
 	width: 960px;
@@ -291,6 +279,44 @@ footer p{
 	height: 8px;
 	width: 540px;
 	background:url('featureBottom.png') no-repeat;
+}
+.callToAction {
+	background:url('callToAction.png') repeat-y;
+	position: relative;
+	margin-top: 8px;
+	margin-bottom: 28px;
+	width: 247px;
+	padding: 0 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.callToAction .top {
+	position: relative;
+	left: -20px;
+	top: -6px;
+	height: 6px;
+	width: 287px;
+	background:url('callToActionTop.png') no-repeat;
+}
+.callToAction .bottom {
+	position: relative;
+	left: -20px;
+	bottom: -6px;
+	height: 6px;
+	width: 287px;
+	background:url('callToActionBottom.png') no-repeat;
+}
+#signUp{
+	height:54px;
+	width:124px;
+	text-indent:-9999px;
+	display:block;
+	background:url('sprites.png') -107px top no-repeat;
+	margin-left: auto;
+	margin-right: auto;
+}
+#signUp:hover{
+	background-position: -107px -56px;
 }
 
 /* placeholder darkness */
