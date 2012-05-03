@@ -27,31 +27,4 @@
           = yield
       #contentShadow
 
-      #footerShadow
-      .footer
-        .container
-          .row
-            .about.span4
-              %h2 About Us
-              %p Day Home Registry is your answer for all of your day home searching needs!
-              %p 
-                Being a parent is busy enough. The mission of the Day Home Registry is to make being a parent a little easier.
-                %a= link_to 'Read More...', about_pages_path
-            .contact.span4
-              %h2 Contact
-              %p Have any questions or concerns about the Day Home Registry? We'd love to hear from you.
-              %p
-                Email us at
-                %a{:href => "mailto:contact@dayhomeregistry.com", :target => "_new"} contact@dayhomeregistry.com
-            .social.span4
-              %h2 We're Social
-              %p Join the conversation and connect with other dayhomes and parents in your area.
-              %a{:href => "http://www.facebook.com/DayhomeRegistry", :target => "_blank"}
-                %p
-                  = image_tag 'icons/facebook.png'
-                  %span Like us on Facebook
-              %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
-                %p
-                  = image_tag 'icons/twitter-2.png'
-                  %span Follow us on Twitter
     = render 'layouts/footer'
