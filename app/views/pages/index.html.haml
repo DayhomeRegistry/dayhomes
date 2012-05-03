@@ -9,7 +9,41 @@
   });
 
 
+.row
+  .featured.span7
+    #featureTop
+    #featureDetails
+      %h2 Featured Dayhomes
 
+<<<<<<< HEAD
+    #coin-container
+      #coin-slider
+        #homes
+          - @featured_day_homes.each do |featured_day_home|
+            %a{:href => day_home_slug_path(featured_day_home.slug), :target => "_blank"}
+              %img{:src=>"#{featured_day_home.photos.first.photo_url(:reg)}"}
+              %span
+                %h4
+                  = featured_day_home.name
+                - if featured_day_home.blurb.present?
+                  %p
+                    = featured_day_home.blurb
+    #featureBtm
+    
+  .callToAction.span4
+    .callToActionTop
+    %h3 Dayhome owner?
+    %p
+      Are you a day home owner? Would you like a fast, easy way for
+      parents to find your company, and tools to keep them informed
+      once they have found you?
+    %p
+      Register your day home today for easy access to a whole new
+      client base.
+    %p
+      = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp', :class => 'pull-right'
+      .callToActionBottom
+=======
 .featured.span7
   #featureTop
   #featureDetails
@@ -57,3 +91,4 @@
       <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
       <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
       
+>>>>>>> origin/master
