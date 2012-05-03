@@ -31,10 +31,6 @@ header{
 	height:195px;
 	background:#fdfdf9;
 }
-header .span4{
-	background:url('logo.png') left bottom no-repeat;
-	height:195px;
-}
 header .span8{
 	background:url('findDayhome.png') right bottom no-repeat;
 	height:195px;

@@ -2,6 +2,8 @@
   .container
     .row
       .span4
+        =link_to root_url do
+          = image_tag 'logo.png'
       .span8
         #searchBox
           = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
