@@ -152,19 +152,20 @@ ul.pull-right li {
 #signUp:hover{
 	background-position: -107px -56px;
 }
-.footerInfo{
+.footer{
 	background:#fdfdf9;
-	padding:11px 11px 24px 11px !important;
-}
-.footerInfo p, .footerInfo h2{
-	margin:0 10px;
+	width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+  	padding-top: 20px;
+  	padding-bottom: 20px;
 }
 #footerShadow{
-	width:963px;
+	width:960px;
 	height:17px;
 	background:url('fatFooterShadow.png') top left no-repeat;
-	position:relative;
-	float:left;
+	margin-left: auto;
+	margin-right: auto;
 }
 footer{
 	height:60px;
