@@ -12,8 +12,8 @@
 .row
   .span7
     .featured
-      #featureTop
-      #featureDetails
+      .top
+      .featureDetails
         %h2 Featured Dayhomes
 
       #coin-container
@@ -28,7 +28,7 @@
                   - if featured_day_home.blurb.present?
                     %p
                       = featured_day_home.blurb
-      #featureBtm
+      .bottom
     
   .callToAction.span4.offset1
     .callToActionTop

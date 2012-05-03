@@ -262,6 +262,37 @@ footer p{
 
 }
 
+/* Homepage Styles */
+.featured {
+	background:url('featureBG.png') repeat-y;
+	position: relative;
+	margin-top: 8px;
+	margin-bottom: 28px;
+}
+.featured #coin-container {
+	height: auto;
+}
+.featured h2 {
+	margin-left: 20px;
+}
+.featured .cs-buttons {
+	display: none;
+}
+.featured .top {
+	position: relative;
+	top: -8px;
+	height: 8px;
+	width: 540px;
+	background:url('featureTop.png') no-repeat;
+}
+.featured .bottom {
+	position: relative;
+	bottom: -8px;
+	height: 8px;
+	width: 540px;
+	background:url('featureBottom.png') no-repeat;
+}
+
 /* placeholder darkness */
 :-moz-placeholder{color:#333333;}
 ::-webkit-input-placeholder{color:#333333;}
