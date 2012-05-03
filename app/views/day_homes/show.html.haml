@@ -191,7 +191,7 @@
         Reviews
       - if @reviews.blank?
         %p{:style => 'font-size: 12px'}
-          No one has left a review for this day home yet.
+          No one has left a review for this dayhome yet.
       - else
         = render 'reviews/show', :reviews => @reviews
         = paginate @reviews
