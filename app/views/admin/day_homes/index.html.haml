@@ -4,11 +4,11 @@
   });
 
 %p
-  = link_to 'Create day home', [:new, :admin, :day_home], :class => :btn
+  = link_to 'Create dayhome', [:new, :admin, :day_home], :class => :btn
 
 - if @day_homes.blank?
   %p
-    No day homes have been added yet!
+    No dayhomes have been added yet!
 - else
   %table.table-striped.table{:cellpadding => '5'}
     %thead

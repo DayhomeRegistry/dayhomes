@@ -1,7 +1,7 @@
 !!! Strict
 %html{:lang =>"en"}
   %head
-    %title Day Home Registry
+    %title Dayhome Registry
     = stylesheet_link_tag :application, :media => :all
     = javascript_include_tag :application
     = csrf_meta_tags
@@ -18,7 +18,7 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));</script>
     = render 'layouts/header'
-    #mainBG
+    #mainContent
       .container
         .content.span12
           .row
@@ -33,8 +33,7 @@
                     = link_to "Admin", admin_root_path
 
                   - if current_user.day_home_owner?
-                    = link_to "My Day Homes", day_homes_path
-
+                    = link_to "My dayhomes", day_homes_path
                   = link_to 'Logout', logout_path
                 - else
                   = link_to 'Login', login_path
@@ -46,31 +45,29 @@
         #contentShadow
       .container
         .span12
-          #footerShadow
+          .footerShadow
       .container
-        .footerInfo.span12
-          .row
-            .about.span4
-              %h2 About Us
-              %p Day Home Registry is your answer for all of your day home searching needs!
-              %p 
-                Being a parent is busy enough. The mission of the Day Home Registry is to make being a parent a little easier.
-                %a= link_to 'Read More...', about_pages_path
-            .contact.span4
-              %h2 Contact
-              %p Have any questions or concerns about the Day Home Registry? We'd love to hear from you.
+        .span12.footerInfo
+          .about.span4
+            %h2 About Us
+            %p Dayhome Registry is your answer for all of your dayhome searching needs!
+            %p Being a parent is busy enough. The mission of the Dayhome Registry is to make being a parent a little easier.
+            %a= link_to 'Read More...', about_pages_path
+          .contact.span4
+            %h2 Contact
+            %p Have any questions or concerns about the Dayhome Registry? We'd love to hear from you.
+            %p
+              Email us at
+              %a{:href => "mailto:contact@dayhomeregistry.com", :target => "_new"} contact@dayhomeregistry.com
+          .social.span4
+            %h2 We're Social
+            %p Join the conversation and connect with other dayhomes and parents in your area.
+            %a{:href => "http://www.facebook.com/DayhomeRegistry", :target => "_blank"}
               %p
-                Email us at
-                %a{:href => "mailto:contact@dayhomeregistry.com", :target => "_new"} contact@dayhomeregistry.com
-            .social.span4
-              %h2 We're Social
-              %p Join the conversation and connect with other dayhomes and parents in your area.
-              %a{:href => "http://www.facebook.com/DayhomeRegistry", :target => "_blank"}
-                %p
-                  = image_tag 'icons/facebook.png'
-                  %span Friend Us on Facebook
-              %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
-                %p
-                  = image_tag 'icons/twitter-2.png'
-                  %span Follow Us on Twitter
+                = image_tag 'icons/facebook.png'
+                %span Friend Us on Facebook
+            %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
+              %p
+                = image_tag 'icons/twitter-2.png'
+                %span Follow Us on Twitter
     = render 'layouts/footer'

@@ -8,14 +8,14 @@
   });
 
 %h2
-  Add your day home
+  Add your dayhome
 
 = form_for @day_home_signup_request do |f|
 
   %h3
-    Day home details
+    Dayhome details
   
-  = f.label :day_home_name, 'Day home name'
+  = f.label :day_home_name, 'Dayhome name'
   = f.text_field :day_home_name
 
   = f.label :day_home_slug, 'http://dayhomeregistry.com/<strong>DAYHOME-URL</strong>'.html_safe
@@ -43,7 +43,7 @@
   = f.text_area :day_home_blurb, :rows => 4
   
   %h3
-    Day home contact
+    Dayhome contact
   
   = f.label :contact_name, 'Full Name'
   = f.text_field :contact_name
@@ -62,6 +62,6 @@
   
   %br
 
-  = f.submit 'Add day home', :class => :btn
+  = f.submit 'Add dayhome', :class => :btn
   |
   = link_to 'Cancel', root_path
