@@ -10,24 +10,25 @@
 
 
 .row
-  .featured.span7
-    #featureTop
-    #featureDetails
-      %h2 Featured Dayhomes
+  .span7
+    .featured
+      #featureTop
+      #featureDetails
+        %h2 Featured Dayhomes
 
-    #coin-container
-      #coin-slider
-        #homes
-          - @featured_day_homes.each do |featured_day_home|
-            %a{:href => day_home_slug_path(featured_day_home.slug), :target => "_blank"}
-              %img{:src=>"#{featured_day_home.photos.first.photo_url(:reg)}"}
-              %span
-                %h4
-                  = featured_day_home.name
-                - if featured_day_home.blurb.present?
-                  %p
-                    = featured_day_home.blurb
-    #featureBtm
+      #coin-container
+        #coin-slider
+          #homes
+            - @featured_day_homes.each do |featured_day_home|
+              %a{:href => day_home_slug_path(featured_day_home.slug), :target => "_blank"}
+                %img{:src=>"#{featured_day_home.photos.first.photo_url(:reg)}"}
+                %span
+                  %h4
+                    = featured_day_home.name
+                  - if featured_day_home.blurb.present?
+                    %p
+                      = featured_day_home.blurb
+      #featureBtm
     
   .callToAction.span4.offset1
     .callToActionTop

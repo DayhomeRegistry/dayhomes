@@ -102,6 +102,7 @@ nav ul{
 	list-style:none;
 	float:left;
 	margin-top:21px;
+	margin-left: 0;
 }
 nav ul.pull-right{
 	float:right;
@@ -125,17 +126,19 @@ ul.pull-right li {
 
 .content{
 	background:url('contentPattern.png') left top repeat;
-	margin-bottom:30px;
   	min-height: 400px;
-  	padding:11px 11px 24px 11px !important;
+  	width: 960px;
+  	margin-left: auto;
+  	margin-right: auto;
+  	padding-top: 20px;
+  	padding-bottom: 20px;
 }
 #contentShadow{
-	width:963px;
+	width:960px;
 	height:17px;
-	background:url('contentShadow.png') bottom left no-repeat;
-	position:relative;
-	float:left;
-	margin:-33px 0 0 21.5px;
+	background:url('contentShadow.png') bottom left repeat-x;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #signUp{
