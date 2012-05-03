@@ -4,7 +4,7 @@
       .span4
         =link_to root_url do
           = image_tag 'logo.png'
-      .span8
+      .span8.findDayhome
         #searchBox
           = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
             = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
