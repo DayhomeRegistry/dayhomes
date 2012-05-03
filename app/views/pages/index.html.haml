@@ -29,7 +29,7 @@
                     = featured_day_home.blurb
     #featureBtm
     
-  .callToAction.span4
+  .callToAction.span4.offset1
     .callToActionTop
     %h3 Dayhome owner?
     %p
@@ -43,7 +43,8 @@
       = link_to 'Sign Up!'.html_safe, [:new, :day_home_signup_request], :id => 'signUp', :class => 'pull-right'
       .callToActionBottom
       
-  %p.clear
+.row
+  .span12
     :plain
       <div class="fb-like" data-href="http://dayhomeregistry.com" data-send="false" data-layout="box_count" data-width="75" data-show-faces="false"></div>
       
