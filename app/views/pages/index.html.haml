@@ -8,7 +8,6 @@
                                     titleSpeed: 700 });
   });
 
-
 .row
   .span7
     .featured
@@ -20,7 +19,7 @@
         #coin-slider
           #homes
             - @featured_day_homes.each do |featured_day_home|
-              %a{:href => day_home_slug_path(featured_day_home.slug), :target => "_blank"}
+              %a{:href => day_home_slug_path(featured_day_home.slug)}
                 %img{:src=>"#{featured_day_home.photos.first.photo_url(:reg)}"}
                 %span
                   %h4
