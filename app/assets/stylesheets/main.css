@@ -31,11 +31,7 @@ header{
 	height:195px;
 	background:#fdfdf9;
 }
-header .span4{
-	background:url('logo.png') left bottom no-repeat;
-	height:195px;
-}
-header .span8{
+.findDayhome{
 	background:url('findDayhome.png') right bottom no-repeat;
 	height:195px;
 }
@@ -102,12 +98,19 @@ nav ul{
 	list-style:none;
 	float:left;
 	margin-top:21px;
-	margin-left:18px;
+	margin-left: 0;
+}
+nav ul.pull-right{
+	float:right;
 }
 nav li{
 	float:left;
-	margin-right:30px;
-	font-size:24px !important;
+	margin-right:20px;
+	font-size:18px;
+}
+ul.pull-right li {
+	margin-right: 0;
+	margin-left: 20px;
 }
 #mainBG{
 	width:100%;
@@ -119,89 +122,34 @@ nav li{
 
 .content{
 	background:url('contentPattern.png') left top repeat;
-	margin-bottom:30px;
   	min-height: 400px;
-  	padding:11px 11px 24px 11px !important;
+  	width: 960px;
+  	margin-left: auto;
+  	margin-right: auto;
+  	padding-top: 20px;
+  	padding-bottom: 20px;
 }
 #contentShadow{
-	width:963px;
+	width:960px;
 	height:17px;
-	background:url('contentShadow.png') bottom left no-repeat;
-	position:relative;
-	float:left;
-	margin:-33px 0 0 21.5px;
+	background:url('contentShadow.png') bottom left repeat-x;
+	margin-left: auto;
+	margin-right: auto;
 }
-#featureTop{
-	height:8px;
-	margin-top:-8px;
-	background:url('featureTop.png') top left no-repeat;
-}
-#featureBtm{
-	height:8px;
-	margin-bottom:-20px;
-	background:url('featureBottom.png') top left no-repeat;
-}
-.featured{
-	margin: 24px 0 0 28px;
-	padding-bottom:12px;
-	background:url('featureBG.png') top left repeat-y;
-}
-.featured h2, .featured p{
-	margin:12px 21px 0px 21px;
-}
- .featured h3{
- 	margin:8px 21px 0px 21px;
- 	font-weight:normal;
- }
-.callToAction{
-	margin:24px 0 0 62px;
-	background:url('callToAction.png') top left repeat-y;
-}
-.callToActionTop{
-	height:6px;
-	margin-top:-6px;
-	background:url('callToActionTop.png') top left no-repeat;
-}
-.callToActionBottom{
-	height:6px;
-	margin-bottom:-20px;
-	clear:right;
-	background:url('callToActionBottom.png') top left no-repeat;
-}
-.callToAction h3{
-	padding:18px 24px 9px 24px;
-}
-.callToAction p{
-	margin:0 36px 14px 24px;
-}
-.callToAction .socialButtons{
-	margin:0px 36px 14px 24px !important;
-}
-
-#signUp{
-	height:54px;
-	width:124px;
-	margin-top:-16px;
-	margin-bottom:14px;
-	text-indent:-9999px;
-	background:url('sprites.png') -107px top no-repeat;
-}
-#signUp:hover{
-	background-position: -107px -56px;
-}
-.footerInfo{
+.fatbar{
 	background:#fdfdf9;
-	padding:11px 11px 24px 11px !important;
-}
-.footerInfo p, .footerInfo h2{
-	margin:0 10px;
+	width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+  	padding-top: 20px;
+  	padding-bottom: 20px;
 }
 #footerShadow{
-	width:963px;
+	width:960px;
 	height:17px;
 	background:url('fatFooterShadow.png') top left no-repeat;
-	position:relative;
-	float:left;
+	margin-left: auto;
+	margin-right: auto;
 }
 footer{
 	height:60px;
@@ -300,6 +248,100 @@ footer p{
 .aboutPage{
 	padding-right:24px;
 
+}
+
+/* Homepage Styles */
+.featured {
+	background:url('featureBG.png') repeat-y;
+	position: relative;
+	margin-top: 8px;
+	margin-bottom: 28px;
+}
+.featured #coin-container {
+	height: auto;
+}
+.featured h2 {
+	margin-left: 20px;
+}
+.featured .cs-buttons {
+	display: none;
+}
+.featured .top {
+	position: relative;
+	top: -8px;
+	height: 8px;
+	width: 540px;
+	background:url('featureTop.png') no-repeat;
+}
+.featured .bottom {
+	position: relative;
+	bottom: -8px;
+	height: 8px;
+	width: 540px;
+	background:url('featureBottom.png') no-repeat;
+}
+.callToAction {
+	background:url('callToAction.png') repeat-y;
+	position: relative;
+	margin-top: 8px;
+	margin-bottom: 28px;
+	width: 247px;
+	padding: 0 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.callToAction .top {
+	position: relative;
+	left: -20px;
+	top: -6px;
+	height: 6px;
+	width: 287px;
+	background:url('callToActionTop.png') no-repeat;
+}
+.callToAction .bottom {
+	position: relative;
+	left: -20px;
+	bottom: -6px;
+	height: 6px;
+	width: 287px;
+	background:url('callToActionBottom.png') no-repeat;
+}
+.callToActionButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
+	box-shadow:inset 0px 1px 0px 0px #f29c93;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
+	background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');
+	background-color:#fe1a00;
+	-moz-border-radius:30px;
+	-webkit-border-radius:30px;
+	border-radius:30px;
+	border:1px solid #d83526;
+	display:block;
+	color:#ffffff;
+	font-family:arial;
+	font-size:24px;
+	font-weight:bold;
+	padding:9px 30px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #b23e35;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}.callToActionButton:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00) );
+	background:-moz-linear-gradient( center top, #ce0100 5%, #fe1a00 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce0100', endColorstr='#fe1a00');
+	background-color:#ce0100;
+	color:#ffffff;	
+}.callToActionButton:active {
+	position:relative;
+	top:1px;
+}
+
+#signUp{
+	width:100px;
 }
 
 /* placeholder darkness */
