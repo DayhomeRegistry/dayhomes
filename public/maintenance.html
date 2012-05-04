@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Coming Soon!</title>
+  <style type="text/css">
+    body { background: #98D072; color: #333; text-align: center; font-family: arial, sans-serif; }
+    div.dialog {
+      width: 750px;
+      padding: 40px;
+      margin: 4em auto 0 auto;
+      border: 1px solid #ccc;
+      border-right-color: #999;
+      border-bottom-color: #999;
+      background: #FDFDF9;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+    }
+    h1 { font-size: 100%; color: #333; font-size: 24px; line-height: 1.5em; }
+    a { color: #333; }
+    
+    input[type=text] {
+      border: 1px solid #ccc;
+      padding: 5px;
+      width: 250px;
+    }
+    
+    input[type=submit]{
+      font-size: 14px;
+      padding: 5px;
+    }
+  </style>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-31077078-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+</head>
+<body>
+  <div class="dialog">
+    <a href="/"><img src="/assets/logo.png" /></a>
+    <h1>We are launching soon!</h1>
+    <p>Enter your email below and we will let you know when!</p>
+    <form action="https://docs.google.com/spreadsheet/formResponse?formkey=dHNmeEhiWGtTSnN5RjU4aXh1a0p6bHc6MQ&amp;ifq" method="POST" id="ss-form">
+    <p>
+      <strong>Your Email:</strong>
+      <input type="text" name="entry.0.single" value="" />
+      <input type="submit" name="submit" value="Notify Me!">
+    </p>
+    </form>
+  </div>
+</body>
+</html>
