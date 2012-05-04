@@ -2,7 +2,7 @@
 /[if lt IE 7] <html lang="en-us" class="lt-ie9 lt-ie8 lt-ie7">
 /[if IE 7] <html lang="en-us" class="lt-ie9 lt-ie8">
 /[if IE 8] <html lang="en-us" class="lt-ie9">
-/ [if gt IE 8]><!
+/ [if gt IE 8] <!
 %html{:lang => "en-us"}
   / <![endif]
   %head
@@ -11,7 +11,7 @@
     = javascript_include_tag :application
     = csrf_meta_tags
     = yield :header_scripts
-    %link{:href => "assets/icons/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
+    %link{:href => "assets/icons/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}
   %body
     :plain
       <div id="fb-root"></div>
