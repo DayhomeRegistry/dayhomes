@@ -132,7 +132,7 @@ ul.pull-right li {
 #contentShadow{
 	width:960px;
 	height:17px;
-	background:url('contentShadow.png') bottom left repeat-x;
+	background:url('contentShadow.png') bottom left no-repeat;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -191,11 +191,14 @@ footer p{
 	margin-bottom:4px;
 	margin-top:14px;
 }
+.contentLeft{
+	padding-left:8px;
+}
 .contact_info a, .create_review a, .calendar a{
 	font-size:14px;
 }
 .availability{
-	margin:0 0 14px 0 !important;
+	margin:0px 0 14px 0 !important;
 	font-size:16px;
 }
 
@@ -207,7 +210,7 @@ footer p{
 }
 .list_reviews{
 	margin-bottom:14px;
-	margin-top:24px;
+	margin-top:6px;
 	padding-top:14px;
 	display:block;
 	border-top:1px solid #ccc;
@@ -228,6 +231,7 @@ footer p{
 #contactFormButton{
 	width:124px;
 	height:50px;
+	margin-top:24px;
 	display:block;
 	background:url('sprites.png') -234px top no-repeat;
 	text-indent:-9999px;
