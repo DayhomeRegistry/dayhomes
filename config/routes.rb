@@ -27,7 +27,7 @@ Dayhomes::Application.routes.draw do
     collection do
       get :about
       get :privacy
-      get :purchase
+      get :pricing
     end
   end
   resources :reviews
