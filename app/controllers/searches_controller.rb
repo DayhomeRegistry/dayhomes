@@ -6,6 +6,13 @@ class SearchesController < ApplicationController
       # display all of the full and part time
       @day_homes = DayHome.with_availability_uniq(Search::DEFAULT_AVAILABILITY_TYPES).all
     else
+      # hack for ie7 due to placeholder being submitted
+      if params[:search].has_key?(:address)
+        if params[:search][:address] =~ /Address or Neighbourhood/
+          params[:search][:address] = ''
+        end
+      end
+
       # apply the params to the search model
       @search = Search.new(params[:search])
 
