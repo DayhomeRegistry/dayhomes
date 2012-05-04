@@ -22,6 +22,8 @@
             %a= link_to 'About Us', about_pages_path
           %li
             %a{:href => "mailto:contact@dayhomeregistry.com"} Contact
+          %li
+            %a= link_to 'Pricing', pricing_pages_path
           - if current_user && current_user.day_home_owner? || current_user && current_user.admin?
             %li
               = link_to 'Forums', forums_path
