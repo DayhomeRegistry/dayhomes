@@ -1,0 +1,1 @@
+server '50.57.75.221', :app, :web, :db, :primary => true
