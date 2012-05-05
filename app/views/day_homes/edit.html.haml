@@ -1,8 +1,35 @@
+:javascript
+  $(function(){
+    add_another_mangement();
+    $(".photo_preview").colorbox({rel:'photo_preview'});
+  });
+
+
+
+
 %h2
   Edit
   = @day_home.name
 
 = form_for @day_home do |f|
+  
+  = f.fields_for :photos do |p|
+    .add_multiples.clear{'data-group' => 'photos'}
+      = p.label :caption, 'Caption & Photo'
+      - if p.object.photo?
+        .remove_contents
+          = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :class => 'photo_preview'
+        
+      = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
+      = p.text_field :caption
+      %br
+      = p.file_field :photo
+      = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link'
+  .clear
+  %strong= link_to 'Add Another Photo', '#', :class => 'add_multiples_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
+  %br
+  %br
+  
   = f.label :availability_types, 'Full-time Availability', :style => 'font-weight: bold'
   
   - AvailabilityType.full_time.each do |availability|
