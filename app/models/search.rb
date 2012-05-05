@@ -73,7 +73,27 @@ class Search
     # return the gmaps pins variable
     create_pins(dayhome_query, search_addy_pin)
   end
+  
+  
+  def address=(addr_value='')
+    # hack for ie7 due to placeholder being submitted
+    if addr_value =~ /Address or Neighbourhood/
+      addr_value = ''
+    end
 
+    # If no major candian city in query - add alberta as default.
+    unless addr_value.downcase =~ /edmonton/
+      addr_value += ' Edmonton'
+    end
+    
+    # If no canadian province in query - add alberta as default.
+    unless addr_value.include?('alberta') && addr_value.include?('ab')
+      addr_value += ' Alberta'
+    end
+    
+    @address = addr_value
+  end
+  
 private
 
   def calibrate_map
