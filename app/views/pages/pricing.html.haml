@@ -2,6 +2,7 @@
   .span12
     .pricingHeader
       Dayhome owner?
+    .bottom
 .row
   .span12
     .pricingBlurb
@@ -14,7 +15,7 @@
       for easy access to a whole new client base.
 .row
   .span4
-    .colHeader
+    .colHeader.baby
       .colHeaderContent
         Baby Bear
       %br
@@ -22,7 +23,7 @@
           $5.99
         %strong
           FREE!!!
-    .colContent
+    .colContent.baby
       %ul
         %li
           Basic Dayhome page
@@ -33,7 +34,7 @@
         %li
           Single picture
   .span4
-    .colHeader
+    .colHeader.mama
       .colHeaderContent
         Mama Bear
       %br
@@ -41,7 +42,7 @@
           $19.99
         %strong
           FREE!!!
-    .colContent
+    .colContent.mama
       %ul
         %li
           Full dayhome page
@@ -54,7 +55,7 @@
         %li
           Picture gallery
   .span4
-    .colHeader
+    .colHeader.papa
       .colHeaderContent
         Papa Bear
       %br
@@ -63,7 +64,7 @@
         .coming
           %strong
             Coming soon…
-    .colContent
+    .colContent.papa
       %ul
         %li
           Receipts for ease at tax time
@@ -73,6 +74,10 @@
           Generate invoices from your calendar
         %li
           Budgeting tools
+
+.row
+  .span12
+    = link_to 'Register Now!'.html_safe, [:new, :day_home_signup_request], :class => "callToActionButton pricingRegister"
 
 .row
   .span12
