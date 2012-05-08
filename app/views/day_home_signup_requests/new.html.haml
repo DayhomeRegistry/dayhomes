@@ -7,61 +7,64 @@
     
   });
 
-%h2
-  Add your dayhome
+.row
+  .span4.offset2
+    %h2
+      Add your dayhome
 
 = form_for @day_home_signup_request do |f|
+  .row.registrationStyle
+    .span4.offset2.well.form-horizontal
+      %h3
+        Dayhome details
 
-  %h3
-    Dayhome details
-  
-  = f.label :day_home_name, 'Dayhome name'
-  = f.text_field :day_home_name
+      = f.label :day_home_name, 'Dayhome name'
+      = f.text_field :day_home_name
 
-  = f.label :day_home_slug, 'http://dayhomeregistry.com/<strong>DAYHOME-URL</strong>'.html_safe
-  = f.text_field :day_home_slug
-  
-  = f.label :day_home_city, 'City'
-  = f.text_field :day_home_city
-  
-  = f.label :day_home_province, 'Province'
-  = f.state_select :day_home_province, 'CA'
-  
-  = f.label :day_home_street1, 'Street1'
-  = f.text_field :day_home_street1
-  
-  = f.label :day_home_street2, 'Street2'
-  = f.text_field :day_home_street2
-  
-  = f.label :day_home_postal_code, 'Postal Code'
-  = f.text_field :day_home_postal_code
+      = f.label :day_home_slug, 'http://dayhomeregistry.com/<strong>DAYHOME-URL</strong>'.html_safe
+      = f.text_field :day_home_slug
 
-  = f.label :day_home_phone_number, 'Phone Number'
-  = f.text_field :day_home_phone_number
+      = f.label :day_home_city, 'City'
+      = f.text_field :day_home_city
 
-  = f.label :day_home_blurb, 'Description'
-  = f.text_area :day_home_blurb, :rows => 4
-  
-  %h3
-    Dayhome contact
-  
-  = f.label :contact_name, 'Full Name'
-  = f.text_field :contact_name
+      = f.label :day_home_province, 'Province'
+      = f.state_select :day_home_province, 'CA'
 
-  = f.label :contact_phone_number, 'Phone Number'
-  = f.text_field :contact_phone_number
+      = f.label :day_home_street1, 'Street1'
+      = f.text_field :day_home_street1
 
-  = f.label :contact_email, 'Email'
-  = f.text_field :contact_email
+      = f.label :day_home_street2, 'Street2'
+      = f.text_field :day_home_street2
 
-  = f.label :preferred_time_to_contact, 'Preferred Time to Contact'
-  = f.text_field :preferred_time_to_contact
+      = f.label :day_home_postal_code, 'Postal Code'
+      = f.text_field :day_home_postal_code
 
-  = f.label :comments, 'Comments or Questions?'
-  = f.text_area :preferred_time_to_contact, :rows => 4
-  
-  %br
+      = f.label :day_home_phone_number, 'Phone Number'
+      = f.text_field :day_home_phone_number
 
-  = f.submit 'Add dayhome', :class => :btn
-  |
-  = link_to 'Cancel', root_path
+      = f.label :day_home_blurb, 'Description'
+      = f.text_area :day_home_blurb, :rows => 4
+    .span4.well.form-horizontal
+      %h3
+        Dayhome contact
+
+      = f.label :contact_name, 'Full Name'
+      = f.text_field :contact_name
+
+      = f.label :contact_phone_number, 'Phone Number'
+      = f.text_field :contact_phone_number
+
+      = f.label :contact_email, 'Email'
+      = f.text_field :contact_email
+
+      = f.label :preferred_time_to_contact, 'Preferred Time to Contact'
+      = f.text_field :preferred_time_to_contact
+
+      = f.label :comments, 'Comments or Questions?'
+      = f.text_area :preferred_time_to_contact, :rows => 4
+
+  .row
+    .span4.offset2
+      = f.submit 'Add dayhome', :class => :btn
+      |
+      = link_to 'Cancel', root_path
