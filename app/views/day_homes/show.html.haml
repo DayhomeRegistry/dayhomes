@@ -12,177 +12,148 @@
         showClose: true,         // Shows a (X) icon/link in the top-right corner
         modalClass: "modal",    // CSS class added to the element being displayed in the modal.
     };
+
+    $('#coin-slider').coinslider({  width: 500,
+                                    effect: 'straight',
+                                    height: 300,
+                                    navigation: true,
+                                    delay: 5000,
+                                    titleSpeed: 700 });
   });
-
-  $(function(){
-    $(".photo_preview").colorbox({rel:'photo_preview'});
-  });
-
-%h2
-  = @day_home.name
-
-%p
-  :plain
-    <div class="fb-like" data-href="#{day_home_slug_url(@day_home.slug)}" data-send="false" data-layout="button_count" data-width="55" data-show-faces="false"></div>
-    
-    <g:plusone size="medium"></g:plusone>
-
-    <script type="text/javascript">
-      (function() {
-        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-        po.src = 'https://apis.google.com/js/plusone.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-      })();
-    </script>
-    
-    <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-      
 .row
-  .span5
+  .span12
+    %h2
+      = @day_home.name
+
     %p
-      #contact-form.modal
-        %h3 Contacting
-        %h5 #{@day_home.name}
-        = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
-          = cf.label :name, "Your name:"
-          = cf.text_field :name, :class => "required"
+      :plain
+        <div class="fb-like" data-href="#{day_home_slug_url(@day_home.slug)}" data-send="false" data-layout="button_count" data-width="55" data-show-faces="false"></div>
 
-          = cf.label :name, "Your email:"
-          = cf.text_field :email, :class => "required"
-          
-          = cf.label :name, "Your phone (optional):"
-          = cf.text_field :phone
-          
-          = cf.label :subject, "Regarding:"
-          = cf.text_field :subject
+        <g:plusone size="medium"></g:plusone>
 
-          .remember
-            = cf.label "Message:"
-            %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
-          = cf.text_area :message, :cols => 90, :rows => 10
+        <script type="text/javascript">
+          (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+          })();
+        </script>
 
-          = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
-          .submit
-            = cf.submit "Contact", :class => 'btn btn-primary span3'
+        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
-    %ul.unstyled
-      - if @day_home.blurb.present?
-        %li
-          %h3.singleViewH3
-            About
-          = @day_home.blurb
+.row
+  .span4.well.wellSize
+    .textSize20
+      = @day_home.blurb
+  .span6.margin10
+    #coin-container
+      #coin-slider
+        #homes
+          - unless @day_home.photos.blank?
+            - @day_home.photos.each do |dh_photo|
+              %img{:src=>"#{dh_photo.photo_url(:reg)}"}
+.row
+  %br
+.row
+  .span3
+    %h3.singleViewH3
+      Availability
+    %div.availability
+      %h4
+        Open Availability
+        - avail = @day_home.availability
+        -if avail.empty?
+          =image_tag("circle-empty.png", :title=> "Closed")
+        -else
+          -if avail.include? "Full-time"
+            =image_tag("circle-full.png", :title=> "Full-time")
+          -if avail.include? "Part-time"
+            =image_tag("circle-half.png", :title=> "Part-time")
+      - @day_home.availability_types.order("id asc").each do |av|
+        = "#{av.availability} -  #{av.kind}"
+  .span4
+    %h3.singleViewH3
+      Contact Information
+    .contact_info
+      = mail_to @day_home.email, "Email Us", :encode => "javascript"
+      = ' / '
+      %a(title="Contact Form" href="#contact-form" rel="modal:open") Contact Form
+      = ' / '
+      = link_to('View Calendar', calendar_day_home_path(@day_home))
+    #contact-form.modal
+      %h3 Contacting
+      %h5 #{@day_home.name}
+      = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
+        = cf.label :name, "Your name:"
+        = cf.text_field :name, :class => "required"
 
-      %li
-        %h3.singleViewH3
-          Contact Information
-        .contact_info
-          = mail_to @day_home.email, "Email Us", :encode => "javascript"
-          = ' / '
-          %a(title="Contact Form" href="#contact-form" rel="modal:open") Contact Form
-          = ' / '
-          = link_to('View Calendar', calendar_day_home_path(@day_home))
-        #contact-form.modal
-          %h3 Contacting
-          %h5 #{@day_home.name}
-          = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
-            = cf.label :name, "Your name:"
-            = cf.text_field :name, :class => "required"
+        = cf.label :name, "Your email:"
+        = cf.text_field :email, :class => "required"
 
-            = cf.label :name, "Your email:"
-            = cf.text_field :email, :class => "required"
-            
-            = cf.label :name, "Your phone (optional):"
-            = cf.text_field :phone
-            
-            = cf.label :subject, "Regarding:"
-            = cf.text_field :subject
+        = cf.label :name, "Your phone (optional):"
+        = cf.text_field :phone
 
-            .remember
-              = cf.label "Message:"
-              %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
-            = cf.text_area :message, :cols => 90, :rows => 10
+        = cf.label :subject, "Regarding:"
+        = cf.text_field :subject
 
-            = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
-            .submit
-              = cf.submit "Contact", :class => 'btn btn-primary span3'
+        .remember
+          = cf.label "Message:"
+          %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
+        = cf.text_area :message, :cols => 90, :rows => 10
 
-        %div
-          = @day_home.address
-          - if @day_home.phone_number?
-            %br
-            Phone Number:
-            = @day_home.phone_number
-        %div.availability
-          %h4
-            Open Availability
-            - avail = @day_home.availability
-            -if avail.empty?
-              =image_tag("circle-empty.png", :title=> "Closed")
-            -else
-              -if avail.include? "Full-time"
-                =image_tag("circle-full.png", :title=> "Full-time")
-              -if avail.include? "Part-time"
-                =image_tag("circle-half.png", :title=> "Part-time")
-          - @day_home.availability_types.order("id asc").each do |av|
-            = "#{av.availability} -  #{av.kind}"
-      
-      %li
-        %h3.singleViewH3
-          Certifications 
-        .certifications
-          %p
-            = @day_home.name
-            has the following certifications:
-      %li
-        %h3.singleViewH3
-          Dietary Accomodations
-        .dietaryAccomodations
-          %p
-            = @day_home.name
-            is mindful of children with the following dietary concerns.
-      %li
-        %h3.singleViewH3
-          Licensed
-        .licensed
-          %p
-            = @day_home.name
-            is licensed.
-      = link_to 'Contact Dayhome'.html_safe, [:new, :day_home_signup_request], :id => 'contactFormButton', :href => '#contact-form', :rel => 'modal:open'
+        = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
+        .submit
+          = cf.submit "Contact", :class => 'btn btn-primary span3'
+      %div
+        = @day_home.address
+        - if @day_home.phone_number?
+          %br
+          Phone Number:
+          = @day_home.phone_number
+  .span4
+    =image_tag('dayhomeAction.png')
 
+.row
+  %br
+
+.row
   .mediaAlign.span7
     %h3.singleViewH3
-      Find Us
+      Location
     = gmaps(:map_options => { :center_latitude => @day_home.lat,
                                  :center_longitude => @day_home.lng,
                                  :zoom => 16,
                                  :auto_zoom => false,
                                  :provider_key => gmaps_api_key},
                :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
-
+  .span5
     %h3.singleViewH3
-      Photos
-    - if @day_home.photos.blank?
+      Other Information
+    %h4
+      Certifications
+    .certifications
       %p
-        No photos available.
-    - else    
+        = @day_home.name
+        has the following certifications:
+        %br
+        -if @day_home.certification_types.any?
+          - @day_home.certification_types.each do |cert|
+            = "- #{cert.kind}"
+            %br
+    %h4
+      Dietary Accomodations
+    .dietaryAccomodations
+      %p
+        = @day_home.name
+        - if @day_home.dietary_accommodations?
+          %b
+            is
+        - else
+          %b
+            is not
+        mindful of children with the following dietary concerns.
 
-      %ul#slideshow
-        - @day_home.photos.each do |photo|
-          %li
-            %h3
-              = photo.caption
-            %span= photo.photo_url
-            = image_tag(photo.photo_url)
-
-      #sliderWrapper
-        #fullsize
-          #imgprev.imgnav{:title => "Previous Image"}
-          #imglink
-          #imgnext.imgnav{:title => "Next Image"}
-          #image
-          #information
-            %h3
 
 .row
   .span12
@@ -208,19 +179,29 @@
           = link_to 'Sign Up', new_user_path
           to leave a review.
 
-= content_for :header_scripts do
-  = javascript_include_tag 'jquery.home_slider'
 
-:javascript
-  $('slideshow').style.display='none';
-  $('sliderWrapper').style.display='block';
-  var slideshow=new TINY.slideshow("slideshow");
-  window.onload=function(){
-    slideshow.auto=true;
-    slideshow.speed=5;
-    slideshow.info="information";
-    slideshow.scrollSpeed=4;
-    slideshow.spacing=5;
-    slideshow.active="#fff";
-    slideshow.init("slideshow","image","imgprev","imgnext","imglink");
-  }
+
+#contact-form.modal
+  %h3 Contacting
+  %h5 #{@day_home.name}
+  = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
+    = cf.label :name, "Your name:"
+    = cf.text_field :name, :class => "required"
+
+    = cf.label :name, "Your email:"
+    = cf.text_field :email, :class => "required"
+
+    = cf.label :name, "Your phone (optional):"
+    = cf.text_field :phone
+
+    = cf.label :subject, "Regarding:"
+    = cf.text_field :subject
+
+    .remember
+      = cf.label "Message:"
+      %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
+    = cf.text_area :message, :cols => 90, :rows => 10
+
+    = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
+    .submit
+      = cf.submit "Contact", :class => 'btn btn-primary span3'

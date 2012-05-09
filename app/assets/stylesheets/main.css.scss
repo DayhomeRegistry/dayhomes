@@ -263,9 +263,6 @@ footer p{
 .featured h2 {
   margin-left: 20px;
 }
-.featured .cs-buttons {
-  display: none;
-}
 .featured .top {
   position: relative;
   top: -8px;
@@ -310,7 +307,7 @@ footer p{
   margin-bottom: 10px;
 }
 .callToAction .point {
-  text-align: center;
+  text-align: left;
 }
 .callToActionButton {
   -moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
@@ -478,4 +475,11 @@ footer p{
   }
 }
 
+.textSize20 {
+  font-size: 14px;
+}
+
+.margintop50 {
+  margin-top: 50px;
+}
 
