@@ -1,14 +1,16 @@
-%h2
-  Dayhomes admin account
+.row.registrationStyle
+  .span4.well.form-horizontal
+    %h2
+      Dayhomes admin account
 
-= form_for [:admin, @user_session] do |f|
-  = f.label :email
-  = f.email_field :email
-  
-  = f.label :password
-  = f.password_field :password
-  
-  %br
-  = f.submit 'Login', :class => 'btn'
-  |
-  = link_to 'Forgot password?', reset_password_path
+    = form_for [:admin, @user_session] do |f|
+      = f.label :email
+      = f.email_field :email
+
+      = f.label :password
+      = f.password_field :password
+
+      %br
+      = f.submit 'Login', :class => 'btn'
+      |
+      = link_to 'Forgot password?', reset_password_path

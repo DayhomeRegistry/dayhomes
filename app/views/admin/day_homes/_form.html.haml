@@ -15,8 +15,11 @@
   = f.label :name
   = f.text_field :name
   
-  = f.label :slug, 'http://dayhomeregistry.com/<strong>DAYHOME-URL</strong>'.html_safe
-  = f.text_field :slug
+  = f.label :slug, 'Dayhome Slug'
+  .input-prepend
+    %span.add-on
+      http://dayhomeregistry.com/
+    = f.text_field :slug
   
   = f.label :phone_number
   = f.text_field :phone_number
