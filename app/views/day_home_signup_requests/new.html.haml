@@ -47,7 +47,13 @@
 
       = f.label :day_home_blurb, 'Description'
       = f.text_area :day_home_blurb, :rows => 6
-    .span4.well.form-horizontal
+
+      %br
+      %br
+      = f.submit 'Add dayhome', :class => :btn
+      |
+      = link_to 'Cancel', root_path
+    .span5.well.form-horizontal
       %h3
         Dayhome contact information
 
@@ -65,9 +71,3 @@
 
       = f.label :comments, 'Comments or Questions?'
       = f.text_area :preferred_time_to_contact, :rows => 6
-
-  .row
-    .span12
-      = f.submit 'Add dayhome', :class => :btn
-      |
-      = link_to 'Cancel', root_path
