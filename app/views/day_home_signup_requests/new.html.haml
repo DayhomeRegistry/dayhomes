@@ -8,21 +8,24 @@
   });
 
 .row
-  .span4.offset2
+  .span12
     %h2
-      Add your dayhome
+      Add your dayhome to the Dayhome Registry!
 
 = form_for @day_home_signup_request do |f|
   .row.registrationStyle
-    .span4.offset2.well.form-horizontal
+    .span6.well.form-horizontal
       %h3
         Dayhome details
 
-      = f.label :day_home_name, 'Dayhome name'
+      = f.label :day_home_name, 'Dayhome Name'
       = f.text_field :day_home_name
 
-      = f.label :day_home_slug, 'http://dayhomeregistry.com/<strong>DAYHOME-URL</strong>'.html_safe
-      = f.text_field :day_home_slug
+      = f.label :day_home_slug, 'Dayhome Slug'
+      .input-prepend
+        %span.add-on
+          http://dayhomeregistry.com/
+        = f.text_field :day_home_slug
 
       = f.label :day_home_city, 'City'
       = f.text_field :day_home_city
@@ -43,10 +46,10 @@
       = f.text_field :day_home_phone_number
 
       = f.label :day_home_blurb, 'Description'
-      = f.text_area :day_home_blurb, :rows => 4
+      = f.text_area :day_home_blurb, :rows => 6
     .span4.well.form-horizontal
       %h3
-        Dayhome contact
+        Dayhome contact information
 
       = f.label :contact_name, 'Full Name'
       = f.text_field :contact_name
@@ -61,10 +64,10 @@
       = f.text_field :preferred_time_to_contact
 
       = f.label :comments, 'Comments or Questions?'
-      = f.text_area :preferred_time_to_contact, :rows => 4
+      = f.text_area :preferred_time_to_contact, :rows => 6
 
   .row
-    .span4.offset2
+    .span12
       = f.submit 'Add dayhome', :class => :btn
       |
       = link_to 'Cancel', root_path

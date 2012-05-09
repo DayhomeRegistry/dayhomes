@@ -457,3 +457,25 @@ footer p{
 .pricingRegister {
   width: 450px;
 }
+
+.input-prepend {
+  input {
+    margin-left:-4px;
+  }
+}
+
+.registrationStyle {
+  h3 {
+    margin-bottom: 10px;
+  }
+
+  label {
+    margin-top:10px;
+  }
+
+  textarea {
+    width:300px;
+  }
+}
+
+
