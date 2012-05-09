@@ -4,3 +4,19 @@
       Sign up
 
     = render 'form'
+
+  .offset2.span4
+    .callToAction
+      .top
+      %h3 Dayhome owner?
+      %p.point
+        We believe all children should have the best care possible.
+      %p.point
+        We believe Dayhomes provide that level of care.
+      %p.point
+        But, caring for children can be a tough job.
+      %p
+        Let us make that job a little easier for you.
+      %p
+        = link_to 'Register!'.html_safe, [:new, :day_home_signup_request], :class => "callToActionButton", :id => "signUp"
+      .bottom
