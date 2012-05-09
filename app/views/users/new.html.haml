@@ -3,4 +3,15 @@
     %h2
       Sign up
 
+    Are you signing up to
+    %b
+      register
+    your dayhome?
+    You're in the
+    %b
+      wrong
+    place! Go
+    %b
+      = link_to 'here', [:new, :day_home_signup_request]
+    to register a dayhome without signing up!
     = render 'form'
