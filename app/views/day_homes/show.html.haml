@@ -63,15 +63,16 @@
       %h4
         Open Availability
         - avail = @day_home.availability
-        -if avail.empty?
-          =image_tag("circle-empty.png", :title=> "Closed")
-        -else
-          -if avail.include? "Full-time"
-            =image_tag("circle-full.png", :title=> "Full-time")
-          -if avail.include? "Part-time"
-            =image_tag("circle-half.png", :title=> "Part-time")
-      - @day_home.availability_types.order("id asc").each do |av|
+        - if avail.empty?
+          = image_tag("circle-empty.png", :title=> "Closed")
+        - else
+          - if avail.include? "Full-time"
+            = image_tag("circle-full.png", :title=> "Full-time")
+          - if avail.include? "Part-time"
+            = image_tag("circle-half.png", :title=> "Part-time")
+      - @day_home.availability_types.each do |av|
         = "#{av.availability} -  #{av.kind}"
+        %br
   .span4
     %h3.singleViewH3
       Contact Information
