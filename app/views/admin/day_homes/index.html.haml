@@ -3,6 +3,8 @@
     $(".photo_preview").colorbox({rel:'photo_preview'});
   });
 
+= render '/layouts/admin_subnav'
+
 %p
   = link_to 'Create dayhome', [:new, :admin, :day_home], :class => :btn
 
