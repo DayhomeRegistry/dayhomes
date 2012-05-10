@@ -147,13 +147,10 @@
     .dietaryAccomodations
       %p
         = @day_home.name
-        - if @day_home.dietary_accommodations?
-          %b
-            is
-        - else
-          %b
-            is not
-        mindful of children with the following dietary concerns.
+        %strong
+          is
+          = "not" unless @day_home.dietary_accommodations?
+        mindful of children with the dietary concerns.
 
 
 .row
