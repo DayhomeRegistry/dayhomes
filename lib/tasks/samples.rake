@@ -8,30 +8,23 @@ namespace :db do
 
   namespace :seed do
     task :samples => :environment do
-      # Reset the primary key increment count; so it starts counting from 1 again.
-      User.connection.execute('ALTER TABLE users AUTO_INCREMENT = 1')
-      DayHome.connection.execute('ALTER TABLE day_homes AUTO_INCREMENT = 1')
-      AvailabilityType.connection.execute('ALTER TABLE availability_types AUTO_INCREMENT = 1')
-      CertificationType.connection.execute('ALTER TABLE availability_types AUTO_INCREMENT = 1')
-
       # create certification types
-      level_1 = CertificationType.create!({:kind => 'Child Care Level 1'})
-      level_2 = CertificationType.create!({:kind => 'Child Care Level 2'})
-      level_3 = CertificationType.create!({:kind => 'Child Care Level 3'})
-      basic_cpr = CertificationType.create!({:kind => 'Basic First Aid'})
-      advanced_cpr = CertificationType.create!({:kind => 'Advanced First Aid'})
-      infant_cpr = CertificationType.create!({:kind => 'Infant CPR'})
+      level_1 = CertificationType.where({:kind => 'Child Care Level 1'}).first
+      level_2 = CertificationType.where({:kind => 'Child Care Level 2'}).first
+      level_3 = CertificationType.where({:kind => 'Child Care Level 3'}).first
+      basic_cpr = CertificationType.where({:kind => 'Basic First Aid'}).first
+      advanced_cpr = CertificationType.where({:kind => 'Advanced First Aid'}).first
+      infant_cpr = CertificationType.where({:kind => 'Infant CPR'}).first
 
       # create availability types
-      full_time_full_days = AvailabilityType.create!({:availability => 'Full-time', :kind => 'Full Days'})
-      full_time_after_school = AvailabilityType.create!({:availability => 'Full-time', :kind => 'After School'})
-      full_time_before_school = AvailabilityType.create!({:availability => 'Full-time', :kind => 'Before School'})
-      part_time_full_days = AvailabilityType.create!({:availability => 'Part-time', :kind => 'Full Days'})
-      part_time_morning = AvailabilityType.create!({:availability => 'Part-time', :kind => 'Morning'})
-      part_time_afternoon = AvailabilityType.create!({:availability => 'Part-time', :kind => 'Afternoon'})
-      part_time_after_school = AvailabilityType.create!({:availability => 'Part-time', :kind => 'After School'})
-      part_time_before_school = AvailabilityType.create!({:availability => 'Part-time', :kind => 'Before School'})
-
+      full_time_full_days = AvailabilityType.where({:availability => 'Full-time', :kind => 'Full Days'}).first
+      full_time_after_school = AvailabilityType.where({:availability => 'Full-time', :kind => 'After School'}).first
+      full_time_before_school = AvailabilityType.where({:availability => 'Full-time', :kind => 'Before School'}).first
+      part_time_full_days = AvailabilityType.where({:availability => 'Part-time', :kind => 'Full Days'}).first
+      part_time_morning = AvailabilityType.where({:availability => 'Part-time', :kind => 'Morning'}).first
+      part_time_afternoon = AvailabilityType.where({:availability => 'Part-time', :kind => 'Afternoon'}).first
+      part_time_after_school = AvailabilityType.where({:availability => 'Part-time', :kind => 'After School'}).first
+      part_time_before_school = AvailabilityType.where({:availability => 'Part-time', :kind => 'Before School'}).first
 
       review_1 = Review.new({:content => 'Bacon ipsum dolor sit amet tri-tip pancetta cow kielbasa. Shank jerky meatloaf, kielbasa sirloin chuck jowl frankfurter swine boudin shoulder pastrami. Bresaola ham kielbasa, meatloaf tri-tip jowl tongue filet mignon flank ball tip brisket andouille. Filet mignon boudin t-bone swine turkey ball tip.', :rating => 2})
       review_2 = Review.new({:content => 'Meatloaf short loin shankle tri-tip. Tri-tip swine turducken pork, filet mignon flank ribeye ball tip jowl. Tongue hamburger short ribs, jowl spare ribs filet mignon chuck t-bone. Sirloin ham boudin, pancetta pork loin drumstick ground round shank capicola chuck corned beef strip steak swine venison.', :rating => 1})
