@@ -12,6 +12,10 @@
     = csrf_meta_tags
     = yield :header_scripts
     %link{:href => "assets/icons/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}
+    /[if gte IE 9]
+      :css
+        .gradient { filter: none; }
+        .gradient:hover { filter: none; }
   %body
     :plain
       <div id="fb-root"></div>
