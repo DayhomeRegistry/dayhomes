@@ -1,18 +1,5 @@
 :javascript
   $(document).ready(function() {
-    $('[rel=tooltip]').tooltip({placement:'right'});
-
-    $.modal.defaults = {
-        overlay: "#000",        // Overlay color
-        opacity: 0.75,          // Overlay opacity
-        zIndex: 1,              // Overlay z-index.
-        escapeClose: true,      // Allows the user to close the modal by pressing `ESC`
-        clickClose: true,       // Allows the user to close the modal by clicking the overlay
-        closeText: 'Close',     // Text content for the close <a> tag.
-        showClose: true,         // Shows a (X) icon/link in the top-right corner
-        modalClass: "modal",    // CSS class added to the element being displayed in the modal.
-    };
-
     $('#coin-slider').coinslider({  width: 500,
                                     effect: 'straight',
                                     height: 300,
@@ -20,6 +7,9 @@
                                     delay: 5000,
                                     titleSpeed: 700 });
   });
+
+  $('[rel=tooltip]').tooltip({placement:'right'});
+
 .row
   .span12
     %h2
@@ -173,7 +163,7 @@
         %p
           Please
           = link_to 'Login', login_path
-          or 
+          or
           = link_to 'Sign Up', new_user_path
           to leave a review.
 
@@ -203,3 +193,15 @@
     = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
     .submit
       = cf.submit "Contact", :class => 'btn btn-primary span3'
+
+:javascript
+  $.modal.defaults = {
+      overlay: "#000",        // Overlay color
+      opacity: 0.75,          // Overlay opacity
+      zIndex: 1,              // Overlay z-index.
+      escapeClose: true,      // Allows the user to close the modal by pressing `ESC`
+      clickClose: true,       // Allows the user to close the modal by clicking the overlay
+      closeText: 'Close',     // Text content for the close <a> tag.
+      showClose: true,         // Shows a (X) icon/link in the top-right corner
+      modalClass: "modal",    // CSS class added to the element being displayed in the modal.
+  };

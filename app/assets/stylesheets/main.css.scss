@@ -355,21 +355,22 @@ footer p{
 .pricingHeader {
   border-bottom:1px solid #EEEEEE;
   background: #FFFDE8;
-  font-family: "Cambria", "Georgia", "Times New Roman", Times, sans-serif;
+  font-family: Helvetica,Arial,sans-serif;
   color: black;
   width:100%;
-  height: 50px;
+  height: 40px;
   text-align: center;
-  font-size: 30px;
-  padding-top: 30px;
+  line-height: 30px;
+  font-size: 24px;
+  padding-top: 16px;
 }
 
 .pricingBlurb {
   background: #FDFDF9;
-  font-family: "Cambria", "Georgia", "Times New Roman", Times, sans-serif;
+  font-family: Helvetica,Arial,sans-serif;
   color: black;
   height:100px;
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom:20px;
   line-height: 30px;
   padding: 20px 20px 20px 20px;
@@ -378,7 +379,7 @@ footer p{
 //pricing columns
 .colHeader {
   background-color: #2B2B2B;
-  font-family: "Cambria", "Georgia", "Times New Roman", Times, sans-serif;
+  font-family: Helvetica,Arial,sans-serif;
   color: black;
   width:100%;
   height: 80px;
@@ -393,20 +394,23 @@ footer p{
 
 .baby {
   background-color: #DCDFFA;
+  margin-bottom: -1px;
 }
 
 .mama {
   background-color: #CCEFFF;
+  margin-bottom: -1px;
 }
 
 .papa {
   background-color: #E6F2CC;
+  margin-bottom: -1px;
 }
 
 
 
 .colContent {
-  font-family: "Cambria", "Georgia", "Times New Roman", Times, sans-serif;
+  font-family: Helvetica,Arial,sans-serif;
   color: black;
   height:200px;
   ul {
@@ -425,21 +429,22 @@ footer p{
 .contentHeader {
   border-bottom:1px solid #EEEEEE;
   background: #FFFDE8;
-  font-family: "Cambria", "Georgia", "Times New Roman", Times, sans-serif;
+  font-family: Helvetica,Arial,sans-serif;
   color: black;
   width:100%;
-  height: 50px;
+  height: 40px;
   text-align: center;
-  font-size: 28px;
-  padding-top: 30px;
+  line-height: 30px;
+  font-size: 24px;
+  padding-top: 16px;
   margin-top: 20px
 }
 
 .contentBlurb {
   background: #FDFDF9;
-  font-family: "Cambria", "Georgia", "Times New Roman", Times, sans-serif;
+  font-family: Helvetica,Arial,sans-serif;
   color: black;
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom:20px;
   line-height: 30px;
   padding: 20px 20px 20px 20px;
@@ -477,9 +482,5 @@ footer p{
 
 .textSize20 {
   font-size: 14px;
-}
-
-.margintop50 {
-  margin-top: 50px;
 }
 
