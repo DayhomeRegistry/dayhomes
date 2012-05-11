@@ -24,6 +24,15 @@
   border: 1px solid #b94a48;
 }
 
+.field_with_errors {
+  display: inline;
+}
+
+.field_with_errors label.message {
+  display: inline;
+  margin-left: 5px;
+}
+
 .left { float: left; }
 .right { float: right; }
 .clear { clear: both; }
