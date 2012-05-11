@@ -12,6 +12,12 @@
     %h2
       Add your dayhome to the Dayhome Registry!
 
+.row
+  .span12
+    .alert.alert-info
+      %i.icon-info-sign.icon-white
+      = link_to "Find out more about our services, plans and pricing...", pricing_pages_path
+
 = form_for @day_home_signup_request do |f|
   .row.registrationStyle
     .span6.well.form-horizontal
