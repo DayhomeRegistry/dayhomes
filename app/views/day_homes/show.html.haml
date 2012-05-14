@@ -50,6 +50,8 @@
     %h3.singleViewH3
       Availability
     %div.availability
+      = link_to('View Calendar', calendar_day_home_path(@day_home), :style => 'font-size: 14px')
+      
       %h4
         Open Availability
         - avail = @day_home.availability
@@ -75,8 +77,6 @@
           = @day_home.phone_number
         
       = mail_to @day_home.email, "Email Us", :encode => "javascript"
-      = ' / '
-      = link_to('View Calendar', calendar_day_home_path(@day_home))
     
     #contact-form.modal
       %h3
