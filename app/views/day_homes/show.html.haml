@@ -77,14 +77,20 @@
     %h3.singleViewH3
       Contact Information
     .contact_info
+      %div
+        = @day_home.address
+        - if @day_home.phone_number?
+          %br
+          Phone:
+          = @day_home.phone_number
+        
       = mail_to @day_home.email, "Email Us", :encode => "javascript"
       = ' / '
-      %a(title="Contact Form" href="#contact-form" rel="modal:open") Contact Form
-      = ' / '
       = link_to('View Calendar', calendar_day_home_path(@day_home))
+    
     #contact-form.modal
-      %h3 Contacting
-      %h5 #{@day_home.name}
+      %h3
+        Contact #{@day_home.name}
       = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
         = cf.label :name, "Your name:"
         = cf.text_field :name, :class => "required"
@@ -101,20 +107,13 @@
         .remember
           = cf.label "Message:"
           %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
-        = cf.text_area :message, :cols => 90, :rows => 10
+        = cf.text_area :message, :style => 'height: 150px !important;'
 
         = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
         .submit
           = cf.submit "Contact", :class => 'btn btn-primary span3'
-      %div
-        = @day_home.address
-        - if @day_home.phone_number?
-          %br
-          Phone Number:
-          = @day_home.phone_number
   .span4
-    =image_tag('dayhomeAction.png')
-
+    = link_to 'Contact Dayhome', '#contact-form', :rel => 'modal:open', :class => "callToActionButton"
 .row
   %br
 
