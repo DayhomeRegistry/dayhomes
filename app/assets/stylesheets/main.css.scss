@@ -40,6 +40,7 @@ header{
   height:93px;
   background:url('searchBox.png') no-repeat;
   margin-top:81px;
+  display: inline-block;
 }
 #searchBox a{
   margin-left:18px;
@@ -52,20 +53,17 @@ header{
 #searchBox a:hover, footer a:hover{
   color:#79489f;
 }
-
 #searchBox ::-webkit-input-placeholder  { color:#828282; }
 #searchBox input:-moz-placeholder { color:#828282; }
-
-
 #submit{
-  height:45px;
+  height:40px;
   width:102px;
-  background: url('sprites.png') top left;
-  border:none;
-  margin:16px 0 -24px 0px;
-}
-#submit:hover{
-  background-position:left -49px;
+  margin:18px 0 -24px 2px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  padding: 9px 0;
+  font-size: 16px;
 }
 #searchQuery{
   height:30px;
@@ -302,6 +300,10 @@ footer p{
   height: 6px;
   width: 287px;
   background:url('callToActionBottom.png') no-repeat;
+}
+
+.callToAction .point {
+  text-align: center !important;
 }
 .callToAction h3 {
   margin-bottom: 10px;
