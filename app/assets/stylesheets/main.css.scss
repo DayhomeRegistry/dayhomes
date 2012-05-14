@@ -40,6 +40,7 @@ header{
   height:93px;
   background:url('searchBox.png') no-repeat;
   margin-top:81px;
+  display: inline-block;
 }
 #searchBox a{
   margin-left:18px;
@@ -52,37 +53,17 @@ header{
 #searchBox a:hover, footer a:hover{
   color:#79489f;
 }
-
 #searchBox ::-webkit-input-placeholder  { color:#828282; }
 #searchBox input:-moz-placeholder { color:#828282; }
-
-
 #submit{
   height:40px;
   width:102px;
-  border:none;
   margin:18px 0 -24px 2px;
-  
-  -webkit-border-radius: 16px;
-  -moz-border-radius: 16px;
-  border-radius: 16px;
-  
-  background: -webkit-gradient(linear, left top, left bottom, from(#FE5702), to(#F94820));
-  background: -moz-linear-gradient(top,  #FE5702,  #F94820);
-  
   color: #fff;
-  font-size: 16px;
-  text-indent: none;
   cursor: pointer;
-  
-  -moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
-  -webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
-  box-shadow:inset 0px 1px 0px 0px #f29c93;
-  
-}
-#submit:hover{
-  background: -webkit-gradient(linear, left top, left bottom, from(#00DC3F), to(#03DA50));
-  background: -moz-linear-gradient(top,  #00DC3F,  #03DA50);
+  display: inline-block;
+  padding: 9px 0;
+  font-size: 16px;
 }
 #searchQuery{
   height:30px;
