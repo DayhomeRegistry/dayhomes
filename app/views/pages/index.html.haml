@@ -1,32 +1,21 @@
-:javascript
-  $(document).ready(function() {
-    $('#coin-slider').coinslider({  width: 500,
-                                    effect: 'straight',
-                                    height: 300,
-                                    navigation: true,
-                                    delay: 5000,
-                                    titleSpeed: 700 });
-  });
-
 .row
   .span7
     .featured
       .top
       .featureDetails
         %h2 Featured Dayhomes
-
-      #coin-container
-        #coin-slider
-          #homes
-            - @featured_day_homes.each do |featured_day_home|
+        .slides
+          - @featured_day_homes.each do |featured_day_home|
+            .slide
               %a{:href => day_home_slug_path(featured_day_home.slug)}
                 %img{:src=>"#{featured_day_home.photos.first.photo_url(:reg)}"}
-                %span
-                  %h4
-                    = featured_day_home.name
-                  - if featured_day_home.blurb.present?
-                    %p
-                      = featured_day_home.blurb
+                .slide-desc
+                  .slide-desc-inset
+                    %h4
+                      = featured_day_home.name
+                    - if featured_day_home.blurb.present?
+                      %p
+                        = featured_day_home.blurb
       .bottom
     
   .span5
