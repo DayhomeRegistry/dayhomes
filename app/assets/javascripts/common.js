@@ -15,8 +15,8 @@
 		// Make slides autoplay
 		$(".slides").cycle({
 			fx: 		"fade",
-			speed: 		300,
-			timeout: 	10000
+			speed: 		600,
+			timeout: 	8000
 		});
 	});
 
