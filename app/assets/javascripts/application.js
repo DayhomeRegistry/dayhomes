@@ -19,11 +19,11 @@
 //= require jquery.ui.timepicker
 //= require jquery.add_more
 //= require jquery.colorbox
-//= require coin-slider.min
 //= require jquery.modal
 //= require jquery.rest
 //= require rails.validations
 //= require jquery-star-rating
+//= require jquery.cycle.lite
 //= require common
 //= require externals/modernizr
 //= require externals/html5support/jquery.html5support
