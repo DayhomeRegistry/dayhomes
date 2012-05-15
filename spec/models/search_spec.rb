@@ -351,24 +351,4 @@ describe Search do
     end
 
   end
-  
-  
-  describe "address=" do
-    it "should replace 'Address or Neighbourhood' if it's present (ie 7 hax)" do
-      @search = Search.new(:address => 'Address or Neighbourhood')
-      @search.address.should == " Edmonton Alberta"
-      
-      @search = Search.new(:address => '123 Fake St')
-      @search.address.should == '123 Fake St Edmonton Alberta'
-    end
-    
-    it "should append edmonton and alberta if not included" do
-      @search = Search.new(:address => '123 Fake St')
-      @search.address.should == "123 Fake St Edmonton Alberta"
-      
-      @search = Search.new(:address => '123 Fake St Edmonton')
-      @search.address.should == "123 Fake St Edmonton Alberta"
-    end
-    
-  end
 end
