@@ -22,7 +22,9 @@ describe Search do
                                   :postal_code => 'T5N1Y6',
                                   :street1 => '131 St NW',
                                   :slug => 'day_home_1',
-                                  :licensed => true
+                                  :licensed => true,
+                                  :email => 'dh1@dayhomeregistry.com',
+                                  :phone_number => '17809072969'
                                   })
 
     @dayhome_2 = DayHome.create!({:name => "DayHome 2",
@@ -34,7 +36,10 @@ describe Search do
                                   :street1 => '178 St NW',
                                   :dietary_accommodations => true,
                                   :slug => 'day_home_2',
-                                  :licensed => false})
+                                  :licensed => false,
+                                  :email => 'dh2@dayhomeregistry.com',
+                                  :phone_number => '17809042969'
+                                 })
   end
 
   it "should create a search model given valid attributes" do
