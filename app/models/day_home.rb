@@ -32,7 +32,8 @@ class DayHome < ActiveRecord::Base
   validates_associated :photos
   validates_uniqueness_of :slug, :email
   validates_format_of :slug, :with => /[a-z0-9]+/
-  
+  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+
   accepts_nested_attributes_for :photos, :reject_if => :all_blank, :allow_destroy => true
 
   # this method is called when creating or updating a dayhome
