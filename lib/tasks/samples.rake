@@ -85,7 +85,7 @@ namespace :db do
                                                :street1 => '4138 36st NW',
                                                :street2 =>  '',
                                                :slug => 'DayHomesWithReviews',
-                                               :email => 'withreviews@dayhomeregistry.com',
+                                               :email => 'withreviews123@dayhomeregistry.com',
                                                :postal_code => 'T6L5M6',
                                                :featured => true,
                                                :phone_number => '780-555-5555',
@@ -123,7 +123,7 @@ namespace :db do
                              :province =>  'AB',
                              :street2 =>  '',
                              :slug => "DayHome#{index}single",
-                             :email => "dhf#{index}@dayhomeregistry.com",
+                             :email => "dh564f#{index}@dayhomeregistry.com",
                              :featured => true,
                              :phone_number => '780-555-5555',
                              :blurb => "DayHome #{index} is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it."
@@ -157,7 +157,8 @@ namespace :db do
                              :province =>  'AB',
                              :street2 =>  '',
                              :slug => "DayHome#{index}partime",
-                             :email => "dhp#{index}@dayhomeregistry.com",
+                             :email => "dh32p#{index}@dayhomeregistry.com",
+                             :phone_number => '17809062943',
                              :featured => true
                             }.merge(street_and_postal))
         d.availability_types << part_time_morning
@@ -177,6 +178,7 @@ namespace :db do
                              :province =>  'AB',
                              :street2 =>  '',
                              :slug => "DayHome#{index}noavail",
+                             :phone_number => '17809062942',
                              :email => "dhn#{index}@dayhomeregistry.com"
                             }.merge(street_and_postal))
         d.availability_types << part_time_before_school
