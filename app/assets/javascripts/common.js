@@ -11,5 +11,13 @@
 
 	$(function() {
 		$("input[placeholder]").placeholder();
+
+		// Make slides autoplay
+		$(".slides").cycle({
+			fx: 		"fade",
+			speed: 		600,
+			timeout: 	8000
+		});
 	});
+
 }(jQuery));

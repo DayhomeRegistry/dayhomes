@@ -255,12 +255,6 @@ footer p{
   margin-top: 8px;
   margin-bottom: 28px;
 }
-.featured #coin-container {
-  height: auto;
-}
-.featured h2 {
-  margin-left: 20px;
-}
 .featured .top {
   position: relative;
   top: -8px;
@@ -274,6 +268,9 @@ footer p{
   height: 8px;
   width: 540px;
   background:url('featureBottom.png') no-repeat;
+}
+.featureDetails {
+  margin: 0 0 0 20px;
 }
 .callToAction {
   background:url('callToAction.png') repeat-y;
@@ -366,8 +363,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002400', end
 }
 
 /* placeholder darkness */
-:-moz-placeholder{color:#333333;}
-::-webkit-input-placeholder{color:#333333;}
+:-moz-placeholder{color:#828282;}
+::-webkit-input-placeholder{color:#828282;}
 
 // first horitzontal chunk
 .pricingHeader {

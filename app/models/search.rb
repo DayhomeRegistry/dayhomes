@@ -14,7 +14,7 @@ class Search
   def initialize(attributes = {})
     # set each of the attributes
     attributes.each do |name, value|
-        send("#{name}=", value)
+      send("#{name}=", value)
     end
 
     # override the models that were set with the attributes send loop
@@ -67,15 +67,16 @@ class Search
 
     # create search dayhome pin
     if params.has_key?(:address) && !params[:address].blank?
-      search_addy_pin = geocode(params[:address])
+      search_addy_pin = geocode(setup_address(params[:address]))
     end
 
     # return the gmaps pins variable
     create_pins(dayhome_query, search_addy_pin)
   end
-  
-  
-  def address=(addr_value='')
+
+  private
+
+  def setup_address(addr_value)
     # hack for ie7 due to placeholder being submitted
     if addr_value =~ /Address or Neighbourhood/
       addr_value = ''
@@ -85,16 +86,19 @@ class Search
     unless addr_value.downcase =~ /edmonton/
       addr_value += ' Edmonton'
     end
-    
+
     # If no canadian province in query - add alberta as default.
-    unless addr_value.include?('alberta') && addr_value.include?('ab')
+    unless addr_value.downcase.include?('alberta') || addr_value.downcase.include?('ab')
       addr_value += ' Alberta'
     end
-    
-    @address = addr_value
+
+    # If no canadian country in query - add alberta as default.
+    unless addr_value.downcase.include?('canada') || addr_value.downcase.include?('ca')
+      addr_value += ' Canada'
+    end
+
+    addr_value
   end
-  
-private
 
   def calibrate_map
     # determine the autozoom

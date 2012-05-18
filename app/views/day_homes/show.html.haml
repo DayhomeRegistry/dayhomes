@@ -1,13 +1,4 @@
 :javascript
-  $(document).ready(function() {
-    $('#coin-slider').coinslider({  width: 500,
-                                    effect: 'straight',
-                                    height: 300,
-                                    navigation: true,
-                                    delay: 5000,
-                                    titleSpeed: 700 });
-  });
-
   $('[rel=tooltip]').tooltip({placement:'right'});
 
 .row
@@ -37,12 +28,16 @@
     .textSize20
       = @day_home.blurb
   .span6.margin10
-    #coin-container
-      #coin-slider
-        #homes
-          - unless @day_home.photos.blank?
-            - @day_home.photos.each do |dh_photo|
-              %img{:src=>"#{dh_photo.photo_url(:reg)}"}
+    - unless @day_home.photos.blank?
+      .slides
+        - @day_home.photos.each do |dh_photo| 
+          .slide
+            %img{:src=>"#{dh_photo.photo_url(:reg)}"}
+            - if dh_photo.caption.present?
+              .slide-desc
+                .slide-desc-inset
+                  %p
+                    = dh_photo.caption
 .row
   %br
 .row
