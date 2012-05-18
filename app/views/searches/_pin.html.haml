@@ -13,10 +13,10 @@
     Availability:
     - avail = dayhome.availability
     -if avail.empty?
-      =image_tag("circle-empty.png", :title=> "Closed")
+      =image_tag("circle-empty.png", :alt=> "Closed", :title=> "Closed")
     -else
       -if avail.include? "Full-time"
-        =image_tag("circle-full.png", :title=> "Full-time")
+        =image_tag("circle-full.png", :alt=> "Full-time", :title=> "Full-time")
       -if avail.include? "Part-time"
-        =image_tag("circle-half.png", :title=> "Part-time")
+        =image_tag("circle-half.png", :alt=> "Part-time", :title=> "Part-time")
 
