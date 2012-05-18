@@ -34,15 +34,13 @@
             = current_user.full_name
             = "-"
             = link_to "Your Account", user_path(current_user)
-
+            |
             - if current_user.admin?
-              |
               = link_to "Admin", admin_root_path
               |
-              
             - if current_user.day_home_owner?
-              = link_to "My Day Homes", day_homes_path
-
+              = link_to "My dayhomes", day_homes_path
+              |
             = link_to 'Logout', logout_path
           - else
             %li
