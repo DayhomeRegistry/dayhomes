@@ -11,7 +11,7 @@
   Edit
   = @day_home.name
 
-= form_for @day_home do |f|
+= form_for @day_home, :html => {:multipart => true} do |f|
   
   = f.fields_for :photos do |p|
     .add_multiples.clear{'data-group' => 'photos'}
