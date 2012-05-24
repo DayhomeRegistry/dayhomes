@@ -11,7 +11,7 @@
   });
   
 
-= form_for [:admin, @day_home] do |f|
+= form_for [:admin, @day_home], :html => {:multipart => true} do |f|
   = f.label :name
   = f.text_field :name
   
