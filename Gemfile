@@ -1,9 +1,10 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rails', '3.2.2'
 gem 'mysql2'
 gem 'haml'
 gem 'gmaps4rails', :git => 'git@github.com:RyanonRails/Google-Maps-for-Rails.git'
+#gem 'gmaps4rails'
 gem 'jquery-rails'
 gem 'carmen'
 gem 'authlogic'
@@ -21,7 +22,8 @@ gem 'airbrake'
 
 # le windows
 platforms :mswin, :mingw do
-  gem 'eventmachine', '1.0.0.beta.4.1'
+  #gem 'eventmachine', '1.0.0.beta.4.1'
+  gem 'eventmachine', :git=> 'git://github.com/eventmachine/eventmachine.git'
   gem 'thin'
 end
 
