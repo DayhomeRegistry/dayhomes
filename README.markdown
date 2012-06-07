@@ -121,12 +121,13 @@ You need to create your database configuration file in <tt>config/database.yml</
 The user credentials you enter in this file need to be able to create and admin the dev
 and test databases. In addition, you're going to need to set
 	> host: 127.0.0.1
-since localhost	gets translated to its corresponding IPv4 address.
+since localhost	gets translated to its corresponding IPv4 address in MySQL.
 
 Once all that is configured, you need to setup your database locally
     
     rake db:create
     rake db:setup
+	rake db:seed:samples
 
 You'll also want to prepare the test database with:
 
@@ -138,6 +139,9 @@ We're using the Foreman gem to manage our application processes. Kick off the
 application with:
 
     bin/foreman start
+	
+	## Note
+	This doesn't seem to work on windows....sigh.
 
 Since foreman doesn't seem to work on Windows at this point, you can also start the app the old fashioned way using:
 	rails server
