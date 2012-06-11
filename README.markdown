@@ -49,13 +49,17 @@ Before you can run Dayhomes in development, you need to install and be running
 the following on your system:
 
   * MySQL 5.5 (Community Server: http://dev.mysql.com/downloads/mysql/)
-	> Follow instructions here http://dev.mysql.com/doc/refman/5.5/en/installing.html
+	Follow instructions here http://dev.mysql.com/doc/refman/5.5/en/installing.html
   * Redis 2.4.8
-	> On Windows, this is an interesting step. To date, I've used MSOpenTech's port of redis
-	>		https://github.com/MSOpenTech/Redis
-	> which can be compiled in Visual Studio (assuming you have the C tools installed)
+	On Windows, this is an interesting step. To date, I've used MSOpenTech's port of redis
+			https://github.com/MSOpenTech/Redis
+	which can be compiled in Visual Studio (assuming you have the C tools installed)
   * Git >=1.7.10    	
-	> At least Git 1.7.10 is required because of changes to the SSL mechanism (i.e. openSSL v1.??)
+	At least Git 1.7.10 is required because of changes to the SSL mechanism (i.e. openSSL v1.??)
+  * ImageMagick
+	In Windows, ImageMagick installed installed by default and the mini_magick gem doesn't load
+	it as a dependency. Grab binaries here:
+		http://www.imagemagick.org/script/binary-releases.php#windows
 
 Begin by cloning the dayhomes repository from GitHub to get access to the
 projects source code and build assets.
@@ -75,13 +79,14 @@ Or install it using RubyInstaller.org
 	
 	http://rubyforge.org/frs/download.php/75848/rubyinstaller-1.9.3-p125.exe	
 	
-	> ## Note
-	> For the moment, you're going to need to use 1.9.3-p125 because p194 has a conflict with the latest build of the EventMachine gem on Windows.
-	>
-	> You also need the DevKit, which can be found here:
-	> 	https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe
-	> follow instructions here:
-	>	https://github.com/oneclick/rubyinstaller/wiki/Development-Kit
+	## Note
+	For the moment, you're going to need to use 1.9.3-p125 because p194 has a conflict with 
+	the latest build of the EventMachine gem on Windows.
+	
+	You also need the DevKit, which can be found here:
+	 	https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe
+	follow instructions here:
+		https://github.com/oneclick/rubyinstaller/wiki/Development-Kit
 
 If you have created a new Ruby install you may need to install the Bundler gem.
 Bundler uses a Gemfile to manage the dependencies of our application.
@@ -100,8 +105,8 @@ The default install of MySQL seems to pull the wrong mysql driver, so you'll wan
 
 	mysql-connector-c-noinstall-6.0.2-win32.zip
 
-	> ## Note
-	> I had to use the 32bit version despite being on a 64bit machine...seems to be a known bug
+	## Note
+	I had to use the 32bit version despite being on a 64bit machine...seems to be a known bug
 	
 The archive contains lib/libmysql.dll which needs to be copied to the %Ruby_home%/bin directory.
 	
@@ -109,7 +114,7 @@ Once the software dependencies are installed we need to configure the database.
 If you haven't already you'll need to install MySQL before continuing.
 
 MySQL on windows with rake is a tricky bugger.  In the MySQL ini file, you're going to need to specify the bind-address 
-	> # The MySQL server
+	# The MySQL server
 	> [mysqld]
 	> ...
 	> bind-address	= localhost
@@ -120,7 +125,7 @@ You need to create your database configuration file in <tt>config/database.yml</
 	
 The user credentials you enter in this file need to be able to create and admin the dev
 and test databases. In addition, you're going to need to set
-	> host: 127.0.0.1
+	host: 127.0.0.1
 since localhost	gets translated to its corresponding IPv4 address in MySQL.
 
 Once all that is configured, you need to setup your database locally
@@ -138,10 +143,7 @@ You'll also want to prepare the test database with:
 We're using the Foreman gem to manage our application processes. Kick off the
 application with:
 
-    bin/foreman start
-	
-	## Note
-	This doesn't seem to work on windows....sigh.
+    bin/foreman start	
 
 Since foreman doesn't seem to work on Windows at this point, you can also start the app the old fashioned way using:
 	rails server
