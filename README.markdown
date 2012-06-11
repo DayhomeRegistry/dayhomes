@@ -14,7 +14,9 @@ This application provides a registry and social platform to connect day homes wi
 
 ## The Team
 
- * *Mark Bennett* - project management, [mark@burmis.ca](mailto:mark@burmis.ca), 780 826 6275, [@MarkBennett on Twitter](https://twitter.com/MarkBennett), [Google+](https://plus.google.com/104431949275766772757/posts), [MarkBennett on GitHub](https://github.com/MarkBennett)
+* *Jon Holt* - primary support, [jon@dayhomeregistry.com](mailto:jon@dayhomeregistry.com), 780 399 3247, [@jonmholt on Twitter](https://twitter.com/jonmholt), [Google+](https://plus.google.com/104840916888359192970/posts), [jonmholt on GitHub](https://github.com/jonmholt)
+* *Mark Bennett* - project management, [mark@burmis.ca](mailto:mark@burmis.ca), 780 826 6275, [@MarkBennett on Twitter](https://twitter.com/MarkBennett), [Google+](https://plus.google.com/104431949275766772757/posts), [MarkBennett on GitHub](https://github.com/MarkBennett)
+## Past team members
  * *Nathan Bertram* - development, [nbertram@gmail.com](mailto:nbertram@gmail.com), [@nathanbertram on Twitter](https://twitter.com/nathanbertram), [Google+](https://plus.google.com/118053740037238335612/posts), [GitHub](https://github.com/nathanbertram)
  * *Ryan Jones* - development, [ryan.michael.jones@gmail.com](mailto:ryan.michael.jones@gmail.com), 780 907 2969, [https://twitter.com/ryanonrails], [Google+](https://plus.google.com/108111379110069559271/posts), [ryanonrails on GitHub](https://github.com/ryanonrails)
  * *Vonn Gondziola* - user experience, [vonngondziola@gmail.com](mailto:vonngondziola@gmail.com), 780 237 5654, [@vonnziola on Twitter](https://twitter.com/#!/vonnziola), [Google+](https://plus.google.com/104018711410926928454/posts), [vonziola on GitHub](https://github.com/vonnziola)
