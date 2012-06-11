@@ -16,14 +16,15 @@ This application provides a registry and social platform to connect day homes wi
 
 * *Jon Holt* - primary support, [jon@dayhomeregistry.com](mailto:jon@dayhomeregistry.com), 780 399 3247, [@jonmholt on Twitter](https://twitter.com/jonmholt), [Google+](https://plus.google.com/104840916888359192970/posts), [jonmholt on GitHub](https://github.com/jonmholt)
 * *Mark Bennett* - project management, [mark@burmis.ca](mailto:mark@burmis.ca), 780 826 6275, [@MarkBennett on Twitter](https://twitter.com/MarkBennett), [Google+](https://plus.google.com/104431949275766772757/posts), [MarkBennett on GitHub](https://github.com/MarkBennett)
-## Past team members
+
+	### Past team members
  * *Nathan Bertram* - development, [nbertram@gmail.com](mailto:nbertram@gmail.com), [@nathanbertram on Twitter](https://twitter.com/nathanbertram), [Google+](https://plus.google.com/118053740037238335612/posts), [GitHub](https://github.com/nathanbertram)
  * *Ryan Jones* - development, [ryan.michael.jones@gmail.com](mailto:ryan.michael.jones@gmail.com), 780 907 2969, [https://twitter.com/ryanonrails], [Google+](https://plus.google.com/108111379110069559271/posts), [ryanonrails on GitHub](https://github.com/ryanonrails)
  * *Vonn Gondziola* - user experience, [vonngondziola@gmail.com](mailto:vonngondziola@gmail.com), 780 237 5654, [@vonnziola on Twitter](https://twitter.com/#!/vonnziola), [Google+](https://plus.google.com/104018711410926928454/posts), [vonziola on GitHub](https://github.com/vonnziola)
 
 ## Development Process
 
-All team members coordinate using Pivotal Tracker. It lists all the stories, tasks, bugs, and releases associated with our project in the order in which they should be completed. If you don’t have access to Pivotal Tracker or aren’t sure how to use it, contact mark@burmis.ca.
+All team members coordinate using [Pivotal Tracker](https://www.pivotaltracker.com/projects/567925). It lists all the stories, tasks, bugs, and releases associated with our project in the order in which they should be completed. If you don’t have access to Pivotal Tracker or aren’t sure how to use it, contact [Jon](jon@dayhomeregistry.com).
 
 Day by day, developers should be signing in to Pivotal to find out what the team expects them to work on. If you don’t own any story and have nothing to work on then just start work on the next story listed in Pivotal. If you’re not sure about the next story, or need help deciding what to start next then send an email to the team. Please don’t wait for us to reach out to you if you’ve got nothing to do.
 
@@ -59,9 +60,9 @@ the following on your system:
   * Git >=1.7.10    	
 	At least Git 1.7.10 is required because of changes to the SSL mechanism (i.e. openSSL v1.??)
   * ImageMagick
-	In Windows, ImageMagick installed installed by default and the mini_magick gem doesn't load
+	ImageMagick is not installed installed by default and the mini_magick gem doesn't load
 	it as a dependency. Grab binaries here:
-		http://www.imagemagick.org/script/binary-releases.php#windows
+		http://www.imagemagick.org/script/binary-releases.php
 
 Begin by cloning the dayhomes repository from GitHub to get access to the
 projects source code and build assets.
@@ -81,7 +82,7 @@ Or install it using RubyInstaller.org
 	
 	http://rubyforge.org/frs/download.php/75848/rubyinstaller-1.9.3-p125.exe	
 	
-	## Note
+	*Note*
 	For the moment, you're going to need to use 1.9.3-p125 because p194 has a conflict with 
 	the latest build of the EventMachine gem on Windows.
 	
@@ -107,7 +108,7 @@ The default install of MySQL seems to pull the wrong mysql driver, so you'll wan
 
 	mysql-connector-c-noinstall-6.0.2-win32.zip
 
-	## Note
+	*Note*
 	I had to use the 32bit version despite being on a 64bit machine...seems to be a known bug
 	
 The archive contains lib/libmysql.dll which needs to be copied to the %Ruby_home%/bin directory.
@@ -116,6 +117,7 @@ Once the software dependencies are installed we need to configure the database.
 If you haven't already you'll need to install MySQL before continuing.
 
 MySQL on windows with rake is a tricky bugger.  In the MySQL ini file, you're going to need to specify the bind-address 
+
 	# The MySQL server
 	> [mysqld]
 	> ...
