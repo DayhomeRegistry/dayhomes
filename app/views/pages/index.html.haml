@@ -13,9 +13,9 @@
                   .slide-desc-inset
                     %h4
                       = featured_day_home.name
-                    - if featured_day_home.blurb.present?
+                    - if featured_day_home.highlight.present?
                       %p
-                        = featured_day_home.blurb
+                        = featured_day_home.highlight
       .bottom
     
   .span5
