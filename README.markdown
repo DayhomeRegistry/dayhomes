@@ -119,10 +119,10 @@ If you haven't already you'll need to install MySQL before continuing.
 MySQL on windows with rake is a tricky bugger.  In the MySQL ini file, you're going to need to specify the bind-address 
 
 	# The MySQL server
-	> [mysqld]
-	> ...
-	> bind-address	= localhost
-	> ...
+	[mysqld]
+	...
+	bind-address	= localhost
+	...
 
 You need to create your database configuration file in <tt>config/database.yml</tt>:
     cp config/database.yml.template config/database.yml
