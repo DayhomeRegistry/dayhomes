@@ -53,10 +53,11 @@
         %li
           All the features of Baby Bear
         %li
-          A monthly Bond Book 
+          A monthly 
+          = link_to 'BaC Pac','#BacPac'  
           = image_tag 'icons/pdf-icon4.png', :alt => 'PDF'		  
           = image_tag 'icons/new.png', :alt => 'New!'
-        = link_to 'Read a sample.'.html_safe, "/documents/sample.pdf"
+        = link_to 'Read a sample.', '/documents/sample.pdf',:target=>'_blank'
 
         
   .span4
@@ -74,9 +75,10 @@
         %li
           All the features of Baby Bear
         %li
-          A customizable monthly Bond Book 
+          A customizable monthly 
+          = link_to 'BaC Pac','#BacPac' 
           = image_tag 'icons/WordIcon.png', :alt => 'MS Word'		  
-        = link_to 'Read a sample.', "/documents/sample.pdf"
+        = link_to 'Read a sample.', '/documents/sample.pdf',:target=>'_blank'
         %li
           Receipts for ease at tax time
         %li
@@ -111,6 +113,15 @@
       Our Standard level will allow a
       %b
         rotating picture gallery, complete with written descriptions.
+
+.row
+  .span12
+    .contentHeader
+      <a name='BacPac'>BaC Pac</a>
+.row
+  .span12
+    .contentBlurb.reg
+      This is the content.
 
 .row
   .span12

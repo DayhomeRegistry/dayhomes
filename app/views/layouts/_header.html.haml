@@ -24,6 +24,8 @@
             = link_to 'Contact', "mailto:contact@dayhomeregistry.com"
           %li
             = link_to 'Pricing', pricing_pages_path
+          %li
+            = link_to 'Blog', "http://blog.dayhomeregistry.com"
           - if current_user && current_user.day_home_owner? || current_user && current_user.admin?
             %li
               = link_to 'Forums', forums_path
