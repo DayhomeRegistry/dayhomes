@@ -17,7 +17,6 @@
 So there are a couple of things that you need to get started:
 
 1. Git
-1. rbenv
 1. MySQL
 1. redis
 2. capistrano

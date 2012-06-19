@@ -1,5 +1,5 @@
 set :application, "dayhomes"
-set :repository,  "git@github.com:burmis/dayhomes.git"
+set :repository,  "git@github.com:dayhomeregistry/dayhomes.git"
 
         require './config/boot'
         require 'airbrake/capistrano'

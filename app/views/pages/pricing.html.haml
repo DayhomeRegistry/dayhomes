@@ -26,15 +26,15 @@
     .colContent.baby
       %ul
         %li
-          Full Dayhome page
+          = link_to 'Full Dayhome page','#page' 
         %li
-          Forum Access
+          = link_to 'Forum Access','#forum'           
           = image_tag 'icons/new.png', :alt => 'New!'
         %li
-          Calendar
+          = link_to 'Calendar','#cal'           
           = image_tag 'icons/new.png', :alt => 'New!'
         %li
-          Monthly newsletter
+          = link_to 'Monthly newsletter','#news'           
           = image_tag 'icons/new.png', :alt => 'New!'
         %li
           Searchable
@@ -58,7 +58,8 @@
           = image_tag 'icons/pdf-icon4.png', :alt => 'PDF'		  
           = image_tag 'icons/new.png', :alt => 'New!'
         = link_to 'Read a sample.', '/documents/sample.pdf',:target=>'_blank'
-
+        %li
+          A waitlist of parents interested in your dayhome
         
   .span4
     .colHeader.papa
@@ -75,7 +76,7 @@
         %li
           All the features of Baby Bear
         %li
-          A customizable monthly 
+          An editable monthly 
           = link_to 'BaC Pac','#BacPac' 
           = image_tag 'icons/WordIcon.png', :alt => 'MS Word'		  
         = link_to 'Read a sample.', '/documents/sample.pdf',:target=>'_blank'
@@ -99,7 +100,7 @@
 .row
   .span12
     .contentHeader
-      Dayhome page
+      <a name="page">Dayhome page</a>
 .row
   .span12
     .contentBlurb.reg
@@ -121,12 +122,12 @@
 .row
   .span12
     .contentBlurb.reg
-      This is the content.
+      The <strong>BaC Pac </strong> is a wonderful activity book to help you and the children <strong>B</strong>ond <strong>a</strong>nd <strong>C</strong>reate using daily activities based on a monthly theme. Each <strong>BaC Pac</strong> has 20 days of activities (or a month's worth of activities for M-F) to help children learn letters, numbers, things about the world around them, etc.  Each day's activities are complete with instructions, a list of needed materials and printables for the children to interact with. Simply print off as many copies as you need, follow the directions, and you are good to go!  The <strong>BaC Pac</strong> is created by Angela, a fellow dayhome provider. She has over 15 years of experience in childcare, and a wealth of knowledge that she hopes to share with as many dayhomes as possible.
 
 .row
   .span12
     .contentHeader
-      Forum
+      <a name="forum">Forum</a>
 .row
   .span12
     .contentBlurb.reg
@@ -144,7 +145,7 @@
 .row
   .span12
     .contentHeader
-      Calendar
+      <a name="cal">Calendar</a>
 .row
   .span12
     .contentBlurb.cal
@@ -171,7 +172,7 @@
 .row
   .span12
     .contentHeader
-      Monthly Newsletter
+      <a name="news">Monthly Newsletter</a>
 .row
   .span12
     .contentBlurb.reg
