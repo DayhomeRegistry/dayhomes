@@ -65,6 +65,29 @@ namespace :db do
           {:postal_code => 'T6J5M5', :street1 => '2978 106 Street NW'},
           {:postal_code => 'T5S1S5', :street1 => '10070 178 Street NW'}
       ]
+      dummy_text = [
+          "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.",
+          "A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.",
+          "Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.",
+          "The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn't listen. She packed her seven versalia, put her initial into the belt and made herself on the way.",
+          "When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane."
+      ]
+      fulltime_names = [
+          "Fanny fulltime",
+          "Two hears fulltime",
+          "Mayday fulltime",
+          "Alternative fulltime"
+      ]
+      part_time_names = [
+          "Patty part-time",
+          "Chocolate part-time",
+          "Mint part-time",
+          "Butterscotch part-time"
+      ]
+      no_availability_names = [
+          "Awesome All-full",
+          "Penelope Plein"
+      ]
 
       def add_photos_to_dayhome(photos, day_home)
         puts "Adding photos to #{day_home.name}..."
@@ -89,7 +112,8 @@ namespace :db do
                                                :postal_code => 'T6L5M6',
                                                :featured => true,
                                                :phone_number => '780-555-5555',
-                                               :blurb => 'Dayhome With Reviews is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.'
+                                               :highlight => 'Dayhome With Reviews is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.',
+                                               :blurb => 'Dayhome With Reviews is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.'                                               
                                               })
       day_home_with_reviews.availability_types << full_time_full_days
       photos = [
@@ -117,7 +141,7 @@ namespace :db do
           { :caption => "Healthy food alternatives.", :photo => "fruit_salad.jpg" }
       ]
       fulltime_addresses.each_with_index  do |street_and_postal, index|
-        d = DayHome.create!({:name => "DayHome #{index}",
+        d = DayHome.create!({:name => fulltime_names[index],
                              :gmaps =>  true,
                              :city =>  'Edmonton',
                              :province =>  'AB',
@@ -126,8 +150,8 @@ namespace :db do
                              :email => "dh564f#{index}@dayhomeregistry.com",
                              :featured => true,
                              :phone_number => '780-555-5555',
-                             :blurb => "DayHome #{index} is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it."
-
+                             :highlight => fulltime_names[index]+" is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.",
+                             :blurb => dummy_text[1+Random.rand(4)]+"\n\n"+dummy_text[1+Random.rand(4)]+"\n\n"+dummy_text[1+Random.rand(4)]+"\n\n"
                             }.merge(street_and_postal))
 
         d.availability_types << full_time_full_days
@@ -151,7 +175,7 @@ namespace :db do
           { :caption => "Stimulating activities.", :photo => "lego.jpg" },
       ]
       part_time_addresses.each_with_index  do |street_and_postal, index|
-        d = DayHome.create!({:name => "DayHome #{index}",
+        d = DayHome.create!({:name => part_time_names[index],
                              :gmaps =>  true,
                              :city =>  'Edmonton',
                              :province =>  'AB',
@@ -159,7 +183,9 @@ namespace :db do
                              :slug => "DayHome#{index}partime",
                              :email => "dh32p#{index}@dayhomeregistry.com",
                              :phone_number => '17809062943',
-                             :featured => true
+                             :featured => true,
+                             :highlight => part_time_names[index]+" is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.",
+                             :blurb => dummy_text[1+Random.rand(4)]+"\n"+dummy_text[1+Random.rand(4)]+"\n"+dummy_text[1+Random.rand(4)]+"\n"                             
                             }.merge(street_and_postal))
         d.availability_types << part_time_morning
         d.certification_types << basic_cpr
@@ -172,14 +198,16 @@ namespace :db do
 
       # Create a couple of dayhomes with no availability
       no_availability_addresses.each_with_index  do |street_and_postal, index|
-        d = DayHome.create!({:name => "DayHome #{index}",
+        d = DayHome.create!({:name => no_availability_names[index],
                              :gmaps =>  true,
                              :city =>  'Edmonton',
                              :province =>  'AB',
                              :street2 =>  '',
                              :slug => "DayHome#{index}noavail",
                              :phone_number => '17809062942',
-                             :email => "dhn#{index}@dayhomeregistry.com"
+                             :email => "dhn#{index}@dayhomeregistry.com",
+                             :highlight => no_availability_names[index]+" is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.",
+                             :blurb => dummy_text[1+Random.rand(4)]+"\n"+dummy_text[1+Random.rand(4)]+"\n"+dummy_text[1+Random.rand(4)]+"\n"                                                          
                             }.merge(street_and_postal))
         d.availability_types << part_time_before_school
         d.availability_types << full_time_after_school

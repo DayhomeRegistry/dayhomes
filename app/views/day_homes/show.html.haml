@@ -26,8 +26,12 @@
 .row
   .span4.well.wellSize
     .textSize20
-      = @day_home.highlight
-      = @day_home.blurb
+      :markdown
+        #{@day_home.highlight}
+    .textSize20
+      :markdown
+        #{@day_home.blurb}
+        
   .span6.margin10
     - unless @day_home.photos.blank?
       .slides
