@@ -19,6 +19,7 @@ gem 'forum_monster'
 gem 'bb-ruby'
 gem 'koala'
 gem 'airbrake'
+gem 'maruku'
 
 # le windows
 platforms :mswin, :mingw do
