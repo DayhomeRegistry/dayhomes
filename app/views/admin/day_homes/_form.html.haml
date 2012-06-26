@@ -12,6 +12,7 @@
   
 
 = form_for [:admin, @day_home], :html => {:multipart => true} do |f|
+  
   = f.label :name
   = f.text_field :name
   
@@ -27,11 +28,12 @@
   = f.label :email
   = f.text_field :email
   
-  = f.label :blurb
-  = f.text_area :blurb
-  
   = f.label :highlight
   = f.text_area :highlight
+  
+  = f.label :blurb
+  = f.text_area :blurb
+
   
   = f.label :featured, :class => 'checkbox' do
     = f.check_box :featured
