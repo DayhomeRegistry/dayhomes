@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120424194608) do
+ActiveRecord::Schema.define(:version => 20120608214548) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(:version => 20120424194608) do
     t.string   "phone_number"
     t.text     "blurb"
     t.boolean  "licensed",               :default => false, :null => false
+    t.text     "highlight"
   end
 
   create_table "events", :force => true do |t|
