@@ -48,10 +48,13 @@ class Search
   def dayhome_filter(params)
     search_addy_pin = nil
     dayhome_query = DayHome.scoped
+	
+	# don't display any dayhomes that are not approved
+	dayhome_query = dayhome_query.where( :approved => true )
 
     # set the joins based on what the user has
     dayhome_query = determine_joins(dayhome_query)
-
+	
     # if the user uses the advanced search, we use the values from the search screen
     # otherwise we use the defaults (defined in set_defaults)
     if params.has_key?(:advanced_search) && params[:advanced_search] == 'true'

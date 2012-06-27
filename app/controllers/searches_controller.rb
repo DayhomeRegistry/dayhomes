@@ -1,7 +1,7 @@
 class SearchesController < ApplicationController
   def index
     if params[:search].blank?
-      @day_homes = DayHome.with_availability_uniq(Search::DEFAULT_AVAILABILITY_TYPES).all
+      @day_homes = DayHome.with_availability_uniq(Search::DEFAULT_AVAILABILITY_TYPES).all.reject{|x| !x.approved?}
     else
       @search = Search.new(params[:search])
 
