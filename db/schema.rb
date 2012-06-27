@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608214548) do
+ActiveRecord::Schema.define(:version => 20120626233719) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20120608214548) do
     t.text     "blurb"
     t.boolean  "licensed",               :default => false, :null => false
     t.string   "highlight"
+    t.boolean  "approved",               :default => true
   end
 
   create_table "events", :force => true do |t|

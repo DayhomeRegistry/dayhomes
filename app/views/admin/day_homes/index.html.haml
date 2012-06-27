@@ -24,6 +24,8 @@
         %th
           Featured?
         %th
+          Approved?		  
+        %th
           Owners
         %th
           Actions
@@ -42,6 +44,8 @@
                 = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 25px; margin: 0 5px 5px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :alt => photo.caption, :title => photo.caption
           %td
             = yes_no(day_home.featured)
+          %td
+            = yes_no(day_home.approved)			
           %td
             - if day_home.users.any?
               = day_home.users.map(&:full_name).join(', ')

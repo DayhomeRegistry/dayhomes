@@ -13,6 +13,10 @@
 
 = form_for [:admin, @day_home], :html => {:multipart => true} do |f|
   
+  = f.label :approved, :class => 'checkbox' do
+    = f.check_box :approved
+    Approved to display in searches?
+	
   = f.label :name
   = f.text_field :name
   
