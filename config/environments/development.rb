@@ -13,9 +13,20 @@ Dayhomes::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = {:host =>"localhost:3000"}
+  # Care if the mailer can't send
+  config.action_mailer.raise_delivery_errors = true
+  #config.action_mailer.default_url_options = {:host =>"localhost:3000"}
+  ActionMailer::Base.smtp_settings = {
+    #:tls => true,
+    :address => "smtp.gmail.com",
+    :port => "587",
+    #:domain => "gmail.com",
+    :authentication => :plain,
+    :user_name => "jonmholt",
+    :password => "plaidDevil$",
+	:enable_starttls_auto =>true,
+	:openssl_verify_mode=>OpenSSL::SSL::VERIFY_NONE
+  }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

@@ -32,7 +32,7 @@ class DayHome < ActiveRecord::Base
   validates :highlight,:length => { :maximum => 200 }
 
   validates_associated :photos
-  validates_uniqueness_of :slug, :email
+  validates_uniqueness_of :slug #, :email
   validates_format_of :slug, :with => /[a-z0-9]+/
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
 
@@ -62,7 +62,10 @@ class DayHome < ActiveRecord::Base
   
   # this method is called when updating the lat long (this is what's fed to google maps)
   def address
-    "#{street1}#{street2}, #{city}, #{province}, #{postal_code}"
+    lstreet = "#{street1}#{street2}".blank? ? "" : "#{street1}#{street2},"
+	lcity = "#{city}".blank? ? "" : "#{city},"
+	
+    lstreet+lcity+ ("#{province}".blank? ? "":"#{province},") + "#{postal_code}"
   end
   
   def to_param
@@ -83,4 +86,22 @@ class DayHome < ActiveRecord::Base
     all.collect {|day_home| [ day_home.name, day_home.id ] }
   end
   
+  def self.create_from_signup(signup)
+	dayhome = self.new
+	dayhome.name = signup.day_home_name
+	dayhome.city = signup.day_home_city
+	dayhome.province = signup.day_home_province
+	dayhome.street1 = signup.day_home_street1
+	dayhome.street2 = signup.day_home_street2
+	dayhome.postal_code = signup.day_home_postal_code
+	dayhome.email = signup.contact_email
+	dayhome.slug = signup.day_home_slug
+	dayhome.phone_number = signup.day_home_phone_number
+	dayhome.blurb = signup.day_home_blurb
+	dayhome.highlight = signup.day_home_highlight
+	dayhome.featured = false
+	dayhome.approved = false
+	
+	return dayhome
+  end
 end

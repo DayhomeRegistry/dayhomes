@@ -1,0 +1,16 @@
+#application_config[:signup_request_to]
+defaults: &DEFAULTS
+  signup_request_to: team@dayhomeregistry.com
+
+development:
+  <<: *DEFAULTS
+  signup_request_to: jonmholt@gmail.com
+
+test:
+  <<: *DEFAULTS  
+
+staging:
+  <<: *DEFAULTS  
+
+production:
+  <<: *DEFAULTS
