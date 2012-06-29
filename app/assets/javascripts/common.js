@@ -1,4 +1,5 @@
 (function($, undefined){
+	
 	$.ajaxSetup({
 	    beforeSend: function(xhr) {
 	        xhr.setRequestHeader("Accept", "text/javascript");
@@ -16,7 +17,7 @@
 		$(".slides").cycle({
 			fx: 		"fade",
 			speed: 		600,
-			timeout: 	8000
+			timeout: 	5000
 		});
 	});
 

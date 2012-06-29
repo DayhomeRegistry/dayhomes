@@ -32,7 +32,7 @@ $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 }
 .field_with_errors label {
   color: red;
-}
+}	
 .field_with_errors label.message {
   margin-left: 5px;
 }
@@ -40,3 +40,12 @@ $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 .left { float: left; }
 .right { float: right; }
 .clear { clear: both; }
+
+
+.form-group {
+	padding:10px;
+	margin: 5px 0;
+	background-color: #8AF18A	;
+	-moz-border-radius: 15px;
+	border-radius: 10px;
+}

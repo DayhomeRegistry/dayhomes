@@ -94,7 +94,7 @@ class DayHome < ActiveRecord::Base
 	dayhome.street1 = signup.day_home_street1
 	dayhome.street2 = signup.day_home_street2
 	dayhome.postal_code = signup.day_home_postal_code
-	dayhome.email = signup.contact_email
+	dayhome.email = signup.day_home_email
 	dayhome.slug = signup.day_home_slug
 	dayhome.phone_number = signup.day_home_phone_number
 	dayhome.blurb = signup.day_home_blurb

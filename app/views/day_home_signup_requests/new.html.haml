@@ -5,6 +5,8 @@
       $('#day_home_signup_request_day_home_slug').empty().attr('value', parsed_subdomain);
     });
     
+    $('.icon-info-sign').popover() ;
+
   });
 
 .row
@@ -22,40 +24,54 @@
   .row.registrationStyle
     .span6.well.form-horizontal
       %h3
-        Dayhome details
+        Tell us a little about your Dayhome
+      %h4
+        At a minimum
+      .form-group
+        = f.label :day_home_name, 'Dayhome Name'
+        = f.text_field :day_home_name
+        <i class="icon-info-sign icon-white" data-title="What's in a name?" data-content="This is the name of your dayhome. Don't have one? Well, pick something that you'll want your parents to know you by...it's your first impression when attracting new families."></i>
+        
+        = f.label :day_home_slug, 'Dayhome Slug'
+        .input-prepend
+          %span.add-on
+            http://dayhomeregistry.com/
+          = f.text_field :day_home_slug
+        <i class="icon-info-sign icon-white" data-title="What's a slug?" data-content="The slug is the name for the end of our web address that makes it easy for you and your customers to find your page.  The web address that you see to the left will be your home on our website."></i>
+        
+        = f.label :day_home_phone_number, 'Contact Phone Number for Dayhome'
+        = f.text_field :day_home_phone_number
+        <i class="icon-info-sign icon-white" data-title="Dayhome have its own phone or email?" data-content="While there's no little star over there on the label, we do expect either a phone number or an email so that parents know how to contact you."></i>
 
-      = f.label :day_home_name, 'Dayhome Name'
-      = f.text_field :day_home_name
+        = f.label :day_home_email, 'Contact Email for Dayhome'
+        = f.text_field :day_home_email
+        <i class="icon-info-sign icon-white" data-title="Dayhome have its own phone or email?" data-content="While there's no little star over there on the label, we do expect either a phone number or an email so that parents know how to contact you."></i>
 
-      = f.label :day_home_slug, 'Dayhome Slug'
-      .input-prepend
-        %span.add-on
-          http://dayhomeregistry.com/
-        = f.text_field :day_home_slug
+        = f.label :day_home_postal_code, 'Postal Code'
+        = f.text_field :day_home_postal_code
+        <i class="icon-info-sign icon-white" data-title="Why just a postal code?" data-content="We only ask, as a mandatory, a postal code, so we can find you approximately on a map.  Some folks don't want to share their actual address online...that's fine. If you, though, look just below."></i>
+             
+        = f.label :day_home_highlight, 'Front page short description'
+        = f.text_area :day_home_highlight, :rows => 6
+        <i class="icon-info-sign icon-white" data-title="What's a highlight?" data-content="On our homepage, when we feature a dayhome, the name of the dayhome and the text you put below are displayed over one of your images.  This highlight has to be 200 characters or less so we can still see how wonderful you are in your picture."></i>
+        
+      %h4
+        Extra Flair      
+      .form-group
+        = f.label :day_home_city, 'City'
+        = f.text_field :day_home_city
 
-      = f.label :day_home_city, 'City'
-      = f.text_field :day_home_city
+        = f.label :day_home_province, 'Province'
+        = f.state_select :day_home_province, 'CA'
 
-      = f.label :day_home_province, 'Province'
-      = f.state_select :day_home_province, 'CA'
+        = f.label :day_home_street1, 'Street1'
+        = f.text_field :day_home_street1
 
-      = f.label :day_home_street1, 'Street1'
-      = f.text_field :day_home_street1
+        = f.label :day_home_street2, 'Street2'
+        = f.text_field :day_home_street2
 
-      = f.label :day_home_street2, 'Street2'
-      = f.text_field :day_home_street2
-
-      = f.label :day_home_postal_code, 'Postal Code'
-      = f.text_field :day_home_postal_code
-
-      = f.label :day_home_phone_number, 'Phone Number'
-      = f.text_field :day_home_phone_number
-
-      = f.label :day_home_highlight, 'Highlight'
-      = f.text_area :day_home_highlight, :rows => 6
-      
-      = f.label :day_home_blurb, 'Description'
-      = f.text_area :day_home_blurb, :rows => 6
+        = f.label :day_home_blurb, 'Detailed Description'
+        = f.text_area :day_home_blurb, :rows => 6
 
       %br
       %br
@@ -64,8 +80,10 @@
       = link_to 'Cancel', root_path
     .span5.well.form-horizontal
       %h3
-        Dayhome contact information
-
+        Now tell us a little about you
+      %h4
+        &nbsp;
+        
       = f.label :contact_name, 'Full Name'
       = f.text_field :contact_name
 
