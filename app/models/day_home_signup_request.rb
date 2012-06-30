@@ -8,7 +8,7 @@ class DayHomeSignupRequest < ActiveRecord::Base
   
   #validates_presence_of :preferred_time_to_contact
   
-  before_save :add_dayhome
+  #before_save :add_dayhome
   
   after_create :send_request_to_dayhome_registry_team
   
@@ -17,8 +17,20 @@ class DayHomeSignupRequest < ActiveRecord::Base
   end
   def add_dayhome
     @day_home = DayHome.create_from_signup(self)
-    
+    @day_home.update_attributes(params[:day_home])
+	
 	#false should cancel the action
     return @day_home.save     
+  end
+  
+  
+  def assign_availability_type_ids=(availability_type_id_attrs=[])
+    self.day_home_availability_types = []
+    self.availability_types = AvailabilityType.find_all_by_id(availability_type_id_attrs)
+  end
+  
+  def assign_certification_type_ids=(certification_type_id_attrs=[])
+    self.day_home_certification_types = []
+    self.certification_types = CertificationType.find_all_by_id(certification_type_id_attrs)
   end
 end

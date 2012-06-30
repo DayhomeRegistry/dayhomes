@@ -49,3 +49,16 @@ $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 	-moz-border-radius: 15px;
 	border-radius: 10px;
 }
+
+.flair {
+  margin-left: 20px;
+}
+
+.center {
+  text-align:center;
+  margin: 0 auto;
+}
+
+h3 small {
+  padding-left:10px;
+}

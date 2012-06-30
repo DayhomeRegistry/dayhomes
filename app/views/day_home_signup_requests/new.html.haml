@@ -51,33 +51,10 @@
         = f.text_field :day_home_postal_code
         <i class="icon-info-sign icon-white" data-title="Why just a postal code?" data-content="We only ask, as a mandatory, a postal code, so we can find you approximately on a map.  Some folks don't want to share their actual address online...that's fine. If you, though, look just below."></i>
              
-        = f.label :day_home_highlight, 'Front page short description'
+        = f.label :day_home_highlight, 'Front page highlight'
         = f.text_area :day_home_highlight, :rows => 6
         <i class="icon-info-sign icon-white" data-title="What's a highlight?" data-content="On our homepage, when we feature a dayhome, the name of the dayhome and the text you put below are displayed over one of your images.  This highlight has to be 200 characters or less so we can still see how wonderful you are in your picture."></i>
         
-      %h4
-        Extra Flair      
-      .form-group
-        = f.label :day_home_city, 'City'
-        = f.text_field :day_home_city
-
-        = f.label :day_home_province, 'Province'
-        = f.state_select :day_home_province, 'CA'
-
-        = f.label :day_home_street1, 'Street1'
-        = f.text_field :day_home_street1
-
-        = f.label :day_home_street2, 'Street2'
-        = f.text_field :day_home_street2
-
-        = f.label :day_home_blurb, 'Detailed Description'
-        = f.text_area :day_home_blurb, :rows => 6
-
-      %br
-      %br
-      = f.submit 'Register', :class => :btn
-      |
-      = link_to 'Cancel', root_path
     .span5.well.form-horizontal
       %h3
         Now tell us a little about you
@@ -98,3 +75,58 @@
 
       = f.label :comments, 'Comments or Questions?'
       = f.text_area :comments, :rows => 6
+
+      
+  .row.registrationStyle
+    .well.form-horizontal.flair
+      :plain
+        <div><h3>Finally, add some Extra Flair<small>all of this is optional </small></h3></div>      
+      .form-group
+        .span5   
+          = f.label :day_home_city, 'City'
+          = f.text_field :day_home_city
+
+          = f.label :day_home_province, 'Province'
+          = f.state_select :day_home_province, 'CA'
+
+          = f.label :day_home_street1, 'Street1'
+          = f.text_field :day_home_street1
+
+          = f.label :day_home_street2, 'Street2'
+          = f.text_field :day_home_street2
+
+          = f.label :day_home_blurb, 'Detailed Description'
+          = f.text_area :day_home_blurb, :rows => 6
+        .span3
+          = f.label :availability_types, 'Full-time Availability', :style => 'font-weight: bold'
+          - AvailabilityType.full_time.each do |availability|
+            = f.label availability.kind, :class => :checkbox do 
+              = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, false
+              = availability.kind
+  
+          = f.label :availability_types, 'Part-time Availability', :style => 'font-weight: bold'
+          - AvailabilityType.part_time.each do |availability|
+            = f.label availability.kind, :class => :checkbox do 
+              = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, false
+              = availability.kind
+        .span3
+          = f.label :certification_types, 'Certification', :style => 'font-weight: bold'
+          - CertificationType.all.each do |certification|
+            = f.label certification.kind, :class => :checkbox do 
+              = check_box_tag 'day_home[assign_certification_type_ids][]', certification.id, false
+              = certification.kind      
+      
+          = f.label :dietary_accommodations, 'Dietary Accommodations', :style => 'font-weight: bold'
+          = f.label :dietary_accommodations, 'Dietary Accommodations', :class => :checkbox do
+            = check_box_tag 'day_home[dietary_accommodations]'
+            Accommodates for Food Allergies
+
+          = f.label :licensed, 'Licensed', :style => 'font-weight: bold'
+          = f.label :licensed, 'Licensed', :class => :checkbox do
+            = check_box_tag 'day_home[licensed]'
+            Licensed
+        .clear
+  .row.registrationStyle
+    .center
+      = f.submit 'Register', :class => :callToActionButton
+      = link_to 'Cancel', root_path
