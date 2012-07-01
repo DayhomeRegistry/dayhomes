@@ -56,8 +56,11 @@ $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 
 .center {
   text-align:center;
-  margin: 0 auto;
-  height:56px;
+  margin: 0 auto;  
+}
+
+#register_button {
+  width: 157px;
 }
 
 h3 small {

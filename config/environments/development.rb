@@ -15,15 +15,15 @@ Dayhomes::Application.configure do
 
   # Care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
-  #config.action_mailer.default_url_options = {:host =>"localhost:3000"}
+  config.action_mailer.default_url_options = {:host =>"localhost:3000"}
   ActionMailer::Base.smtp_settings = {
     #:tls => true,
     :address => "smtp.gmail.com",
     :port => "587",
     #:domain => "gmail.com",
     :authentication => :plain,
-    :user_name => "jonmholt",
-    :password => "plaidDevil$",
+    :user_name => "username",
+    :password => "password",
 	:enable_starttls_auto =>true,
 	:openssl_verify_mode=>OpenSSL::SSL::VERIFY_NONE
   }
