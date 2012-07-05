@@ -6,15 +6,20 @@ class DayHomeSignupRequestsController < ApplicationController
   def create
     # Capture the signup request and send email
     @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])
-    
+
+    # Create user, if necessary
+    @user = current_user
+    if current_user.nil?
+      @user = User.new_from_signup_request(@day_home_signup_request)
+      @user.save
+    end
+            
     # Create a dayhome
     @day_home = DayHome.create_from_signup(@day_home_signup_request)
     @day_home.update_attributes(params[:day_home])
     
-    # Create user, if necessary
-    
     # Bind dayhome to user
-    
+    @user.add_day_home(@day_home)
     
 	if @day_home.save
 	  if @day_home_signup_request.save

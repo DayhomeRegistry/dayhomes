@@ -14,6 +14,7 @@ class DayHomeSignupRequest < ActiveRecord::Base
   
   def send_request_to_dayhome_registry_team
     DayHomeMailer.day_home_signup_request(self).deliver
+    DayHomeMailer.day_home_signup_confirmation(self).deliver
   end
   def add_dayhome
     @day_home = DayHome.create_from_signup(self)

@@ -62,18 +62,21 @@
           Thanks for logging in, we've used a little info from your account below.  If you'd like to update that info, visit 
           = link_to "Your Account", user_path(current_user)
       
-        = f.label :contact_name, 'First Name'
-        = f.text_field :contact_name, :value=>current_user.first_name, :class=>:disabled, :disabled=>'disabled'
+        = f.label :first_name, 'First Name'
+        = f.text_field :first_name, :value=>current_user.first_name, :class=>:disabled, :disabled=>'disabled'
         
-        = f.label :contact_name, 'Last Name'
-        = f.text_field :contact_name, :value=>current_user.last_name, :class=>:disabled, :disabled=>'disabled'
+        = f.label :last_name, 'Last Name'
+        = f.text_field :last_name, :value=>current_user.last_name, :class=>:disabled, :disabled=>'disabled'
         
         = f.label :contact_email, 'Email'
         = f.text_field :contact_email, :value=>current_user.email, :class=>:disabled, :disabled=>'disabled'
       -else        
-        = f.label :contact_name, 'Full Name'
-        = f.text_field :contact_name
-      
+        = f.label :first_name, 'First Name'
+        = f.text_field :first_name
+
+        = f.label :last_name, 'Last Name'
+        = f.text_field :last_name
+        
         = f.label :contact_email, 'Email'
         = f.text_field :contact_email
       

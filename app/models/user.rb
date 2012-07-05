@@ -26,6 +26,10 @@ class User < ActiveRecord::Base
     self.day_homes = DayHome.find_all_by_id(day_home_id_attrs)
   end
   
+  def add_day_home(day_home)
+    self.day_homes.add(day_home)
+  end
+  
   def self.new_from_fb_user(fb_user, fb_access_token, fb_expires_in)
     random_password = SecureRandom.hex(12)
     new({
@@ -36,6 +40,17 @@ class User < ActiveRecord::Base
       :password_confirmation => random_password,
       :facebook_access_token => fb_access_token,
       :facebook_access_token_expires_in => fb_expires_in
+    })
+  end
+  
+  def self.new_from_signup_request(signup_request)
+    random_password = SecureRandom.hex(12)
+    new({
+      :first_name => signup_request.first_name,
+      :last_name => signup_request.last_name,
+      :email => signup_request.contact_email ,     
+      :password => random_password,
+      :password_confirmation => random_password
     })
   end
   
