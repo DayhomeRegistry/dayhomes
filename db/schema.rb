@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(:version => 20120705003057) do
     t.string   "day_home_postal_code"
     t.string   "day_home_phone_number"
     t.text     "day_home_blurb"
-    t.string   "first_name"
+    t.string   "contact_name"
     t.string   "contact_phone_number"
     t.string   "contact_email"
     t.string   "preferred_time_to_contact"
@@ -96,7 +96,6 @@ ActiveRecord::Schema.define(:version => 20120705003057) do
     t.datetime "updated_at",                :null => false
     t.string   "day_home_highlight"
     t.string   "day_home_email"
-    t.string   "last_name"
   end
 
   create_table "day_homes", :force => true do |t|
