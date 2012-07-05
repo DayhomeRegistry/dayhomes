@@ -5,6 +5,8 @@ CertificationType.create!({:kind => 'Child Care Level 3'})
 CertificationType.create!({:kind => 'Basic First Aid'})
 CertificationType.create!({:kind => 'Advanced First Aid'})
 CertificationType.create!({:kind => 'Infant CPR'})
+CertificationType.create!({:kind => 'Criminal Record Check'})
+CertificationType.create!({:kind => 'Child Welfare Check'})
 
 # create availability types
 AvailabilityType.create!({:availability => 'Full-time', :kind => 'Full Days'})
