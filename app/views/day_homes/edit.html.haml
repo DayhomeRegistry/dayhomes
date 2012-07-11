@@ -12,10 +12,20 @@
   = @day_home.name
 
 = form_for @day_home, :html => {:multipart => true} do |f|
+  %h3
+    Description  
+    
+  = f.label :highlight
+  = f.text_area :highlight, :rows=>10, :style=>"width:90%"
   
+  = f.label :blurb
+  = f.text_area :blurb, :rows=>10, :style=>"width:90%"
+  
+  %h3
+    Photos
+    
   = f.fields_for :photos do |p|
-    .add_multiples.clear{'data-group' => 'photos'}
-      = p.label :caption, 'Caption & Photo'
+    .add_multiples.clear{'data-group' => 'photos'}      
       - if p.object.photo?
         .remove_contents
           = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'
@@ -30,6 +40,9 @@
   %br
   %br
   
+  %h3
+    Availability
+    
   = f.label :availability_types, 'Full-time Availability', :style => 'font-weight: bold'
   
   - AvailabilityType.full_time.each do |availability|
@@ -42,7 +55,10 @@
     = f.label availability.kind, :class => :checkbox do 
       = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
       = availability.kind
-  
+      
+  %h3
+    Certifications
+    
   = f.label :certification_types, 'Certification', :style => 'font-weight: bold'
   - CertificationType.all.each do |certification|
     = f.label certification.kind, :class => :checkbox do 
