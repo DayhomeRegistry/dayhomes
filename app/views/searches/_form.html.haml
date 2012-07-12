@@ -11,17 +11,17 @@
       .search_section
         %h5
           ='Full-time Availability'
-        - @advanced_search.availability_types.each do |avail_type|
-          %label.checkbox
-            - if avail_type.availability == 'Full-time'
+        - @advanced_search.availability_types.each do |avail_type|          
+          - if avail_type.availability == 'Full-time'
+            %label.checkbox
               = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
               = avail_type.kind
       .search_section
         %h5
           ='Part-time Availability'
         - @advanced_search.availability_types.each do |avail_type|
-          %label.checkbox
-            - if avail_type.availability == 'Part-time'
+          - if avail_type.availability == 'Part-time'
+            %label.checkbox
               = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
               = avail_type.kind
 
