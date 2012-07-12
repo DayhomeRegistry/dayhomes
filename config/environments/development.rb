@@ -20,10 +20,10 @@ Dayhomes::Application.configure do
     #:tls => true,
     :address => "smtp.gmail.com",
     :port => "587",
-    #:domain => "gmail.com",
+    :domain => "dayhomeregistry.com",
     :authentication => :plain,
-    :user_name => "username",
-    :password => "password",
+    :user_name => "staging@dayhomeregistry.com",
+    :password => "bl@nk4n0w",
 	:enable_starttls_auto =>true,
 	:openssl_verify_mode=>OpenSSL::SSL::VERIFY_NONE
   }
