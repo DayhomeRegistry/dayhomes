@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default :from => 'DayHomeRegistry.com <do-not-reply@dayhomeregistry.com>'
+  default :from => 'DayHomeRegistry.com <questions@dayhomeregistry.com>'
 
   def password_reset_instructions(user)
     @user = user
