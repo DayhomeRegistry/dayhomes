@@ -4,7 +4,8 @@ class DayHomeContact < ActiveRecord::Base
   after_create :send_message_in_email
   
   def send_message_in_email
-    DayHomeMailer.contact_day_home(self).deliver
+    @dayhome = DayHome.find(self.day_home_id)
+    DayHomeMailer.contact_day_home(self,@dayhome).deliver
   end
   
 end

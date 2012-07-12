@@ -1,8 +1,9 @@
 class DayHomeMailer < ActionMailer::Base
   default :from => 'DayHomeRegistry.com <questions@dayhomeregistry.com>'
 
-  def contact_day_home(contact)
+  def contact_day_home(contact, dayhome)
     @contact = contact
+    @dayhome = dayhome
     mail(:to => contact.day_home_email, :subject => contact.subject, :reply_to=>contact.email)
   end
   
