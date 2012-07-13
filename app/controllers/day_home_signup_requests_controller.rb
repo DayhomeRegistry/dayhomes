@@ -10,8 +10,16 @@ class DayHomeSignupRequestsController < ApplicationController
     # Create user, if necessary
     @user = current_user
     if current_user.nil?
-      @user = User.new_from_signup_request(@day_home_signup_request)
-      @user.save
+	  #find user by email
+	  @user = User.find_by_email(@day_home_signup_request.contact_email)
+	  if @user.nil?
+	    @user = User.find_by_email(@day_home_signup_request.day_home_email)
+	    if @user.nil?
+		  #no one here, create a new one
+          @user = User.new_from_signup_request(@day_home_signup_request)
+          @user.save	  
+		end
+	  end
     end
             
     # Create a dayhome

@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   end
   
   def add_day_home(day_home)
-    self.day_homes.add(day_home)
+    self.day_homes<<(day_home)
   end
   
   def self.new_from_fb_user(fb_user, fb_access_token, fb_expires_in)
