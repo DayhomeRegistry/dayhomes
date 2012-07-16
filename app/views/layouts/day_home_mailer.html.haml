@@ -1,9 +1,8 @@
 = render 'layouts/mailheader'
-#mainBG
-  .content
-    .container
+#mainBG{:style="width: 100%;background: #52BE60 center top repeat-x;margin-top: -3px;padding-bottom: 12px;overflow: hidden;"}
+  .content{:style="background: white left top repeat;min-height: 400px;width: 960px;margin-left: auto;margin-right: auto;padding-top: 20px;padding-bottom: 20px;"}
+    .container{:style="margin-right: auto;margin-left: auto;"}
       .row
         .span12          
           = yield
-#contentShadow
-  = render 'layouts/mailfooter'
+= render 'layouts/mailfooter'
