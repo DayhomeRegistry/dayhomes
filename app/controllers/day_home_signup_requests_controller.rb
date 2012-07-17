@@ -20,7 +20,9 @@ class DayHomeSignupRequestsController < ApplicationController
             @user.save	  
             
             #but we don't want them to be logged in
-            current_user_session.destroy
+            if !current_user_session.nil?
+              current_user_session.destroy
+            end
         end
       end
     end
