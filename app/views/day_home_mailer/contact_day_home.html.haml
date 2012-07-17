@@ -1,11 +1,32 @@
-== Dayhome: #{@dayhome.name}
-%br
-== Name: #{@contact.name}
-%br
-== Email: #{@contact.email}
-%br
-== Phone: #{@contact.phone}
-%br
-== Subject: #{@contact.subject}
-%br
-== Message: #{@contact.message}
+%h2
+  Someone on Dayhome Registry has a question!
+%p
+  Someone at 
+  = link_to "#{@dayhome.name}", root_path+"#{@dayhome.slug}"
+  has filled out the contact form on 
+  = link_to "Dayhome Registry", root_path
+  = ".  You can see their question below:"
+%p
+  %b 
+    Name:
+  = "#{@contact.name}"
+
+%p
+  %b 
+    Email:
+  = "#{@contact.email}"
+
+%p
+  %b 
+    Phone:
+  = "#{@contact.phone}"
+
+%p
+  %b 
+    Subject:
+  = "#{@contact.subject}"
+
+%p
+  %b 
+    Message:
+  = "#{@contact.message}"

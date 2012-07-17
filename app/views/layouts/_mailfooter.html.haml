@@ -1,33 +1,32 @@
-  .fatbar{:style="background: #FDFDF9;width: 960px;margin-left: auto;margin-right: auto;padding-top: 20px;padding-bottom: 20px;"}
-    .container{:style="margin-right: auto;margin-left: auto;"}
-      .row
-        .about.span4{:style="float: left;margin-left: 20px;width: 300px;"}
-          %h2 About Us
-          %p Dayhome Registry is your answer for all of your dayhome searching needs!
-          %p 
-            Being a parent is busy enough. The mission of the Dayhome Registry is to make being a parent a little easier.
-            = link_to 'Read More...', about_pages_path
-        .contact.span4{:style="float: left;margin-left: 20px;width: 300px;"}
-          %h2 Contact
-          %p Have any questions or concerns about the Dayhome Registry? We'd love to hear from you.
-          %p
-            Email us at
-            %a{:href => "mailto:contact@dayhomeregistry.com", :target => "_blank"} contact@dayhomeregistry.com
-        .social.span4{:style="float: left;margin-left: 20px;width: 300px;"}
-          %h2 We're Social
-          %p Join the conversation and connect with other dayhomes and parents in your area.
-          %a{:href => "http://www.facebook.com/DayhomeRegistry", :target => "_blank"}
-            %p
-              = image_tag 'icons/facebook.png', :alt => 'Like Dayhomes on Facebook'
-              %span Like us on Facebook
-          %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
-            %p
-              = image_tag 'icons/twitter-2.png', :alt => 'Like Dayhomes on Twitter'
-              %span Follow us on Twitter
+.fatbar{:style=>"background: #FDFDF9;width: 600px;margin-left: auto;margin-right: auto;padding-top: 20px;padding-bottom: 20px;"}
+  .container{:style=>"margin-right: auto;margin-left: auto;height:210px;"}  
+    .about.span4{:style=>"float: left;margin-left: 20px;width: 180px;"}
+      %h2 About Us
+      %p Dayhome Registry is your answer for all of your dayhome searching needs!
+      %p 
+        Being a parent is busy enough. The mission of the Dayhome Registry is to make being a parent a little easier.
+        = link_to 'Read More...', about_pages_path
+    .contact.span4{:style=>"float: left;margin-left: 20px;width: 180px;"}
+      %h2 Contact
+      %p Have any questions or concerns about the Dayhome Registry? We'd love to hear from you.
+      %p
+        Email us at
+        %a{:href => "mailto:contact@dayhomeregistry.com", :target => "_blank"} contact@dayhomeregistry.com
+    .social.span4{:style=>"float: left;margin-left: 20px;width: 180px;"}
+      %h2 We're Social
+      %p Join the conversation and connect with other dayhomes and parents in your area.
+      %a{:href => "http://www.facebook.com/DayhomeRegistry", :target => "_blank"}
+        %p
+          = image_tag 'icons/facebook.png', :alt => 'Like Dayhomes on Facebook'
+          %span Like us on Facebook
+      %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
+        %p
+          = image_tag 'icons/twitter-2.png', :alt => 'Like Dayhomes on Twitter'
+          %span Follow us on Twitter
 
-  %footer
-    %p
-      &copy;
-      = link_to "Dayhome Registry #{Date.today.year}", root_path
-      | Read our
-      = link_to 'Privacy Policy', [:privacy, :pages]
+.footer{:style=>"clear:both;width:600px;margin-left:auto;margin-right:auto;"}
+  .div{:style=>"width:600px;text-align:center;"}
+    &copy;
+    = link_to "Dayhome Registry #{Date.today.year}", root_path
+    | Read our
+    = link_to 'Privacy Policy', [:privacy, :pages]

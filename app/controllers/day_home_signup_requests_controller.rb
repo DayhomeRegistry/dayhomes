@@ -26,16 +26,39 @@ class DayHomeSignupRequestsController < ApplicationController
     @day_home = DayHome.create_from_signup(@day_home_signup_request)
     @day_home.update_attributes(params[:day_home])
     
-    # Bind dayhome to user
-    @user.add_day_home(@day_home)
     
 	if @day_home.save
 	  if @day_home_signup_request.save
+        # Bind dayhome to user
+        @user.add_day_home(@day_home)
+
         redirect_to root_path, :notice => "Thanks for adding your DayHome! We will contact you soon!"
-      else
-        render :action => :new
+    else
+      error_msg = []
+      @day_home.errors.full_messages.each do |err|
+        error_msg << err
+      end
+      @day_home_signup_request.errors.full_messages.each do |err|
+        error_msg << err
+      end
+      @user.errors.full_messages.each do |err|
+        error_msg << err
+      end
+      flash[:error] = error_msg.join("<br/>").html_safe
+      render :action => :new
 	  end
 	else
+      error_msg = []
+      @day_home.errors.full_messages.each do |err|
+        error_msg << err
+      end
+      @day_home_signup_request.errors.full_messages.each do |err|
+        error_msg << err
+      end
+      @user.errors.full_messages.each do |err|
+        error_msg << err
+      end
+      flash[:error] = error_msg.join("<br/>").html_safe
       render :action => :new
     end
   end
