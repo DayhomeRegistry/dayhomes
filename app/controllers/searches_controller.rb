@@ -17,4 +17,5 @@ class SearchesController < ApplicationController
     # make sure the search object keeps its persistance
     @advanced_search = params.has_key?(:search) ? @search : Search.new
   end
+  
 end

@@ -1,13 +1,33 @@
 .row
   .span3
     =render 'form'
-  .span8
+  .span8    
     =gmaps(:map_options => { :center_latitude => @search.center_latitude,
                              :center_longitude => @search.center_longitude,
                              :zoom => @search.zoom,
                              :auto_adjust =>  @search.auto_adjust,
                              :auto_zoom => false,
-                             :provider_key => gmaps_api_key},
+                             :provider_key => gmaps_api_key,
+                             :list_container => "markers_list" },
            :markers     => { :data => gmap_prepare_dayhomes(@day_homes), :options => { :do_clustering => true,
                                                                                        :clusterer_maxZoom => 6,
                                                                                        }})
+    %h3
+      Results
+      <ul id="markers_list">  </ul>
+    / 
+      - if !@day_homes.empty?
+        =render :partial => 'day_home', :collection => @day_homes 
+- content_for :scripts do
+  :javascript
+    //Gmaps.map.callback = function() {
+      //for (var i = 0; i <  this.markers.length; ++i) {
+      //  $('#markers_list').append(this.markers[i].sidebar);
+      //}
+    //};
+    Gmaps.map.callback = function() {
+      google.maps.event.addListener(Gmaps.map.map,'bounds_changed', function(object){ 
+        alert(object); 
+      });
+    }
+   

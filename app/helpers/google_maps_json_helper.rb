@@ -33,7 +33,7 @@ module GoogleMapsJsonHelper
                        :width => 32,
                        :height => 37
                      })
-
+      marker.sidebar render(:partial => "/searches/day_home", :locals => { :day_home => dayhome})
     end
   end
 end
