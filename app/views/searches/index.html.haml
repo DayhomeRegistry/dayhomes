@@ -14,20 +14,70 @@
                                                                                        }})
     %h3
       Results
-      <ul id="markers_list">  </ul>
+    <ul id="markers_list">  </ul>
     / 
       - if !@day_homes.empty?
         =render :partial => 'day_home', :collection => @day_homes 
 - content_for :scripts do
   :javascript
-    //Gmaps.map.callback = function() {
-      //for (var i = 0; i <  this.markers.length; ++i) {
-      //  $('#markers_list').append(this.markers[i].sidebar);
-      //}
-    //};
-    Gmaps.map.callback = function() {
-      google.maps.event.addListener(Gmaps.map.map,'bounds_changed', function(object){ 
-        alert(object); 
+    var isMapDragging = false;
+    var idleSkipped = false;
+    var currentInfo = null;
+    $(document).ready(function(){
+      $(".markerCallout").live('click',function(){          
+          var slug = $(this).attr('id');
+          for(i=0;i<Gmaps.map.markers.length;i++){          
+            var railsmarker = Gmaps.map.markers[i];
+            //var marker = new google.maps.Marker({
+            //  position: new google.maps.LatLng(railsmarker.lat,railsmarker.lng),
+            // map: Gmaps.map.map              
+            //});
+            if (railsmarker.sidebar.toString().indexOf("/"+slug)>0) {
+              Gmaps.map.map.setCenter(new google.maps.LatLng(railsmarker.lat,railsmarker.lng));
+              if(currentInfo != null){
+                currentInfo['infowindow'].close();
+              }
+              currentInfo = railsmarker;
+              try {
+                railsmarker['infowindow'].open(Gmaps.map.map);
+              } catch (err) {
+                 alert(err);
+              }
+            }
+          }
+          return false;
       });
+    });
+    function _respondToMapChange(){
+        $("#markers_list").children().remove();
+        for(i=0;i<Gmaps.map.markers.length;i++){
+            if(Gmaps.map.map.getBounds().contains(new google.maps.LatLng(Gmaps.map.markers[i].lat,Gmaps.map.markers[i].lng))){
+              $("#markers_list").append(Gmaps.map.markers[i].sidebar);
+            }
+        }
     }
+    Gmaps.map.callback = function() {
+      google.maps.event.addListener(Gmaps.map.map,'idle', function(){ 
+        if (isMapDragging) {
+          idleSkipped=true;
+          return;
+        }
+        idleSkipped = false;
+        _respondToMapChange();
+      });
+      google.maps.event.addListener(Gmaps.map.map,'dragstart', function(){ 
+        this.isMapDragging = true;
+      });
+      google.maps.event.addListener(Gmaps.map.map,'dragend', function(){ 
+        isMapDragging = false;
+        if (idleSkipped==true) {
+          _respondToMapChange();
+          idleSkipped = false;
+        }
+      });
+      google.maps.event.addListener(Gmaps.map.map,'bounds_changed', function(){ 
+        idleSkipped = false;
+      });
+    }    
+    
    
