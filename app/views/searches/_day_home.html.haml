@@ -1,8 +1,6 @@
 %div.dayhome_listing  
   .name
-    %h4=link_to(day_home.name, day_home_slug_path(day_home.slug))
-  %div
-    =link_to "Click here","",:class=>"markerCallout",:id=>day_home.slug
+    %h4=link_to day_home.name,"#",:class=>"markerCallout",:id=>day_home.slug    
   .row
     .span2
       .bubble_pic

@@ -32,16 +32,15 @@
             //  position: new google.maps.LatLng(railsmarker.lat,railsmarker.lng),
             // map: Gmaps.map.map              
             //});
-            if (railsmarker.sidebar.toString().indexOf("/"+slug)>0) {
-              Gmaps.map.map.setCenter(new google.maps.LatLng(railsmarker.lat,railsmarker.lng));
+            if (railsmarker.sidebar.toString().indexOf("/"+slug)>0) {              
               if(currentInfo != null){
                 currentInfo['infowindow'].close();
               }
               currentInfo = railsmarker;
               try {
-                railsmarker['infowindow'].open(Gmaps.map.map);
+                railsmarker['infowindow'].open(Gmaps.map.map,railsmarker.serviceObject);
               } catch (err) {
-                 alert(err);
+                 //wish I knew how to tell someone
               }
             }
           }
