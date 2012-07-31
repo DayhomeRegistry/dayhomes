@@ -46,4 +46,9 @@ class Admin::DayHomesController < Admin::ApplicationController
     redirect_to admin_day_homes_path
   end
   
+  def mass_update
+    return render :text => "Params=>"+params.inspect
+    render :action => :index
+  end
+  
 end

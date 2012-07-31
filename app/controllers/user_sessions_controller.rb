@@ -9,10 +9,17 @@ class UserSessionsController < ApplicationController
 
   def create
     @user_session = UserSession.new(params[:user_session])
-    @user = User.new
-
+    
+    if !(@user = User.find_by_email(params[:user_session]["email"]))
+      @user = User.new
+    end     
+    
     if @user_session.save
-      redirect_to root_path
+      if (@user.day_home_owner?) || (@user.admin?) 
+        redirect_to admin_root_path
+      else
+        redirect_to root_path
+      end
     else
       flash[:error] = "Please enter a valid email and password combination."
       render :action => :new

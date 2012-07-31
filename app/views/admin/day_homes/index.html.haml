@@ -1,13 +1,28 @@
 :javascript
   $(function(){
     $(".photo_preview").colorbox({rel:'photo_preview'});
+    
+    $("#select_all").click(function(){
+        $(".select").prop("checked", true);
+    });
+    
+    $("#approveBtn").click(function(event){
+      $("#day_home_mass_function").val="approve";
+      $("#mass_form").submit();
+      
+      event.preventDefault(); // Prevent link from following its href
+    });
   });
 
 = render '/layouts/admin_subnav'
-
+= form_tag({:controller => "day_homes", :action => "mass_update"}, :method => "post", :id => "mass_form")
+:plain
+  <form action="/admin/day_homes/mass_update" id="mass_form">
+=hidden_field(:day_home, :mass_function)  
 %p
   = link_to 'Create dayhome', [:new, :admin, :day_home], :class => :btn
-
+  = link_to 'Approve','#',:id => 'approveBtn',:class => :btn
+        
 - if @day_homes.blank?
   %p
     No dayhomes have been added yet!
@@ -15,6 +30,8 @@
   %table.table-striped.table{:cellpadding => '5'}
     %thead
       %tr
+        %th          
+          = check_box_tag(:select_all)
         %th
           Name
         %th
@@ -32,6 +49,8 @@
     %tbody
       - @day_homes.each do |day_home|
         %tr
+          %td
+            = check_box_tag "select_"+day_home.slug,day_home.slug,false,:class => "select"
           %td
             = link_to day_home.name, day_home_slug_path(day_home.slug)
           %td
@@ -54,5 +73,7 @@
           %td
             = link_to 'Edit', [:edit, :admin, day_home]
             |
-            = link_to 'Delete', [:admin, day_home], :method => :delete, :confirm => "Are you sure?"
-  = paginate @day_homes
+            = link_to 'Delete', [:admin, day_home], :method => :delete, :confirm => "Are you sure?"    
+  = paginate @day_homes, :outer_window => 3
+:plain
+  </form>    
