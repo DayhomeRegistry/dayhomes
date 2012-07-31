@@ -47,7 +47,15 @@ class Admin::DayHomesController < Admin::ApplicationController
   end
   
   def mass_update
-    return render :text => "Params=>"+params.inspect
+    text = "function=>"+params[:day_home]["mass_function"]+";"
+    if params[:select]
+      text += "selected["
+      params[:select].each do |dayhome|
+        text += dayhome[0]+","
+      end
+      text += "]"
+    end
+    return render :text => text
     render :action => :index
   end
   

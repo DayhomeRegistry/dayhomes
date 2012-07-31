@@ -7,7 +7,7 @@
     });
     
     $("#approveBtn").click(function(event){
-      $("#day_home_mass_function").val="approve";
+      $("#day_home_mass_function").val("approve");
       $("#mass_form").submit();
       
       event.preventDefault(); // Prevent link from following its href
@@ -50,7 +50,7 @@
       - @day_homes.each do |day_home|
         %tr
           %td
-            = check_box_tag "select_"+day_home.slug,day_home.slug,false,:class => "select"
+            = check_box_tag "select["+day_home.slug+"]",day_home.slug,false,:class => "select"
           %td
             = link_to day_home.name, day_home_slug_path(day_home.slug)
           %td
