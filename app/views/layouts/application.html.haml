@@ -10,7 +10,9 @@
     = stylesheet_link_tag :application, :media => :all
     = javascript_include_tag :application
     = csrf_meta_tags
+    / yield
     = yield :header_scripts
+    / /yield
     %link{:href => "/assets/icons/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}
     /[if gte IE 9]
       :css

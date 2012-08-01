@@ -13,7 +13,16 @@
  *= require calendar/calendar
  *= require calendar/fullcalendar
  *= require calendar/datepicker
- *= require_tree .
+ *= require application
+ *= require colorbox
+ *= require dayhomes
+ *= require gmaps4rails
+ *= require jquery-ui-1.8.18.custom
+ *= require jquery.modal
+ *= require main
+ *= require searches
+ *= require slides
+ 
 */
 
 /* Configure and import bootstrap */
@@ -65,4 +74,11 @@ $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 
 h3 small {
   padding-left:10px;
+}
+
+.pagination a {
+  float: left;  
+  line-height: 34px;
+  text-decoration: none;  
+  border-left-width: 0;
 }

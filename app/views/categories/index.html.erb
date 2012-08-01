@@ -1,8 +1,11 @@
+<% content_for :header_scripts do %>
+  <%= stylesheet_link_tag params[:controller] %>
+<% end %>    
+
 <div id="forum_header">
     <div id="logo">
-      <%= image_tag "logo.png", :alt => 'Dayhomes Message Board' %>
       <h1>Dayhomes message board</h1>
-      A message board for dayhomes and parents
+      A message board for dayhomes      
       <div class="clear"></div>
     </div>
 </div>
