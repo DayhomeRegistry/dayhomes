@@ -74,6 +74,6 @@
             = link_to 'Edit', [:edit, :admin, day_home]
             |
             = link_to 'Delete', [:admin, day_home], :method => :delete, :confirm => "Are you sure?"    
-  = paginate @day_homes, :outer_window => 3
+  = paginate @day_homes, :window => 1,:left => 3,:right => 3
 :plain
   </form>    

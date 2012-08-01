@@ -77,8 +77,14 @@ h3 small {
 }
 
 .pagination a {
-  float: left;  
+  padding: 0;
+  border: none;
+}
+
+.pagination .page.active a{
+  color: red;
+}
+.pagination span.first {
   line-height: 34px;
-  text-decoration: none;  
-  border-left-width: 0;
+  color: #999;
 }
