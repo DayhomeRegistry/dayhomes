@@ -1,6 +1,8 @@
 class Admin::DayHomesController < Admin::ApplicationController
   def index
-    @day_homes = DayHome.page(params[:page] || 1).per(params[:per_page] || 10)
+    sort = params[:sort].nil? ? "name" : params[:sort]
+    direction = params[:direction].nil? ? "asc" : params[:direction]
+    @day_homes = DayHome.order(sort + ' ' + direction).page(params[:page] || 1).per(params[:per_page] || 10)
   end
 
   def show
@@ -46,17 +48,36 @@ class Admin::DayHomesController < Admin::ApplicationController
     redirect_to admin_day_homes_path
   end
   
-  def mass_update
-    text = "function=>"+params[:day_home]["mass_function"]+";"
+  def mass_update      
+    text = "<div>The following dayhomes were "
+    function = params[:day_home]["mass_function"]
+    text += function + "d:<ul>"
     if params[:select]
-      text += "selected["
-      params[:select].each do |dayhome|
-        text += dayhome[0]+","
+      case function
+        when "approve"
+          params[:select].each do |dayhome|
+            @day_home = DayHome.find_by_slug(dayhome)
+            if(!@day_home.approved)
+              text += "<li>"+@day_home.name+"</li>"
+              @day_home.approved = true
+              @day_home.save
+            end
+          end
+        when "feature"
+          params[:select].each do |dayhome|
+            @day_home = DayHome.find_by_slug(dayhome)
+            if(!@day_home.featured)
+              text += "<li>"+@day_home.name+"</li>"
+              @day_home.featured = true
+              @day_home.save
+            end
+          end
       end
-      text += "]"
+      text += "</ul></div>"
     end
-    return render :text => text
-    render :action => :index
+    #return render :text => text
+    flash[:success] = text
+    redirect_to :action => :index
   end
   
 end

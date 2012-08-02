@@ -1,3 +1,3 @@
 - flash.each do |type, value|
   .flash{ :class => "alert alert-" + type.to_s }
-    = value 
+    = raw (value )
