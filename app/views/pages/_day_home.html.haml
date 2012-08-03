@@ -1,0 +1,22 @@
+%div.dayhome_listing  
+  .name
+    %h4=link_to day_home.name,"#",:class=>"markerCallout",:id=>day_home.slug    
+  .row
+    .span2
+      .bubble_pic
+        =link_to(day_home.photos.empty? ? '' : image_tag(day_home.photos.first.photo_url(:thumb)), day_home_slug_path(day_home.slug))
+    .span4
+      %div
+        =day_home.highlight
+      %div
+        =day_home.street1
+        =day_home.city  + ' , ' + day_home.province
+        =day_home.postal_code
+        - avail = day_home.availability
+        -if avail.empty?
+          =image_tag("circle-empty.png", :alt=> "Closed", :title=> "Closed")
+        -else
+          -if avail.include? "Full-time"
+            =image_tag("circle-full.png", :alt=> "Full-time", :title=> "Full-time")
+          -if avail.include? "Part-time"
+            =image_tag("circle-half.png", :alt=> "Part-time", :title=> "Part-time")

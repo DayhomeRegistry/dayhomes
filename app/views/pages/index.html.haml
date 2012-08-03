@@ -1,3 +1,12 @@
+:javascript
+  $(function(){
+    $("#featureList").hide();
+    $("#seeListLink").click(function(event){
+      $("#featureList").toggle();
+      
+      event.preventDefault(); // Prevent link from following its href
+    });
+  });
 .row
   .span7
     .featured
@@ -16,6 +25,10 @@
                     - if featured_day_home.highlight.present?
                       %p
                         = featured_day_home.highlight
+        .list
+          = link_to "Show all featured dayhomes","#", :id=>"seeListLink"
+      .featureList#featureList
+        =render :partial => 'day_home', :collection => @featured_day_homes             
       .bottom
     
   .span5
