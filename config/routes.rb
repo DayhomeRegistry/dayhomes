@@ -56,8 +56,7 @@ Dayhomes::Application.routes.draw do
     resources :users
     resources :user_sessions
     
-    match 'day_homes/mass_update' => 'day_homes#mass_update'
-    match 'day_homes/search' => 'day_homes#search', :as => :adminsearch
+    match 'day_homes/mass_update' => 'day_homes#mass_update'    
     match 'login' => 'user_sessions#new', :as => :login
     match 'logout' => 'user_sessions#destroy', :as => :logout
   end

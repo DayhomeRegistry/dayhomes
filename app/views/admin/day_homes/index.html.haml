@@ -18,6 +18,11 @@
       
       event.preventDefault(); // Prevent link from following its href
     });
+    $("#adminSearchBtn").click(function(event){
+      $("#searchForm").submit();
+      
+      event.preventDefault(); // Prevent link from following its href
+    });
   });
 
 = render '/layouts/admin_subnav'
@@ -25,15 +30,15 @@
   = link_to 'Create dayhome', [:new, :admin, :day_home], :class => :btn
   = link_to 'Approve','#',:id => 'approveBtn',:class => :btn
   = link_to 'Feature','#',:id => 'featureBtn',:class => :btn
-=form_tag :url => admin_adminsearch_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
+=form_tag({:controller => "day_homes", :action => "index"}, :id => :searchForm) do 
   %div.input-prepend.pull-right
     %span.add-on
       %i.icon-search
-    = text_field_tag :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
-    = submit_tag "Go", :id => 'submit', :class => "btn"        
+    = text_field_tag :query, nil, :placeholder => "Search", :value=> @query
+    = link_to 'Go','#',:id => 'adminSearchBtn',:class => :btn
 - if @day_homes.blank?
-  %p
-    No dayhomes have been added yet!
+  %p    
+    Huh.  There don't seem to be any Dayhomes like that.
 - else
   = form_tag({:controller => "day_homes", :action => "mass_update"}, :method => "post", :id => "mass_form")
   =hidden_field(:day_home, :mass_function)  

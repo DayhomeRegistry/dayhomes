@@ -2,7 +2,36 @@ class Admin::DayHomesController < Admin::ApplicationController
   def index
     sort = params[:sort].nil? ? "name" : params[:sort]
     direction = params[:direction].nil? ? "asc" : params[:direction]
-    @day_homes = DayHome.order(sort + ' ' + direction).page(params[:page] || 1).per(params[:per_page] || 10)
+    
+    if (!params[:query].nil?)
+      clause = params[:query]      
+      result = clause.scan(/(\bfeatured:\b[^\s]*)/)            
+      feature = result.length==0 ? "" : result[0][0]
+      result = clause.scan(/(\bapproved:\b[^\s]*)/)
+      approve = result.length==0 ? "" : result[0][0]  
+      clause = clause.gsub(feature,"")
+      clause = clause.gsub(approve,"")            
+      
+      if (!clause.empty?)
+        @day_homes = DayHome.where("name like ?", "%#{clause.strip}%")
+      else
+        @day_homes = DayHome.scoped
+      end
+      #return render :text=> clause.strip+"|"+feature+"|"+approve
+      
+      if(!feature.empty?)            
+        @day_homes = @day_homes.where(:featured=> feature=="featured:yes")
+      end
+      if(!approve.empty?)
+        @day_homes = @day_homes.where(:approved=> approve=="approved:yes")
+                
+      end
+      @day_homes = @day_homes.order(sort + ' ' + direction).page(params[:page] || 1).per(params[:per_page] || 10)
+      @query = params[:query]
+    else 
+      @day_homes = DayHome.order(sort + ' ' + direction).page(params[:page] || 1).per(params[:per_page] || 10)
+    end
+    
   end
 
   def show
