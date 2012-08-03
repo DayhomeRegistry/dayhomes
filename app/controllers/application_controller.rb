@@ -1,9 +1,16 @@
 class ApplicationController < ActionController::Base
   before_filter :create_search
+  before_filter :validate_acknowledgement
   protect_from_forgery
 
   def create_search
     @search = Search.new
+  end
+  
+  def validate_acknowledgement
+    if(current_user)
+      flash[:notice]=render_to_string :partial=>"application/acknowledgement"
+    end
   end
   
   helper_method :current_user_session, :current_user, :gmaps_api_key

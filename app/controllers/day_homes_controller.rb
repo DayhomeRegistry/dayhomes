@@ -2,9 +2,37 @@ class DayHomesController < ApplicationController
 
   before_filter :require_user, :except => [:show, :contact, :calendar]
   before_filter :require_user_to_be_day_home_owner_or_admin, :except => [:show, :contact, :calendar]
+  helper_method :sort_column, :sort_direction
     
   def index
-    @day_homes = current_user.day_homes
+    if (!params[:query].nil?)
+      clause = params[:query]      
+      result = clause.scan(/(\bfeatured:\b[^\s]*)/)            
+      feature = result.length==0 ? "" : result[0][0]
+      result = clause.scan(/(\bapproved:\b[^\s]*)/)
+      approve = result.length==0 ? "" : result[0][0]  
+      clause = clause.gsub(feature,"")
+      clause = clause.gsub(approve,"")            
+      
+      if (!clause.empty?)
+        @day_homes = current_user.day_homes.where("name like ?", "%#{clause.strip}%")
+      else
+        @day_homes = current_user.day_homes
+      end
+      #return render :text=> clause.strip+"|"+feature+"|"+approve
+      
+      if(!feature.empty?)            
+        @day_homes = @day_homes.where(:featured=> feature=="featured:yes")
+      end
+      if(!approve.empty?)
+        @day_homes = @day_homes.where(:approved=> approve=="approved:yes")
+                
+      end
+      @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+      @query = params[:query]
+    else 
+      @day_homes = current_user.day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+    end
   end
   
   def show
@@ -70,5 +98,13 @@ class DayHomesController < ApplicationController
       render :action => :edit
     end
   end
-
+  
+  private
+  def sort_column
+    DayHome.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
+  end 
 end

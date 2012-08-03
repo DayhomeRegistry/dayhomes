@@ -1,6 +1,6 @@
 class Admin::DayHomesController < Admin::ApplicationController
   helper_method :sort_column, :sort_direction
-  def index
+  def index    
     #return render :text=>url_for({:sort => "name", :direction => "asc"})
     if (!params[:query].nil?)
       clause = params[:query]      

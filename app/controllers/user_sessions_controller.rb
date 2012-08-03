@@ -14,9 +14,12 @@ class UserSessionsController < ApplicationController
       @user = User.new
     end     
     
-    if @user_session.save
-      if (@user.day_home_owner?) || (@user.admin?) 
+    if @user_session.save    
+      #if (@user.day_home_owner?) || (@user.admin?) 
+      if (@user.admin?)
         redirect_to admin_root_path
+      elsif (@user.day_home_owner?)
+        redirect_to day_homes_path
       else
         redirect_to root_path
       end
@@ -28,6 +31,8 @@ class UserSessionsController < ApplicationController
 
   def destroy
     current_user_session.destroy
+    @current_user_session = nil
+    @user = nil
     redirect_to root_path
   end
   

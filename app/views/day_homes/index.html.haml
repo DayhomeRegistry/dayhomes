@@ -1,20 +1,31 @@
 :javascript
   $(function(){
     $(".photo_preview").colorbox({rel:'photo_preview'});
-  });
-  
+
+    $("#adminSearchBtn").click(function(event){
+      $("#searchForm").submit();
+      
+      event.preventDefault(); // Prevent link from following its href
+    });
+  });  
 %h2
   My dayhomes
+=form_tag({:controller => "day_homes", :action => "index"},:method=>"get", :id => :searchForm) do 
+  %div.input-prepend.pull-right
+    %span.add-on
+      %i.icon-search
+    = text_field_tag :query, nil, :placeholder => "Search", :value=> @query
+    = link_to 'Go','#',:id => 'adminSearchBtn',:class => :btn
 
 - if @day_homes.blank?
   %p
-    No dayhomes have been assigned to you yet!
+    No dayhomes have been assigned to you or, at least, none that match that criteria!
 - else
   %table.table-striped.table{:cellpadding => '5'}
     %thead
       %tr
         %th
-          Name
+          = sortable "name","Name"
         %th
           Address
         %th
