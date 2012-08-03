@@ -1,8 +1,7 @@
 class Admin::DayHomesController < Admin::ApplicationController
+  helper_method :sort_column, :sort_direction
   def index
-    sort = params[:sort].nil? ? "name" : params[:sort]
-    direction = params[:direction].nil? ? "asc" : params[:direction]
-    
+    #return render :text=>url_for({:sort => "name", :direction => "asc"})
     if (!params[:query].nil?)
       clause = params[:query]      
       result = clause.scan(/(\bfeatured:\b[^\s]*)/)            
@@ -26,10 +25,10 @@ class Admin::DayHomesController < Admin::ApplicationController
         @day_homes = @day_homes.where(:approved=> approve=="approved:yes")
                 
       end
-      @day_homes = @day_homes.order(sort + ' ' + direction).page(params[:page] || 1).per(params[:per_page] || 10)
+      @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
       @query = params[:query]
     else 
-      @day_homes = DayHome.order(sort + ' ' + direction).page(params[:page] || 1).per(params[:per_page] || 10)
+      @day_homes = DayHome.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
     end
     
   end
@@ -109,4 +108,12 @@ class Admin::DayHomesController < Admin::ApplicationController
     redirect_to :action => :index
   end
   
+  private
+  def sort_column
+    DayHome.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
+  end  
 end

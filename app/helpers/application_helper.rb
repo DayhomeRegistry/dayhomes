@@ -12,8 +12,20 @@ module ApplicationHelper
   
   def sortable(column, title = nil)
     title ||= column.titleize
-    direction = (column == params[:sort] && params[:direction] == "asc") ? "desc" : "asc"
-    link_to title, :sort => column, :direction => direction
+    css_class = (column == sort_column) ? "current #{sort_direction}" : nil
+    direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"    
+    #link_to title, {:sort => column, :direction => direction}
+    link_to url_for({:sort => column, :direction => direction}), {:class => css_class} do      
+      if (column == sort_column)
+        if (sort_direction == "asc")
+          raw ("<div style='min-width:100px;'>#{title}<i class='icon-chevron-up'></i></div>")
+        else
+          raw ("<div style='min-width:100px;'>#{title}<i class='icon-chevron-down'></i></div>")
+        end
+      else
+          title
+      end
+    end
   end
-  
+
 end
