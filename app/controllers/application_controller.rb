@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
   
   def validate_acknowledgement
     if(current_user)
-      flash[:notice]=render_to_string :partial=>"application/acknowledgement"
+      if(!current_user.privacy_effective_date || (current_user.privacy_effective_date<PrivacyPolicy.last.effective_date))
+        flash[:notice]=render_to_string :partial=>"application/acknowledgement"
+      end
     end
   end
   

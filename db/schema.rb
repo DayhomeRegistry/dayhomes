@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120705003057) do
+ActiveRecord::Schema.define(:version => 20120803195020) do
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -161,6 +161,13 @@ ActiveRecord::Schema.define(:version => 20120705003057) do
   add_index "posts", ["topic_id"], :name => "index_posts_on_topic_id"
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
+  create_table "privacy_policies", :force => true do |t|
+    t.string   "version"
+    t.date     "effective_date"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "reviews", :force => true do |t|
     t.text     "content"
     t.integer  "rating",      :default => 0
@@ -222,6 +229,7 @@ ActiveRecord::Schema.define(:version => 20120705003057) do
     t.integer  "posts_count",                      :default => 0
     t.string   "facebook_access_token"
     t.string   "facebook_access_token_expires_in"
+    t.date     "privacy_effective_date"
   end
 
 end
