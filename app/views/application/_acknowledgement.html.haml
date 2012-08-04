@@ -11,7 +11,7 @@
   Our Privacy Policy and Terms of use has changed.  Please take a moment to 
   =link_to "read the updated version","/pages/privacy"
   and click the checkbox below.
-=form_tag({:controller => "pages", :action => "acknowledge"}, :method=>"get", :id => :ackForm) do 
+=form_tag("/pages/acknowledge", :method=>"get", :id => :ackForm) do 
   .ackdiv
     = label_tag "ack", :class => :checkbox do       
       = check_box_tag "ack","yes",false,:class => "select"
