@@ -1,2 +1,19 @@
+:javascript
+  $(function(){
+    $("#acknowledgeBtn").click(function(event){
+      $("#ackForm").submit();
+      
+      event.preventDefault(); // Prevent link from following its href
+    });
+  });
+
 %span
-  I have validated the acknowledgement of the privacy policy.
+  Our Privacy Policy and Terms of use has changed.  Please take a moment to 
+  =link_to "read the updated version","/pages/privacy"
+  and click the checkbox below.
+=form_tag({:controller => "pages", :action => "acknowledge"}, :method=>"get", :id => :ackForm) do 
+  .ackdiv
+    = label_tag "ack", :class => :checkbox do       
+      = check_box_tag "ack","yes",false,:class => "select"
+      I have read and understood the Privacy Policy and Terms of Use
+    = link_to 'Save','#',:id => 'acknowledgeBtn',:class => :btn

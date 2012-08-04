@@ -8,4 +8,10 @@ class PagesController < ApplicationController
   
   def privacy
   end
+  
+  def acknowledge
+    current_user.privacy_effective_date = Time.now()
+    current_user.save
+    redirect_to request.referer
+  end
 end

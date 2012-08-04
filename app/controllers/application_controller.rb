@@ -8,9 +8,15 @@ class ApplicationController < ActionController::Base
   end
   
   def validate_acknowledgement
-    if(current_user)
-      if(!current_user.privacy_effective_date || (current_user.privacy_effective_date<PrivacyPolicy.last.effective_date))
-        flash[:notice]=render_to_string :partial=>"application/acknowledgement"
+    if(current_user)      
+          #raise current_user.privacy_effective_date.to_s+"<"+PrivacyPolicy.last.effective_date.to_s+"="+(current_user.privacy_effective_date<PrivacyPolicy.last.effective_date).to_s
+      if(!current_user.privacy_effective_date || (current_user.privacy_effective_date<PrivacyPolicy.last.effective_date))        
+      
+        if(!request.fullpath.match(/^\/pages\/acknowledge/))
+          #raise request.fullpath
+          flash[:notice]=render_to_string :partial=>"application/acknowledgement"
+        end
+        
       end
     end
   end
@@ -26,9 +32,10 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user    
-    return @current_user if defined?(@current_user)
+    #return @current_user if defined?(@current_user)
     
-    @current_user = current_user_session && current_user_session.user
+    #@current_user = current_user_session && current_user_session.user
+    return current_user_session && current_user_session.user
   end
   
   # Make sure they are an admin!
