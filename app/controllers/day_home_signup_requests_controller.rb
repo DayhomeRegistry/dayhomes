@@ -33,8 +33,8 @@ class DayHomeSignupRequestsController < ApplicationController
       end
     end
     # Need to set the ack date
-    current_user.privacy_effective_date = Time.now()
-    current_user.save
+    @user.privacy_effective_date = Time.now()
+    @user.save
             
     # Create a dayhome
     @day_home = DayHome.create_from_signup(@day_home_signup_request)
