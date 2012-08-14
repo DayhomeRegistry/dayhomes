@@ -4,8 +4,14 @@ class DayHomeSignupRequestsController < ApplicationController
   end
   
   def create
+    #I don't know how to make the checkbox mandatory, so we'll check here first
+    if(params["ack"].nil?)
+      flash[:error] = "Acknowledging the Privacy Policy and Terms of Use is required."
+      return redirect_to :action => :new    
+    end
+      
     # Capture the signup request and send email
-    @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])
+    @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])    
 
     # Create user, if necessary
     @user = current_user
@@ -23,13 +29,18 @@ class DayHomeSignupRequestsController < ApplicationController
             if !current_user_session.nil?
               current_user_session.destroy
             end
-        end
+        end        
       end
     end
+    # Need to set the ack date
+    current_user.privacy_effective_date = Time.now()
+    current_user.save
             
     # Create a dayhome
     @day_home = DayHome.create_from_signup(@day_home_signup_request)
     @day_home.update_attributes(params[:day_home])
+    
+    
     
     
 	if @day_home.save

@@ -53,6 +53,11 @@
         = f.text_area :day_home_highlight, :rows => 6
         <i class="icon-info-sign icon-white" data-title="What's a highlight?" data-content="On our homepage, when we feature a dayhome, the name of the dayhome and the text you put below are displayed over one of your images.  This highlight has to be 200 characters or less so we can still see how wonderful you are in your picture."></i>
         
+        = label_tag "ack", :class => :checkbox do       
+          = check_box_tag "ack","yes",false,:class => "select"
+          I have read and understood the 
+          =link_to "Privacy Policy and Terms of Use","/pages/privacy"
+        
     .span5.well.form-horizontal
       %h3
         Now tell us a little about you        
