@@ -10,7 +10,11 @@ Dayhomes::Application.routes.draw do
   root :to => 'pages#index'
 
   resources :searches
-  resources :day_home_signup_requests
+  resources :day_home_signup_requests do
+    collection do
+      get :welcome
+    end
+  end
   resources :day_homes do
     resources :reviews
     resources :events

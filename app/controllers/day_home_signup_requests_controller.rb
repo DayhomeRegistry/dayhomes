@@ -1,9 +1,16 @@
 class DayHomeSignupRequestsController < ApplicationController
+  def index
+    redirect_to :action=>:new
+  end
+  
   def new
     @day_home_signup_request = DayHomeSignupRequest.new
   end
   
   def create
+  
+    return redirect_to :action => :welcome
+    
     #I don't know how to make the checkbox mandatory, so we'll check here first
     if(params["ack"].nil?)
       flash[:error] = "Acknowledging the Privacy Policy and Terms of Use is required."
@@ -48,7 +55,8 @@ class DayHomeSignupRequestsController < ApplicationController
         # Bind dayhome to user
         @user.add_day_home(@day_home)
 
-        redirect_to root_path, :notice => "Thanks for adding your DayHome! We will contact you soon!"
+        #redirect_to root_path, :notice => "Thanks for adding your DayHome! We will contact you soon!"
+        return redirect_to :action => :welcome   
     else
       error_msg = []
       @day_home.errors.full_messages.each do |err|
@@ -78,4 +86,7 @@ class DayHomeSignupRequestsController < ApplicationController
       render :action => :new
     end
   end
+end
+
+def welcome
 end

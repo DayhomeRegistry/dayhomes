@@ -1,0 +1,32 @@
+:javascript
+  $(function(){
+    
+    
+    $('.icon-info-sign').popover() ;
+
+  });
+
+.row
+  .span12
+    %h2
+      Thanks
+
+.row
+  .span12
+    %p
+      Welcome to the Dayhome Registry family!  We're thrilled you're here.  We thought we'd take a moment to explain what is going to happen next.
+    %ol
+      %li
+        Your registration details have been sent off to our Dayhome Registry house-elves to be reviewed for completeness.  Your dayhome won't appear on the site until they're done.
+      %li
+        You will receive an email asking you to confirm your email address and reset your password.  You should do that right away!
+      %li
+        Once the house-elves have approved your registration, you will receive another email letting you know.  You should tell everyone you know your new homepage.
+
+.row
+  .span12
+    %p
+      Once again, welcome.  Please 
+      = mail_to "contact@dayhomeregistry.com", "email us", :encode => "javascript"
+      if you have any questions at all.
+        
