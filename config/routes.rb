@@ -18,9 +18,10 @@ Dayhomes::Application.routes.draw do
   resources :day_homes do
     resources :reviews
     resources :events
-    
+       
     member do
       post :contact
+      get :followup
     end
 
     member do

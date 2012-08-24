@@ -9,7 +9,6 @@ class DayHomeSignupRequestsController < ApplicationController
   
   def create
   
-    return redirect_to :action => :welcome
     
     #I don't know how to make the checkbox mandatory, so we'll check here first
     if(params["ack"].nil?)

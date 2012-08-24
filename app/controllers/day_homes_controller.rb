@@ -50,12 +50,17 @@ class DayHomesController < ApplicationController
   end
 
   def contact
+  
     params[:day_home_contact][:day_home_email] = Base64::decode64(params[:day_home_contact][:day_home_email])
     @day_home = DayHome.find(params[:id])
     @day_home_contact = DayHomeContact.new(params[:day_home_contact].merge(:day_home_id => @day_home.id))
+    #return render :text=>day_home_slug_path(@day_home.slug)
+    return redirect_to followup_day_home_path(@day_home)
+    
     
     if @day_home_contact.save
-      redirect_to day_home_slug_path(@day_home.slug), :notice => "#{@day_home.name} has been contacted!"
+      #redirect_to day_home_slug_path(@day_home.slug), :notice => "#{@day_home.name} has been contacted!"
+      redirect_to followup_day_home_path(@day_home)
     else
       redirect_to day_home_slug_path(@day_home.slug), :error => "Something went wrong while sending your contact - please try again."
     end
@@ -107,4 +112,9 @@ class DayHomesController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
   end 
+end
+
+def followup
+  @dayhome = DayHome.find(params[:id])
+  render :text=>@dayhome.slug
 end
