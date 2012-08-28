@@ -4,7 +4,7 @@
 .row
   .span12
     %h2
-      = @day_home.name
+      = Thanks for the note!
 
     %p
       :plain
@@ -25,5 +25,9 @@
 
 .row
   .span12
-    %h3
-      Followup
+    %p
+      We just wanted to say a quick thanks for your interest.  The dayhome or agency will get back to you in the next couple of days.
+    %p
+      Click
+      =link_to "here",day_home_slug_path(@day_home.slug)
+      to get back to #{@day_home.name}

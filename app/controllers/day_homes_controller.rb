@@ -1,7 +1,7 @@
 class DayHomesController < ApplicationController
 
-  before_filter :require_user, :except => [:show, :contact, :calendar]
-  before_filter :require_user_to_be_day_home_owner_or_admin, :except => [:show, :contact, :calendar]
+  before_filter :require_user, :except => [:show, :contact, :calendar, :followup]
+  before_filter :require_user_to_be_day_home_owner_or_admin, :except => [:show, :contact, :calendar, :followup]
   helper_method :sort_column, :sort_direction
     
   def index
@@ -54,10 +54,7 @@ class DayHomesController < ApplicationController
     params[:day_home_contact][:day_home_email] = Base64::decode64(params[:day_home_contact][:day_home_email])
     @day_home = DayHome.find(params[:id])
     @day_home_contact = DayHomeContact.new(params[:day_home_contact].merge(:day_home_id => @day_home.id))
-    #return render :text=>day_home_slug_path(@day_home.slug)
-    return redirect_to followup_day_home_path(@day_home)
-    
-    
+        
     if @day_home_contact.save
       #redirect_to day_home_slug_path(@day_home.slug), :notice => "#{@day_home.name} has been contacted!"
       redirect_to followup_day_home_path(@day_home)
@@ -103,6 +100,9 @@ class DayHomesController < ApplicationController
       render :action => :edit
     end
   end
+  def followup  
+    @day_home = DayHome.find(params[:id])
+  end  
   
   private
   def sort_column
@@ -114,7 +114,3 @@ class DayHomesController < ApplicationController
   end 
 end
 
-def followup
-  @dayhome = DayHome.find(params[:id])
-  render :text=>@dayhome.slug
-end

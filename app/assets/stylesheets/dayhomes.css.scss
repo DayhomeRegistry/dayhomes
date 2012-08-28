@@ -71,7 +71,7 @@
     margin-bottom: 6px;
   }
   textarea {
-    width:400px;
+    width:690px;
     height:250px;
   }
   .submit {
@@ -84,7 +84,17 @@
       display:inline !important;
     }
   }
+  
+  .modal { 
+    width: 720px !important; 
+  }
 }
+#day_home_contact_subject {
+  width: 690px;
+}
+#contact-form.modal{ 
+    width: 720px !important; 
+  }
 
 .contact_info {
   display: block;

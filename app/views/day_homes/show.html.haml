@@ -82,22 +82,38 @@
       %h3
         Contact #{@day_home.name}
       = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
-        = cf.label :name, "Your name:"
-        = cf.text_field :name, :class => "required"
+        .span4.well.form-horizontal
+          = cf.label :name, "Your name:"
+          = cf.text_field :name, :class => "required"
 
-        = cf.label :name, "Your email:"
-        = cf.text_field :email, :class => "required"
+          = cf.label :name, "Your email:"
+          = cf.text_field :email, :class => "required"
 
-        = cf.label :name, "Your phone (optional):"
-        = cf.text_field :phone
+          = cf.label :name, "Your phone (optional):"
+          = cf.text_field :phone
+        
+        .span4.well.form-horizontal
+          = cf.label :name, "Child's name:"
+          = cf.text_field :name, :class => "required"
 
-        = cf.label :subject, "Regarding:"
-        = cf.text_field :subject
+          = cf.label :name, "Child's Birthday"
+          = cf.text_field :name, :class => "required"
+          = cf.text_field :name, :class => "required"
 
-        .remember
-          = cf.label "Message:"
-          %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
-        = cf.text_area :message, :style => 'height: 150px !important;'
+          = cf.label :name, "Start Date"
+          = cf.text_field :name, :class => "required"        
+          
+          = cf.label :name, "Your address (optional):"
+          = cf.text_field :name
+          
+        .span9
+          = cf.label :subject, "Regarding:"
+          = cf.text_field :subject
+
+          .remember
+            = cf.label "Message:"
+            %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
+          = cf.text_area :message, :style => 'height: 150px !important;'
 
         = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
         .submit
@@ -182,7 +198,7 @@
     = cf.text_field :phone
 
     = cf.label :subject, "Regarding:"
-    = cf.text_field :subject
+    = cf.text_field :subject, :class=>"span6"
 
     .remember
       = cf.label "Message:"
@@ -202,5 +218,5 @@
       clickClose: true,       // Allows the user to close the modal by clicking the overlay
       closeText: 'Close',     // Text content for the close <a> tag.
       showClose: true,         // Shows a (X) icon/link in the top-right corner
-      modalClass: "modal",    // CSS class added to the element being displayed in the modal.
+      modalClass: "modal"     // CSS class added to the element being displayed in the modal.
   };

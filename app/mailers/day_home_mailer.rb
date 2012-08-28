@@ -4,7 +4,11 @@ class DayHomeMailer < ActionMailer::Base
   def contact_day_home(contact, dayhome)
     @contact = contact
     @dayhome = dayhome
-    mail(:to => contact.day_home_email, :subject => contact.subject, :reply_to=>contact.email)
+    if (Rails.env.development?)
+      mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => contact.subject, :reply_to=>contact.email)
+    else 
+      mail(:to => contact.day_home_email, :subject => contact.subject, :reply_to=>contact.email)
+    end
   end
   
   def day_home_signup_request(day_home_signup_request)
