@@ -94,29 +94,15 @@
             </ul>  
           </div>  
         .span4.well.form-horizontal
-          = cf.label  "Your name:"
+          = cf.label :name, "Your name:"
           = cf.text_field :name, :class => "required"
 
-          = cf.label  "Your email:"
+          = cf.label :email,"Your email:"
           = cf.text_field :email, :class => "required"
 
-          = cf.label  "Your phone (optional):"
+          = cf.label  :phone,"Your phone (optional):"
           = cf.text_field :phone
         
-        .span4.well.form-horizontal
-          = cf.label  "Child's name:"
-          = cf.text_field :name, :class => "required"
-
-          = cf.label  "Child's Birthday"
-          = cf.text_field :name, :class => "required"
-          = cf.text_field :name, :class => "required"
-
-          = cf.label  "Start Date"
-          = cf.text_field :name, :class => "required"        
-          
-          = cf.label "Your address (optional):"
-          = cf.text_field :name
-          
         .span9
           = cf.label "Regarding:"
           = cf.text_field :subject

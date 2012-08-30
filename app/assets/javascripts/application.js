@@ -10,6 +10,9 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+// taking this out
+// require rails.validations
+
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
@@ -21,7 +24,6 @@
 //= require jquery.colorbox
 //= require jquery.modal
 //= require jquery.rest
-//= require rails.validations
 //= require jquery-star-rating
 //= require jquery.cycle.lite
 //= require common
