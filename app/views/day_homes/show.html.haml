@@ -102,7 +102,21 @@
 
           = cf.label  :phone,"Your phone (optional):"
           = cf.text_field :phone
-        
+
+        .span4.well.form-horizontal
+          = cf.label "Child's name:"
+          = cf.text_field :email, :class => "required"
+
+          = cf.label "Child's Birthday"
+          = cf.text_field :email, :class => "required"
+          = cf.text_field :email, :class => "required"
+
+          = cf.label "Start Date"
+          = cf.text_field :email, :class => "required"        
+          
+          = cf.label "Your address (optional):"
+          = cf.text_field :email
+                  
         .span9
           = cf.label "Regarding:"
           = cf.text_field :subject
