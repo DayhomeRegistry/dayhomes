@@ -82,7 +82,7 @@
     #contact-form.modal
       %h3
         Contact #{@day_home.name}
-      = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validates => true do |cf|
+      = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
         - if @day_home_contact.errors.any?
           %div#errorExplanation
             %h2
