@@ -5,7 +5,8 @@
   .span12
     %h2
       = @day_home.name
-
+    %h2
+      you've got the right one
     %p
       :plain
         <div class="fb-like" data-href="#{day_home_slug_url(@day_home.slug)}" data-send="false" data-layout="button_count" data-width="55" data-show-faces="false"></div>
@@ -81,7 +82,7 @@
     #contact-form.modal
       %h3
         Contact #{@day_home.name}
-      = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
+      = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validates => true do |cf|
         - if @day_home_contact.errors.any?
           %div#errorExplanation
             %h2
@@ -93,15 +94,10 @@
                   = msg          
             </ul>  
           </div>  
-        .span4.well.form-horizontal
-          = cf.label :name, "Your name:"
-          = cf.text_field :name, :class => "required"
-
-          = cf.label :email,"Your email:"
-          = cf.text_field :email, :class => "required"
-
-          = cf.label  :phone,"Your phone (optional):"
-          = cf.text_field :phone
+        .span4.well
+          = cf.input :name, :label=>"Your name"
+          = cf.input :email, :label=>"Your email"
+          = cf.input :phone, :label=>"Your phone"          
 
         .span4.well.form-horizontal
           = cf.label "Child's name:"
@@ -172,7 +168,7 @@
 .row
   .span12
     .list_reviews
-      %h3
+      %h3      
         Reviews
       - if @reviews.blank?
         %p{:style => 'font-size: 12px'}
@@ -198,19 +194,13 @@
 #contact-form.modal
   %h3 Contacting
   %h5 #{@day_home.name}
-  = form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
-    = cf.label :name, "Your name:"
-    = cf.text_field :name, :class => "required"
-
-    = cf.label :name, "Your email:"
-    = cf.text_field :email, :class => "required"
-
-    = cf.label :name, "Your phone (optional):"
-    = cf.text_field :phone
-
-    = cf.label "Regarding:"
-    = cf.text_field :subject, :class=>"span6"
-
+  = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate=>true do |cf|
+    = cf.input :name, :label=>"Your name"
+    = cf.input :email, :label=>"Your email"
+    = cf.input :phone, :label=>"Your phone"
+    = cf.input :subject, :label=>"Regarding", :input_html=>{:class=>"span6"}
+    :javascript
+      console.log('help me')
     .remember
       = cf.label "Message:"
       %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }

@@ -20,6 +20,7 @@ gem 'bb-ruby'
 gem 'koala'
 gem 'airbrake'
 gem 'maruku'
+gem 'simple_form'
 
 # le windows
 platforms :mswin, :mingw do
