@@ -5,8 +5,6 @@
   .span12
     %h2
       = @day_home.name
-    %h2
-      you've got the right one
     %p
       :plain
         <div class="fb-like" data-href="#{day_home_slug_url(@day_home.slug)}" data-send="false" data-layout="button_count" data-width="55" data-show-faces="false"></div>
@@ -82,49 +80,34 @@
     #contact-form.modal
       %h3
         Contact #{@day_home.name}
-      = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate => true do |cf|
-        - if @day_home_contact.errors.any?
-          %div#errorExplanation
-            %h2
-              = pluralize(@user.errors.count, "error")
-              prohibited this user from being saved: 
-            %ul
-              -@user.errors.full_messages.each do |msg|
-                %li
-                  = msg          
-            </ul>  
-          </div>  
+      = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home),:validate=>true do |cf|            
         .span4.well
           = cf.input :name, :label=>"Your name"
           = cf.input :email, :label=>"Your email"
           = cf.input :phone, :label=>"Your phone"          
 
-        .span4.well.form-horizontal
-          = cf.label "Child's name:"
-          = cf.text_field :email, :class => "required"
-
-          = cf.label "Child's Birthday"
-          = cf.text_field :email, :class => "required"
-          = cf.text_field :email, :class => "required"
-
-          = cf.label "Start Date"
-          = cf.text_field :email, :class => "required"        
+        .span4.well
+          = cf.input :child_name, :label =>"Child's name"
+          = cf.input :child_birth_date, :discard_day => true                             
+          = cf.input :child_start_date, :label=>"Desired Start Date"
           
-          = cf.label "Your address (optional):"
-          = cf.text_field :email
-                  
-        .span9
-          = cf.label "Regarding:"
-          = cf.text_field :subject
-          
-          .remember
-            = cf.label "Message:"
+          = cf.input :home_address, :label=>false do             
+            =cf.label :home_address, :style => 'display:inline;'
+            %i.icon-info-sign{:rel=>"tooltip", :title=> "If you are contacting a licensed dayhome, this helps the agency find other options if this one won't work." }
+            =cf.text_field :home_address
+            
+        .span9.remember
+          = cf.input :subject,:label=>"Regarding" 
+          = cf.error :subject, :id => 'subject_error'
+
+          = cf.input :message, :label=>false do
+            =cf.label :message, :label=>"Message", :style => 'display:inline;'
             %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
-          = cf.text_area :message, :style => 'height: 150px !important;'
-
+            = cf.text_area :message, :style => 'height: 150px !important;'
+            
         = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
         .submit
-          = cf.submit "Contact", :class => 'btn btn-primary span3'
+          = cf.button :submit,  "Contact", :class => 'btn btn-primary span3'
   .span4
     = link_to 'Contact Dayhome', '#contact-form', :rel => 'modal:open', :class => "callToActionButton gradient"
 .row

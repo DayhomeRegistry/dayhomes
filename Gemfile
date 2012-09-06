@@ -14,13 +14,13 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
 gem 'jquery-star-rating-rails'
-gem 'client_side_validations'
 gem 'forum_monster'
 gem 'bb-ruby'
 gem 'koala'
 gem 'airbrake'
 gem 'maruku'
 gem 'simple_form'
+gem 'client_side_validations', '3.2.0.beta.6', :git => 'https://github.com/bcardarella/client_side_validations.git'
 
 # le windows
 platforms :mswin, :mingw do

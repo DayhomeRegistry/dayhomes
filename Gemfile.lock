@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/bcardarella/client_side_validations.git
+  revision: a7fcf0cecea15859d647f2205d8c466408062563
+  specs:
+    client_side_validations (3.2.0.beta.6)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -65,7 +71,6 @@ GEM
       activesupport (>= 3.2.0)
     childprocess (0.3.2)
       ffi (~> 1.0.6)
-    client_side_validations (3.1.4)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -264,7 +269,7 @@ DEPENDENCIES
   capybara
   carmen
   carrierwave
-  client_side_validations
+  client_side_validations (= 3.2.0.beta.6)!
   coffee-rails (~> 3.2.1)
   eventmachine (= 1.0.0.beta.4.1)
   factory_girl_rails
