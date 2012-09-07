@@ -36,28 +36,7 @@ class DayHomesController < ApplicationController
   end
   
   def show
-    ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
-     if ((html_tag != '<span id="input_tag" />') && (html_tag != '<label id="label_tag" />'))
-      raise html_tag
-     end
-     html = %(<div class="field_with_errors">#{html_tag}</div>).html_safe     
-     # add nokogiri gem to Gemfile
-     elements = Nokogiri::HTML::DocumentFragment.parse(html_tag).css "label, input"
-     elements.each do |e|
-       
-       if e.node_name.eql? 'label'
-         html = %(<div class="clearfix error">#{e}</div>).html_safe
-       elsif e.node_name.eql? 'input'
-         if instance.error_message.kind_of?(Array)
-           html = %(<div class="clearfix error">#{html_tag}<span class="help-inline">&nbsp;#{instance.error_message.join(',')}</span></div>).html_safe
-         else
-           html = %(<div class="clearfix error">#{html_tag}<span class="help-inline">&nbsp;#{instance.error_message}</span></div>).html_safe
-         end
-       end
-     end
-     html
-    end
-    
+        
     @day_home = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:id])
 
     if @day_home.nil?
@@ -81,7 +60,8 @@ class DayHomesController < ApplicationController
       #redirect_to day_home_slug_path(@day_home.slug), :notice => "#{@day_home.name} has been contacted!"
       redirect_to followup_day_home_path(@day_home)
     else
-      redirect_to day_home_slug_path(@day_home.slug), :error => "Something went wrong while sending your contact - please try again."
+      flash[:error]= "Something went wrong while sending your contact - please try again: "+@day_home_contact.errors.full_messages.to_sentence
+      redirect_to day_home_slug_path(@day_home.slug)
     end
   end
 

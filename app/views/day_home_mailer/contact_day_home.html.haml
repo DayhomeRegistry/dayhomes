@@ -1,26 +1,44 @@
 %h2
   Someone on Dayhome Registry has a question!
 %p
-  Someone at 
-  = link_to "#{@dayhome.name}", root_path+"#{@dayhome.slug}"
-  has filled out the contact form on 
-  = link_to "Dayhome Registry", root_path
-  = ".  You can see their question below:"
-%p
-  %b 
-    Name:
-  = "#{@contact.name}"
+  Someone at has filled out the contact form on 
+  = link_to "#{@dayhome.name}", root_url+"#{@dayhome.slug}"
+  Dayhome Registry.  You can see their question below:
+.row
+  .span4.well
+    %p
+      %b 
+        Name:
+      = "#{@contact.name}"
 
-%p
-  %b 
-    Email:
-  = "#{@contact.email}"
+    %p
+      %b 
+        Email:
+      = "#{@contact.email}"
 
-%p
-  %b 
-    Phone:
-  = "#{@contact.phone}"
+    %p
+      %b 
+        Phone:
+      = "#{@contact.phone}"
+  .span4.well
+    %p
+      %b 
+        Child's Name:
+      = "#{@contact.child_name}"
 
+    %p
+      %b 
+        Birthdate:
+      = "#{@contact.child_birth_date.strftime("%B %Y")}"
+    %p
+      %b 
+        Start date:
+      = "#{@contact.child_start_date.strftime("%B #{@contact.child_start_date.day.ordinalize} %Y")}"
+
+    %p
+      %b 
+        Address:
+      = "#{@contact.home_address}"  
 %p
   %b 
     Subject:

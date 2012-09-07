@@ -1,5 +1,9 @@
-.container{:style=>"width:600px;margin-right:auto;margin-left:auto;"}
-  .row
-    .span4
-      =link_to root_url do
-        = image_tag 'logo.png'
+%html
+  %head
+    = stylesheet_link_tag "mailer"
+  %body
+    .container{:style=>"width:600px;margin-right:auto;margin-left:auto;"}
+      .row
+        .span4
+          =link_to root_url do
+            = image_tag 'logo.png'
