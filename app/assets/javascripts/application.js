@@ -14,7 +14,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require rails.validations
-//= require rails.validations.simple_form
+//= require client_validations_custom
 //= require bootstrap
 //= require fullcalendar
 //= require_tree ./gmaps4rails
