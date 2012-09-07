@@ -26,7 +26,8 @@ ClientSideValidations.formBuilders['SimpleForm::FormBuilder'] = {
         "class": settings.error_class,
         text: message
       });
-      return wrapper.find(".controls").append(errorElement);
+      //return wrapper.find(".controls").append(errorElement);
+      return wrapper.find("label").after(errorElement);
     } else {
       wrapper = element.closest(settings.wrapper_tag);
       wrapper.addClass(settings.wrapper_error_class);

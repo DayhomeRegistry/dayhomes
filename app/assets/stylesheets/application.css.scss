@@ -119,3 +119,12 @@ h3 small {
   color:#999999;
   font-size: 13px;
 }
+.simple_form .control-label {
+  display:inline;
+}
+.simple_form .help-inline {
+  margin-bottom: 3px;
+}
+.control-group.error .controls > label {
+  color: #B94A48;
+}
