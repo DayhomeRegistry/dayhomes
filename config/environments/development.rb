@@ -19,8 +19,8 @@ Dayhomes::Application.configure do
   # Care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = {:host =>"localhost:3000"}  
-  config.action_mailer.asset_host='http://staging.dayhomeregistry.com'
-  ActionMailer::Base.asset_host= 'http://staging.dayhomeregistry.com'
+  #config.action_mailer.asset_host='http://staging.dayhomeregistry.com'
+  #ActionMailer::Base.asset_host= 'http://staging.dayhomeregistry.com'
   ActionMailer::Base.smtp_settings = {
     #:tls => true,
     :address => "smtp.gmail.com",

@@ -21,4 +21,9 @@ class DayHomeMailer < ActionMailer::Base
     @day_home_signup_request = day_home_signup_request    
 	  mail(:to => @day_home_signup_request.day_home_email.blank? ? @day_home_signup_request.contact_email : @day_home_signup_request.day_home_email, :subject => "We've received your registration at DayHomeRegistry.com")	
   end
+  
+  def day_home_approval_confirmation(dayhome)
+    @dayhome = dayhome
+    mail(:to => @dayhome.user.email, :subject => contact.subject, :reply_to=>contact.email)
+  end
 end

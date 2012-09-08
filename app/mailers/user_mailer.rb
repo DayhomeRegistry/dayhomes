@@ -3,7 +3,12 @@ class UserMailer < ActionMailer::Base
 
   def password_reset_instructions(user)
     @user = user
-    mail(:to => user.email, :subject => "DayHomeRegistry.com - Password Reset Instructions")
+    mail(:to => user.email, :subject => "DayhomeRegistry.com - Password Reset Instructions")
+  end
+  
+  def new_user_password_instructions(user)
+    @user = user
+    mail(:to => user.email, :subject => "DayhomeRegistry.com - Welcome")
   end
 
 end
