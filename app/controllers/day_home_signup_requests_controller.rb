@@ -31,10 +31,10 @@ class DayHomeSignupRequestsController < ApplicationController
             user = User.new_from_signup_request(@day_home_signup_request)
             user.save	  
             
-            #but we don't want them to be logged in
-            if !current_user_session.nil?
-              current_user_session.destroy
-            end
+            #email them their password set instructions
+            UserMailer.new_user_password_instructions(user).deliver                        
+            
+            reset_session
         end        
       end
     end

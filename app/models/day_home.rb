@@ -38,6 +38,8 @@ class DayHome < ActiveRecord::Base
 
   accepts_nested_attributes_for :photos, :reject_if => :all_blank, :allow_destroy => true
 
+  after_save :approval_message
+  
   # this method is called when creating or updating a dayhome
   # it won't make a call to google maps if we already have a lat long however,
     # this method seems to be ignored on update
@@ -87,21 +89,36 @@ class DayHome < ActiveRecord::Base
   end
   
   def self.create_from_signup(signup)
-	dayhome = self.new
-	dayhome.name = signup.day_home_name
-	dayhome.city = signup.day_home_city
-	dayhome.province = signup.day_home_province
-	dayhome.street1 = signup.day_home_street1
-	dayhome.street2 = signup.day_home_street2
-	dayhome.postal_code = signup.day_home_postal_code
-	dayhome.email = signup.day_home_email
-	dayhome.slug = signup.day_home_slug
-	dayhome.phone_number = signup.day_home_phone_number
-	dayhome.blurb = signup.day_home_blurb
-	dayhome.highlight = signup.day_home_highlight
-	dayhome.featured = false
-	dayhome.approved = false
-	
-	return dayhome
+    dayhome = self.new
+    dayhome.name = signup.day_home_name
+    dayhome.city = signup.day_home_city
+    dayhome.province = signup.day_home_province
+    dayhome.street1 = signup.day_home_street1
+    dayhome.street2 = signup.day_home_street2
+    dayhome.postal_code = signup.day_home_postal_code
+    dayhome.email = signup.day_home_email
+    dayhome.slug = signup.day_home_slug
+    dayhome.phone_number = signup.day_home_phone_number
+    dayhome.blurb = signup.day_home_blurb
+    dayhome.highlight = signup.day_home_highlight
+    dayhome.featured = false
+    dayhome.approved = false
+    
+    return dayhome
   end
+  
+  def approval_message
+    if (self.approved_changed? && self.approved == true)
+      DayHomeMailer.day_home_approval_confirmation(self).deliver
+      self.users.find_each do |user|        
+        if (!user.last_login_ip?)  
+          UserMailer.new_user_password_reminder(user).deliver
+        end
+      end
+    end
+    if (self.approved_changed? && self.approved != true)      
+      raise "Not implemented DayHomeMailer.day_home_unapproval_confirmation"
+      DayHomeMailer.day_home_unapproval_confirmation(self).deliver
+    end
+  end  
 end

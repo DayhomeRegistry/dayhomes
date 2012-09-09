@@ -12,18 +12,28 @@ class DayHomeMailer < ActionMailer::Base
   end
   
   def day_home_signup_request(day_home_signup_request)
-    @day_home_signup_request = day_home_signup_request
-    #mail(:to => 'team@dayhomeregistry.com', :subject => 'DayHomeRegistry.com [DayHome Signup Request]')
+    @day_home_signup_request = day_home_signup_request    
 	  mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => 'DayHomeRegistry.com [DayHome Signup Request]')	
   end
   
   def day_home_signup_confirmation(day_home_signup_request)
     @day_home_signup_request = day_home_signup_request    
-	  mail(:to => @day_home_signup_request.day_home_email.blank? ? @day_home_signup_request.contact_email : @day_home_signup_request.day_home_email, :subject => "We've received your registration at DayHomeRegistry.com")	
+    if (Rails.env.development?)
+      mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => "We've received your registration at DayHomeRegistry.com")	
+    else 
+      mail(:to => @day_home_signup_request.day_home_email.blank? ? @day_home_signup_request.contact_email : @day_home_signup_request.day_home_email, :subject => "We've received your registration at DayHomeRegistry.com")	
+    end
   end
   
   def day_home_approval_confirmation(dayhome)
     @dayhome = dayhome
-    mail(:to => @dayhome.user.email, :subject => contact.subject, :reply_to=>contact.email)
+    @dayhome.users.find_each do |user|
+      if (Rails.env.development?)
+        mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => "You've been approved at DayhomeRegistry.com")
+      else 
+        mail(:to => user.email, :subject => "You've been approved at DayhomeRegistry.com")
+      end
+    end
+    
   end
 end

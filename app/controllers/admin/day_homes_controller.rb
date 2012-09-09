@@ -58,17 +58,9 @@ class Admin::DayHomesController < Admin::ApplicationController
   end
 
   def update
-    @day_home = DayHome.find(params[:id])
-
-    approved = @day_home.approved?
-    raise approved
-    if @day_home.update_attributes(params[:day_home])
-      if (!approved && @day_home.approved?)
-        DayHomeMailer.day_home_approval_confirmation(@day_home).deliver
-        if (!@day_home.user.last_login_ip?)  
-          UserMailer.new_user_password_instructions(@day_home.user).deliver
-        end
-      end
+    @day_home = DayHome.find(params[:id])    
+    
+    if @day_home.update_attributes(params[:day_home])           
       redirect_to admin_day_homes_path
     else
       render :action => :edit
