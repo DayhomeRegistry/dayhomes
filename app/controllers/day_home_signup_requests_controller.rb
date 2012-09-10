@@ -5,11 +5,16 @@ class DayHomeSignupRequestsController < ApplicationController
   
   def new
     @day_home_signup_request = DayHomeSignupRequest.new
+    if(!params[:plan].blank? && params[:plan]=="mama")
+      @day_home_signup_request.plan = "mama"
+    end
+    if(!params[:plan].blank? && params[:plan]=="papa")
+      @day_home_signup_request.plan = "papa"
+    end
   end
   
   def create
   
-    
     #I don't know how to make the checkbox mandatory, so we'll check here first
     if(params["ack"].nil?)
       flash[:error] = "Acknowledging the Privacy Policy and Terms of Use is required."

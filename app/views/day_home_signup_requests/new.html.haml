@@ -21,6 +21,7 @@
       = link_to "Find out more about our services, plans and pricing...", pricing_pages_path
 
 = form_for @day_home_signup_request do |f|
+  = f.hidden_field(:plan, :value=>@day_home_signup_request.plan)
   .row.registrationStyle
     .span6.well.form-horizontal
       %h3

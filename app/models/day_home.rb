@@ -39,6 +39,23 @@ class DayHome < ActiveRecord::Base
   accepts_nested_attributes_for :photos, :reject_if => :all_blank, :allow_destroy => true
 
   after_save :approval_message
+  def approval_message
+    #Don't do the checks if this has just been created
+    if (!self.id_changed?)
+      if (self.approved_changed? && self.approved == true)
+        DayHomeMailer.day_home_approval_confirmation(self).deliver
+        self.users.find_each do |user|        
+          if (!user.last_login_ip?)  
+            UserMailer.new_user_password_reminder(user).deliver
+          end
+        end
+      end
+      if (self.approved_changed? && self.approved != true)      
+        raise "Not implemented DayHomeMailer.day_home_unapproval_confirmation"
+        DayHomeMailer.day_home_unapproval_confirmation(self).deliver
+      end
+    end
+  end  
   
   # this method is called when creating or updating a dayhome
   # it won't make a call to google maps if we already have a lat long however,
@@ -103,22 +120,10 @@ class DayHome < ActiveRecord::Base
     dayhome.highlight = signup.day_home_highlight
     dayhome.featured = false
     dayhome.approved = false
+    dayhome.plan = signup.plan
     
     return dayhome
   end
   
-  def approval_message
-    if (self.approved_changed? && self.approved == true)
-      DayHomeMailer.day_home_approval_confirmation(self).deliver
-      self.users.find_each do |user|        
-        if (!user.last_login_ip?)  
-          UserMailer.new_user_password_reminder(user).deliver
-        end
-      end
-    end
-    if (self.approved_changed? && self.approved != true)      
-      raise "Not implemented DayHomeMailer.day_home_unapproval_confirmation"
-      DayHomeMailer.day_home_unapproval_confirmation(self).deliver
-    end
-  end  
+  
 end

@@ -13,98 +13,139 @@
       %b
         Register your dayhome today
       for easy access to a whole new client base.
-.row
-  .span4
-    .colHeader.baby
-      .colHeaderContent
-        Baby Bear
-      %br
-        %del
-          $10
-        %strong
-          FREE!!!*
-    .colContent.baby
+.row 
+  .price_table
+    .column_1
       %ul
-        %li
-          = link_to 'Full Dayhome page','#page' 
-        %li
-          = link_to 'Forum Access','#forum'           
-          = image_tag 'icons/new.png', :alt => 'New!'
-        %li
-          = link_to 'Calendar','#cal'           
-          = image_tag 'icons/new.png', :alt => 'New!'
-        %li
-          = link_to 'Monthly newsletter','#news'           
-          = image_tag 'icons/new.png', :alt => 'New!'
-        %li
-          Searchable
-        %li
-          Picture gallery
-          = image_tag 'icons/new.png', :alt => 'New!'
-  .span4
-    .colHeader.mama
-      .colHeaderContent
-        Mama Bear
-      %br
-        %del
-          $25
-        %strong
-          $15*        
-    .colContent.mama
+        %li.header_row_1.align_center
+          .pack-title
+            Baby Bear
+        %li.header_row_2.align_center
+          .price
+            %span$10
+            .time
+              per month
+        %li.row_style_1.align_center
+          %span
+            = link_to 'Full Dayhome page','#page'
+        %li.row_style_1.align_center
+          %span
+            = link_to 'Forum Access','#forum'          
+        %li.row_style_1.align_center
+          %span
+            = link_to 'Calendar','#cal'           
+        %li.row_style_1.align_center
+          %span
+            Searchable
+        %li.row_style_1.align_center
+          %span
+            Picture gallery
+        %li.row_style_1.align_center.no-option
+          %span
+            A monthly 
+            = link_to 'BaC Pac','#BacPac'  
+        %li.row_style_1.align_center.no-option
+          %span
+            Receipts for ease at tax time
+        %li.row_style_1.align_center.no-option
+          %span
+            Accept Credit card payments
+        %li.row_style_1.align_center.no-option
+          %span
+            Budgeting tools          
+        %li.row_style_footer_1
+          .buy_now
+            = link_to 'Sign up'.html_safe, new_day_home_signup_request_path(:plan=>"baby")
+    .column_1
       %ul
-        %li
-          All the features of Baby Bear
-        %li
-          A monthly 
-          = link_to 'BaC Pac','#BacPac'  
-          = image_tag 'icons/pdf-icon4.png', :alt => 'PDF'		  
-          = image_tag 'icons/new.png', :alt => 'New!'
-        = link_to 'Read a sample.', '/documents/sample.pdf',:target=>'_blank'
-        %li
-          A waitlist of parents interested in your dayhome
-        
-  .span4
-    .colHeader.papa
-      .colHeaderContent
-        Papa Bear
-      %br
-        %strong
-          $40
-        .coming
-          %strong
-            Coming soon…
-    .colContent.papa
+        %li.header_row_1.align_center
+          .pack-title
+            Mama Bear
+        %li.header_row_2.align_center
+          .price
+            %span$25
+            .time
+              per month
+        %li.row_style_1.align_center
+          %span
+            = link_to 'Full Dayhome page','#page'
+        %li.row_style_1.align_center
+          %span
+            = link_to 'Forum Access','#forum'          
+        %li.row_style_1.align_center
+          %span
+            = link_to 'Calendar','#cal'           
+        %li.row_style_1.align_center
+          %span
+            Searchable
+        %li.row_style_1.align_center
+          %span
+            Picture gallery
+        %li.row_style_1.align_center
+          %span
+            A monthly 
+            = link_to 'BaC Pac','#BacPac'  
+            = link_to image_tag('icons/pdf-icon4.png'), '/documents/sample.pdf',:target=>'_blank'                                         
+        %li.row_style_1.align_center.no-option
+          %span
+            Receipts for ease at tax time
+        %li.row_style_1.align_center.no-option
+          %span
+            Accept Credit card payments
+        %li.row_style_1.align_center.no-option
+          %span
+            Budgeting tools          
+        %li.row_style_footer_1
+          .buy_now
+            = link_to 'Sign up'.html_safe, new_day_home_signup_request_path(:plan=>"mama")
+    .column_1
       %ul
-        %li
-          All the features of Baby Bear
-        %li
-          An editable monthly 
-          = link_to 'BaC Pac','#BacPac' 
-          = image_tag 'icons/WordIcon.png', :alt => 'MS Word'		  
-        = link_to 'Read a sample.', '/documents/sample.pdf',:target=>'_blank'
-        %li
-          Receipts for ease at tax time
-        %li
-          Accept Credit card payments
-        %li
-          Generate invoices from your calendar
-        %li
-          Budgeting tools
-.row
-  .span12
-    %p
-      %em * until Sept 1! (after that you will be charged the standard monthly rate)
+        %li.header_row_1.align_center
+          .pack-title
+            Papa Bear
+        %li.header_row_2.align_center
+          .price
+            %span
+              Coming
+            .time
+              soon
+        %li.row_style_1.align_center
+          %span
+            = link_to 'Full Dayhome page','#page'
+        %li.row_style_1.align_center
+          %span
+            = link_to 'Forum Access','#forum'          
+        %li.row_style_1.align_center
+          %span
+            = link_to 'Calendar','#cal'           
+        %li.row_style_1.align_center
+          %span
+            Searchable
+        %li.row_style_1.align_center
+          %span
+            Picture gallery
+        %li.row_style_1.align_center
+          %span
+            A monthly 
+            = link_to 'BaC Pac','#BacPac'  
+            = link_to image_tag('icons/pdf-icon4.png'), '/documents/sample.pdf',:target=>'_blank'                                         
+        %li.row_style_1.align_center
+          %span
+            Receipts for ease at tax time
+        %li.row_style_1.align_center
+          %span
+            Accept Credit card payments
+        %li.row_style_1.align_center
+          %span
+            Budgeting tools          
+        %li.row_style_footer_1
+          
+                              
 
 .row
-  .span12
-    = link_to 'Register Now!'.html_safe, [:new, :day_home_signup_request], :class => "callToActionButton pricingRegister gradient"
-
-.row
-  .span12
+  .span6
     .contentHeader
       <a name="page">Dayhome page</a>
-.row
-  .span12
     .contentBlurb.reg
       Your dayhome will have a
       %b
@@ -116,22 +157,9 @@
       Our Standard level will allow a
       %b
         rotating picture gallery, complete with written descriptions.
-
-.row
-  .span12
+  .span6
     .contentHeader
-      <a name='BacPac'>BaC Pac</a>
-.row
-  .span12
-    .contentBlurb.reg
-      The <strong>BaC Pac </strong> is a wonderful activity book to help you and the children <strong>B</strong>ond <strong>a</strong>nd <strong>C</strong>reate using daily activities based on a monthly theme. Each <strong>BaC Pac</strong> has 20 days of activities (or a month's worth of activities for M-F) to help children learn letters, numbers, things about the world around them, etc.  Each day's activities are complete with instructions, a list of needed materials and printables for the children to interact with. Simply print off as many copies as you need, follow the directions, and you are good to go!  The <strong>BaC Pac</strong> is created by Angela, a fellow dayhome provider. She has over 15 years of experience in childcare, and a wealth of knowledge that she hopes to share with as many dayhomes as possible.
-
-.row
-  .span12
-    .contentHeader
-      <a name="forum">Forum</a>
-.row
-  .span12
+      <a name="forum">Forum</a>  
     .contentBlurb.reg
       This is a message board for dayhome owners to
       %b
@@ -143,13 +171,17 @@
       Want to arrange a park play date with another dayhome in your area?
       %b
         This will be a great way to arrange that!
-
+    
 .row
-  .span12
+  .span6
+    .contentHeader
+      <a name='BacPac'>BaC Pac</a>
+    .contentBlurb.reg
+      The <strong>BaC Pac </strong> is a wonderful activity book to help you and the children <strong>B</strong>ond <strong>a</strong>nd <strong>C</strong>reate using daily activities based on a monthly theme. Each <strong>BaC Pac</strong> has 20 days of activities (or a month's worth of activities for M-F) to help children learn letters, numbers, things about the world around them, etc.  Each day's activities are complete with instructions, a list of needed materials and printables for the children to interact with. Simply print off as many copies as you need, follow the directions, and you are good to go!  The <strong>BaC Pac</strong> is created by Angela, a fellow dayhome provider. She has over 15 years of experience in childcare, and a wealth of knowledge that she hopes to share with as many dayhomes as possible.
+
+  .span6
     .contentHeader
       <a name="cal">Calendar</a>
-.row
-  .span12
     .contentBlurb.cal
       Your dayhome is
       %b
@@ -175,7 +207,6 @@
   .span12
     .contentHeader
       <a name="news">Monthly Newsletter</a>
-.row
   .span12
     .contentBlurb.reg
       You will have access to a
@@ -190,7 +221,3 @@
       or
       %b
         dietary needs.
-
-.row
-  .span12
-    = link_to 'Register Now!'.html_safe, [:new, :day_home_signup_request], :class => "callToActionButton gradient pricingRegister"

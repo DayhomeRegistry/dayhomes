@@ -58,6 +58,8 @@
         %th
           = sortable "approved","Approved?"
         %th
+          = sortable "plan","Plan"
+        %th
           Owners
         %th
           Actions
@@ -80,6 +82,8 @@
             = yes_no(day_home.featured)
           %td
             = yes_no(day_home.approved)			
+          %td
+            = day_home.plan	
           %td
             - if day_home.users.any?
               = day_home.users.map(&:full_name).join(', ')
