@@ -52,13 +52,13 @@ GEM
     bb-ruby (0.9.5)
     bootstrap-sass (2.0.4.2)
     builder (3.0.2)
-    capistrano (2.13.3)
+    capistrano (2.12.0)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
-    capistrano-fanfare (0.0.23)
+    capistrano-fanfare (0.0.21)
       capistrano (~> 2.11)
       capistrano_colors (~> 0.5)
       multi_json (~> 1.0)
@@ -113,7 +113,7 @@ GEM
       net-ssh (>= 2.1.3)
       nokogiri (~> 1.5.0)
       ruby-hmac
-    foreman (0.57.0)
+    foreman (0.47.0)
       thor (>= 0.13.6)
     formatador (0.2.3)
     forum_monster (1.0.3)
@@ -273,7 +273,8 @@ DEPENDENCIES
   awesome_print
   bb-ruby
   bootstrap-sass (~> 2.0.2)
-  capistrano-fanfare
+  capistrano (= 2.12.0)
+  capistrano-fanfare (= 0.0.21)
   capybara
   carmen
   carrierwave
@@ -282,7 +283,7 @@ DEPENDENCIES
   eventmachine (= 1.0.0.beta.4.1)
   factory_girl_rails
   fog
-  foreman
+  foreman (= 0.47.0)
   forum_monster
   gmaps4rails (= 1.4.8)
   guard-rspec

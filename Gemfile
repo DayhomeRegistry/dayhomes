@@ -41,7 +41,8 @@ end
 
 group :development, :test do
   gem 'awesome_print'
-  gem 'capistrano-fanfare'
+  gem 'capistrano', '2.12.0'
+  gem 'capistrano-fanfare', '0.0.21'
   gem 'rspec-rails', '~> 2.6'
   gem 'webrat', '~> 0.7.3'
   gem 'factory_girl_rails', :require => false
@@ -54,5 +55,5 @@ end
 group :production do
   # app server and process management
   gem 'unicorn'
-  gem 'foreman'
+  gem 'foreman', '0.47.0'
 end
