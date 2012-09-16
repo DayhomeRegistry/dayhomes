@@ -52,7 +52,21 @@ Dayhomes::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.default_url_options = {:host => "dayhomeregistry.com"}
-
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = {:host =>"staging.dayhomeregistry.com"}
+  config.action_mailer.asset_host='http://staging.dayhomeregistry.com'
+  ActionMailer::Base.asset_host= 'http://staging.dayhomeregistry.com'
+  ActionMailer::Base.smtp_settings = {
+    #:tls => true,
+    :address => "smtp.gmail.com",
+    :port => "587",
+    :domain => "dayhomeregistry.com",
+    :authentication => :plain,
+    :user_name => "staging@dayhomeregistry.com",
+    :password => "bl@nk4n0w",
+	:enable_starttls_auto =>true,
+	:openssl_verify_mode=>OpenSSL::SSL::VERIFY_NONE
+  }
   # Enable threaded mode
   # config.threadsafe!
 

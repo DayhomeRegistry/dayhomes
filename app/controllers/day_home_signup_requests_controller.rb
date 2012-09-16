@@ -13,17 +13,17 @@ class DayHomeSignupRequestsController < ApplicationController
     end
   end
   
-  def create
-  
-    #I don't know how to make the checkbox mandatory, so we'll check here first
-    if(params["ack"].nil?)
-      flash[:error] = "Acknowledging the Privacy Policy and Terms of Use is required."
-      render :action => :new    
-    end
+  def create  
       
     # Capture the signup request and send email
     @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])    
 
+    #I don't know how to make the checkbox mandatory, so we'll check here first
+    if(params["ack"].nil?)
+      flash[:error] = "Acknowledging the Privacy Policy and Terms of Use is required."
+      return render :action => :new    
+    end
+    
     # Create user, if necessary
     user = current_user
     if current_user.nil?
