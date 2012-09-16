@@ -5,7 +5,7 @@ require './config/boot'
 require 'airbrake/capistrano'
 
 set :default_environment, {
-  'PATH' => "/srv/dayhomes_staging/current/bin:/usr/bin/ruby:/usr/local/bin/rails:/home/deploy/.rbenv/shims:/home/deploy/.rbenv/bin:/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+  'PATH' => "/srv/dayhomes_staging/current/bin:/usr/bin/ruby:/usr/local/bin/rails:/usr/local/bin/foreman:/home/deploy/.rbenv/shims:/home/deploy/.rbenv/bin:/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
 }
 
 
