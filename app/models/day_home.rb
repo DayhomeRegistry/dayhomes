@@ -50,8 +50,7 @@ class DayHome < ActiveRecord::Base
           end
         end
       end
-      if (self.approved_changed? && self.approved != true)      
-        raise "Not implemented DayHomeMailer.day_home_unapproval_confirmation"
+      if (self.approved_changed? && self.approved != true)              
         DayHomeMailer.day_home_unapproval_confirmation(self).deliver
       end
     end
@@ -82,9 +81,9 @@ class DayHome < ActiveRecord::Base
   # this method is called when updating the lat long (this is what's fed to google maps)
   def address
     lstreet = "#{street1}#{street2}".blank? ? "" : "#{street1}#{street2},"
-	lcity = "#{city}".blank? ? "" : "#{city},"
+	lcity = "#{city}".blank? ? "" : " #{city},"
 	
-    lstreet+lcity+ ("#{province}".blank? ? "":"#{province},") + "#{postal_code}"
+    lstreet+lcity+ ("#{province}".blank? ? "":" #{province},") + " #{postal_code}"
   end
   
   def to_param

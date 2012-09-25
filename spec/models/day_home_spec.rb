@@ -10,7 +10,7 @@ describe DayHome do
   end
   
   describe "validations" do
-    [:name, :street1, :city, :province, :postal_code, :slug, :email, :phone_number].each do |attribute|
+    [:name, :postal_code, :slug, :email, :highlight].each do |attribute|
       it { should validate_presence_of(attribute)}
     end
   end

@@ -24,7 +24,8 @@ describe Search do
                                   :slug => 'day_home_1',
                                   :licensed => true,
                                   :email => 'dh1@dayhomeregistry.com',
-                                  :phone_number => '17809072969'
+                                  :phone_number => '17809072969',
+                                  :highlight => 'a highilght for dayhome 1'
                                   })
 
     @dayhome_2 = DayHome.create!({:name => "DayHome 2",
@@ -38,7 +39,8 @@ describe Search do
                                   :slug => 'day_home_2',
                                   :licensed => false,
                                   :email => 'dh2@dayhomeregistry.com',
-                                  :phone_number => '17809042969'
+                                  :phone_number => '17809042969',
+                                  :highlight => 'a highilght for dayhome 2'
                                  })
   end
 
