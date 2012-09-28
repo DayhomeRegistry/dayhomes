@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe DayHomeContact do
   it "should create a dayhome contact" do
-    FactoryGirl.create(:day_home_contact)
+    day_home = FactoryGirl.create(:day_home)
+    FactoryGirl.create(:day_home_contact, :day_home_id=>day_home.id)
   end
   
   describe "validations" do

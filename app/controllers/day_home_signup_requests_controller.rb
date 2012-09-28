@@ -21,20 +21,23 @@ class DayHomeSignupRequestsController < ApplicationController
     #I don't know how to make the checkbox mandatory, so we'll check here first
     if(params["ack"].nil?)
       flash[:error] = "Acknowledging the Privacy Policy and Terms of Use is required."
+      #raise "param[ack] was missing: " + params.to_json
       return render :action => :new    
     end
+    #raise "param[ack] was there: " + params.to_json
     
     # Create user, if necessary
     user = current_user
     if current_user.nil?
       #find user by email
-      user = User.find_by_email(@day_home_signup_request.contact_email)
+      user = User.find_by_email(@day_home_signup_request.contact_email)      
       if user.nil?
         user = User.find_by_email(@day_home_signup_request.day_home_email)
         if user.nil?
             #no one here, create a new one
             user = User.new_from_signup_request(@day_home_signup_request)
             user.save	  
+            
             
             #email them their password set instructions
             UserMailer.new_user_password_instructions(user).deliver                        
@@ -44,17 +47,18 @@ class DayHomeSignupRequestsController < ApplicationController
       end
     end
     # Need to set the ack date
-    user.privacy_effective_date = Time.now()
+    user.privacy_effective_date = Time.now()    
     user.save
-            
+    
     # Create a dayhome
     @day_home = DayHome.create_from_signup(@day_home_signup_request)
-    @day_home.update_attributes(params[:day_home])
+    @day_home.update_attributes(params[:day_home])    
+    
+    #raise user.email+user.errors.to_json            
     
     
     
-    
-	if @day_home.save
+	if @day_home.save    
 	  if @day_home_signup_request.save
         # Bind dayhome to user
         user.add_day_home(@day_home)
@@ -87,6 +91,7 @@ class DayHomeSignupRequestsController < ApplicationController
         error_msg << err
       end
       flash[:error] = error_msg.join("<br/>").html_safe
+      raise flash[:error]
       render :action => :new
     end
   end

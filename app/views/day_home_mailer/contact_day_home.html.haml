@@ -29,11 +29,11 @@
     %p
       %b 
         Birthdate:
-      = "#{@contact.child_birth_date.strftime("%B %Y")}"
+      = "#{@contact.child_birth_date.strftime("%B %Y") unless @contact.child_birth_date.nil?}"
     %p
       %b 
         Start date:
-      = "#{@contact.child_start_date.strftime("%B #{@contact.child_start_date.day.ordinalize} %Y")}"
+      = "#{@contact.child_start_date.strftime("%B #{@contact.child_start_date.day.ordinalize} %Y") unless @contact.child_start_date.nil?}"
 
     %p
       %b 

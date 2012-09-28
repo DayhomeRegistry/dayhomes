@@ -1,11 +1,13 @@
 FactoryGirl.define do
+  sequence :day_home_name do |n| 
+    'Day Home #{n}'
+  end
+  sequence :day_home_slug do |n|
+    'dayhome#{n}'
+  end
   factory :day_home_signup_request do
-    sequence :day_home_name do |n| 
-      'Day Home #{n}'
-    end
-    sequence :day_home_slug do |n|
-      'dayhome#{n}'
-    end
+    day_home_name
+    day_home_slug
     day_home_postal_code 'T6W1C3'    
     day_home_highlight 'the highlight'
     day_home_phone_number '780 111 1111'

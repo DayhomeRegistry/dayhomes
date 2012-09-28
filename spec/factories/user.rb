@@ -18,6 +18,6 @@ FactoryGirl.define do
     current_login_ip "127.0.0.1"
     last_login_ip "127.0.0.1"
     facebook_access_token "AAAD7xLVpVzMBAE5qrxBoG2VhcY5MCE17JTMs8X5N27A4cfE3ZCiGZAeLOzCsdsiMI1DzTP2W3rwZAhvkpQMwffzNbXzNSZBZBO7oml6uX9AZDZD"
-    facebook_access_token_expires_in "5183999"
+    facebook_access_token_expires_in "5183999"    
   end
 end
