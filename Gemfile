@@ -10,6 +10,7 @@ gem 'carmen'
 gem 'authlogic'
 gem 'kaminari'
 gem 'awesome_print'
+#gem 'carrierwave', :git => 'git://github.com/jnicklas/carrierwave.git'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
@@ -23,13 +24,11 @@ gem 'simple_form'
 gem 'client_side_validations', '3.2.0.beta.6', :git => 'https://github.com/bcardarella/client_side_validations.git'
 gem 'actionmailer-instyle', :require => 'action_mailer/in_style'
 
-
 # le windows
-platforms :mswin, :mingw do
-  gem 'eventmachine', '1.0.0.beta.4.1'
-  #gem 'eventmachine', :git=> 'git://github.com/eventmachine/eventmachine.git'
-  gem 'thin'
-end
+#platforms :mswin, :mingw do
+#  gem 'eventmachine', '1.0.0.beta.4.1'
+#  #gem 'eventmachine', :git=> 'git://github.com/eventmachine/eventmachine.git'
+#end
 
 group :assets do
   gem 'sass-rails', '~> 3.1'
@@ -50,6 +49,7 @@ group :development, :test do
   gem 'spork', '~> 1.0rc'
   gem 'capybara'
   gem 'guard-rspec'
+  gem 'thin', '~> 1.5'
 end
 
 group :production do

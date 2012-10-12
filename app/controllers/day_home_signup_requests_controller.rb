@@ -54,7 +54,7 @@ class DayHomeSignupRequestsController < ApplicationController
     @day_home = DayHome.create_from_signup(@day_home_signup_request)
     @day_home.update_attributes(params[:day_home])    
     
-    #raise user.email+user.errors.to_json            
+    # raise user.email+user.errors.to_json            
     
     
     
@@ -66,6 +66,7 @@ class DayHomeSignupRequestsController < ApplicationController
         #redirect_to root_path, :notice => "Thanks for adding your DayHome! We will contact you soon!"
         return redirect_to :action => :welcome   
     else
+	  	
       error_msg = []
       @day_home.errors.full_messages.each do |err|
         error_msg << err
@@ -77,6 +78,7 @@ class DayHomeSignupRequestsController < ApplicationController
         error_msg << err
       end
       flash[:error] = error_msg.join("<br/>").html_safe
+      
       render :action => :new
 	  end
 	else
