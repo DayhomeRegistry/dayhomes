@@ -52,7 +52,7 @@ class DayHome < ActiveRecord::Base
         end
       end
       if (self.approved_changed? && self.approved != true)      
-        DayHomeMailer.day_home_unapproval_confirmation(self).deliver
+        #DayHomeMailer.day_home_unapproval_confirmation(self).deliver
       end
     end
   end  

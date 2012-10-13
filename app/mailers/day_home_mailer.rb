@@ -36,4 +36,5 @@ class DayHomeMailer < ActionMailer::Base
     end
     
   end
+  
 end
