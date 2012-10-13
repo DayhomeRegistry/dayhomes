@@ -1,3 +1,4 @@
+
 class DayHome < ActiveRecord::Base
 
   acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
@@ -50,8 +51,8 @@ class DayHome < ActiveRecord::Base
           end
         end
       end
-      if (self.approved_changed? && self.approved != true)              
-        DayHomeMailer.day_home_unapproval_confirmation(self).deliver
+      if (self.approved_changed? && self.approved != true)      
+        #DayHomeMailer.day_home_unapproval_confirmation(self).deliver
       end
     end
   end  
