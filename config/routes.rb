@@ -1,4 +1,6 @@
 Dayhomes::Application.routes.draw do
+  namespace :admin do resources :agencies end
+
   resources :categories, :except => [:index, :show]
   resources :forums, :except => :index do
     resources :topics, :shallow => true, :except => :index do

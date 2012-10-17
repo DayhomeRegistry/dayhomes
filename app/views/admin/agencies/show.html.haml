@@ -1,0 +1,17 @@
+#notice
+  = notice
+
+%p
+  %b
+    Name:
+  = @admin_agency.name
+
+%p
+  %b
+    Email:</b>
+  = @admin_agency.email 
+
+
+= link_to 'Edit', edit_admin_agency_path(@admin_agency) 
+|
+= link_to 'Back', admin_agencies_path 

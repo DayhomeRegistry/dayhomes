@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910025157) do
+ActiveRecord::Schema.define(:version => 20121017032036) do
+
+  create_table "agencies", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -63,6 +70,11 @@ ActiveRecord::Schema.define(:version => 20120910025157) do
     t.integer  "day_home_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "birth_day"
+    t.integer  "birth_month"
+    t.integer  "birth_year"
+    t.date     "required_start"
+    t.string   "address"
     t.string   "child_name"
     t.date     "child_birth_date"
     t.date     "child_start_date"
@@ -200,6 +212,13 @@ ActiveRecord::Schema.define(:version => 20120910025157) do
 
   add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"
   add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
+
+  create_table "user_agencies", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "agency_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "user_day_homes", :force => true do |t|
     t.integer  "day_home_id"

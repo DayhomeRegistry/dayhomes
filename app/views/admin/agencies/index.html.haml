@@ -1,0 +1,29 @@
+= render '/layouts/admin_subnav'
+
+%p
+  = link_to 'New Agency', [:new, :admin, :agency], :class => :btn
+  
+%table.table-striped.table{:cellpadding => '5'}
+  %thead
+    %tr
+      %th          
+        = check_box_tag(:select_all)
+      %th
+        Name
+      %th
+        Email
+      %th
+        Actions
+  %tbody
+    - @admin_agencies.each do |admin_agency|
+      %tr
+        %td
+          = check_box_tag "select["+admin_agency.name+"]",admin_agency.name,false,:class => "select"
+        %td
+          = link_to admin_agency.name, admin_agency
+        %td
+          = admin_agency.email
+        %td
+          = link_to 'Edit', edit_admin_agency_path(admin_agency)
+          |
+          = link_to 'Destroy', admin_agency, confirm: 'Are you sure?', method: :delete 

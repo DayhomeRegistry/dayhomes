@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   has_many :reviews
   has_many :user_day_homes, :dependent => :destroy
   has_many :day_homes, :through => :user_day_homes
+  
+  has_many :user_agencies, :dependent => :destroy
+  has_many :agencies, :through => :user_agencies
 
   has_many :topics, :dependent => :destroy
   has_many :posts, :dependent => :destroy

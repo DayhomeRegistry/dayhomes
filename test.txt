@@ -1,0 +1,169 @@
+.....................................F......F....F......F.....F...F...................FFF.......................FFFF...FF..FFFFF..............................................................................................
+
+Failures:
+
+  1) DayHomeSignupRequestsController create should create a new dayhome signup request and save it
+     Failure/Error: DayHomeSignupRequest.should_receive(:save)
+       (<DayHomeSignupRequest(id: integer, day_home_name: string, day_home_slug: string, day_home_city: string, day_home_province: string, day_home_street1: string, day_home_street2: string, day_home_postal_code: string, day_home_phone_number: string, day_home_blurb: text, first_name: string, contact_phone_number: string, contact_email: string, preferred_time_to_contact: string, comments: text, created_at: datetime, updated_at: datetime, day_home_highlight: string, day_home_email: string, last_name: string, plan: string) (class)>).save(any args)
+           expected: 1 time
+           received: 0 times
+     # ./spec/controllers/day_home_signup_requests_controller_spec.rb:35:in `block (3 levels) in <top (required)>'
+
+  2) EventsController public user access update should redirect due to no permissions if trying to create an event
+     Failure/Error: put :update, :day_home_id => @day_home.id, :event => @event, :format => :js
+     ActionController::RoutingError:
+       No route matches {:day_home_id=>"5", :event=>"4", :format=>"js", :controller=>"events", :action=>"update"}
+     # ./spec/controllers/events_controller_spec.rb:36:in `block (4 levels) in <top (required)>'
+
+  3) EventsController logged in user access update should redirect due to no permissions if trying to create an event
+     Failure/Error: put :update, :day_home_id => @day_home.id, :event => @event, :format => :js
+     ActionController::RoutingError:
+       No route matches {:day_home_id=>"10", :event=>"9", :format=>"js", :controller=>"events", :action=>"update"}
+     # ./spec/controllers/events_controller_spec.rb:77:in `block (4 levels) in <top (required)>'
+
+  4) ForumsController dayhome site admin access index should provide a list of forums
+     Failure/Error: get :index
+     ActionController::RoutingError:
+       No route matches {:controller=>"forums"}
+     # ./spec/controllers/forums_controller_spec.rb:22:in `block (4 levels) in <top (required)>'
+
+  5) ForumsController dayhome admin access index should provide a list of forums
+     Failure/Error: get :index
+     ActionController::RoutingError:
+       No route matches {:controller=>"forums"}
+     # ./spec/controllers/forums_controller_spec.rb:70:in `block (4 levels) in <top (required)>'
+
+  6) ForumsController regular user access index should provide a list of forums
+     Failure/Error: get :index
+     ActionController::RoutingError:
+       No route matches {:controller=>"forums"}
+     # ./spec/controllers/forums_controller_spec.rb:104:in `block (4 levels) in <top (required)>'
+
+  7) PostsController regular user access create should create a post
+     Failure/Error: post :create, :post => @attr
+     ActionController::RoutingError:
+       No route matches {:post=>{:body=>"What do you think about xyz?"}, :controller=>"posts", :action=>"create"}
+     # ./spec/controllers/posts_controller_spec.rb:83:in `block (4 levels) in <top (required)>'
+
+  8) PostsController regular user access update should update a post
+     Failure/Error: put :update, :id => @post.id, :post => @attr
+     ActionController::RoutingError:
+       No route matches {:id=>nil, :post=>{:body=>"What do you think about xyz?"}, :controller=>"posts", :action=>"update"}
+     # ./spec/controllers/posts_controller_spec.rb:90:in `block (4 levels) in <top (required)>'
+
+  9) PostsController regular user access destroy should delete the post
+     Failure/Error: delete :destroy, :id => @post.id
+     ActionController::RoutingError:
+       No route matches {:id=>nil, :controller=>"posts", :action=>"destroy"}
+     # ./spec/controllers/posts_controller_spec.rb:97:in `block (4 levels) in <top (required)>'
+
+  10) TopicsController regular user access show should show a topic
+     Failure/Error: get :show, :id => @topic.id
+     ActionController::RoutingError:
+       No route matches {:id=>nil, :controller=>"topics", :action=>"show"}
+     # ./spec/controllers/topics_controller_spec.rb:88:in `block (4 levels) in <top (required)>'
+
+  11) TopicsController regular user access create should create a topic
+     Failure/Error: post :create, :topic => @attr
+     ActionController::RoutingError:
+       No route matches {:topic=>{:title=>"(Sticky) Items that should be banned?", :sticky=>true, :locked=>false, :body=>"Does anyone have a list of banned items for parents?"}, :controller=>"topics", :action=>"create"}
+     # ./spec/controllers/topics_controller_spec.rb:95:in `block (4 levels) in <top (required)>'
+
+  12) TopicsController regular user access update should update a topic
+     Failure/Error: put :update, :id => @topic.id, :topic => @attr
+     ActionController::RoutingError:
+       No route matches {:id=>nil, :topic=>{:title=>"(Sticky) Items that should be banned?", :sticky=>true, :locked=>false, :body=>"Does anyone have a list of banned items for parents?"}, :controller=>"topics", :action=>"update"}
+     # ./spec/controllers/topics_controller_spec.rb:102:in `block (4 levels) in <top (required)>'
+
+  13) TopicsController regular user access destroy should delete the topic
+     Failure/Error: delete :destroy, :id => @topic.id
+     ActionController::RoutingError:
+       No route matches {:id=>nil, :controller=>"topics", :action=>"destroy"}
+     # ./spec/controllers/topics_controller_spec.rb:109:in `block (4 levels) in <top (required)>'
+
+  14) UserSessionsController create should create a new User
+     Failure/Error: post :create, params
+     NoMethodError:
+       undefined method `[]' for nil:NilClass
+     # ./app/controllers/user_sessions_controller.rb:13:in `create'
+     # ./spec/controllers/user_sessions_controller_spec.rb:38:in `do_render'
+     # ./spec/controllers/user_sessions_controller_spec.rb:48:in `block (3 levels) in <top (required)>'
+
+  15) UserSessionsController create should save the UserSession in question
+     Failure/Error: post :create, params
+     NoMethodError:
+       undefined method `[]' for nil:NilClass
+     # ./app/controllers/user_sessions_controller.rb:13:in `create'
+     # ./spec/controllers/user_sessions_controller_spec.rb:38:in `do_render'
+     # ./spec/controllers/user_sessions_controller_spec.rb:53:in `block (3 levels) in <top (required)>'
+
+  16) UserSessionsController fb_connect_callback should initialize the Koala oauth client and get_token_access_info
+     Failure/Error: get :fb_connect_callback, {:code => 'super_secret_code_in_params'}
+       Mock UserSession received unexpected message :priority_record= with (nil)
+     # ./app/controllers/application_controller.rb:31:in `current_user_session'
+     # ./app/controllers/application_controller.rb:38:in `current_user'
+     # ./app/controllers/application_controller.rb:11:in `validate_acknowledgement'
+     # ./spec/controllers/user_sessions_controller_spec.rb:114:in `do_render'
+     # ./spec/controllers/user_sessions_controller_spec.rb:124:in `block (3 levels) in <top (required)>'
+
+  17) UserSessionsController fb_connect_callback existing user should log the user in if they already exist in the system
+     Failure/Error: get :fb_connect_callback, {:code => 'super_secret_code_in_params'}
+       Mock UserSession received unexpected message :priority_record= with (nil)
+     # ./app/controllers/application_controller.rb:31:in `current_user_session'
+     # ./app/controllers/application_controller.rb:38:in `current_user'
+     # ./app/controllers/application_controller.rb:11:in `validate_acknowledgement'
+     # ./spec/controllers/user_sessions_controller_spec.rb:114:in `do_render'
+     # ./spec/controllers/user_sessions_controller_spec.rb:134:in `block (4 levels) in <top (required)>'
+
+  18) UserSessionsController fb_connect_callback new user should create a user from the fb_user
+     Failure/Error: get :fb_connect_callback, {:code => 'super_secret_code_in_params'}
+       Mock UserSession received unexpected message :priority_record= with (nil)
+     # ./app/controllers/application_controller.rb:31:in `current_user_session'
+     # ./app/controllers/application_controller.rb:38:in `current_user'
+     # ./app/controllers/application_controller.rb:11:in `validate_acknowledgement'
+     # ./spec/controllers/user_sessions_controller_spec.rb:114:in `do_render'
+     # ./spec/controllers/user_sessions_controller_spec.rb:149:in `block (4 levels) in <top (required)>'
+
+  19) UserSessionsController fb_connect_callback new user shoud log the user in if the new_user saves
+     Failure/Error: get :fb_connect_callback, {:code => 'super_secret_code_in_params'}
+       Mock UserSession received unexpected message :priority_record= with (nil)
+     # ./app/controllers/application_controller.rb:31:in `current_user_session'
+     # ./app/controllers/application_controller.rb:38:in `current_user'
+     # ./app/controllers/application_controller.rb:11:in `validate_acknowledgement'
+     # ./spec/controllers/user_sessions_controller_spec.rb:114:in `do_render'
+     # ./spec/controllers/user_sessions_controller_spec.rb:155:in `block (4 levels) in <top (required)>'
+
+  20) UserSessionsController fb_connect_callback new user should flash an error message if the new_user doesn't save
+     Failure/Error: get :fb_connect_callback, {:code => 'super_secret_code_in_params'}
+       Mock UserSession received unexpected message :priority_record= with (nil)
+     # ./app/controllers/application_controller.rb:31:in `current_user_session'
+     # ./app/controllers/application_controller.rb:38:in `current_user'
+     # ./app/controllers/application_controller.rb:11:in `validate_acknowledgement'
+     # ./spec/controllers/user_sessions_controller_spec.rb:114:in `do_render'
+     # ./spec/controllers/user_sessions_controller_spec.rb:161:in `block (4 levels) in <top (required)>'
+
+Finished in 12.35 seconds
+222 examples, 20 failures
+
+Failed examples:
+
+rspec ./spec/controllers/day_home_signup_requests_controller_spec.rb:12 # DayHomeSignupRequestsController create should create a new dayhome signup request and save it
+rspec ./spec/controllers/events_controller_spec.rb:35 # EventsController public user access update should redirect due to no permissions if trying to create an event
+rspec ./spec/controllers/events_controller_spec.rb:76 # EventsController logged in user access update should redirect due to no permissions if trying to create an event
+rspec ./spec/controllers/forums_controller_spec.rb:21 # ForumsController dayhome site admin access index should provide a list of forums
+rspec ./spec/controllers/forums_controller_spec.rb:69 # ForumsController dayhome admin access index should provide a list of forums
+rspec ./spec/controllers/forums_controller_spec.rb:103 # ForumsController regular user access index should provide a list of forums
+rspec ./spec/controllers/posts_controller_spec.rb:82 # PostsController regular user access create should create a post
+rspec ./spec/controllers/posts_controller_spec.rb:89 # PostsController regular user access update should update a post
+rspec ./spec/controllers/posts_controller_spec.rb:96 # PostsController regular user access destroy should delete the post
+rspec ./spec/controllers/topics_controller_spec.rb:87 # TopicsController regular user access show should show a topic
+rspec ./spec/controllers/topics_controller_spec.rb:94 # TopicsController regular user access create should create a topic
+rspec ./spec/controllers/topics_controller_spec.rb:101 # TopicsController regular user access update should update a topic
+rspec ./spec/controllers/topics_controller_spec.rb:108 # TopicsController regular user access destroy should delete the topic
+rspec ./spec/controllers/user_sessions_controller_spec.rb:46 # UserSessionsController create should create a new User
+rspec ./spec/controllers/user_sessions_controller_spec.rb:51 # UserSessionsController create should save the UserSession in question
+rspec ./spec/controllers/user_sessions_controller_spec.rb:117 # UserSessionsController fb_connect_callback should initialize the Koala oauth client and get_token_access_info
+rspec ./spec/controllers/user_sessions_controller_spec.rb:128 # UserSessionsController fb_connect_callback existing user should log the user in if they already exist in the system
+rspec ./spec/controllers/user_sessions_controller_spec.rb:146 # UserSessionsController fb_connect_callback new user should create a user from the fb_user
+rspec ./spec/controllers/user_sessions_controller_spec.rb:152 # UserSessionsController fb_connect_callback new user shoud log the user in if the new_user saves
+rspec ./spec/controllers/user_sessions_controller_spec.rb:159 # UserSessionsController fb_connect_callback new user should flash an error message if the new_user doesn't save
