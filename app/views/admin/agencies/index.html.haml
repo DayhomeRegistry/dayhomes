@@ -15,15 +15,15 @@
       %th
         Actions
   %tbody
-    - @admin_agencies.each do |admin_agency|
+    - @agencies.each do |agency|
       %tr
         %td
-          = check_box_tag "select["+admin_agency.name+"]",admin_agency.name,false,:class => "select"
+          = check_box_tag "select["+agency.name+"]",agency.name,false,:class => "select"
         %td
-          = link_to admin_agency.name, admin_agency
+          = link_to agency.name, admin_agency_path(agency)
         %td
-          = admin_agency.email
+          = agency.email
         %td
-          = link_to 'Edit', edit_admin_agency_path(admin_agency)
+          = link_to 'Edit', edit_admin_agency_path(agency)
           |
-          = link_to 'Destroy', admin_agency, confirm: 'Are you sure?', method: :delete 
+          = link_to 'Destroy', admin_agency_path(agency), :method => :delete, confirm: 'Are you sure?', method: :delete 

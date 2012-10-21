@@ -38,6 +38,16 @@ describe User do
     end
   end
   
+  describe "all_for_select" do
+    it "should return all the users without an assigned dayhome" do
+      @user1 = FactoryGirl.create(:user)
+      @user2 = FactoryGirl.create(:user)
+      @user.add_day_home(FactoryGirl.create(:day_home))
+      @list = User.all_for_select
+      @list.should == [[@user1.full_name,@user1.id],[@user2.full_name,@user2.id]]
+    end
+  end
+  
   describe "self.new_from_fb_user" do
     it "should create a new user based on the fb_user objects that come in" do
       SecureRandom.stub!(:hex).and_return('random_password')
@@ -53,6 +63,43 @@ describe User do
       @user.password.should == 'random_password'
       @user.facebook_access_token.should == 'token_like'
       @user.facebook_access_token_expires_in.should == '123456'
+    end
+  end
+  describe "when assigned an agency" do
+    let(:agency) {FactoryGirl.create(:agency)}
+    let(:user) {FactoryGirl.create(:user)}
+    
+    it "should report one user" do
+      user.add_agency(agency)
+      agency.users.count.should == 1
+    end
+    it "should have the user report one agency" do
+      user.add_agency(agency)
+      user.agencies.count.should == 1
+    end
+    it "should have the UserAgency report one" do
+      user.add_agency(agency)
+      UserAgency.all.count.should == 1
+    end
+  end
+  describe "when already has a dayhome and is assigned an agency" do
+    it "should raise an error" do
+      @anotherUser = FactoryGirl.create(:user)
+      @day_home = FactoryGirl.create(:day_home)
+      @anotherUser.add_day_home(@day_home)
+      @anotherUser.day_homes.count.should == 1
+      @agency = FactoryGirl.create(:agency)
+      expect{@anotherUser.add_agency(@agency)}.to raise_exception
+    end
+  end
+  describe "when already has an agency and is assigned an dayhome" do
+    it "should raise an error" do
+      @anotherUser = FactoryGirl.create(:user)
+      @day_home = FactoryGirl.create(:day_home)
+      @agency = FactoryGirl.create(:agency)
+      @anotherUser.add_agency(@agency)
+      @anotherUser.agencies.count.should == 1
+      expect{@anotherUser.add_day_home(@day_home)}.to raise_exception
     end
   end
 end

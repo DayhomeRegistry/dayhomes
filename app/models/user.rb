@@ -28,11 +28,21 @@ class User < ActiveRecord::Base
     self.user_day_homes = []
     self.day_homes = DayHome.find_all_by_id(day_home_id_attrs)
   end
-  
+  def self.all_for_select
+    all.collect {|user| [ user.full_name, user.id ] }
+  end
   def add_day_home(day_home)
+    if (self.agencies.count != 0) then
+      raise "A user can't have an agency and a dayhome"
+    end
     self.day_homes<<(day_home)
   end
-  
+  def add_agency(agency)
+    if (self.day_homes.count != 0) then
+      raise "A user can't have an agency and a dayhome"
+    end
+    self.agencies<<(agency)
+  end  
   def self.new_from_fb_user(fb_user, fb_access_token, fb_expires_in)
     random_password = SecureRandom.hex(12)
     new({

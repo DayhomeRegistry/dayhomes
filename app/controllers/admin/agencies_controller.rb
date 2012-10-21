@@ -3,69 +3,77 @@ class Admin::AgenciesController < ApplicationController
   # GET /admin/agencies
   # GET /admin/agencies.json
   def index
-    @admin_agencies = Agency.all
+    @agencies = Agency.all
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @admin_agencies }
+      format.html # index.html.haml
+      format.json { render json: @agencies }
     end
   end
 
   # GET /admin/agencies/1
   # GET /admin/agencies/1.json
   def show
-    @admin_agency = Agency.find(params[:id])
+    @agency = Agency.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @admin_agency }
+      format.html # show.html.haml
+      format.json { render json: @agency }
     end
   end
 
   # GET /admin/agencies/new
   # GET /admin/agencies/new.json
   def new
-    @admin_agency = Agency.new
+    @agency = Agency.new
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @admin_agency }
+      format.html # new.html.haml
+      format.json { render json: @agency }
     end
-  end
-
-  # GET /admin/agencies/1/edit
-  def edit
-    @admin_agency = Agency.find(params[:id])
   end
 
   # POST /admin/agencies
   # POST /admin/agencies.json
   def create
-    @admin_agency = Agency.new(params[:admin_agency])
-
-    respond_to do |format|
-      if @admin_agency.save
-        format.html { redirect_to @admin_agency, notice: 'Agency was successfully created.' }
-        format.json { render json: @admin_agency, status: :created, location: @admin_agency }
-      else
+    @agency = Agency.new(params[:agency])
+    if @agency.add_user(current_user) then
+      respond_to do |format|
+        if @agency.save
+          format.html { redirect_to admin_agency_path(@agency), notice: 'Agency was successfully created.' }
+          format.json { render json: @agency, status: :created, location: @agency }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @agency.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
         format.html { render action: "new" }
-        format.json { render json: @admin_agency.errors, status: :unprocessable_entity }
+        format.json { render json: @agency.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /admin/agencies/1/edit
+  def edit
+    @agency = Agency.find(params[:id])
+    @agency.day_homes.build if @agency.day_homes.blank?
+    @agency.users.build if @agency.users.blank?
   end
 
   # PUT /admin/agencies/1
   # PUT /admin/agencies/1.json
   def update
-    @admin_agency = Agency.find(params[:id])
+    @agency = Agency.find(params[:id])
 
     respond_to do |format|
-      if @admin_agency.update_attributes(params[:admin_agency])
-        format.html { redirect_to @admin_agency, notice: 'Agency was successfully updated.' }
+      if @agency.update_attributes(params[:agency])
+        format.html { redirect_to admin_agency_path(@agency), notice: 'Agency was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @admin_agency.errors, status: :unprocessable_entity }
+        format.json { render json: @agency.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -73,8 +81,8 @@ class Admin::AgenciesController < ApplicationController
   # DELETE /admin/agencies/1
   # DELETE /admin/agencies/1.json
   def destroy
-    @admin_agency = Agency.find(params[:id])
-    @admin_agency.destroy
+    @agency = Agency.find(params[:id])
+    @agency.destroy
 
     respond_to do |format|
       format.html { redirect_to admin_agencies_url }
