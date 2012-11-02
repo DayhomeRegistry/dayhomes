@@ -3,11 +3,12 @@ FactoryGirl.define do
   sequence(:perishable_token) {|n| Digest::MD5.hexdigest("#{Time.now}-user#{n}@doe.com")}
   sequence(:single_access_token) {|n| Digest::MD5.hexdigest("#{Time.now}-user#{n}@doe.com")}
   sequence(:persistence_token) {|n| Digest::MD5.hexdigest("#{Time.now}-user#{n}@doe.com")}
-      
+  sequence(:first_name) {|n| "John#{n}"}
+  sequence(:last_name) {|n| "Doe#{n}"}      
   factory :user do
     email
-    first_name 'John'
-    last_name 'Doe'
+    first_name
+    last_name
     password 'john4doe'
     password_confirmation 'john4doe'
     crypted_password "c4cd6c8b9b3791090fdc5422f47d242dda2735d31"

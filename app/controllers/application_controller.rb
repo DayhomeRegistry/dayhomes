@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   
   def validate_acknowledgement
     if(current_user)      
-          #raise current_user.privacy_effective_date.to_s+"<"+PrivacyPolicy.last.effective_date.to_s+"="+(current_user.privacy_effective_date<PrivacyPolicy.last.effective_date).to_s
+         # raise current_user.privacy_effective_date.to_s #+"<"+PrivacyPolicy.last.effective_date.to_s+"="+(current_user.privacy_effective_date<PrivacyPolicy.last.effective_date).to_s
       if(!current_user.privacy_effective_date || (current_user.privacy_effective_date<PrivacyPolicy.last.effective_date))        
       
         if(!request.fullpath.match(/^\/pages\/acknowledge/))

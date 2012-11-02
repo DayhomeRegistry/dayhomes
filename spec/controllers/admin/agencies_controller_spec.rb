@@ -22,7 +22,9 @@ describe Admin::AgenciesController do
 
   before(:each) do
     @attr = FactoryGirl.attributes_for(:agency)
+    @pp = FactoryGirl.create(:privacy_policy)
     login_admin_user
+    @user.privacy_effective_date = (30.days.ago.to_date)
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -88,6 +90,17 @@ describe Admin::AgenciesController do
         post :create, {:agency => valid_attributes}, valid_session
         response.should redirect_to(admin_agency_path(Agency.last))
       end
+      
+      describe "with assigned_user_ids" do
+        it "assigns the users through the association" do
+          user1 = FactoryGirl.create(:user)
+          user2 = FactoryGirl.create(:user)
+          a = valid_attributes.clone
+          a[:assign_user_ids]=[user1.id,user2.id]
+          post :create, {:agency => valid_attributes,:assign_user_ids=>[user1.id,user2.id]}, valid_session
+          assigns(:agency).users.count.should == 2
+        end
+      end
     end
 
     describe "with invalid params" do
@@ -104,7 +117,20 @@ describe Admin::AgenciesController do
         post :create, {:agency => {}}, valid_session
         response.should render_template("new")
       end
+      
+      describe "with assigned_user_ids that already have a dayhome" do
+        it "re-renders the 'new' template" do
+          user1 = FactoryGirl.create(:user)      
+          user1.add_day_home(FactoryGirl.create(:day_home))
+          a = valid_attributes.clone
+          a[:assign_user_ids]=[user1.id]
+          post :create, {:agency => valid_attributes,:assign_user_ids=>[user1.id]}, valid_session
+          response.should render_template("new")
+        end
+      end
     end
+    
+    
   end
 
   describe "PUT update" do

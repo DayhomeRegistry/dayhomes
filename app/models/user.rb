@@ -31,6 +31,9 @@ class User < ActiveRecord::Base
   def self.all_for_select
     all.collect {|user| [ user.full_name, user.id ] }
   end
+  def self.unassigned_for_select
+    User.find(:all, :include => "user_day_homes", :conditions => ["user_day_homes.day_home_id IS NULL"]).collect {|user| [user.full_name,user.id]}
+  end
   def add_day_home(day_home)
     if (self.agencies.count != 0) then
       raise "A user can't have an agency and a dayhome"

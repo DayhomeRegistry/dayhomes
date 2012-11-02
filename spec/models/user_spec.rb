@@ -11,7 +11,7 @@ describe User do
   
   describe "full_name" do
     it "should return first + last name" do
-      @user.full_name.should == 'John Doe'
+      @user.full_name.should == @user.first_name + " " + @user.last_name
     end
   end
   
@@ -39,15 +39,24 @@ describe User do
   end
   
   describe "all_for_select" do
+    it "should return all the users" do
+      @user1 = FactoryGirl.create(:user)
+      @user2 = FactoryGirl.create(:user)
+      @user3 = FactoryGirl.create(:user)
+      @user3.add_day_home(FactoryGirl.create(:day_home))
+      @list = User.all_for_select
+      @list.should == [[@user1.full_name,@user1.id],[@user2.full_name,@user2.id],[@user3.full_name,@user3.id]]
+    end
+  end
+  describe "unassigned_for_select" do
     it "should return all the users without an assigned dayhome" do
       @user1 = FactoryGirl.create(:user)
       @user2 = FactoryGirl.create(:user)
-      @user.add_day_home(FactoryGirl.create(:day_home))
-      @list = User.all_for_select
-      @list.should == [[@user1.full_name,@user1.id],[@user2.full_name,@user2.id]]
+      @user2.add_day_home(FactoryGirl.create(:day_home))
+      @list = User.unassigned_for_select
+      @list.should == [[@user1.full_name,@user1.id]]
     end
   end
-  
   describe "self.new_from_fb_user" do
     it "should create a new user based on the fb_user objects that come in" do
       SecureRandom.stub!(:hex).and_return('random_password')

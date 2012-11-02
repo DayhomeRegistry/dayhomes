@@ -11,6 +11,9 @@
     Email:</b>
   = @agency.email 
 
+- @agency.day_homes.each do |dayhome|
+  %p
+    = dayhome.name    
 
 = link_to 'Edit', edit_admin_agency_path(@admin_agency) 
 |

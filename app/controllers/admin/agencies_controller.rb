@@ -36,9 +36,17 @@ class Admin::AgenciesController < ApplicationController
   # POST /admin/agencies
   # POST /admin/agencies.json
   def create
+    #raise params.to_json
     @agency = Agency.new(params[:agency])
-    if @agency.add_user(current_user) then
-      respond_to do |format|
+    respond_to do |format|
+      if @agency.valid? 
+        #add the users
+        if !params[:assign_user_ids].nil?
+          params[:assign_user_ids].each do |id|
+            @agency.add_user_by_id(id)
+          end
+        end
+        #and save
         if @agency.save
           format.html { redirect_to admin_agency_path(@agency), notice: 'Agency was successfully created.' }
           format.json { render json: @agency, status: :created, location: @agency }
@@ -46,9 +54,7 @@ class Admin::AgenciesController < ApplicationController
           format.html { render action: "new" }
           format.json { render json: @agency.errors, status: :unprocessable_entity }
         end
-      end
-    else
-      respond_to do |format|
+      else
         format.html { render action: "new" }
         format.json { render json: @agency.errors, status: :unprocessable_entity }
       end
@@ -65,10 +71,12 @@ class Admin::AgenciesController < ApplicationController
   # PUT /admin/agencies/1
   # PUT /admin/agencies/1.json
   def update
+    #raise params.to_json
     @agency = Agency.find(params[:id])
 
     respond_to do |format|
       if @agency.update_attributes(params[:agency])
+        #raise @agency.errors.messages.inspect
         format.html { redirect_to admin_agency_path(@agency), notice: 'Agency was successfully updated.' }
         format.json { head :no_content }
       else

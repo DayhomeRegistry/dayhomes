@@ -8,9 +8,13 @@ class Agency < ActiveRecord::Base
 
   validates :name, :email, :presence => true
 
+  def add_user_by_id(id)
+    user = User.find_by_id(id)
+    return self.add_user(user)
+  end
   def add_user(user)
     if user.day_homes.count > 0 then
-      errors.add(:users,"A user cannot have a dayhome and an agency")
+      errors.add(:users,"cannot have a dayhome and an agency. (UserID: "+user.id.to_s+")")
       return false
     end
     self.users<<(user)
@@ -19,10 +23,18 @@ class Agency < ActiveRecord::Base
     self.day_homes<<(day_home)
   end
   
-  def assign_user_ids=(user_id_attrs=[])
-    self.users = []
-    self.users = User.find_all_by_id(user_id_attrs)
-  end
+  #def assign_user_ids=(user_id_attrs=[])
+  #  self.users = []
+  #  User.find_all_by_id(user_id_attrs).each do |user|
+  #    if user.day_homes.count>0 then
+  #      raise user.day_homes.count.to_s
+  #      errors.add(:users,"cannot have a dayhome and an agency. (UserID: "+user.id.to_s+")")
+  #      return false
+  #    else
+  #      self.users << user
+  #    end
+  #  end
+  #end
   def assign_day_home_ids=(day_home_id_attrs=[])
     self.day_homes = []
     self.day_homes = DayHome.find_all_by_id(day_home_id_attrs)
