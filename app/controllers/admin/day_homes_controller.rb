@@ -45,7 +45,7 @@ class Admin::DayHomesController < Admin::ApplicationController
   def create
     @day_home = DayHome.new(params[:day_home])
     
-    if @day_home.save
+    if @day_home.save_with_payment
       redirect_to admin_day_homes_path
     else
       render :action => :new
@@ -55,12 +55,19 @@ class Admin::DayHomesController < Admin::ApplicationController
   def edit
     @day_home = DayHome.find(params[:id])
     @day_home.photos.build if @day_home.photos.blank?
+    raise @day_home.to_json
+    customer = Stripe::Customer.retrieve(@day_home.stripe_customer_token)
+    @credit_card = {
+      last4: customer.last4,
+      month: customer.exp_month,
+      year: customer.exp_year
+    }
   end
 
   def update
     @day_home = DayHome.find(params[:id])    
-    
-    if @day_home.update_attributes(params[:day_home])           
+    @day_home.update_attributes(params[:day_home])           
+    if @day_home.save_with_payment
       redirect_to admin_day_homes_path
     else
       render :action => :edit

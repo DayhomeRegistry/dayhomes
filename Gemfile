@@ -22,7 +22,7 @@ gem 'maruku'
 gem 'simple_form'
 gem 'client_side_validations', '3.2.0.beta.6', :git => 'https://github.com/bcardarella/client_side_validations.git'
 gem 'actionmailer-instyle', :require => 'action_mailer/in_style'
-
+gem 'stripe'
 
 # le windows
 platforms :mswin, :mingw do
