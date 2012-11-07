@@ -14,7 +14,7 @@ class Admin::UsersController < Admin::ApplicationController
   def create
     @user = User.new(params[:user])
     
-    if @user.save
+    if @user.save_with_payment
       redirect_to admin_users_path
     else
       render :action => :new
@@ -23,15 +23,34 @@ class Admin::UsersController < Admin::ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    
+    if(!@user.stripe_customer_token.nil?)
+      customer = Stripe::Customer.retrieve(@user.stripe_customer_token)
+      #raise customer.to_json
+      @credit_card = {
+        last4: customer.active_card.last4,
+        month: customer.active_card.exp_month,
+        year: customer.active_card.exp_year
+      }
+      
+    end
   end
 
   def update
     @user = User.find(params[:id])
-
-    if @user.update_attributes(params[:user])
-      redirect_to admin_users_path
+    @user.assign_attributes(params[:user])           
+    if @user.stripe_card_token.nil?
+      if @user.save_with_payment
+        redirect_to admin_users_path
+      else
+        render :action => :edit
+      end
     else
-      render :action => :edit
+      if @user.save
+        redirect_to admin_users_path
+      else
+        render :action => :edit
+      end
     end
   end
 

@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :topics, :dependent => :destroy
   has_many :posts, :dependent => :destroy
 
+  attr_accessor :stripe_card_token
+  
   def full_name
     "#{first_name} #{last_name}"
   end
@@ -52,6 +54,24 @@ class User < ActiveRecord::Base
       :password => random_password,
       :password_confirmation => random_password
     })
+  end
+  
+  
+  def save_with_payment 
+    if valid?
+      if !stripe_card_token.nil?
+        self.day_homes.each do |day_home|
+          customer = Stripe::Customer.create(email: email, description: day_home.name, plan: day_home.plan, card: stripe_card_token)
+          #raise customer.id
+          self.stripe_customer_token = customer.id
+        end
+      end
+      save!
+    end
+  rescue Stripe::InvalidRequestError => e
+    logger.error "Stripe error while creating customer: #{e.message}"
+    errors.add :base, "There was a problem with your credit card."
+    false
   end
   
 end

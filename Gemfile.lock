@@ -244,7 +244,7 @@ GEM
     subexec (0.2.2)
     sushi (0.0.2)
     syntax (1.0.0)
-    thin (1.4.1)
+    thin (1.5.0)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
@@ -308,7 +308,7 @@ DEPENDENCIES
   simple_form
   spork (~> 1.0rc)
   stripe
-  thin
+  thin (~> 1.5)
   uglifier (>= 1.0.3)
   unicorn
   webrat (~> 0.7.3)

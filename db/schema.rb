@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910025157) do
+ActiveRecord::Schema.define(:version => 20121107043615) do
+
+  create_table "agencies", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "availability_types", :force => true do |t|
     t.string   "kind"
@@ -31,6 +38,13 @@ ActiveRecord::Schema.define(:version => 20120910025157) do
     t.string   "kind"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "day_home_agencies", :force => true do |t|
+    t.integer  "day_home_id"
+    t.integer  "agency_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "day_home_availability_types", :force => true do |t|
@@ -206,6 +220,13 @@ ActiveRecord::Schema.define(:version => 20120910025157) do
   add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"
   add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
 
+  create_table "user_agencies", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "agency_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "user_day_homes", :force => true do |t|
     t.integer  "day_home_id"
     t.integer  "user_id"
@@ -241,6 +262,7 @@ ActiveRecord::Schema.define(:version => 20120910025157) do
     t.string   "facebook_access_token"
     t.string   "facebook_access_token_expires_in"
     t.date     "privacy_effective_date"
+    t.string   "stripe_customer_token"
   end
 
 end

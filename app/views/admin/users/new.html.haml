@@ -2,5 +2,13 @@
 
 %h2
   New User
-
+-if @user.errors.any? %>  
+  .errorExplanation
+    %h2
+      = pluralize(@user.errors.count, "error")
+      prohibited this user from being saved:
+    %ul  
+      - @user.errors.full_messages.each do |msg|
+        %li
+          = msg
 = render 'form'

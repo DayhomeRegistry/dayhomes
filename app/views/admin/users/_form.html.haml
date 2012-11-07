@@ -1,7 +1,57 @@
 :javascript
   $(function(){
     add_another_mangement();
+    
+    if ($("#existingCard").length > 0){
+      $('#newCard').hide();
+    }
+    Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
+    credit_card.setupForm();
+    
+    $('#change_credit_card_link').click(function(){
+      $('#existingCard').hide();
+      $('#newCard').show();
+      return false;
+    });
+    $('#cancel_credit_card_link').click(function(){
+      $('#newCard').hide();
+      $('#existingCard').show();
+      $('#card_number').val("")
+      return false;
+    });
+    
   });
+  var credit_card = {
+    setupForm: function() {
+      $($('form')[1]).submit(function(){      
+        $('input[type=submit]').attr('disabled',true);
+        if ($('#card_number').val() == "") {
+          $('form')[1].submit();
+        } else {
+          credit_card.processCard();
+          return false;
+        }
+      });
+    },
+    processCard: function() {
+      var card = {
+        number: $('#card_number').val(),
+        cvc: $('#card_code').val(),
+        expMonth: $('#card_month').val(),
+        expYear: $('#card_year').val()
+      };
+      Stripe.createToken(card, credit_card.handleStripeResponse);
+    },
+    handleStripeResponse: function (status, response) {
+      if(status == 200) {
+        $('#user_stripe_card_token').val(response.id);
+        $('form')[1].submit();
+      } else {
+        $('#stripe_error').text(response.error.message);        
+        $('input[type=submit]').attr('disabled',false);
+      }
+    }
+  };
 
 - @user.user_day_homes.build if @user.user_day_homes.blank? 
 = form_for [:admin, @user] do |f|
@@ -33,7 +83,35 @@
       %br
   = link_to 'Assign another dayhome', '#', :class => 'add_multiples_link', 'data-group' => 'assign_day_home_ids', 'data-attribute-key' => 'assign_day_home_ids_attributes'
   %br
-  
+  .row
+    .creditCard.form-group.span6
+      =label_tag :card_number, "Card Number"
+      -if !@credit_card.nil?
+        #existingCard
+          =label_tag :existing_card_number, "**** **** **** "+@credit_card[:last4], :style=>"width:150px;"
+          =label_tag :existing_card_exp, "Exp:"+@credit_card[:month].to_s+"/"+@credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"        
+          = link_to 'Change','#', :id=>'change_credit_card_link'    
+      #newCard
+        .form-row
+          =text_field_tag :card_number, nil, name:nil
+            
+        .form-row
+          =label_tag :card_code, "Security Code on Card"
+          =text_field_tag :card_code, nil, name:nil
+        
+        .form-row
+          =label_tag :card_expiry, "Expiration (MM/YYYY)"
+          =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month"}
+          =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
+        
+        .form-row
+          #stripe_error
+            %noscript
+              Javascript is not enabled and is required for this form.  First enable it in your web browser settings.
+        = f.hidden_field :stripe_card_token
+        .form-row
+          = link_to 'Cancel', '#', :id=>'cancel_credit_card_link'
+      
   %br
   = f.submit 'Save', :class => 'btn'
   |

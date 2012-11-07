@@ -39,7 +39,6 @@ class DayHome < ActiveRecord::Base
 
   accepts_nested_attributes_for :photos, :reject_if => :all_blank, :allow_destroy => true
   
-  attr_accessor :stripe_card_token
 
   after_save :approval_message
   def approval_message
@@ -127,15 +126,4 @@ class DayHome < ActiveRecord::Base
     return dayhome
   end
   
-  def save_with_payment need to move this to person, not dayhome
-    if valid?
-      customer = Stripe::Customer.create(description: email, plan: plan, card: stripe_card_token)
-      self.stripe_customer_token = customer.id
-      save!
-    end
-  rescue Stripe::InvalidRequestError => e
-    logger.error "Stripe error while creating customer: #{e.message}"
-    errors.add :base, "There was a problem with your credit card."
-    false
-  end
 end
