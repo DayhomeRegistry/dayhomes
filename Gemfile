@@ -27,7 +27,7 @@ gem 'thin', '~>1.5'
 
 # le windows
 platforms :mswin, :mingw do
-  gem 'eventmachine', '1.0.0.beta.4.1'
+  #gem 'eventmachine', '1.0.0.beta.4.1'
   #gem 'eventmachine', :git=> 'git://github.com/eventmachine/eventmachine.git'
   #gem 'thin'
 end

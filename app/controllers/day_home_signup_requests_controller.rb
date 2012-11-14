@@ -11,6 +11,15 @@ class DayHomeSignupRequestsController < ApplicationController
     if(!params[:plan].blank? && params[:plan]=="papa")
       @day_home_signup_request.plan = "papa"
     end
+    if(!current_user.nil? && !current_user.stripe_customer_token.nil?)
+      customer = Stripe::Customer.retrieve(current_user.stripe_customer_token)
+      #raise customer.to_json
+      @credit_card = {
+        last4: customer.active_card.last4,
+        month: customer.active_card.exp_month,
+        year: customer.active_card.exp_year
+      }  
+    end
   end
   
   def create  
@@ -45,51 +54,48 @@ class DayHomeSignupRequestsController < ApplicationController
     end
     # Need to set the ack date
     user.privacy_effective_date = Time.now()
-    user.save
+    #raise @day_home_signup_request.stripe_card_token
+    user.stripe_card_token = @day_home_signup_request.stripe_card_token
+    
+    if user.save_with_payment 
             
-    # Create a dayhome
-    @day_home = DayHome.create_from_signup(@day_home_signup_request)
-    @day_home.update_attributes(params[:day_home])
+    	# Create a dayhome
+    	@day_home = DayHome.create_from_signup(@day_home_signup_request)
+    	@day_home.update_attributes(params[:day_home])
     
-    
-    
-    
-	if @day_home.save
-	  if @day_home_signup_request.save
-        # Bind dayhome to user
-        user.add_day_home(@day_home)
-
-        #redirect_to root_path, :notice => "Thanks for adding your DayHome! We will contact you soon!"
-        return redirect_to :action => :welcome   
-    else
-      error_msg = []
-      @day_home.errors.full_messages.each do |err|
-        error_msg << err
-      end
-      @day_home_signup_request.errors.full_messages.each do |err|
-        error_msg << err
-      end
-      user.errors.full_messages.each do |err|
-        error_msg << err
-      end
-      flash[:error] = error_msg.join("<br/>").html_safe
-      render :action => :new
-	  end
-	else
-      error_msg = []
-      @day_home.errors.full_messages.each do |err|
-        error_msg << err
-      end
-      @day_home_signup_request.errors.full_messages.each do |err|
-        error_msg << err
-      end
-      user.errors.full_messages.each do |err|
-        error_msg << err
-      end
-      flash[:error] = error_msg.join("<br/>").html_safe
-      render :action => :new
-    end
-  end
+			if @day_home.save
+				if @day_home_signup_request.save
+						# Bind dayhome to user
+						user.add_day_home(@day_home)
+		
+						#redirect_to root_path, :notice => "Thanks for adding your DayHome! We will contact you soon!"
+						return redirect_to :action => :welcome   
+				else
+					@day_home_signup_request.errors.full_messages.each do |err|
+						error_msg << err
+					end
+					flash[:error] = error_msg.join("<br/>").html_safe
+					render :action => :new
+				end
+			else
+					error_msg = []
+					@day_home.errors.full_messages.each do |err|
+						error_msg << err
+					end
+					flash[:error] = error_msg.join("<br/>").html_safe
+					render :action => :new
+				end
+			end
+	  else
+			error_msg = []
+	
+			user.errors.full_messages.each do |err|
+				error_msg << err
+			end
+			
+			flash[:error] = error_msg.join("<br/>").html_safe
+			render :action => :new
+		end
 end
 
 def welcome

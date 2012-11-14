@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :stripe_card_token
   
+  before_destroy :destroy_customer
+  
   def full_name
     "#{first_name} #{last_name}"
   end
@@ -50,7 +52,8 @@ class User < ActiveRecord::Base
     new({
       :first_name => signup_request.first_name,
       :last_name => signup_request.last_name,
-      :email => signup_request.contact_email ,     
+      :email => signup_request.contact_email , 
+      :plan => signup_request.plan,    
       :password => random_password,
       :password_confirmation => random_password
     })
@@ -59,19 +62,37 @@ class User < ActiveRecord::Base
   
   def save_with_payment 
     if valid?
-      if !stripe_card_token.nil?
-        self.day_homes.each do |day_home|
-          customer = Stripe::Customer.create(email: email, description: day_home.name, plan: day_home.plan, card: stripe_card_token)
-          #raise customer.id
+      #raise stripe_card_token.blank?.to_s
+      if !stripe_card_token.blank?
+        if self.stripe_customer_token.nil?
+          customer = Stripe::Customer.create(email: email, description: full_name, plan: plan, card: stripe_card_token)
+          #raise customer.to_json
           self.stripe_customer_token = customer.id
+        else
+          customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+          customer.card = stripe_card_token
+          customer.save
         end
       end
       save!
     end
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while creating customer: #{e.message}"
-    errors.add :base, "There was a problem with your credit card."
+    errors.add :base, "There was a problem with your credit card: #{e.message}"
     false
+  rescue Stripe::CardError => e
+    logger.error "Stripe error while creating customer: #{e.message}"
+    errors.add :base, e.message
+    false  
   end
   
+  def destroy_customer
+    customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+    customer.delete
+    
+  rescue Stripe::InvalidRequestError => e
+    logger.error "Stripe error while removing customer: #{e.message}"
+    errors.add :base, "There was a problem with removing your credit card: #{e.message}"
+    false
+  end
 end

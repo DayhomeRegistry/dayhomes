@@ -1,6 +1,14 @@
 .row.registrationStyle
-  .span4.well.form-horizontal
+  .span7.well.form-horizontal
     %h2
       Edit Your Account
-
+    -if current_user.errors.any?  
+      .errorExplanation
+        %h2
+          = pluralize(current_user.errors.count, "error")
+          prohibited this user from being saved:
+        %ul  
+          - current_user.errors.full_messages.each do |msg|
+            %li
+              = msg
     = render 'form'

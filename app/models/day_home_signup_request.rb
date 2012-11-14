@@ -10,6 +10,8 @@ class DayHomeSignupRequest < ActiveRecord::Base
   
   #before_save :add_dayhome
   
+  attr_accessor :stripe_card_token
+  
   after_create :send_request_to_dayhome_registry_team
   
   def send_request_to_dayhome_registry_team

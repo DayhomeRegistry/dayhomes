@@ -1,6 +1,18 @@
 :javascript
   $(function(){
     add_another_mangement();
+    if("true"!="#{@user.user_day_homes.count>0}"){
+      $(".creditCard").hide();
+    }
+    
+    $(".add_multiples").on("change","select", function(event){
+      if($(this).val()!=""){
+        $(".creditCard").show();
+      } else {
+        $(".creditCard").hide();
+        $('#card_number').val("")
+      }
+    });
     
     if ($("#existingCard").length > 0){
       $('#newCard').hide();
@@ -73,6 +85,9 @@
   = f.label :admin, :class => :checkbox do
     = f.check_box :admin
     Has admin access?
+    
+  = f.label :plan
+  = select_tag 'user[plan',options_for_select([['Baby Bear','baby'],['Mamma Bear','mama'],['Papa Bear','papa']])
   
   = f.label :assign_day_home_ids, "Assigned dayhomes"
   
@@ -100,7 +115,7 @@
           =text_field_tag :card_code, nil, name:nil
         
         .form-row
-          =label_tag :card_expiry, "Expiration (MM/YYYY)"
+          =label_tag :card_expiry, "Expiration"
           =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month"}
           =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
         
@@ -109,8 +124,9 @@
             %noscript
               Javascript is not enabled and is required for this form.  First enable it in your web browser settings.
         = f.hidden_field :stripe_card_token
-        .form-row
-          = link_to 'Cancel', '#', :id=>'cancel_credit_card_link'
+        - if !@credit_card.nil?
+          .form-row
+            = link_to 'Cancel', '#', :id=>'cancel_credit_card_link'
       
   %br
   = f.submit 'Save', :class => 'btn'

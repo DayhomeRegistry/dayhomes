@@ -62,7 +62,10 @@ describe Admin::UsersController do
     end
     
     it "should find the user in question" do
+      cc = {last4:"4242",month:"1",year:"2014"}
+      Stripe::Customer.stub(:retrieve).and_return(cc)
       User.should_receive(:find).with('42')
+      assigns(:credit_card).should == cc
       do_render
     end
   end

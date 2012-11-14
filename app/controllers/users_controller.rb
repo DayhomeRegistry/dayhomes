@@ -22,10 +22,22 @@ class UsersController < ApplicationController
   end
 
   def edit
+    #raise current_user.stripe_customer_token
+    if(!current_user.stripe_customer_token.nil?)
+      customer = Stripe::Customer.retrieve(current_user.stripe_customer_token)
+      #raise customer.to_json
+      @credit_card = {
+        last4: customer.active_card.last4,
+        month: customer.active_card.exp_month,
+        year: customer.active_card.exp_year
+      }
+      
+    end
   end
 
   def update
-    if current_user.update_attributes(params[:user])
+    current_user.assign_attributes(params[:user])
+    if current_user.save_with_payment
       redirect_to user_path(current_user)
     else
       render :action => :edit

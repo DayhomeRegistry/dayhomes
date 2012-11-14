@@ -121,7 +121,7 @@ class DayHome < ActiveRecord::Base
     dayhome.highlight = signup.day_home_highlight
     dayhome.featured = false
     dayhome.approved = false
-    dayhome.plan = signup.plan
+    #dayhome.plan = signup.plan
     
     return dayhome
   end
