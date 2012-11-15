@@ -23,12 +23,14 @@ gem 'maruku'
 gem 'simple_form'
 gem 'client_side_validations', '3.2.0.beta.6', :git => 'https://github.com/bcardarella/client_side_validations.git'
 gem 'actionmailer-instyle', :require => 'action_mailer/in_style'
+gem 'stripe'
+gem 'thin', '~>1.5'
 
-# le windows
-#platforms :mswin, :mingw do
-#  gem 'eventmachine', '1.0.0.beta.4.1'
-#  #gem 'eventmachine', :git=> 'git://github.com/eventmachine/eventmachine.git'
-#end
+platforms :mswin, :mingw do
+  #gem 'eventmachine', '1.0.0.beta.4.1'
+  #gem 'eventmachine', :git=> 'git://github.com/eventmachine/eventmachine.git'
+  #gem 'thin'
+end
 
 group :assets do
   gem 'sass-rails', '~> 3.1'

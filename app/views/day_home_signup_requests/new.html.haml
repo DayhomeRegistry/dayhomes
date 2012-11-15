@@ -7,7 +7,41 @@
     
     $('.icon-info-sign').popover() ;
 
+    Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
+    credit_card.setupForm();
+    
   });
+  var credit_card = {
+    setupForm: function() {
+      $($('form')[1]).submit(function(){      
+        $('input[type=submit]').attr('disabled',true);
+        if ($('#card_number').val() == "") {
+          $('form')[1].submit();
+        } else {
+          credit_card.processCard();
+          return false;
+        }
+      });
+    },
+    processCard: function() {
+      var card = {
+        number: $('#card_number').val(),
+        cvc: $('#card_code').val(),
+        expMonth: $('#card_month').val(),
+        expYear: $('#card_year').val()
+      };
+      Stripe.createToken(card, credit_card.handleStripeResponse);
+    },
+    handleStripeResponse: function (status, response) {
+      if(status == 200) {
+        $('#day_home_signup_request_stripe_card_token').val(response.id);
+        $('form')[1].submit();
+      } else {
+        $('#stripe_error').text(response.error.message);        
+        $('input[type=submit]').attr('disabled',false);
+      }
+    }
+  };  
 
 .row
   .span12
@@ -23,7 +57,7 @@
 = form_for @day_home_signup_request do |f|
   = f.hidden_field(:plan, :value=>@day_home_signup_request.plan)
   .row.registrationStyle
-    .span6.well.form-horizontal
+    .span5.well.form-horizontal
       %h3
         Tell us a little about your Dayhome
       .form-group
@@ -35,7 +69,7 @@
         .input-prepend
           %span.add-on
             http://dayhomeregistry.com/
-          = f.text_field :day_home_slug
+          = f.text_field :day_home_slug, :class=>"span2"
         <i class="icon-info-sign icon-white" data-title="What's a slug?" data-content="The slug is the name for the end of our web address that makes it easy for you and your customers to find your page.  The web address that you see to the left will be your home on our website."></i>
         
         = f.label :day_home_phone_number, 'Contact Phone Number for Dayhome'
@@ -51,7 +85,7 @@
         <i class="icon-info-sign icon-white" data-title="Why just a postal code?" data-content="We only ask, as a mandatory, a postal code, so we can find you approximately on a map.  Some folks don't want to share their actual address online...that's fine. If you, though, look just below."></i>
              
         = f.label :day_home_highlight, 'Front page highlight'
-        = f.text_area :day_home_highlight, :rows => 6
+        = f.text_area :day_home_highlight, :rows => 12
         <i class="icon-info-sign icon-white" data-title="What's a highlight?" data-content="On our homepage, when we feature a dayhome, the name of the dayhome and the text you put below are displayed over one of your images.  This highlight has to be 200 characters or less so we can still see how wonderful you are in your picture."></i>
         
         = label_tag "ack", :class => :checkbox do       
@@ -76,6 +110,16 @@
         
         = f.label :contact_email, 'Email'
         = f.text_field :contact_email, :value=>current_user.email, :class=>:disabled, :disabled=>'disabled'
+        -if !@credit_card.nil?        
+          =label_tag "Credit Card"
+          #existingCard
+            =label_tag :existing_card_number, "**** **** **** "+@credit_card[:last4], :style=>"width:150px;"
+            =label_tag :existing_card_exp, "Exp:"+@credit_card[:month].to_s+"/"+@credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"        
+        -else
+          %br
+          %br
+          .alert.alert-error
+            No credit card set!    
       -else        
         = f.label :first_name, 'First Name'
         = f.text_field :first_name
@@ -85,12 +129,28 @@
         
         = f.label :contact_email, 'Email'
         = f.text_field :contact_email
+        
+        =label_tag :card_number, "Card Number"
+        =text_field_tag :card_number, nil, name:nil
+          
+        =label_tag :card_code, "Security Code on Card"
+        =text_field_tag :card_code, nil, name:nil
+      
+        =label_tag :card_expiry, "Expiration"
+        =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month"}
+        =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
+      
+        #stripe_error
+          %noscript
+            Javascript is not enabled and is required for this form.  First enable it in your web browser settings.
+        = f.hidden_field :stripe_card_token
       
       = f.label :contact_phone_number, 'Phone Number'
       = f.text_field :contact_phone_number
       
       = f.label :preferred_time_to_contact, 'Preferred Time to Contact'
       = f.text_field :preferred_time_to_contact
+      
 
       = f.label :comments, 'Comments or Questions?'
       = f.text_area :comments, :rows => 6

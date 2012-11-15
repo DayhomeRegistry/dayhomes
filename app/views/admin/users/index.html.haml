@@ -17,6 +17,8 @@
         %th
           Is Admin?
         %th
+          = sortable "plan","Plan"
+        %th
           Dayhomes?
         %th
           Created
@@ -31,6 +33,8 @@
             = user.email
           %td
             = yes_no(user.admin?)
+          %td
+            = user.plan	            
           %td
             - if user.day_home_owner?
               = user.day_homes.map(&:name).join(', ')

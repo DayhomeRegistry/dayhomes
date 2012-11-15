@@ -1,4 +1,5 @@
 class Admin::UsersController < Admin::ApplicationController
+  helper_method :sort_column, :sort_direction
   def index
     @users = User.page(params[:page] || 1).per(params[:per_page] || 10)
   end
@@ -14,7 +15,7 @@ class Admin::UsersController < Admin::ApplicationController
   def create
     @user = User.new(params[:user])
     
-    if @user.save
+    if @user.save_with_payment
       redirect_to admin_users_path
     else
       render :action => :new
@@ -23,15 +24,35 @@ class Admin::UsersController < Admin::ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    if(!@user.stripe_customer_token.nil?)
+      customer = Stripe::Customer.retrieve(@user.stripe_customer_token)
+      #raise customer.to_json
+      @credit_card = {
+        last4: customer.active_card.last4,
+        month: customer.active_card.exp_month,
+        year: customer.active_card.exp_year
+      }
+      
+    end
   end
 
   def update
     @user = User.find(params[:id])
-
-    if @user.update_attributes(params[:user])
-      redirect_to admin_users_path
+    @user.assign_attributes(params[:user])  
+    
+    #raise @user.stripe_card_token         
+    if !@user.stripe_card_token.nil?
+      if @user.save_with_payment
+        redirect_to admin_users_path
+      else
+        render :action => :edit
+      end
     else
-      render :action => :edit
+      if @user.save
+        redirect_to    admin_users_path
+      else
+        render :action => :edit
+      end
     end
   end
 
@@ -44,4 +65,13 @@ class Admin::UsersController < Admin::ApplicationController
     redirect_to admin_users_path
   end
   
+    
+  private
+  def sort_column
+    User.column_names.include?(params[:sort]) ? params[:sort] : "full_name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
+  end  
 end

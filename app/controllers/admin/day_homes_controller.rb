@@ -55,12 +55,13 @@ class Admin::DayHomesController < Admin::ApplicationController
   def edit
     @day_home = DayHome.find(params[:id])
     @day_home.photos.build if @day_home.photos.blank?
+
   end
 
   def update
     @day_home = DayHome.find(params[:id])    
-    
-    if @day_home.update_attributes(params[:day_home])           
+         
+    if @day_home.update_attributes(params[:day_home])  
       redirect_to admin_day_homes_path
     else
       render :action => :edit

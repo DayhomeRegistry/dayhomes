@@ -7,6 +7,7 @@
       var parsed_subdomain = $(this).attr('value').replace(/[^a-z0-9]/gi,'').toLowerCase();
       $('#day_home_slug').empty().attr('value', parsed_subdomain);
     });
+
     
   });
   
@@ -104,6 +105,8 @@
     = f.check_box :licensed
     Licensed
   
+
+        
   %br
   = f.submit 'Save', :class => 'btn'
   |

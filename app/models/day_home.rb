@@ -42,6 +42,7 @@ class DayHome < ActiveRecord::Base
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
 
   accepts_nested_attributes_for :photos, :reject_if => :all_blank, :allow_destroy => true
+  
 
   after_save :approval_message
   def approval_message
@@ -124,10 +125,9 @@ class DayHome < ActiveRecord::Base
     dayhome.highlight = signup.day_home_highlight
     dayhome.featured = false
     dayhome.approved = false
-    dayhome.plan = signup.plan
+    #dayhome.plan = signup.plan
     
     return dayhome
   end
-  
   
 end
