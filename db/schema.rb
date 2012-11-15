@@ -11,13 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121109031740) do
+ActiveRecord::Schema.define(:version => 20121115040352) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
-    t.string   "email"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "city"
+    t.string   "province"
+    t.string   "street1"
+    t.string   "street2"
+    t.string   "postal_code"
+    t.string   "phone_number"
   end
 
   create_table "availability_types", :force => true do |t|
@@ -77,6 +82,11 @@ ActiveRecord::Schema.define(:version => 20121109031740) do
     t.integer  "day_home_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "birth_day"
+    t.integer  "birth_month"
+    t.integer  "birth_year"
+    t.date     "required_start"
+    t.string   "address"
     t.string   "child_name"
     t.date     "child_birth_date"
     t.date     "child_start_date"

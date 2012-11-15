@@ -23,18 +23,19 @@ class Agency < ActiveRecord::Base
     self.day_homes<<(day_home)
   end
   
-  #def assign_user_ids=(user_id_attrs=[])
-  #  self.users = []
-  #  User.find_all_by_id(user_id_attrs).each do |user|
-  #    if user.day_homes.count>0 then
-  #      raise user.day_homes.count.to_s
-  #      errors.add(:users,"cannot have a dayhome and an agency. (UserID: "+user.id.to_s+")")
-  #      return false
-  #    else
-  #      self.users << user
-  #    end
-  #  end
-  #end
+  def assign_user_ids=(user_id_attrs=[])
+    self.users = []
+    User.find_all_by_id(user_id_attrs).each do |user|
+      if user.day_homes.count>0 then
+        raise user.day_homes.count.to_s
+        errors.add(:users,"cannot have a dayhome and an agency. (UserID: "+user.id.to_s+")")
+        return false
+      else
+        self.users << user
+      end
+    end
+  end
+  
   def assign_day_home_ids=(day_home_id_attrs=[])
     self.day_homes = []
     self.day_homes = DayHome.find_all_by_id(day_home_id_attrs)

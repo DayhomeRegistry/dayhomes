@@ -8,9 +8,19 @@
 
 %p
   %b
-    Email:</b>
-  = @agency.email 
+    Address:</b>
+  = @agency.street1
+  -if !@agency.street2.nil? 
+    =@agency.street2
+  = @agency.city + "," + @agency.province
+  = @agency.postal_code
+  
 
+%p
+  %b
+    Phone:</b>
+  = @agency.phone_number
+    
 - @agency.day_homes.each do |dayhome|
   %p
     = dayhome.name    

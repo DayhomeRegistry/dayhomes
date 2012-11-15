@@ -16,7 +16,13 @@
 
   .form-inputs
     = f.input :name 
-    = f.input :email 
+    = f.input :phone_number
+    = f.input :street1 
+    = f.input :street2
+    = f.input :city
+    = f.input :province
+    = f.input :postal_code
+                        
   = f.label :assign_day_home_ids, "Assigned users"
   
   - f.object.users.each do |user|
