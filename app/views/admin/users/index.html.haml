@@ -21,6 +21,8 @@
         %th
           Dayhomes?
         %th
+          Agencies?
+        %th
           Created
         %th
           Actions
@@ -38,6 +40,11 @@
           %td
             - if user.day_home_owner?
               = user.day_homes.map(&:name).join(', ')
+            - else
+              None
+          %td
+            - if user.agencies.any?
+              = user.agencies.map(&:name).join(', ')
             - else
               None
           %td

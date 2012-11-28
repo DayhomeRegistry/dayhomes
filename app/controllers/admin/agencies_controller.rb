@@ -36,8 +36,8 @@ class Admin::AgenciesController < ApplicationController
   # POST /admin/agencies
   # POST /admin/agencies.json
   def create
-    #raise params.to_json
     @agency = Agency.new(params[:agency])
+    #raise @agency.to_json
     respond_to do |format|
       if @agency.valid? 
         #add the users

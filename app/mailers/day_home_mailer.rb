@@ -4,10 +4,24 @@ class DayHomeMailer < ActionMailer::Base
   def contact_day_home(contact, dayhome)
     @contact = contact
     @dayhome = dayhome
+
     if (Rails.env.development?)
-      mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => contact.subject, :reply_to=>contact.email)
+      if (dayhome.agencies.any?)
+        emails=dayhome.agencies.first.users.map(&:email).join(', ')
+        
+        mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => contact.subject+"["+emails+"]", :reply_to=>contact.email)
+      else
+        mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => contact.subject+"["+contact.day_home_email+"]", :reply_to=>contact.email)
+      end
+      
     else 
-      mail(:to => contact.day_home_email, :subject => contact.subject, :reply_to=>contact.email)
+      if (dayhome.agencies.any?)
+        dayhome.agencies.first.users.find_each do |user|
+          mail(:to => user.email, :subject => contact.subject, :reply_to=>contact.email)
+        end
+      else
+        mail(:to => contact.day_home_email, :subject => contact.subject, :reply_to=>contact.email)
+      end
     end
   end
   

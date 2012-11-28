@@ -77,13 +77,23 @@
     %h3.singleViewH3
       Contact Information
     .contact_info
+    - if @day_home.agencies.any?
+      %div
+        This dayhome is proudly managed through 
+        %br
+        =@day_home.agencies.first.name
+        %br
+        Phone:
+        =@day_home.agencies.first.phone_number
+    - else
       %div
         = @day_home.address
         - if @day_home.phone_number?
           %br
           Phone:
           = @day_home.phone_number
-        
+
+
     
     #contact-form.modal
       %h3

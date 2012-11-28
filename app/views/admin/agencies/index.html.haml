@@ -11,7 +11,11 @@
       %th
         Name
       %th
-        Email
+        Address
+      %th
+        Phone
+      %th
+        Dayhomes
       %th
         Actions
   %tbody
@@ -22,7 +26,11 @@
         %td
           = link_to agency.name, admin_agency_path(agency)
         %td
-          = agency.email
+          = agency.address
+        %td
+          = agency.phone_number  
+        %td
+          = agency.day_homes.map(&:name).join(', ')
         %td
           = link_to 'Edit', edit_admin_agency_path(agency)
           |

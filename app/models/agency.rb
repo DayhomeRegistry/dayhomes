@@ -6,7 +6,7 @@ class Agency < ActiveRecord::Base
   has_many :day_home_agencies, :dependent => :destroy
   has_many :day_homes, :through => :day_home_agencies
 
-  validates :name, :email, :presence => true
+  validates :name, :presence => true
 
   def add_user_by_id(id)
     user = User.find_by_id(id)
@@ -39,5 +39,11 @@ class Agency < ActiveRecord::Base
   def assign_day_home_ids=(day_home_id_attrs=[])
     self.day_homes = []
     self.day_homes = DayHome.find_all_by_id(day_home_id_attrs)
+  end
+  def address
+    lstreet = "#{street1}#{street2}".blank? ? "" : "#{street1}#{street2},"
+    lcity = "#{city}".blank? ? "" : " #{city},"
+  
+    lstreet+lcity+ ("#{province}".blank? ? "":" #{province},") + " #{postal_code}"
   end
 end
