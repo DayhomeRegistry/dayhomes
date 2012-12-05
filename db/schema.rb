@@ -82,11 +82,6 @@ ActiveRecord::Schema.define(:version => 20121115040352) do
     t.integer  "day_home_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
-    t.integer  "birth_day"
-    t.integer  "birth_month"
-    t.integer  "birth_year"
-    t.date     "required_start"
-    t.string   "address"
     t.string   "child_name"
     t.date     "child_birth_date"
     t.date     "child_start_date"

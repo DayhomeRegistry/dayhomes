@@ -38,16 +38,24 @@ namespace :db do
 
       # Create Default Admin User
       admin_user = User.create!({:email => 'dayadmin@dayhomeregistry.com', :password => 'day4admin', :password_confirmation => 'day4admin', :first_name => 'DayHome', :last_name => 'Admin', :admin => true})
-      user0 = User.create!({:email => 'test0@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
-      user1 = User.create!({:email => 'test1@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
-      user2 = User.create!({:email => 'test2@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
-      user3 = User.create!({:email => 'test3@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
-      user4 = User.create!({:email => 'test4@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
-      user5 = User.create!({:email => 'test5@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
-      user6 = User.create!({:email => 'test6@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'TestF', :last_name => 'TestL', :admin => false})
+      user0 = User.create!({:email => 'test0@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Marty', :last_name => 'Bristow', :admin => false})
+      user1 = User.create!({:email => 'test1@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Lestor', :last_name => 'Hart', :admin => false})
+      user2 = User.create!({:email => 'test2@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Betty', :last_name => 'Williams', :admin => false})
+      user3 = User.create!({:email => 'test3@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'May', :last_name => 'Manweiler', :admin => false})
+      user4 = User.create!({:email => 'test4@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Marilyn', :last_name => 'Dennis', :admin => false})
+      user5 = User.create!({:email => 'test5@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Lisa', :last_name => 'Schreder', :admin => false})
+      user6 = User.create!({:email => 'test6@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Faye', :last_name => 'Morrison', :admin => false})
 
       users = [ user0, user1, user2, user3, user4, user5, user6]
 
+      # Create basic agency
+      agency = Agency.create!({:name=>"Child Development Dayhomes",:postal_code => 'T5N1Y6', :street1 => '131 St NW',:city=>'Edmonton',:province=>'Alberta'})
+      agencyUser1 = User.create!({:email => 'agency1@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Bobby', :last_name => 'Arya', :admin => false})
+      agencyUser2 = User.create!({:email => 'agency2@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Brenda', :last_name => 'Schuler', :admin => false})
+      agency.add_user(agencyUser1)
+      agency.add_user(agencyUser2)
+      
+      
       # address hashes
       fulltime_addresses = [
           {:postal_code => 'T5N1Y6', :street1 => '131 St NW'},
@@ -365,6 +373,7 @@ namespace :db do
           d.certification_types << infant_cpr
         end
         add_photos_to_dayhome(photos, d)
+        agency.add_day_home(d)
       end
 
       # Create a couple of dayhomes with part time
