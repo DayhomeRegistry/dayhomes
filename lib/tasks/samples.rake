@@ -182,7 +182,7 @@ namespace :db do
       ]
       fulltime_names = [
           "Fanny fulltime",
-          "Two hears fulltime",
+          "Two bears fulltime",
           "Mayday fulltime",
           "Alternative fulltime",
           "Aardvark Dayhome",

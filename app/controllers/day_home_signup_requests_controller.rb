@@ -36,73 +36,115 @@ class DayHomeSignupRequestsController < ApplicationController
     #raise "param[ack] was there: " + params.to_json
     
     # Create user, if necessary
-    user = current_user
-    if current_user.nil?
-      #find user by email
-      user = User.find_by_email(@day_home_signup_request.contact_email)      
-      if user.nil?
-        user = User.find_by_email(@day_home_signup_request.day_home_email)
-        if user.nil?
-            #no one here, create a new one
-            user = User.new_from_signup_request(@day_home_signup_request)
-            user.save	  
-            
-            
-            #email them their password set instructions
-            UserMailer.new_user_password_instructions(user).deliver                        
-            
-            reset_session
-        end        
-      end
-    end
+    user = find_or_create_user
     # Need to set the ack date
-
     user.privacy_effective_date = Time.now()
-    #raise @day_home_signup_request.stripe_card_token
-    user.stripe_card_token = @day_home_signup_request.stripe_card_token
 
-    
-    if user.save_with_payment 
-            
-    	# Create a dayhome
-    	@day_home = DayHome.create_from_signup(@day_home_signup_request)
-    	@day_home.update_attributes(params[:day_home])
-    
+    if(user.agency_admin?)
+      agency = user.agencies.first
+      # Create a dayhome
+      @day_home = DayHome.create_from_signup(@day_home_signup_request)
+      @day_home.update_attributes(params[:day_home])
+      if @day_home.save
+        if @day_home_signup_request.save
+            begin
+              agency.add_day_home(@day_home)
+              agency.save
+            rescue Exception => e
+                flash[:error] = e.message
+                return render :action => :new              
+            end
+        else
+          handle_day_home_signup_request_error
+          return render :action => :new
+        end
+      else
+          handle_day_home_error
+          return render :action => :new
+        end
+      end
+    else
+      user.stripe_card_token = @day_home_signup_request.stripe_card_token
+      
+      if user.save_with_payment 
+              
+      	# Create a dayhome
+      	@day_home = DayHome.create_from_signup(@day_home_signup_request)
+      	@day_home.update_attributes(params[:day_home])
 
-			if @day_home.save
-				if @day_home_signup_request.save
-						# Bind dayhome to user
-						user.add_day_home(@day_home)
-		
+  			if @day_home.save
+  				if @day_home_signup_request.save
+            begin
+  						# Bind dayhome to user
+  						user.add_day_home(@day_home)
+		        rescue Exception => e
+              flash[:error] = e.message
+              return render :action => :new
+            end
+
 						#redirect_to root_path, :notice => "Thanks for adding your DayHome! We will contact you soon!"
 						return redirect_to :action => :welcome   
-				else
-					@day_home_signup_request.errors.full_messages.each do |err|
-						error_msg << err
-					end
-					flash[:error] = error_msg.join("<br/>").html_safe
-					render :action => :new
+  				else
+  					handle_day_home_signup_request_error
+  					return render :action => :new
+  				end
+  			else
+					handle_day_home_error
+					return render :action => :new
 				end
-			else
-					error_msg = []
-					@day_home.errors.full_messages.each do |err|
-						error_msg << err
-					end
-					flash[:error] = error_msg.join("<br/>").html_safe
-					render :action => :new
-				end
-			end
-	  else
-			error_msg = []
-	
-			user.errors.full_messages.each do |err|
-				error_msg << err
-			end
-			
-			flash[:error] = error_msg.join("<br/>").html_safe
-			render :action => :new
-		end
-end
+  	  else
+  			handle_user_error
+  			return render :action => :new
+  		end
+    end
+  end
 
-def welcome
-end
+  def welcome
+  end
+
+  private
+    def find_or_create_user
+      user = current_user
+      if current_user.nil?
+        #find user by email
+        user = User.find_by_email(@day_home_signup_request.contact_email)      
+        if user.nil?
+          user = User.find_by_email(@day_home_signup_request.day_home_email)
+          if user.nil?
+              #no one here, create a new one
+              user = User.new_from_signup_request(@day_home_signup_request)
+              user.save   
+              
+              
+              #email them their password set instructions
+              UserMailer.new_user_password_instructions(user).deliver                        
+              
+              reset_session
+          end        
+        end
+      end
+      return user
+    end
+
+    def handle_day_home_error
+      error_msg = []
+      @day_home.errors.full_messages.each do |err|
+        error_msg << err
+      end
+      flash[:error] = error_msg.join("<br/>").html_safe
+    end
+
+    def handle_day_home_signup_request_error
+      @day_home_signup_request.errors.full_messages.each do |err|
+        error_msg << err
+      end
+      flash[:error] = error_msg.join("<br/>").html_safe
+    end
+
+    def handle_user_error
+      error_msg = []
+      user.errors.full_messages.each do |err|
+        error_msg << err
+      end
+      flash[:error] = error_msg.join("<br/>").html_safe
+    end
