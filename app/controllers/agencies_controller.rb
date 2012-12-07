@@ -3,8 +3,8 @@ class AgenciesController < ApplicationController
   before_filter :require_user_to_be_agency_admin
   helper_method :sort_column, :sort_direction
   
-  # GET /admin/agencies/1
-  # GET /admin/agencies/1.json
+  # GET /agencies/1
+  # GET /agencies/1.json
   def show
     @agency = Agency.find(params[:id])
 
