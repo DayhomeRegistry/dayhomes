@@ -74,14 +74,15 @@
             http://dayhomeregistry.com/
           = f.text_field :day_home_slug, :class=>"span2"
         <i class="icon-info-sign icon-white" data-title="What's a slug?" data-content="The slug is the name for the end of our web address that makes it easy for you and your customers to find your page.  The web address that you see to the left will be your home on our website."></i>
-        
-        = f.label :day_home_phone_number, 'Contact Phone Number for Dayhome'
-        = f.text_field :day_home_phone_number
-        <i class="icon-info-sign icon-white" data-title="Dayhome have its own phone or email?" data-content="While there's no little star over there on the label, we do expect either a phone number or an email so that parents know how to contact you."></i>
+        -if current_user
+          - if !current_user.agency_admin?
+            = f.label :day_home_phone_number, 'Contact Phone Number for Dayhome'
+            = f.text_field :day_home_phone_number
+            <i class="icon-info-sign icon-white" data-title="Dayhome have its own phone or email?" data-content="While there's no little star over there on the label, we do expect either a phone number or an email so that parents know how to contact you."></i>
 
-        = f.label :day_home_email, 'Contact Email for Dayhome'
-        = f.text_field :day_home_email
-        <i class="icon-info-sign icon-white" data-title="Dayhome have its own phone or email?" data-content="While there's no little star over there on the label, we do expect either a phone number or an email so that parents know how to contact you."></i>
+            = f.label :day_home_email, 'Contact Email for Dayhome'
+            = f.text_field :day_home_email
+            <i class="icon-info-sign icon-white" data-title="Dayhome have its own phone or email?" data-content="While there's no little star over there on the label, we do expect either a phone number or an email so that parents know how to contact you."></i>
 
         = f.label :day_home_postal_code, 'Postal Code'
         = f.text_field :day_home_postal_code
@@ -99,30 +100,41 @@
     .span5.well.form-horizontal
       %h3
         Now tell us a little about you        
-      - if current_user      
-        .alert.alert-success
-          %i.icon-info-sign.icon-white
-          Thanks for logging in, we've used a little info from your account below.  If you'd like to update that info, visit 
-          = link_to "Your Account", user_path(current_user)
-      
-        = f.label :first_name, 'First Name'
-        = f.text_field :first_name, :value=>current_user.first_name, :class=>:disabled, :disabled=>'disabled'
+      - if current_user    
+        -if !current_user.agency_admin?
+          .alert.alert-success
+            %i.icon-info-sign.icon-white
+            Thanks for logging in, we've used a little info from your account below.  If you'd like to update that info, visit 
+            = link_to "Your Account", user_path(current_user)
         
-        = f.label :last_name, 'Last Name'
-        = f.text_field :last_name, :value=>current_user.last_name, :class=>:disabled, :disabled=>'disabled'
-        
-        = f.label :contact_email, 'Email'
-        = f.text_field :contact_email, :value=>current_user.email, :class=>:disabled, :disabled=>'disabled'
-        -if !@credit_card.nil?        
-          =label_tag "Credit Card"
-          #existingCard
-            =label_tag :existing_card_number, "**** **** **** "+@credit_card[:last4], :style=>"width:150px;"
-            =label_tag :existing_card_exp, "Exp:"+@credit_card[:month].to_s+"/"+@credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"        
-        -else
-          %br
-          %br
-          .alert.alert-error
-            No credit card set!    
+          = f.label :first_name, 'First Name'
+          = f.text_field :first_name, :value=>current_user.first_name, :class=>:disabled, :disabled=>'disabled'
+          
+          = f.label :last_name, 'Last Name'
+          = f.text_field :last_name, :value=>current_user.last_name, :class=>:disabled, :disabled=>'disabled'
+          
+          = f.label :contact_email, 'Email'
+          = f.text_field :contact_email, :value=>current_user.email, :class=>:disabled, :disabled=>'disabled'
+          -if !@credit_card.nil?        
+            =label_tag "Credit Card"
+            #existingCard
+              =label_tag :existing_card_number, "**** **** **** "+@credit_card[:last4], :style=>"width:150px;"
+              =label_tag :existing_card_exp, "Exp:"+@credit_card[:month].to_s+"/"+@credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"        
+          -else
+            %br
+            %br
+            .alert.alert-error
+              No credit card set!    
+        - else
+          .alert.alert-success
+            %i.icon-info-sign.icon-white
+            Welcome back #{current_user.agencies.first.name}! This new registration will be added to your dayhomes which you can 
+            = link_to "manage here.", user_path(current_user)
+            Agency information can be managed
+            = link_to "here.", admin_agencies_path(current_user.agencies.first)
+            %br
+            #{current_user.first_name}, you can update your personal setting by visiting
+            = link_to "Your Account", user_path(current_user)
       -else        
         = f.label :first_name, 'First Name'
         = f.text_field :first_name

@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   end
   
   def day_home_owner?
-    day_homes.any?
+    day_homes.any? || agencies.any?
   end
   def agency_admin?
     agencies.any?

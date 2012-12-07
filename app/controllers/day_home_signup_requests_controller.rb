@@ -52,6 +52,7 @@ class DayHomeSignupRequestsController < ApplicationController
             if @day_home_signup_request.save
               agency.add_day_home(@day_home)
               agency.save
+              return redirect_to :action => :welcome   
             else              
               handle_day_home_signup_request_error
               return render :action => :new
