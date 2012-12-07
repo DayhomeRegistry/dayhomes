@@ -1,0 +1,48 @@
+:javascript
+  $(function(){
+    add_another_mangement();
+  });
+  
+- @agency.users.build if @agency.users.blank? 
+- @agency.day_homes.build if @agency.day_homes.blank? 
+= simple_form_for([:admin,@agency]) do |f| 
+  - if (@agency.errors.keys.include?(:users))
+    .alert.alert-error
+      = f.full_error(:users)
+  - if (@agency.errors.keys.count>1)
+    = f.error_notification 
+
+  
+
+  .form-inputs
+    = f.input :name 
+    = f.input :phone_number
+    = f.input :street1 
+    = f.input :street2
+    = f.input :city
+    = f.input :province
+    = f.input :postal_code
+                        
+  = f.label :assign_day_home_ids, "Assigned users"
+  
+  - f.object.users.each do |user|
+    .add_multiples.clear{'data-group' => 'assign_user_ids'}
+      = select_tag 'agency[assign_user_ids][]', options_for_select([['None', nil]] + User.all_for_select, user.id)
+      = link_to 'Remove', '#', :class => 'remove_fieldset_link'
+      %br
+  = link_to 'Assign another user', '#', :class => 'add_multiples_link', 'data-group' => 'assign_user_ids', 'data-attribute-key' => 'assign_user_ids_attributes'
+  %br
+  %br
+  = f.label :assign_day_home_ids, "Assigned dayhomes"
+  
+  - f.object.day_homes.each do |day_home|
+    .add_multiples.clear{'data-group' => 'assign_day_home_ids'}
+      = select_tag 'agency[assign_day_home_ids][]', options_for_select([['None', nil]] + DayHome.all_for_select, day_home.id)
+      = link_to 'Remove', '#', :class => 'remove_fieldset_link'
+      %br
+  = link_to 'Assign another dayhome', '#', :class => 'add_multiples_link', 'data-group' => 'assign_day_home_ids', 'data-attribute-key' => 'assign_day_home_ids_attributes'
+  %br   
+  
+  
+  .form-actions
+    = f.button :submit 

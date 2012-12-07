@@ -9,7 +9,10 @@
     });
   });  
 %h2
-  My dayhomes
+  -if (current_user.agency_admin?)
+    #{current_user.agencies.first.name} dayhomes
+  -else
+    My dayhomes
 =form_tag({:controller => "day_homes", :action => "index"},:method=>"get", :id => :searchForm) do 
   %div.input-prepend.pull-right
     %span.add-on

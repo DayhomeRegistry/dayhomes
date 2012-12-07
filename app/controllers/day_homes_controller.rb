@@ -14,10 +14,19 @@ class DayHomesController < ApplicationController
       clause = clause.gsub(feature,"")
       clause = clause.gsub(approve,"")            
       
-      if (!clause.empty?)
-        @day_homes = current_user.day_homes.where("name like ?", "%#{clause.strip}%")
+      raise current_user.agency_admin?.to_s
+      if (current_user.agency_admin?)
+        if (!clause.empty?)
+          @day_homes = current_user.agencies.first.day_homes.where("name like ?", "%#{clause.strip}%")
+        else
+          @day_homes = current_user.agencies.first.day_homes
+        end
       else
-        @day_homes = current_user.day_homes
+        if (!clause.empty?)
+          @day_homes = current_user.day_homes.where("name like ?", "%#{clause.strip}%")
+        else
+          @day_homes = current_user.day_homes
+        end
       end
       #return render :text=> clause.strip+"|"+feature+"|"+approve
       
@@ -31,12 +40,16 @@ class DayHomesController < ApplicationController
       @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
       @query = params[:query]
     else 
-      @day_homes = current_user.day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+      
+      if (current_user.agency_admin?)      
+        @day_homes = current_user.agencies.first.day_homes
+      else
+        @day_homes = current_user.day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)      
+      end
     end
   end
   
   def show
-        
     @day_home = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:id])
 
     if @day_home.nil?
