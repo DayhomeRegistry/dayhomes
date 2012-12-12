@@ -21,10 +21,6 @@
     Phone:</b>
   = @agency.phone_number
     
-- @agency.day_homes.each do |dayhome|
-  %p
-    = dayhome.name    
-
 = link_to 'Edit', edit_agency_path(@admin_agency) 
 |
 = link_to 'Back', agencies_path 

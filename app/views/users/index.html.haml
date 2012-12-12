@@ -1,0 +1,58 @@
+= render '/layouts/admin_subnav'
+
+%p
+  = link_to 'Create User', [:new, :user], :class => :btn
+
+- if @users.blank?
+  %p
+    No users have been added yet - how are you logged in?
+- else
+  %table.table-striped.table{:cellpadding => '5'}
+    %thead
+      %tr
+        %th
+          Full Name
+        %th
+          Email
+        %th
+          Is Admin?
+        %th
+          = sortable "plan","Plan"
+        %th
+          Dayhomes?
+        %th
+          Agencies?
+        %th
+          Created
+        %th
+          Actions
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td
+            = user.full_name
+          %td
+            = user.email
+          %td
+            = yes_no(user.admin?)
+          %td
+            = user.plan	            
+          %td
+            - if user.day_home_owner?
+              = user.day_homes.map(&:name).join(', ')
+            - else
+              None
+          %td
+            - if user.agencies.any?
+              = user.agencies.map(&:name).join(', ')
+            - else
+              None
+          %td
+            = user.created_at.to_s(:descriptive)
+          %td
+            = link_to 'Edit', [:edit, user]
+            |
+            = link_to 'Delete', [user], :method => :delete, :confirm => "Are you sure you want to remove #{user.full_name}?"
+            
+            
+  = paginate @users

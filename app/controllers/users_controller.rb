@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:show, :update]
+  helper_method :sort_column, :sort_direction
+  before_filter :require_no_user, :only => [:new, :create], :unless => :agency_user
+  before_filter :require_user, :only => [:show, :update, :index]
+  before_filter :require_user_to_be_agency_admin, :only=>[:index]
   
   def show
     @user = current_user
@@ -8,23 +10,36 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    if(current_user.agency_admin?)
+      return render :action=>:agency_new
+    end
   end
 
   def create
     @user = User.new(params[:user])
     
     if @user.save
-      redirect_to root_path
-      flash[:notice] = "Thanks for signing up #{@user.full_name}!"
+      if(current_user.agency_admin?)
+        current_user.agencies.first.add_user(@user);
+        current_user.agencies.first.save
+        redirect_to users_path
+      else
+        redirect_to root_path
+        flash[:notice] = "Thanks for signing up #{@user.full_name}!"
+      end
     else
       render :action => :new
     end
   end
 
   def edit
+    @user = current_user
+    if (@user.agency_admin? && !params[:id].nil?)
+      @user = User.find(params[:id])
+    end
     #raise current_user.stripe_customer_token
-    if(!current_user.stripe_customer_token.nil?)
-      customer = Stripe::Customer.retrieve(current_user.stripe_customer_token)
+    if(!@user.stripe_customer_token.nil?)
+      customer = Stripe::Customer.retrieve(@user.stripe_customer_token)
       #raise customer.to_json
       @credit_card = {
         last4: customer.active_card.last4,
@@ -36,12 +51,50 @@ class UsersController < ApplicationController
   end
 
   def update
-    current_user.assign_attributes(params[:user])
-    if current_user.save_with_payment
-      redirect_to user_path(current_user)
+
+    @user = User.find(params[:id])
+    @user.assign_attributes(params[:user]) 
+
+    if !@user.stripe_card_token.nil?
+      if @user.save_with_payment
+        redirect_to user_path(@user)
+      else
+        return render :action => :edit
+      end
     else
-      render :action => :edit
+      if @user.save
+        redirect_to user_path(@user)
+      else
+        return render :action => :edit
+      end
     end
   end
 
+  def index
+    #this is just for agency admin to edit the users associated with the agency
+    @users = current_user.agencies.first.users.page(params[:page] || 1).per(params[:per_page] || 10)
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    unless @user.destroy
+      flash[:error] = "Unable to remove #{@user.full_name}"
+    end
+
+    redirect_to admin_users_path
+  end
+  
+    
+  private
+  def sort_column
+    User.column_names.include?(params[:sort]) ? params[:sort] : "full_name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
+  end  
+
+  def agency_user
+    return current_user.agency_admin?
+  end
 end

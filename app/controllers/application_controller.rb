@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     end
   end
   def require_user_to_be_day_home_owner_or_admin
-    unless (current_user && current_user.day_home_owner?) || (current_user && current_user.admin?)
+    unless (current_user && current_user.day_home_owner?) || (current_user && current_user.admin?) || (current_user && current_user.agency_admin?)
       redirect_to root_path
     end
   end

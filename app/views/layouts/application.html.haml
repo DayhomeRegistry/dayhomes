@@ -37,6 +37,11 @@
           .row
             .span12
               = render 'layouts/flash_msgs'
+              -if current_user.admin?
+                = render '/layouts/admin_subnav'
+              -if current_user.agency_admin?
+                = render '/layouts/agency_subnav'
+
           = yield
       #contentShadow
       = render 'layouts/footer'

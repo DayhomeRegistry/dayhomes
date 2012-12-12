@@ -37,14 +37,8 @@
             = "-"
             = link_to "Your Account", user_path(current_user)
             |
-            - if current_user.admin?
-              = link_to "Admin", admin_root_path
-              |
             - if current_user.day_home_owner?
               = link_to "My dayhomes", day_homes_path
-              |
-            - if current_user.agency_admin?
-              = link_to "My agency", agency_path(current_user.agencies.first)
               |
             = link_to 'Logout', logout_path
           - else
