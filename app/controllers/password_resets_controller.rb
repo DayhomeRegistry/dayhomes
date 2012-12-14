@@ -1,16 +1,27 @@
 class PasswordResetsController < ApplicationController
-  before_filter :require_no_user
+  before_filter :require_no_user, :except => [:admin_reset]
   skip_before_filter :require_user
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
   
   def new
   end
   
+  def admin_reset
+    @user = User.find(params[:id])
+    if @user && @user.deliver_password_reset_instructions!
+      flash[:notice] = "Instructions to reset their password have been emailed to #{@user.email}."
+    else
+      flash[:error] = "Oops, we couldn't find an email for that user."
+    end
+    flash.keep
+    redirect_to :controller=>'users',:action=>'index'
+  end
+
   def create
     @user = User.find_by_email(params[:email])
     
     if @user && @user.deliver_password_reset_instructions!
-      flash[:notice] = "Instructions to reset your password have been emailed to #{@user.email}."
+      flash[:notice] = "Instructions for a password reset have been emailed to #{@user.email}."
       redirect_to root_path
     else
       flash.now[:error] = "No user was found for #{params[:email]}"

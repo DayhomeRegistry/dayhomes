@@ -36,8 +36,6 @@
         %th
           Featured?
         %th
-          Owners
-        %th
           Actions
     %tbody
       - @day_homes.each do |day_home|
@@ -55,10 +53,6 @@
           %td
             = yes_no(day_home.featured?)
           %td
-            = day_home.users.map(&:full_name).join(', ')
-          %td
-            = link_to 'View dayhome', day_home
-            |
             = link_to 'Edit', [:edit, day_home]
             |
             = link_to('View Calendar', "/day_homes/#{day_home.id}/calendar")

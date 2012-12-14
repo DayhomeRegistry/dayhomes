@@ -14,14 +14,13 @@ class DayHomesController < ApplicationController
       clause = clause.gsub(feature,"")
       clause = clause.gsub(approve,"")            
       
-      raise current_user.agency_admin?.to_s
       if (current_user.agency_admin?)
         if (!clause.empty?)
           @day_homes = current_user.agencies.first.day_homes.where("name like ?", "%#{clause.strip}%")
         else
           @day_homes = current_user.agencies.first.day_homes
         end
-      else
+      else 
         if (!clause.empty?)
           @day_homes = current_user.day_homes.where("name like ?", "%#{clause.strip}%")
         else
@@ -103,11 +102,19 @@ class DayHomesController < ApplicationController
 
 
   def edit
-    @day_home = current_user.day_homes.find(params[:id])
+    if(current_user.agency_admin?)
+      @day_home = current_user.agencies.first.day_homes.find(params[:id])
+    else
+      @day_home = current_user.day_homes.find(params[:id])
+    end
   end
   
   def update
-    @day_home = current_user.day_homes.find(params[:id])
+    if(current_user.agency_admin?)
+      @day_home = current_user.agencies.first.day_homes.find(params[:id])
+    else
+      @day_home = current_user.day_homes.find(params[:id])
+    end
     
     if @day_home.update_attributes(params[:day_home])
       redirect_to day_homes_path

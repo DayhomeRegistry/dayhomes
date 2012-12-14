@@ -31,7 +31,7 @@ class AgenciesController < ApplicationController
     respond_to do |format|
       if @agency.update_attributes(params[:agency])
         #raise @agency.errors.messages.inspect
-        format.html { redirect_to admin_agency_path(@agency), notice: 'Agency was successfully updated.' }
+        format.html { redirect_to agency_path(@agency), notice: 'Agency was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -47,7 +47,7 @@ class AgenciesController < ApplicationController
     @agency.destroy
 
     respond_to do |format|
-      format.html { redirect_to admin_agencies_url }
+      format.html { redirect_to agencies_url }
       format.json { head :no_content }
     end
   end

@@ -1,5 +1,5 @@
-= render '/layouts/admin_subnav'
-
+%p
+  All the users listed here will be notified when a Dayhome is contacted and when new dayhomes are created.
 %p
   = link_to 'Create User', [:new, :user], :class => :btn
 
@@ -14,14 +14,10 @@
           Full Name
         %th
           Email
-        %th
-          Is Admin?
-        %th
-          = sortable "plan","Plan"
-        %th
-          Dayhomes?
-        %th
-          Agencies?
+        /%th
+        /  Receive Contacts
+        /%th
+        /  Receive Signups
         %th
           Created
         %th
@@ -33,26 +29,16 @@
             = user.full_name
           %td
             = user.email
-          %td
-            = yes_no(user.admin?)
-          %td
-            = user.plan	            
-          %td
-            - if user.day_home_owner?
-              = user.day_homes.map(&:name).join(', ')
-            - else
-              None
-          %td
-            - if user.agencies.any?
-              = user.agencies.map(&:name).join(', ')
-            - else
-              None
+          /%td
+          /%td
           %td
             = user.created_at.to_s(:descriptive)
           %td
             = link_to 'Edit', [:edit, user]
             |
             = link_to 'Delete', [user], :method => :delete, :confirm => "Are you sure you want to remove #{user.full_name}?"
+            |
+            = link_to 'Reset Password', reset_password_admin_path(user.id), :confirm => "Are you sure you want to reset the password for #{user.full_name}?"
             
             
   = paginate @users
