@@ -1,5 +1,6 @@
 set :application, "dayhomes"
 set :repository,  "git@github.com:DayhomeRegistry/dayhomes.git"
+set :rake, "rake --trace"
 
 require './config/boot'
 require 'airbrake/capistrano'
