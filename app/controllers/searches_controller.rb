@@ -3,6 +3,7 @@ class SearchesController < ApplicationController
     if params[:search].blank?
       @day_homes = DayHome.with_availability_uniq(Search::DEFAULT_AVAILABILITY_TYPES).all.reject{|x| !x.approved?}
     else
+      #raise params.to_json
       @search = Search.new(params[:search])
 
       # If any errors, show an error message
@@ -11,6 +12,7 @@ class SearchesController < ApplicationController
       end
 
       # set the pins for gmaps
+      @agency = Agency.find_by_id(@search.agency)
       @day_homes = @search.day_homes
     end
 

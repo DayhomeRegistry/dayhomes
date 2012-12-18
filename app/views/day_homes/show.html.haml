@@ -80,8 +80,10 @@
     - if @day_home.agencies.any?
       %div
         This dayhome is proudly managed through 
-        %br
-        =@day_home.agencies.first.name
+        %span.external
+          #{@day_home.agencies.first.name}
+        , click here for
+        = link_to(" other locations near this one.",searches_path('search[agency]'=>@day_home.agencies.first.id,'search[address]'=>@day_home.address))   
         %br
         Phone:
         =@day_home.agencies.first.phone_number

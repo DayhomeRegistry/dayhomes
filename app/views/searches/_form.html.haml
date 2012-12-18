@@ -4,9 +4,14 @@
   .control-group
     .controls
       = f.hidden_field(:advanced_search, :value => true)
+      -if !@agency.nil?
+        =f.hidden_field(:agency,:value=>@agency.id)
       .search_section
         %h5
-          = 'Dayhomes near'
+          - if !@agency.nil?
+            #{@agency.name} locations near
+          -else
+            = 'Dayhomes near'
         = f.text_field :address, :style => 'width: 175px', :placeholder => "Address or Neighbourhood"
       .search_section
         %h5

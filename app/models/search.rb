@@ -6,12 +6,13 @@ class Search
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
                 :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
-                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group
+                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group, :agency
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => 'Full Days'}
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
 
   def initialize(attributes = {})
+
     # set each of the attributes
     attributes.each do |name, value|
       send("#{name}=", value)
@@ -46,15 +47,22 @@ class Search
   end
 
   def dayhome_filter(params)
+    
     search_addy_pin = nil
     dayhome_query = DayHome.scoped
 	
-	# don't display any dayhomes that are not approved
-	dayhome_query = dayhome_query.where( :approved => true )
+  	# don't display any dayhomes that are not approved
+  	dayhome_query = dayhome_query.where( :approved => true )
 
     # set the joins based on what the user has
     dayhome_query = determine_joins(dayhome_query)
-	
+
+    # filter for agencies
+    if(params.has_key?(:agency))
+      #raise params[:agency].to_s
+      dayhome_query = apply_agency_filter(params[:agency],dayhome_query)
+  	end
+
     # if the user uses the advanced search, we use the values from the search screen
     # otherwise we use the defaults (defined in set_defaults)
     if params.has_key?(:advanced_search) && params[:advanced_search] == 'true'
@@ -75,6 +83,7 @@ class Search
 
     # return the gmaps pins variable
     create_pins(dayhome_query, search_addy_pin)
+
   end
 
   private
@@ -149,6 +158,14 @@ class Search
       dayhome_query = dayhome_query.where(:licensed => [true, false])
     end
 
+    dayhome_query
+  end
+
+  # show only those dayhomes for a particular agency
+  def apply_agency_filter(agency_id,dayhome_query)
+    
+    dayhome_query = dayhome_query.joins(:agencies)
+    dayhome_query = dayhome_query.where("agencies.id = #{agency_id}")
     dayhome_query
   end
 
@@ -235,6 +252,7 @@ class Search
     unless self.send(type).blank?
       # tack on any of the checkboxes to the where clause
       id_array = []
+      #raise self.send(type).to_json
       self.send(type).each do |search_type|
         if search_type.checked
           id_array << "#{search_type.id}"
