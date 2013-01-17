@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117025714) do
+ActiveRecord::Schema.define(:version => 20130117045158) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -171,6 +171,26 @@ ActiveRecord::Schema.define(:version => 20130117025714) do
   end
 
   add_index "forums", ["category_id"], :name => "index_forums_on_category_id"
+
+  create_table "location_day_homes", :force => true do |t|
+    t.integer  "location_id"
+    t.integer  "day_home_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "organization_locations", :force => true do |t|
+    t.integer  "organization_id"
+    t.integer  "location_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "organization_users", :force => true do |t|
     t.integer  "user_id"
