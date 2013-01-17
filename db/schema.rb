@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117045158) do
+ActiveRecord::Schema.define(:version => 20130117223356) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -158,6 +158,13 @@ ActiveRecord::Schema.define(:version => 20130117045158) do
   end
 
   add_index "events", ["day_home_id"], :name => "index_events_on_day_home_id"
+
+  create_table "features", :force => true do |t|
+    t.date     "start"
+    t.date     "end"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "forums", :force => true do |t|
     t.string   "title"
