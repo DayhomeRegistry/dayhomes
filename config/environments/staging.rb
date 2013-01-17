@@ -49,9 +49,6 @@ Dayhomes::Application.configure do
   config.assets.precompile += %w(jquery.home_slider.js google_analytics.js categories.css mailer.css)
     
   # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.delivery_method = :sendmail
-  config.action_mailer.default_url_options = {:host => "dayhomeregistry.com"}
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = {:host =>"staging.dayhomeregistry.com"}
   config.action_mailer.asset_host='http://staging.dayhomeregistry.com'
@@ -75,7 +72,7 @@ Dayhomes::Application.configure do
   config.i18n.fallbacks = true
 
   # Send deprecation notices to registered listeners
-  config.active_support.deprecation = :notify
+  config.active_support.deprecation = :log
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
