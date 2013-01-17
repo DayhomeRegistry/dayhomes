@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115040352) do
+ActiveRecord::Schema.define(:version => 20130117025714) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -172,6 +172,19 @@ ActiveRecord::Schema.define(:version => 20121115040352) do
 
   add_index "forums", ["category_id"], :name => "index_forums_on_category_id"
 
+  create_table "organizations", :force => true do |t|
+    t.string   "name"
+    t.string   "city"
+    t.string   "province"
+    t.string   "street1"
+    t.string   "street2"
+    t.string   "postal_code"
+    t.string   "billing_email"
+    t.string   "phone_number"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "posts", :force => true do |t|
     t.text     "body"
     t.integer  "forum_id"
@@ -236,6 +249,13 @@ ActiveRecord::Schema.define(:version => 20121115040352) do
   add_index "user_day_homes", ["day_home_id", "user_id"], :name => "index_user_day_homes_on_day_home_id_and_user_id"
   add_index "user_day_homes", ["day_home_id"], :name => "index_user_day_homes_on_day_home_id"
   add_index "user_day_homes", ["user_id"], :name => "index_user_day_homes_on_user_id"
+
+  create_table "user_organizations", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                                :null => false
