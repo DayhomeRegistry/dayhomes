@@ -9,10 +9,12 @@ class AgencyToOrganization < ActiveRecord::Migration
 	    t.string   "postal_code"
 	    t.string   "billing_email"
 	    t.string   "phone_number"
+	    t.string   :stripe_customer_token
+    	t.string   :plan,  :default => 'baby'
 
 	    t.timestamps
 	end
-	create_table :user_organizations do |t|
+	create_table :organization_users do |t|
       t.column :user_id, :integer
       t.column :organization_id, :integer
 
@@ -28,6 +30,7 @@ class AgencyToOrganization < ActiveRecord::Migration
 				:street2 => dayhome.street2,
 				:postal_code => dayhome.postal_code,
 				:phone_number => dayhome.phone_number,
+				:stripe_customer_token => user.stripe_customer_token
 			)
 			org.save
 			org.users << user
@@ -36,6 +39,13 @@ class AgencyToOrganization < ActiveRecord::Migration
 	end
 
 	Agency.all.each do |agency|
+		stripe = nil
+		agency.users.each do |u|
+			if !u.stripe_customer_token.nil?
+				stripe=u.stripe_customer_token
+				break
+			end
+		end
 		org = Organization.new(
 			:name => agency.name,
 			:city => agency.city,
@@ -43,7 +53,8 @@ class AgencyToOrganization < ActiveRecord::Migration
 			:street1 => agency.street1,
 			:street2 => agency.street2,
 			:postal_code => agency.postal_code,
-			:phone_number => agency.phone_number
+			:phone_number => agency.phone_number,
+			:stripe_customer_token => stripe
 		)
 		org.save
 		org.users << agency.users

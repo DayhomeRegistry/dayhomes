@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :user_agencies, :dependent => :destroy
   has_many :agencies, :through => :user_agencies
 
+  has_one :organization, :through => :user_organizations
+
   has_many :topics, :dependent => :destroy
   has_many :posts, :dependent => :destroy
 

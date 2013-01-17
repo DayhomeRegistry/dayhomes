@@ -172,6 +172,13 @@ ActiveRecord::Schema.define(:version => 20130117025714) do
 
   add_index "forums", ["category_id"], :name => "index_forums_on_category_id"
 
+  create_table "organization_users", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "organizations", :force => true do |t|
     t.string   "name"
     t.string   "city"
@@ -181,8 +188,10 @@ ActiveRecord::Schema.define(:version => 20130117025714) do
     t.string   "postal_code"
     t.string   "billing_email"
     t.string   "phone_number"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "stripe_customer_token"
+    t.string   "plan",                  :default => "baby"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   create_table "posts", :force => true do |t|
@@ -249,13 +258,6 @@ ActiveRecord::Schema.define(:version => 20130117025714) do
   add_index "user_day_homes", ["day_home_id", "user_id"], :name => "index_user_day_homes_on_day_home_id_and_user_id"
   add_index "user_day_homes", ["day_home_id"], :name => "index_user_day_homes_on_day_home_id"
   add_index "user_day_homes", ["user_id"], :name => "index_user_day_homes_on_user_id"
-
-  create_table "user_organizations", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "organization_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                                :null => false
