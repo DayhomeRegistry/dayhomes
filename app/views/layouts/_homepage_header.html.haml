@@ -1,0 +1,23 @@
+%header
+  #logo
+  #nav
+    %ul
+      %li
+        = link_to 'About Us', about_pages_path
+      %li
+        = link_to 'Blog', "http://blog.dayhomeregistry.com"
+      %li
+        = link_to 'Pricing', pricing_pages_path, :class=>"red"
+      %li
+        = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
+          = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
+          = f.submit "Search!", :id => 'submit', :class => "yellow"
+    .clear
+  #charm
+    %div
+      = link_to "My Account", user_path(current_user)
+      - if current_user
+        = link_to 'Logout', logout_path
+      - else
+        = link_to 'Login', login_path
+  .clear

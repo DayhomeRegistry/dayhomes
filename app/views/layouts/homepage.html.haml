@@ -1,0 +1,66 @@
+!!! Strict
+/[if lt IE 7] <html lang="en-us" class="lt-ie9 lt-ie8 lt-ie7">
+/[if IE 7] <html lang="en-us" class="lt-ie9 lt-ie8">
+/[if IE 8] <html lang="en-us" class="lt-ie9">
+/ [if gt IE 8] <!
+%html{:lang => "en-us"}
+  / <![endif]
+  %head
+    %title Dayhome Registry
+    = stylesheet_link_tag :homepage, :media => :all
+    = javascript_include_tag "http://js.stripe.com/v1/",:application
+    = csrf_meta_tags
+    = tag :meta, :name=>"stripe-key", :content => STRIPE_PUBLIC_KEY
+    / yield
+    = yield :header_scripts
+    / /yield
+    %link{:href => "/assets/icons/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}
+    /[if gte IE 9]
+      :css
+        .gradient { filter: none; }
+        .gradient:hover { filter: none; }
+  %body
+    :plain
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=371277729589519";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+      
+    = render 'layouts/homepage_header'
+    #main
+      #featureReel
+        #feature.drop-shadow
+      
+      #chooseYourAdventure
+        #parent
+          %h1
+            Do you need a dayhome?
+          %div
+            %img(src='http://dl.dropbox.com/u/76665191/map.jpg')
+          %div  
+            Use our
+            =link_to search_path,'advanced search'
+            to find what you need
+        #dayhome
+          %h1
+            Are you a dayhome provider?
+          .signup
+            = link_to pricing_path, :class->'signup-link'
+              %strong.signin-popup
+                Sign up now
+                %span.starburst-holder
+                  %span.starburst
+                    %span
+                      Free!
+          %h2
+            It takes less than a minute to create your <span class="red">free</span> account and start promoting your business!</h2>
+          <div class="facebook">Have a facebook account? You can use that to <a href="">sign in</a> too!</div>
+        </div>
+      </div>  
+      <div class="clear"></div>
+    </div>
+    = render 'layouts/footer'
