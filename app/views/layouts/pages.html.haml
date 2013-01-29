@@ -7,7 +7,7 @@
   / <![endif]
   %head
     %title Dayhome Registry
-    = stylesheet_link_tag :homepage, :media => :all
+    = stylesheet_link_tag :pages, :media => :all
     = javascript_include_tag "http://js.stripe.com/v1/",:application
     = csrf_meta_tags
     = tag :meta, :name=>"stripe-key", :content => STRIPE_PUBLIC_KEY
@@ -43,13 +43,13 @@
             %img(src='http://dl.dropbox.com/u/76665191/map.jpg')
           %div  
             Use our
-            =link_to search_path,'advanced search'
+            =link_to 'advanced search',searches_path
             to find what you need
         #dayhome
           %h1
             Are you a dayhome provider?
           .signup
-            = link_to pricing_path, :class->'signup-link'
+            - link_to pricing_pages_path(), :class=>'signup-link' do
               %strong.signin-popup
                 Sign up now
                 %span.starburst-holder
@@ -57,10 +57,12 @@
                     %span
                       Free!
           %h2
-            It takes less than a minute to create your <span class="red">free</span> account and start promoting your business!</h2>
-          <div class="facebook">Have a facebook account? You can use that to <a href="">sign in</a> too!</div>
-        </div>
-      </div>  
-      <div class="clear"></div>
-    </div>
-    = render 'layouts/footer'
+            It takes less than a minute to create your 
+            %span.red
+              free
+            account and start promoting your business!
+          .facebook
+            Have a facebook account? You can use that to 
+            = link_to 'sign in ', login_path
+            too!
+    /= render 'layouts/footer'
