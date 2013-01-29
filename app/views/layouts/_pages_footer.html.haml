@@ -1,0 +1,39 @@
+%footer
+  #about
+    %h2
+      About Us
+    %p
+      Dayhome Registry is your answer for all of your dayhome searching needs!
+    %p
+      Being a parent is busy enough. The mission of the Dayhome Registry is to make being a parent a little easier.
+      = link_to 'Read More...', about_pages_path
+  #contact
+    %h2
+      Contact
+    %p
+      Have any questions or concerns about the Dayhome Registry? We'd love to hear from you.
+    %p
+      Email us at 
+      = link_to 'contact@dayhomeregistry.com','mailto:contact@dayhomeregistry.com', :target=>'_blank'
+  #social
+    %h2 We're Social
+    %p Join the conversation and connect with other dayhomes and parents in your area.
+    %a{:href => "http://www.facebook.com/DayhomeRegistry", :target => "_blank"}
+      %p
+        = image_tag 'icons/facebook.png', :alt => 'Like Dayhomes on Facebook'
+        %span Like us on Facebook
+    %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
+      %p
+        = image_tag 'icons/twitter-2.png', :alt => 'Like Dayhomes on Twitter'
+        %span Follow us on Twitter
+  .copyright
+    %p
+    &copy;
+    = link_to "Dayhome Registry #{Date.today.year}", root_path
+    | Read our
+    = link_to 'Privacy Policy', [:privacy, :pages]
+
+= yield :scripts
+- if Rails.env.production?
+  = javascript_include_tag 'google_analytics'
+

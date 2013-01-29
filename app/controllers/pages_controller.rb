@@ -1,6 +1,10 @@
 class PagesController < ApplicationController
+  layout 'application'
+
   def index
+
     @featured_day_homes = DayHome.featured.reject{|day_home| day_home.photos.blank?||!day_home.approved? }
+    render :layout=>'pages'
   end
   
   def about

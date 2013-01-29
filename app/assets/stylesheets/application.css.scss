@@ -26,125 +26,6 @@
  
 */
 
-$green: #52BE60;
-$yellow: #f0df73;
-$red: #FE1A00;
-$blue: #23affa;
-$light-grey: #e3e3e3;
-$dark-grey: #798e94;
-
-.red {
-  color: $red;
-}
-.yellow {
-  color: $yellow;
-}
-.clear {
-  clear: both;
-}
-
-body {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
-  width: 100%;
-  border: 0;
-  margin: 0;
-}
-ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-a {
-  color: $green;
-  text-decoration: none;
-}
-h1 {
-  font-size: 25.888px;
-}
-header {
-  width: 70%;
-  margin: auto;
-  position: relative;
-  padding-bottom: 1em;
-}
-
-header > div {
-}
-
-#logo {
-  height: 175px;  
-  float: left;
-  background: #ffffff  url('http://staging.dayhomeregistry.com/assets/logo-17985638cc586b2f803a229715586919.png') no-repeat;
-  
-  width: 205px;
-  margin-top: 4em;
-}
-#nav {
-  font-size: 18px;
-  background: #fff url('http://dl.dropbox.com/u/76665191/arrow.png') no-repeat bottom right;
-  height: 175px;  
-  margin-left: 205px;
-  
-  ul {
-    float: right;
-    margin-top: 4em;
-    padding-top: 139px;
-    
-    li {
-      float: left;
-      margin: 0 1em 0 1em;
-    }
-  }
-  a {
-    color: $dark-grey;
-  }
-  a.red {
-    color: $red;
-  }
-  a.yellow {
-    color: $yellow;
-  }
-  a:hover {
-    border-top: 2px solid $dark-grey;
-  }
-}
-#search {
-  width:200px;
-  margin-right:4px;
-}
-#charm {
-  background-color: $light-grey;
-  color: $dark-grey;
-  width:200px;
-  height: 1.5em;
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  padding: 0 .5em;
-  
-  -moz-border-radius-bottomright: 8px;
-  -moz-border-radius-bottomleft: 8px;
-  -webkit-border-bottom-right-radius: 8px;
-  -webkit-border-bottom-left-radius: 8px;  
-
-  > div {
-    
-    margin-top: 4px;
-    float: left;
-    width: 50%; 
-    text-align: center;
-    
-    a {
-      color: $dark-grey !important;
-    }
-    a:hover {
-      border-top: 2px solid $dark-grey;
-    }
-  }
-}
-
-
-
 /* Configure and import bootstrap */
 /* Set the proper asset path for loading icon images. */
 $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
@@ -161,7 +42,7 @@ $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 }
 .field_with_errors label {
   color: red;
-}	
+} 
 .field_with_errors label.message {
   margin-left: 5px;
 }
@@ -172,11 +53,11 @@ $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 
 
 .form-group {
-	padding:10px;
-	margin: 5px 0;
-	background-color: #8AF18A	;
-	-moz-border-radius: 15px;
-	border-radius: 10px;
+  padding:10px;
+  margin: 5px 0;
+  background-color: #8AF18A ;
+  -moz-border-radius: 15px;
+  border-radius: 10px;
 }
 
 .flair {
@@ -272,9 +153,9 @@ color: #468847;
 }
 
 #existingCard label{
-	background-color: #F5F8A8	;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+  background-color: #F5F8A8 ;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .agency_subnav {

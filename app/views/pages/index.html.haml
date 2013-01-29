@@ -1,101 +1,44 @@
-:javascript
-  $(function(){
-    $("#featureList").hide();
-    $("#seeListLink").click(function(event){
-      $("#featureList").toggle();
-      
-      event.preventDefault(); // Prevent link from following its href
-    });
-  });
-.row
-  .span7
-    .featured
-      .top
-      .featureDetails
-        %h2 Featured Dayhomes
-        .slides
-          - @featured_day_homes.each do |featured_day_home|
-            .slide
-              %a{:href => day_home_slug_path(featured_day_home.slug)}
-                %img{:src=>"#{featured_day_home.photos.first.photo_url(:reg)}"}
-                .slide-desc
-                  .slide-desc-inset
-                    %h4
-                      = featured_day_home.name
-                    - if featured_day_home.highlight.present?
-                      %p
-                        = featured_day_home.highlight
-        .list
-          = link_to "Show all featured dayhomes","#", :id=>"seeListLink"
-      .featureList#featureList
-        =render :partial => 'day_home', :collection => @featured_day_homes             
-      .bottom
-    
-  .span5
-    .callToAction
-      .top
-      %h3 Dayhome owner?
-      %p.point
-        We believe all children should have the best care possible.
-      %p.point
-        We believe Dayhomes provide that level of care.
-      %p.point
-        But, caring for children can be a tough job.
-      %p
-        Let us make that job a little easier for you.
-      %p
-        = link_to 'Register!'.html_safe, pricing_pages_path, :class => "callToActionButton gradient"
-      .bottom
-    .twitterWidget
-      :plain
-        <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
-        <script>
-          new TWTR.Widget({
-            version: 2,
-            type: 'profile',
-            rpp: 1,
-            interval: 30000,
-            width: 287,
-            height: 150,
-            theme: {
-              shell: {
-                background: '#9f9f9f',
-                color: '#ffffff'
-              },
-              tweets: {
-                background: '#ffffff',
-                color: '#9f9f9f',
-                links: '#005580'
-              }
-            },
-            features: {
-              scrollbar: false,
-              loop: false,
-              live: true,
-              behavior: 'all'
-            }
-          }).render().setUser('dayhomeregistry').start();
-        </script>    
-.row
-  .span12
-    :plain
-      <div class="dh-inline-block">
-        <div class="fb-like" data-href="http://dayhomeregistry.com" data-send="false" data-layout="button_count" data-show-faces="false"></div>
-      </div>
-      
-      <div class="dh-inline-block">
-        <div class="g-plusone" data-size="medium" data-annotation="none"></div>
-        <script type="text/javascript">
-          (function() {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://apis.google.com/js/plusone.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-          })();
-        </script>
-      </div>
-
-      
-      <div class="dh-inline-block">
-        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-      </div>
+#featureReel
+  #feature.drop-shadow
+    .slides
+      - @featured_day_homes.each do |featured_day_home|
+        .slide
+          %a{:href => day_home_slug_path(featured_day_home.slug)}
+            %img{:src=>"#{featured_day_home.photos.first.photo_url(:reg)}"}
+            .slide-desc
+              .slide-desc-inset
+                %h4
+                  = featured_day_home.name
+                - if featured_day_home.highlight.present?
+                  %p
+                    = featured_day_home.highlight
+#chooseYourAdventure
+  #parent
+    %h1
+      Do you need a dayhome?
+    %div
+      %img(src='http://dl.dropbox.com/u/76665191/map.jpg')
+    %div  
+      Use our
+      =link_to 'advanced search',searches_path
+      to find what you need
+  #dayhome
+    %h1
+      Are you a dayhome provider?
+    .signup
+      %a{:href => pricing_pages_path(), :class=>'signup-link'}
+        %strong.signin-popup
+          Sign up now
+          %span.starburst-holder
+            %span.starburst
+              %span
+                Free!
+    %h2
+      It takes less than a minute to create your 
+      %span.red
+        free
+      account and start promoting your business!
+    .facebook
+      Have a facebook account? You can use that to 
+      = link_to 'sign in ', login_path
+      too!
