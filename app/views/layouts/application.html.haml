@@ -31,16 +31,9 @@
       }(document, 'script', 'facebook-jssdk'));</script>
       
     = render 'layouts/header'
-    #mainBG
-      .content
-        .container
-          .row
-            .span12
-              -if current_user && current_user.admin?
-                = render '/layouts/admin_subnav'
-              -if current_user && current_user.agency_admin?
-                = render '/layouts/agency_subnav'
-              = render 'layouts/flash_msgs'
-          = yield
-      #contentShadow
-      = render 'layouts/footer'
+    #main    
+      .clear
+      = render 'layouts/flash_msgs'
+      = yield
+      .clear
+    = render 'layouts/footer'

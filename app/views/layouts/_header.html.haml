@@ -1,50 +1,64 @@
+:javascript
+  $(function(){
+    $('#searchSubmit').click(function(){
+      $('#search').submit();
+      return false;
+    });
+  });
 %header
-  .container
-    .row
-      .span4
-        =link_to root_url do
-          = image_tag 'logo.png'
-      .span8.findDayhome
-        #searchBox
-          = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
+  #logo
+  #nav
+    = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
+      %ul.main-nav
+        - if request.path != pages_path
+          %li
+            = link_to 'Home', pages_path
+        %li
+          = link_to 'About', about_pages_path
+        %li
+          = link_to 'Blog', "http://blog.dayhomeregistry.com"
+        %li
+          %div
             = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
-            = f.submit "Search!", :id => 'submit', :class => "callToActionButton gradient"
-          = link_to 'Advanced Search', searches_path
-
-%nav
-  .container
-    .row
-      .span6
-        %ul
+            = link_to "Search", "#",:id=>'searchSubmit',:class=>"yellow"
+      -if current_user && (current_user.day_home_owner? || current_user.agency_admin?)
+        %ul.client-menu
           %li
-            = link_to 'Home', root_path, :id => 'active'
+            %a{:href => ""}
+              Overview
           %li
-            = link_to 'About Us', about_pages_path
+            %a{:href => ""}
+              Upgrades
           %li
-            = link_to 'Contact', "mailto:contact@dayhomeregistry.com"
-          %li
-            = link_to 'Pricing', pricing_pages_path
-          %li
-            = link_to 'Blog', "http://blog.dayhomeregistry.com"
-          - if current_user && current_user.day_home_owner? || current_user && current_user.admin?
-            %li
-              = link_to 'Forums', forums_path
-
-      .span6.pull-right
-        %ul.pull-right
-          - if current_user
-            = current_user.full_name
-            = "-"
-            = link_to "Your Account", user_path(current_user)
-            |
-            - if current_user.day_home_owner?
-              = link_to "My dayhomes", day_homes_path
-              |
-            = link_to 'Logout', logout_path
-          - else
-            %li
-              = link_to 'Login', login_path
-            %li
-              = link_to 'Sign Up', new_user_path
-            %li
-              = fb_connect_button
+            %a{:href => ""}
+              Buy Extras    
+  .clear
+  -if current_user && current_user.agency_admin?
+    #subnav  
+      %ul
+        %li
+          = link_to 'People', users_path
+        %li
+          = link_to 'DayHomes', day_homes_path
+        %li
+          = link_to 'Company Info', agency_path(current_user.agencies.first)
+      .clear
+  -if current_user && current_user.admin?
+    #subnav  
+      %ul
+        %li
+          = link_to 'People', [:admin, :users]
+        %li
+          = link_to 'DayHomes', [:admin, :day_homes]
+        %li
+          = link_to 'Manage Agencies', [:admin, :agencies]
+      .clear      
+  #charm
+    - if current_user
+      %div
+        = link_to "My Account", user_path(current_user)
+        = link_to 'Logout', logout_path
+    - else
+      %div
+        = link_to 'Login', login_path
+  .clear

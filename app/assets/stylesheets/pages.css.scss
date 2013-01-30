@@ -8,8 +8,9 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
+ *= require normalize
  *= require slides
+ *= require_self
  
 */
 
@@ -30,8 +31,12 @@ $dark-grey: #798e94;
   clear: both;
 }
 
-body {
+body,
+input {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+}
+
+body {  
   width: 100%;
   border: 0;
   margin: 0;
@@ -56,6 +61,7 @@ header {
 
 header > div {
 }
+
 
 #logo {
   height: 175px;  
@@ -97,6 +103,7 @@ header > div {
 #searchQuery {
   width:200px;
   margin-right:4px;
+  font-size: 16px;
 }
 #charm {
   background-color: $light-grey;
@@ -116,13 +123,14 @@ header > div {
 
   > div {
     
-    margin-top: 4px;
-    float: left;
-    width: 50%; 
+    margin: 4px auto 4px auto; 
     text-align: center;
+    
     
     a {
       color: $dark-grey !important;
+      padding-left: 4px;
+      padding-right: 4px;
     }
     a:hover {
       border-top: 2px solid $dark-grey;
