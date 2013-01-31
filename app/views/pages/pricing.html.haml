@@ -1,223 +1,111 @@
-.row
-  .span12
-    .pricingHeader
-      Dayhome owner?
-    .bottom
-.row
-  .span12
-    .pricingBlurb
-      Are you a dayhome owner? Would you like a
-      %b
-        fast, easy
-      way for parents to find your company, and tools to keep them informed once they have found you?
-      %b
-        Register your dayhome today
-      for easy access to a whole new client base.
-.row 
-  .price_table
-    .column_1
-      %ul
-        %li.header_row_1.align_center
-          .pack-title
-            Baby Bear
-        %li.header_row_2.align_center
-          .price
-            %span$10
-            .time
-              per month
-        %li.row_style_1.align_center
-          %span
-            = link_to 'Full Dayhome page','#page'
-        %li.row_style_1.align_center
-          %span
-            = link_to 'Forum Access','#forum'          
-        %li.row_style_1.align_center
-          %span
-            = link_to 'Calendar','#cal'           
-        %li.row_style_1.align_center
-          %span
-            Searchable
-        %li.row_style_1.align_center
-          %span
-            Picture gallery
-        %li.row_style_1.align_center.no-option
-          %span
-            A monthly 
-            = link_to 'BaC Pac','#BacPac'  
-        %li.row_style_1.align_center.no-option
-          %span
-            Receipts for ease at tax time
-        %li.row_style_1.align_center.no-option
-          %span
-            Accept Credit card payments
-        %li.row_style_1.align_center.no-option
-          %span
-            Budgeting tools          
-        %li.row_style_footer_1
-          .buy_now
-            = link_to 'Sign up'.html_safe, new_day_home_signup_request_path(:plan=>"baby")
-    .column_1
-      %ul
-        %li.header_row_1.align_center
-          .pack-title
-            Mama Bear
-        %li.header_row_2.align_center
-          .price
-            %span$25
-            .time
-              per month
-        %li.row_style_1.align_center
-          %span
-            = link_to 'Full Dayhome page','#page'
-        %li.row_style_1.align_center
-          %span
-            = link_to 'Forum Access','#forum'          
-        %li.row_style_1.align_center
-          %span
-            = link_to 'Calendar','#cal'           
-        %li.row_style_1.align_center
-          %span
-            Searchable
-        %li.row_style_1.align_center
-          %span
-            Picture gallery
-        %li.row_style_1.align_center
-          %span
-            A monthly 
-            = link_to 'BaC Pac','#BacPac'  
-            = link_to image_tag('icons/pdf-icon4.png'), '/documents/sample.pdf',:target=>'_blank'                                         
-        %li.row_style_1.align_center.no-option
-          %span
-            Receipts for ease at tax time
-        %li.row_style_1.align_center.no-option
-          %span
-            Accept Credit card payments
-        %li.row_style_1.align_center.no-option
-          %span
-            Budgeting tools          
-        %li.row_style_footer_1
-          .buy_now
-            = link_to 'Sign up'.html_safe, new_day_home_signup_request_path(:plan=>"mama")
-    .column_1
-      %ul
-        %li.header_row_1.align_center
-          .pack-title
-            Papa Bear
-        %li.header_row_2.align_center
-          .price
-            %span
-              Coming
-            .time
-              soon
-        %li.row_style_1.align_center
-          %span
-            = link_to 'Full Dayhome page','#page'
-        %li.row_style_1.align_center
-          %span
-            = link_to 'Forum Access','#forum'          
-        %li.row_style_1.align_center
-          %span
-            = link_to 'Calendar','#cal'           
-        %li.row_style_1.align_center
-          %span
-            Searchable
-        %li.row_style_1.align_center
-          %span
-            Picture gallery
-        %li.row_style_1.align_center
-          %span
-            A monthly 
-            = link_to 'BaC Pac','#BacPac'  
-            = link_to image_tag('icons/pdf-icon4.png'), '/documents/sample.pdf',:target=>'_blank'                                         
-        %li.row_style_1.align_center
-          %span
-            Receipts for ease at tax time
-        %li.row_style_1.align_center
-          %span
-            Accept Credit card payments
-        %li.row_style_1.align_center
-          %span
-            Budgeting tools          
-        %li.row_style_footer_1
-          
-                              
 
-.row
-  .span6
-    .contentHeader
-      <a name="page">Dayhome page</a>
-    .contentBlurb.reg
-      Your dayhome will have a
-      %b
-        unique URL address.
-      You will be able to
-      %b
-        load pictures, update availability, edit your calendar, and advertise your dayhome
-      to potential clients.
-      Our Standard level will allow a
-      %b
-        rotating picture gallery, complete with written descriptions.
-  .span6
-    .contentHeader
-      <a name="forum">Forum</a>  
-    .contentBlurb.reg
-      This is a message board for dayhome owners to
-      %b
-        connect
-      to each other.
-      ONLY dayhomes will have access to the forum, so you can
-      %b
-        discuss issues openly.
-      Want to arrange a park play date with another dayhome in your area?
-      %b
-        This will be a great way to arrange that!
-    
-.row
-  .span6
-    .contentHeader
-      <a name='BacPac'>BaC Pac</a>
-    .contentBlurb.reg
-      The <strong>BaC Pac </strong> is a wonderful activity book to help you and the children <strong>B</strong>ond <strong>a</strong>nd <strong>C</strong>reate using daily activities based on a monthly theme. Each <strong>BaC Pac</strong> has 20 days of activities (or a month's worth of activities for M-F) to help children learn letters, numbers, things about the world around them, etc.  Each day's activities are complete with instructions, a list of needed materials and printables for the children to interact with. Simply print off as many copies as you need, follow the directions, and you are good to go!  The <strong>BaC Pac</strong> is created by Angela, a fellow dayhome provider. She has over 15 years of experience in childcare, and a wealth of knowledge that she hopes to share with as many dayhomes as possible.
+%table.pricingTable.upgrade-page{:align => "center", :cellpadding => "0", :cellspacing => "0"}
+  %tbody
+    %tr{:valign => "top"}
+      %th.pricingSelect
+        Choose Your Plan
+      %th.package_78.enabled.column_4.selected_package{ :width => "135"}
+        Baby Bear
+        .price
+          %strong
+            %span.dollar-sign Free
+        %a.button.medium.green{:href => ""}
+          %span Select
+      %th.package_79.enabled.column_3{ :width => "135"}
+        Mama Bear
+        .price
+          %strong
+            %span.dollar-sign> $
+            %span> 50
+            %span.cents 00
+          %span.permonth> /mth
+        %a.button.medium.green{:href => ""}
+          %span Select
+      %th.package_80.enabled.column_2{ :width => "135"}
+        Papa Bear
+        .price
+          %strong
+            %span.dollar-sign> $
+            %span> 100
+            %span.cents> 00
+          %span.permonth> /mth
+        %a.button.medium.green{:href => ""}
+          %span Select
+      %th.package_81.enabled.column_1{ :width => "135"}
+        Goldilocks
+        .price
+          %strong
+            %span.dollar-sign> $
+            %span> 200
+            %span.cents> 00
+          %span.permonth> /mth
+        %a.button.medium.green{:href => ""}
+          %span Select
+    %tr
+      %td.pricingLeft
+        \# of dayhomes you can manage
+      %td.package_78.enabled{:rel => "78"}
+        %strong 1
+      %td.package_79.enabled{:rel => "79"}
+        %strong 50
+      %td.package_80.enabled{:rel => "80"}
+        %strong 250
+      %td.package_81.enabled{:rel => "81"}
+        %strong Unlimited
+    %tr
+      %td.pricingLeft
+        Waiting lists
+      %td.package_78.enabled{:rel => "78", :style => "cursor: pointer;"}
+        %span 0
+        %span.row-tiny ($10 each additional)
+      %td.package_79.enabled{:rel => "79"}
+        %span 10
+        %span.row-tiny ($10 each additional)
+      %td.package_80.enabled{:rel => "80"}
+        %span 100
+        %span.row-tiny ($10 each additional)
+      %td.package_81.enabled{:rel => "81"}
+        %span Unlimited
+    %tr
+      %td.pricingLeft
+        Additional staff who can access your account
+      %td.package_78.enabled{:rel => "78"}
+        %span 0
+      %td.package_79.enabled{:rel => "79"}
+        %span 1
+        %span.row-tiny ($10 each additional)
+      %td.package_80.enabled{:rel => "80"}
+        %span 2
+        %span.row-tiny ($10 each additional)
+      %td.package_81.enabled{:rel => "81"}
+        %span 5
+        %span.row-tiny ($10 each additional)
+    %tr
+      %td.pricingLeft
+        \# of Locales
+      %td.package_78.enabled{:rel => "78", :style => "cursor: pointer;"}
+        1
+      %td.package_79.enabled{:rel => "79"}
+        %span 1
+      %td.package_80.enabled{:rel => "80"}
+        %span 5
+        %span.row-tiny ($10 each additional)
+      %td.package_81.enabled{:rel => "81"}
+        %span Unlimted
+    %tr.last-row
+      %td.pricingLeft
+        \ 
+      %td.package_78.enabled.column_3{:rel => "78", :style => "cursor: pointer;"}
+        %a.button.medium.green.a_package78{:href => ""}
+          %span Select
+      %td.package_79.enabled.column_2{:rel => "79"}
+        %a.button.medium.green.a_package79{:href => ""}
+          %span Select
+      %td.package_80.enabled.column_1{:rel => "80"}
+        %a.button.medium.green.a_package80{:href => ""}
+          %span Select
+      %td.package_81.enabled.column_1{:rel => "81"}
+        %a.button.medium.green.a_package81{:href => ""}
+          %span Select
 
-  .span6
-    .contentHeader
-      <a name="cal">Calendar</a>
-    .contentBlurb.cal
-      Your dayhome is
-      %b
-        unique
-      , with
-      %b
-        unique activities
-      going on each day.
-      Your online calendar will be a great tool to
-      %b
-        communicate those activities with parents.
-      Need to take a bunch of kids with cabin fever to the park in the middle of winter?
-      %b
-        Remind parents to send warm clothing for that day!
-      The calendar will also help you
-      %b
-        keep track
-      of which child has been with you on what day, which will make payments
-      %b
-        easier to calculate at the end of the month.
-
-.row
-  .span12
-    .contentHeader
-      <a name="news">Monthly Newsletter</a>
-  .span12
-    .contentBlurb.reg
-      You will have access to a
-      %b
-        monthly newsletter
-      , emailed directly to you, which will have ideas for
-      %b
-        new recipes, craft ideas, games and a developmental article.
-      Recipes will include ways to modify for different
-      %b
-        allergies
-      or
-      %b
-        dietary needs.
+= hidden_field_tag 'choose-package'
