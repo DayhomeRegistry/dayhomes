@@ -17,6 +17,9 @@
  *= require pricing
  
 */
+$iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
+@import "bootstrap";
+
 $green: #52BE60;
 $yellow: #f0df73;
 $red: #FE1A00;
@@ -204,7 +207,25 @@ header > div {
   width: 70%;
   margin: auto;
 }
-
+.social-home {
+  color: #999;
+  font-size: 15px;
+}
+.social-home-twitter {
+  width: 43px;
+  float: left;
+  margin: 15px 15px 0 0;
+}
+.social-home-facebook {
+  width: 43px;
+  float: left;
+  margin: 15px 15px 0 0;
+}
+.social-home-pinterest {
+  width: 43px;
+  float: left;
+  margin: 15px 15px 0 0;
+}
 footer {
   clear: both;
   border-top: 1px solid $dark-grey;

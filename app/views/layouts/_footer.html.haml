@@ -18,14 +18,18 @@
   #social
     %h2 We're Social
     %p Join the conversation and connect with other dayhomes and parents in your area.
-    %a{:href => "http://www.facebook.com/DayhomeRegistry", :target => "_blank"}
-      %p
-        = image_tag 'icons/facebook.png', :alt => 'Like Dayhomes on Facebook'
-        %span Like us on Facebook
-    %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
-      %p
-        = image_tag 'icons/twitter-2.png', :alt => 'Like Dayhomes on Twitter'
-        %span Follow us on Twitter
+    .social-home
+      .wrapper
+        Get child care tips:
+      .social-home-twitter
+        %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
+          =image_tag '/assets/icons/twitter-icon.png', :alt=>'Follow us on Twitter'
+      .social-home-facebook
+        %a{:href => "http://facebook.com/dayhomeregistry", :target => "_blank"}
+          =image_tag '/assets/icons/facebook-icon.png', :alt => 'Like Dayhomes on Facebook'
+      .social-home-pinterest
+        %a{:href => "http://pinterest.com/dayhomeregistry/", :target => "_blank"}
+          =image_tag '/assets/icons/pinterest-icon.png', :alt=>'Follow us on Pinterest'
   .copyright
     %p
     &copy;
