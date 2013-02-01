@@ -72,7 +72,9 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         keys: {
             staff: 'staff',
             locales: 'locales'
-        }
+        },        
+        numberClass: '.num',
+        amountClass: '.amount'
     },
     //elements used to display the currently selected pricing info
     costElements: {},
@@ -116,11 +118,11 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         $(this.options.form).bind('submit', this.handleForm);
 
         // List of all the things which can affect pricing 
-/*        
+        
         $(this.options.update_triggers).bind('change', function () {
             self.update();
         });
-*/
+
         $('#choose-package').bind('change', function (event) {
             self.checkPackageSwitch();
         });
@@ -266,10 +268,11 @@ Dayhome.upgradePage.Upgrade = Class.extend({
                 extra_cost = self.applyDiscount(extra_cost, payment_frequency);
                 period_total += extra_cost || 0;
 
+                //.find(self.options.amountClass).text(self.currency.round(extra_cost));
                 element.show()
-					.find(self.options.numberClass).text(extra + ' ')
-					.end()
-					.find(self.options.amountClass).text(self.currency.round(extra_cost));
+                  .find(self.options.numberClass).text(extra + ' ')
+                  .end()
+                  .find(self.options.amountClass).text(extra_cost);
                 selectedExtraCount++;
             } else {
                 element.hide();
