@@ -29,6 +29,22 @@ div.span-1, div.span-2, div.span-3, div.span-4, div.span-5, div.span-6, div.span
 	text-align: right;
 	width: 160px;
 }
+.form-horizontal input[type=text],.form-horizontal input[type=password],.form-horizontal textarea,.form-horizontal select,.form-stacked input[type=text],.form-stacked input[type=password],.form-stacked textarea,.form-stacked select
+{
+	background-color:#fafafa;
+	border-width:1px;
+	border-style:solid;
+	border-color:#bbb #ddd #ddd #bbb;
+	-webkit-box-shadow:0 1px #e5e5e5 inset;
+	-moz-box-shadow:0 1px #e5e5e5 inset;
+	box-shadow:0 1px #e5e5e5 inset;
+	-o-border-radius:3px;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+	padding:4px 3px;
+	margin-top:-4px;
+}
 
 .button {
   text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
@@ -281,13 +297,32 @@ h4.sidebar_header_orange {
 	color: #000;
 	font-size: 16px;
 }
+#upgrade-form .span-6 {
+	width:120px;
+	margin-left:0;
+}
+#upgrade-form .span-11 {
+	width: 220px;	
+	margin-left:0;
+}
 #upgrade-form .span-13 {
 	width: 260px;	
+	margin-left:0;
+}
+#upgrade-form .span-14 {
+	width: 280px;	
 	margin-left:0;
 }
 #upgrade-form .span-22 {
 	width: 440px;
 	margin-left:0;
+}
+#upgrade-form .span-25 {
+  width: 500px;
+	margin-left:0;
+}
+#upgarde-form select {
+  width: 120px;
 }
 .append-bottom-1 {
 	padding-bottom: 18px;
