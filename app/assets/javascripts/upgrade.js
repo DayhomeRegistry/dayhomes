@@ -68,16 +68,25 @@
 Dayhome.upgradePage.Upgrade = Class.extend({
 	defaults: {
         form: '#upgrade-form',
-        update_triggers: '#staff, #day_homes, #locales, #storage, #p_country, #canada',
+        update_triggers: '#staff, #locales',
         keys: {
-            day_homes: 'day_homes',
             staff: 'staff',
-            locales: 'locales',
-            storage: 'storage',
-            price: 'price'
+            locales: 'locales'
         }
     },
+    //elements used to display the currently selected pricing info
+    costElements: {},
 
+    //containers for the inputs.
+    inputContainers: {},
+
+    //inputs to read data from.
+    inputs: {},
+
+    //limits for the new package
+    newLimits: {},
+    
+    // 'Constructor'
     init: function (options) {
         
         this.options = jQuery.extend({}, this.defaults, options);
@@ -86,14 +95,14 @@ Dayhome.upgradePage.Upgrade = Class.extend({
     },
 
     getElements: function () {
-    	/*
+    	
         for (var name in this.options.keys) {
             this.inputs[name] = $('#' + name);
             this.inputContainers[name] = $('#addon_' + name);
             this.costElements[name] = $('#total_box_' + name);
             this.newLimits[name] = $('#limit_' + name);
         }
-        */
+        
         this.packageInput = $('#choose-package');
         //this.country = $('#p_country');
         //this.is_mobile = $('#is_mobile');
@@ -117,7 +126,11 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         });
 
     },
-
+    
+    get_additional_value: function (type) {
+        return parseInt($('#' + type + ':enabled').val(), 10) || 0;
+    },
+    
     checkPackageSwitch: function (event) {
         var packageid = Number(this.packageInput.val());
         var self = this;
@@ -174,6 +187,8 @@ Dayhome.upgradePage.Upgrade = Class.extend({
             this.discountType = _this.discountAmount = null;
         }
 */
+        this.discountAmount = 0;
+        this.discountType= null;
         this.updateDetails(packageid);
 
     },
@@ -206,8 +221,8 @@ Dayhome.upgradePage.Upgrade = Class.extend({
 
         // Update the sidebar numbers and text
         var period_total = Number(base_package.price),
-			totalBoxBase = $('#total_box_base'),
-			totalBoxTotal = $('#total_box_total');
+        totalBoxBase = $('#total_box_base'),
+        totalBoxTotal = $('#total_box_total');
 
         //adjust payment_frequency based in input selection.
         var payment_frequency = this.getYearly() == '1' ? 12 : 1;
@@ -260,7 +275,8 @@ Dayhome.upgradePage.Upgrade = Class.extend({
                 element.hide();
             }
         });
-        totalBoxBase.find('span.amount').text(this.currency.round(package_price));
+        //totalBoxBase.find('span.amount').text(this.currency.round(package_price));
+        totalBoxBase.find('span.amount').text(package_price);
 
         if (selectedExtraCount === 0 && totalBoxBase.css('display') === 'none') {
             $('#total_box').hide();
@@ -268,9 +284,25 @@ Dayhome.upgradePage.Upgrade = Class.extend({
             $('#total_box').show();
         }
 
-        $('#total_box_total .amount').text(this.currency.round(period_total));
+        //$('#total_box_total .amount').text(this.currency.round(period_total));
+        $('#total_box_total .amount').text(period_total);
         $('#package_name').text(base_package.name);
         return period_total;
+    },
+    /*
+    Apply the discounts to the amount provided.  paymentFrequency controls the yearly 
+    discount application. We give 10% discounts to yearly payment intervals.
+
+    Applies the yearly discount as well as any selected discounts.
+    */
+    applyDiscount: function (amount, paymentFrequency) {
+        if (paymentFrequency == 12) {
+            amount = (amount * 12) * 0.9;
+        }
+        if (this.discountType == 'percent') {
+            amount = amount * (100 - this.discountAmount) / 100;
+        }
+        return amount;
     }
 
 
