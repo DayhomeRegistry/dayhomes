@@ -84,6 +84,9 @@ a.button, div.button, button.button span {
   box-shadow: 0 2px 1px -1px #b3d72d inset;
   border: 1px solid #558a0f;
 }
+.button.green:hover {
+  background-color: rgb(127, 196, 29);
+}
 .form-horizontal .section-header, .form-horizontal .section-header-plain {
   padding-bottom: 18px;
   padding-top: 18px;

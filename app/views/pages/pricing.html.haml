@@ -28,7 +28,7 @@
           .price
             %strong
               %span.dollar-sign> $
-              %span> 100
+              %span> 250
               %span.cents> 00
             %span.permonth> /mth
           %a.button.medium.green{:href => ""}
@@ -38,7 +38,7 @@
           .price
             %strong
               %span.dollar-sign> $
-              %span> 200
+              %span> 400
               %span.cents> 00
             %span.permonth> /mth
           %a.button.medium.green{:href => ""}
@@ -94,7 +94,7 @@
           %span 5
           %span.row-tiny ($10 each additional)
         %td.package_81.enabled{:rel => "81"}
-          %span Unlimted
+          %span Unlimited
       %tr.last-row
         %td.pricingLeft
           \ 
@@ -111,13 +111,14 @@
           %a.button.medium.green.a_package81{:href => ""}
             %span Select
 
-  = form_for @day_home_signup_request, :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>"display:none;"} do |f|
+  = form_for @day_home_signup_request, :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>""} do |f|
     = hidden_field_tag 'choose-package'
+    = hidden_field_tag 'plan', :value=>"baby"
     %br
     %h3#addon-header.section-header.section-header-first
       Choose Any Extras You May Need
     .span-22.append-bottom-1
-      #addon_staff{:style => "display: block;"}
+      #addon_staff{:style => "display: none;"}
         .control-group
           %label.control-label{:for => "staff"}
             Extra Staff
@@ -139,33 +140,33 @@
               %option{:value => "5"} +5 locale ($50/month)
       %div
         %div{:style => "margin: 0 45px; font-weight: bold; padding-left: 45px;"}
-          Add
+          You can add
           = succeed "like" do
             %a#A1{:href => "buy.htm"}
               %span one-time use extras
-          Featuring your dayhome or adding a waiting list.
+          Featuring your dayhome or adding a waiting list later.
     .span-13.append-bottom-2
       #total_box.bg_orange.hide{:style => "display: block;"}
         %h4.sidebar_header_orange
           %span Upgrade Details
         %table.fs_11{:cellpadding => "2", :cellspacing => "0", :width => "100%"}
           %tbody
-            %tr#total_box_base{:style => "display:none;", :valign => "top"}
+            %tr#total_box_base{:style => "", :valign => "top"}
               %td
                 %strong
                   New plan -
-                  %span#package_name Mama Bear
+                  %span#package_name Baby Bear
                 %br
                   %div{:style => "padding-left: 15px;"}
                     (
-                    %span#limit_day_homes> 250
+                    %span#limit_day_homes> 1
                     \ dayhome(s),
                     = succeed " staff," do
-                      %span#limit_staff 1
+                      %span#limit_staff 0
                     = succeed " locale(s))" do
                       %span#limit_locales 1
               %td{:align => "right"}
-                %span.amount 50.00
+                %span.amount 0.00
             %tr#total_box_staff{:style => "display: none;"}
               %td
                 %span.num>
@@ -199,56 +200,60 @@
               %td{:align => "right"}
                 %strong
                   $
-                  %span.amount 50.00
+                  %span.amount 0.00
     .clear
     %h3.section-header
       Tell us a little about yourself
+      
     .control-group
-      %label.control-label{:for => "EMAIL"}
-        Dayhome name
+      = f.label :day_home_name, 'Dayhome Name', :class=>"control-label"
       .controls
-        %input.input-large{:name => "day_home_name", :type => "text"}
-    .clearb
+        = f.text_field :day_home_name
+        <i class="icon-info-sign" data-title="What's in a name?" data-content="This is the name of your dayhome. Don't have one? Well, pick something that you'll want your parents to know you by...it's your first impression when attracting new families."></i>
     .control-group
-      %label.control-label{:for => "BILL_ADDRESS_ONE"}
-        Street Address
+      = f.label :day_home_slug, 'Dayhome Slug', :class=>"control-label"
+      .controls
+        .input-prepend
+          %span.add-on
+            http://dayhomeregistry.com/
+          = f.text_field :day_home_slug, :class=>"span2"
+        <i class="icon-info-sign" data-title="What's a slug?" data-content="The slug is the name for the end of our web address that makes it easy for you and your customers to find your page.  The web address that you see to the left will be your home on our website."></i>             
+    .control-group
+      = f.label :day_home_highlight, 'Front page highlight', :class=>"control-label"
+      .controls
+        = f.text_area :day_home_highlight, :rows => 8, :style=>"width:530px;"
+        <i class="icon-info-sign" data-title="What's a highlight?" data-content="On our homepage, when we feature a dayhome, the name of the dayhome and the text you put below are displayed over one of your images.  This highlight has to be 200 characters or less so we can still see how wonderful you are in your picture."></i>
+    .control-group
+      .controls
+        = label_tag "ack", :class => :checkbox, :style=>"margin-left:20px;" do       
+          = check_box_tag "ack","yes",false,:class => "select"
+          I have read and understood the 
+          =link_to "Privacy Policy and Terms of Use","/pages/privacy"    
+    .control-group
+      =f.label :day_home_street1,'Street Address', :class=>"control-label"         
       .controls
         .append-bottom-1
-          %input#BILL_ADDRESS_ONE.input-xxlarge{:name => "BILL_ADDRESS_ONE", :type => "text", :value => "7933 85 AVE NW"}
+          = f.text_field :day_home_street1, :class=>"input-xxlarge"          
           .example.first
             Street
         .append-bottom-1
           .span-7
-            %input#BILL_CITY.input-medium{:name => "BILL_CITY", :type => "text", :value => "Edmonton"}
+            = f.text_field :day_home_city, :class=>"input-medium"            
             .example
               City
           .span-10
-            %select#canada.formSelectReq.input-span-9{:name => "state_or_province", :style => "", :tabindex => ""}
-              %option{:value => ""} [Choose One]
-              %option{:selected => "selected", :value => "Alberta"} Alberta
-              %option{:value => "British Columbia"} British Columbia
-              %option{:value => "Manitoba"} Manitoba
-              %option{:value => "New Brunswick"} New Brunswick
-              %option{:value => "Newfoundland And Labrador"} Newfoundland And Labrador
-              %option{:value => "Northwest Territories"} Northwest Territories
-              %option{:value => "Nova Scotia"} Nova Scotia
-              %option{:value => "Nunavut"} Nunavut
-              %option{:value => "Ontario"} Ontario
-              %option{:value => "Prince Edward Island"} Prince Edward Island
-              %option{:value => "Quebec"} Quebec
-              %option{:value => "Saskatchewan"} Saskatchewan
-              %option{:value => "Yukon"} Yukon                
+            = f.state_select :day_home_province, 'CA'                  
             .example
               Province
           .span-6
-            %input#BILL_ZIP_OR_POSTAL_CODE.input-mini{:name => "BILL_ZIP_OR_POSTAL_CODE", :type => "text", :value => "T6C1G3"}
+            = f.text_field :day_home_postal_code, :class=>"input-mini"
             .example
               Postal/Zip Code
     .control-group.append-bottom-1
       %label.control-label{:for => "EMAIL"}
         Email Address
       .controls
-        %input#EMAIL.input-large{:name => "EMAIL", :type => "text", :value => "billing@dayhomeregistry.com"}
+        %input#EMAIL.input-large{:name => "EMAIL", :type => "text", }
     .clearb
     /
       %h3#choose-subscription.section-header
@@ -280,23 +285,35 @@
         %span.button.large.green.single
           %input#pay-now-button{:name => "paynow", :type => "submit", :value => "Pay Now"}
 :javascript
+  $('.icon-info-sign').popover() ;
+  
   var Dayhome = Dayhome || {};
 
   Dayhome.upgradePage = {
-      existing: {},
-      packages: {
-          "78": {
+      existing: { 
               "name": "Baby Bear",
+              "plan": "baby",
               "day_homes": "1",
               "staff": "0",
               "locales": "1",
               "price": "0.00",
-              "tagline": null,
+              "block_staff_addon": "1",
+              "block_locales_addon": "1", 
+              "id": "78" },
+      packages: {
+          "78": {
+              "name": "Baby Bear",
+              "plan": "baby",
+              "day_homes": "1",
+              "staff": "0",
+              "locales": "1",
+              "price": "0.00",
               "block_staff_addon": "1",
               "block_locales_addon": "1"
           },
           "79": {
               "name": "Mama Bear",
+              "plan": "mama",
               "day_homes": "50",
               "staff": "1",
               "locales": "1",
@@ -306,19 +323,21 @@
           },
           "80": {
               "name": "Papa Bear",
+              "plan": "papa",
               "day_homes": "250",
               "staff": "2",
               "locales": "3",
-              "price": "100.00",
+              "price": "250.00",
               "block_staff_addon": "0",
               "block_locales_addon": "0"
           },
           "81": {
               "name": "Goldilocks",
+              "plan": "goldilocks",
               "day_homes": null,
               "staff": "5",
               "locales": null,
-              "price": "250.00",
+              "price": "400.00",
               "block_staff_addon": "0",
               "block_locales_addon": "0"
           }

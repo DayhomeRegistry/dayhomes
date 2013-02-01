@@ -43,4 +43,11 @@ $(function () {
             $('td.' + packageClass).removeClass('over_package');
         }
     );
+    
+    //select the current package
+    var packageid = Dayhome.upgradePage.existing.id;
+    if (packageid) {
+      $('table.pricingTable .package_' + packageid).addClass('selected_package');
+      $('table.pricingTable .package_' + packageid + ' a.button.green').html('<span>Free Trial</span>');
+    }
 });
