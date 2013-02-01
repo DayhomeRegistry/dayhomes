@@ -62,8 +62,9 @@
   };
 })();
 
+var Dayhome = Dayhome || {};
 
-
+Dayhome.upgradePage = {};
 
 Dayhome.upgradePage.Upgrade = Class.extend({
 	defaults: {
@@ -131,7 +132,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         //update the details on the page.
         var period_total = this.updateDetails(packageid);
 
-        if (period_total.toFixed(2) - Dayhome.upgradePage.payment_amount.toFixed(2) <= 0) {
+        if (period_total.toFixed(2) - Fresh.upgradePage.payment_amount.toFixed(2) <= 0) {
             $('#credit-card-section').slideUp().find('input, select').prop('disabled', true);
         } else {
             $('#credit-card-section').slideDown().find('input, select').prop('disabled', false);
@@ -145,7 +146,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         }
 
         
-/*
+
         var heading = $('#choose-subscription'),
 			method = 'show';
 
@@ -173,19 +174,8 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         } else {
             this.discountType = _this.discountAmount = null;
         }
-*/
         this.updateDetails(packageid);
 
-    },
-
-    getYearly: function () {
-        var pay_yearly = 0;
-        if ($('#yearly').length) {
-            pay_yearly = this.frequencyBox.find('input[name=pay_yearly]:checked').val();
-        } else {
-            pay_yearly = Dayhome.upgradePage.payment_frequency == 12 ? 1 : 0;
-        }
-        return pay_yearly;
     },
 
 	/*
@@ -194,9 +184,9 @@ Dayhome.upgradePage.Upgrade = Class.extend({
     updateDetails: function (packageid) {
     	var self = this;
     	var period_total = 0;
-        var base_package = Dayhome.upgradePage.existing;
-        if (packageid && Dayhome.upgradePage.packages[packageid]) {
-            base_package = Dayhome.upgradePage.packages[packageid];
+        /*var base_package = Fresh.upgradePage.existing;
+        if (packageid && Fresh.upgradePage.packages[packageid]) {
+            base_package = Fresh.upgradePage.packages[packageid];
         }
 
         $.each(this.newLimits, function (type, element) {
@@ -245,7 +235,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         $.each(this.costElements, function (type, element) {
             var extra = self.get_additional_value(type);
             if (extra) {
-                var extra_cost = parseFloat(Dayhome.upgradePage.additional_cost[type](extra));
+                var extra_cost = parseFloat(Fresh.upgradePage.additional_cost[type](extra));
 
                 //discount the addons
                 extra_cost = self.applyDiscount(extra_cost, payment_frequency);
@@ -269,7 +259,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         }
 
         $('#total_box_total .amount').text(this.currency.round(period_total));
-        $('#package_name').text(base_package.name);
+        $('#package_name').text(base_package.name);*/
         return period_total;
     }
 

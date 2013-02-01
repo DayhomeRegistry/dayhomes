@@ -18,4 +18,7 @@ class PagesController < ApplicationController
     current_user.save
     redirect_to request.referer
   end
+  def pricing
+    @day_home_signup_request = DayHomeSignupRequest.new
+  end
 end

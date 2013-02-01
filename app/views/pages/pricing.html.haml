@@ -1,3 +1,5 @@
+-content_for :footer_scripts do
+  = javascript_include_tag :upgrade, :upgrade_init
 .container.primary-content
   %table.pricingTable.upgrade-page{:align => "center", :cellpadding => "0", :cellspacing => "0"}
     %tbody
@@ -78,7 +80,7 @@
           %span 2
           %span.row-tiny ($10 each additional)
         %td.package_81.enabled{:rel => "81"}
-          %span 5
+          %span 3
           %span.row-tiny ($10 each additional)
       %tr
         %td.pricingLeft
@@ -108,10 +110,8 @@
           %a.button.medium.green.a_package81{:href => ""}
             %span Select
 
-  
-  %form#upgrade-form.form-horizontal{:action => "./fresh_files/fresh.htm", :autocomplete => "off", :method => "POST", :name => "form", :style => ""}
+  = form_for @day_home_signup_request, :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>"display:none;"} do |f|
     = hidden_field_tag 'choose-package'
-    %input{:name => "csrfToken", :type => "hidden", :value => "bdb487bf56c73cd273b7"}
     %br
     %h3#addon-header.section-header.section-header-first
       Choose Any Extras You May Need
@@ -149,7 +149,7 @@
           %span Upgrade Details
         %table.fs_11{:cellpadding => "2", :cellspacing => "0", :width => "100%"}
           %tbody
-            %tr#total_box_base{:style => "", :valign => "top"}
+            %tr#total_box_base{:style => "display:none;", :valign => "top"}
               %td
                 %strong
                   New plan -
@@ -201,14 +201,20 @@
                   %span.amount 50.00
     .clear
     %h3.section-header
-      Enter Your Billing Address and Email
+      Tell us a little about yourself
+    .control-group
+      %label.control-label{:for => "EMAIL"}
+        Dayhome name
+      .controls
+        %input.input-large{:name => "day_home_name", :type => "text"}
+    .clearb
     .control-group
       %label.control-label{:for => "BILL_ADDRESS_ONE"}
         Street Address
       .controls
         .append-bottom-1
           %input#BILL_ADDRESS_ONE.input-xxlarge{:name => "BILL_ADDRESS_ONE", :type => "text", :value => "7933 85 AVE NW"}
-          .example
+          .example.first
             Street
         .append-bottom-1
           .span-7
@@ -243,7 +249,7 @@
       .controls
         %input#EMAIL.input-large{:name => "EMAIL", :type => "text", :value => "billing@dayhomeregistry.com"}
     .clearb
-    
+    /
       %h3#choose-subscription.section-header
         Choose Your Subscription
       #green_box
@@ -272,3 +278,60 @@
       .submit-container
         %span.button.large.green.single
           %input#pay-now-button{:name => "paynow", :type => "submit", :value => "Pay Now"}
+:javascript
+  var Dayhome = Dayhome || {};
+
+  Dayhome.upgradePage = {
+      existing: {},
+      packages: {
+          "78": {
+              "name": "Baby Bear",
+              "day_homes": "1",
+              "staff": "0",
+              "locales": "1",
+              "price": "0.00",
+              "tagline": null,
+              "block_staff_addon": "1",
+              "block_locales_addon": "1"
+          },
+          "79": {
+              "name": "Mama Bear",
+              "day_homes": "50",
+              "staff": "1",
+              "locales": "1",
+              "price": "50.00",
+              "block_staff_addon": "0",
+              "block_locales_addon": "1"
+          },
+          "80": {
+              "name": "Papa Bear",
+              "day_homes": "250",
+              "staff": "2",
+              "locales": "3",
+              "price": "100.00",
+              "block_staff_addon": "0",
+              "block_locales_addon": "0"
+          },
+          "81": {
+              "name": "Goldilocks",
+              "day_homes": null,
+              "staff": "5",
+              "locales": null,
+              "price": "250.00",
+              "block_staff_addon": "0",
+              "block_locales_addon": "0"
+          }
+      },
+      payment_frequency: 1,
+      payment_amount: 19.950,
+      additional_cost: {
+          staff: function (n) {
+              return parseInt(n, 10) * 10 || 0;
+          },
+          locales: function (n) {
+              //return { "1": 10, "2": 20, "3": 30, "4": 40, "5": 50, "1500": 60, "1750": 70, "2000": 80, "3000": 120, "4000": 160, "5000": 200}[n] || 0;
+              return parseInt(n, 10) * 10 || 0;
+          }
+      },
+      existingDeprecated: false
+  };

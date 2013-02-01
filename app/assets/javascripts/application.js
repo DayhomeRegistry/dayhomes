@@ -29,4 +29,4 @@
 //= require common
 //= require externals/modernizr
 //= require externals/html5support/jquery.html5support
-//= require upgrade
+
