@@ -63,8 +63,6 @@
 })();
 
 
-
-
 Dayhome.upgradePage.Upgrade = Class.extend({
 	defaults: {
         form: '#upgrade-form',
@@ -110,14 +108,18 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         //this.country = $('#p_country');
         //this.is_mobile = $('#is_mobile');
 
-        //this.frequencyBox = $('#green_box');
+        this.frequencyBox = $('#green_box');
+        this.payNowButton = $('#pay-now-button');
+        //make sure the button is setup correctly
+        this.checkPackageSwitch();
     },
 
 	bindEvents: function () {
         var self = this;
 
-        $(this.options.form).bind('submit', this.handleForm);
-
+        $(this.options.form).bind('submit', function (event) {
+            self.handleForm( self, event );
+        });
         // List of all the things which can affect pricing 
         
         $(this.options.update_triggers).bind('change', function () {
@@ -134,9 +136,21 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         return parseInt($('#' + type + ':enabled').val(), 10) || 0;
     },
     
+    isCurrentPackageFree: function () {
+        var packageid = Number(this.packageInput.val());
+        return packageid=="78";
+    },
     checkPackageSwitch: function (event) {
         var packageid = Number(this.packageInput.val());
         var self = this;
+        if (this.isCurrentPackageFree())
+        {
+            $('#credit-card-section').hide();
+            this.payNowButton.val('Signup Now');
+        } else {
+            $('#credit-card-section').show();
+            this.payNowButton.val('Pay Now');
+        }
         self.update();        
     },
 
@@ -189,11 +203,11 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         } else {
             this.discountType = _this.discountAmount = null;
         }
-*/
+    
         this.discountAmount = 0;
         this.discountType= null;
         this.updateDetails(packageid);
-
+*/
     },
 
     getYearly: function () {
@@ -310,6 +324,92 @@ Dayhome.upgradePage.Upgrade = Class.extend({
             amount = amount * (100 - this.discountAmount) / 100;
         }
         return amount;
+    },
+
+
+    /*
+    Event handler for form submissions and validates form data before sending it
+    */
+    handleForm: function (self, event) {
+        /*var ccnum = $('#CREDIT_CARD_NUMBER').val(),
+            cardchanged = $('#credit_card_changed').val(),
+            isnum = /(^\d+$)|(^\d+\.\d+$)/,
+            now = new Date(),
+            curyear = now.getFullYear(), curmonth = now.getMonth() + 1,
+            expyear = $('#EXPIRE_YEAR').val(),
+            expmonth = $('#EXPIRE_MONTH').val(),
+            curdate = new Date(curyear, curmonth, 1).getTime(),
+            expdate = new Date(expyear, expmonth, 1).getTime(),
+
+            validators = {
+                "p_country": "You must select your country.",
+                "BILL_ADDRESS_ONE": "You must enter your address.",
+                "BILL_CITY": "You must enter your city.",
+                "BILL_ZIP_OR_POSTAL_CODE": "You must enter your postal code / zip.",
+                "EMAIL": "You must enter your email.",
+                "CARD_BRAND": "You must select your credit card type.",
+                "BILL_NAME": "You must enter the name on your credit card.",
+                "CREDIT_CARD_NUMBER": "You must enter your credit card number."
+            };
+
+        // if doing a downgrade, don't validate these fields as they are not required
+        if ($('#credit-card-section').is(':hidden')) {
+            delete validators.CREDIT_CARD_NUMBER;
+            delete validators.CARD_BRAND;
+        }
+
+        var agreed = true;
+        if ($('#agree').length) {
+            agreed = $('#agree').is(':checked');
+        }
+        if (!agreed) {
+            alert('You must agree to the terms and services.');
+        }
+
+        if (!agreed || !build_validator(validators)(this)) {
+            event.preventDefault();
+            return false;
+        }
+
+        if (validators.CREDIT_CARD_NUMBER && cardchanged == 1 && !isnum.test(ccnum)) {
+            alert("Please re-enter your credit card number using only numbers.");
+            document.form.CREDIT_CARD_NUMBER.focus();
+            event.preventDefault();
+            return false;
+        }
+        if (validators.CREDIT_CARD_NUMBER && expdate < curdate) {
+            alert("Your expiry date is in the past.");
+            $('#EXPIRE_MONTH').focus();
+            event.preventDefault();
+            return false;
+        }
+
+        return true;*/
+        // Disable the button.
+        self.payNowButton.val('Loading…').prop('disabled', true);
+
+        var card = {
+            number: $('#card_number').val(),
+            cvc: $('#card_code').val(),
+            expMonth: $('#card_month').val(),
+            expYear: $('#card_year').val()
+        };
+        Stripe.createToken(card, self.handleStripeResponse);
+        event.preventDefault();
+        return false;
+    },
+
+    handleStripeResponse: function (status, response) {
+      if(status == 200) {
+        $('#day_home_signup_request_stripe_card_token').val(response.id);
+        $('form')[1].submit();
+      } else {
+        // Enable the button.
+        $('#pay-now-button').val('Pay Now').prop('disabled', false);
+
+        $('#stripe_error').text(response.error.message);        
+        $('input[type=submit]').attr('disabled',false);
+      }
     }
 
 

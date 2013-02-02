@@ -112,8 +112,8 @@
             %span Select
 
   = form_for @day_home_signup_request, :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>""} do |f|
-    = hidden_field_tag 'choose-package'
-    = hidden_field_tag 'plan', :value=>"baby"
+    = hidden_field_tag 'choose-package', "78"
+    = hidden_field_tag 'plan', "baby"
     %br
     %h3#addon-header.section-header.section-header-first
       Choose Any Extras You May Need
@@ -255,17 +255,22 @@
       .controls
         %input#EMAIL.input-large{:name => "EMAIL", :type => "text", }
     .clearb
-    #credit-card-section{:style => ""}
+    #credit-card-section{:style => "display:none;"}
       = f.hidden_field :stripe_card_token
       %h3.section-header
         Enter Your Credit Card Information
+      .append-bottom-1  
+        #stripe_error
+          %noscript
+            Javascript is not enabled and is required for this form.  First enable it in your web browser settings.                
       .append-bottom-1
         .span-25
-          .control-group
-            %label.control-label{:for => "BILL_NAME"}
-              Name on Card
-            .controls
-              %input#BILL_NAME.input-large{:name => "BILL_NAME", :type => "text", :value => ""}
+          /
+            .control-group
+              %label.control-label{:for => "BILL_NAME"}
+                Name on Card
+              .controls
+                %input#BILL_NAME.input-large{:name => "BILL_NAME", :type => "text", :value => ""}
           .control-group          
             =label_tag :card_number, "Card Number", :class=>"control-label"            
             .controls  
@@ -288,10 +293,7 @@
               .span-6.append-bottom-1
                 =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
                 .example.first
-                  Year                               
-      #stripe_error
-        %noscript
-          Javascript is not enabled and is required for this form.  First enable it in your web browser settings.      
+                  Year   
         .span-12
           %strong Need Help? Call us!
           %br
@@ -301,15 +303,17 @@
                 %br
                   at +1-780-975-1290
                 %br
-        .clearb
-    /
+      .clear                            
+      
+      .clear
+    /  
       %h3#choose-subscription.section-header
         Choose Your Subscription
       #green_box
         .control-group
           .controls
-            %input#monthly{:checked => "checked", :name => "pay_yearly", :type => "radio", :value => "0"}
-              %label{:for => "monthly", :style => "font-weight: normal;"}
+            %label{:for => "monthly", :style => "font-weight: normal;"}
+              %input#monthly{:checked => "checked", :name => "pay_yearly", :type => "radio", :value => "0"}
                 %strong Monthly Payments:
                 $19.95
                 + $1.00 GST (5%)
@@ -319,21 +323,28 @@
             .red{:style => "padding-bottom: 5px;"}
               %strong Special:
               Save 10% by paying Yearly – no lock-in, cancel any time.
-            %input#yearly{:name => "pay_yearly", :type => "radio", :value => "1"}
-              %label{:for => "yearly", :style => "font-weight: normal;"}
+            %label{:for => "yearly", :style => "font-weight: normal;"}            
+              %input#yearly{:name => "pay_yearly", :type => "radio", :value => "1"}
                 %strong Yearly Payments:
                 $215.46
                 + $10.77 GST (5%)
                 \. You’ll save 10%
                 or $23.94/year. Cancel any time and receive a refund for any unused months. Our best value.
-        .clearb
-        .clearb
-      .submit-container
-        %span.button.large.green.single
-          %input#pay-now-button{:name => "paynow", :type => "submit", :value => "Pay Now"}
+        .clear
+        .clear
+    .submit-container
+      %span.button.large.green.single
+        %input#pay-now-button{:name => "paynow", :type => "submit", :value => "Pay Now"}
 :javascript
   $('.icon-info-sign').popover() ;
   
+  Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
+
+  $('#day_home_signup_request_day_home_name').keyup(function(e) {
+      var parsed_subdomain = $(this).attr('value').replace(/[^a-z0-9]/gi,'').toLowerCase();
+      $('#day_home_signup_request_day_home_slug').empty().attr('value', parsed_subdomain);
+  });
+
   var Dayhome = Dayhome || {};
 
   Dayhome.upgradePage = {

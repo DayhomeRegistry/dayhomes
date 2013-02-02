@@ -103,6 +103,39 @@ a.button, div.button, button.button span {
 .button.green:hover {
   background-color: rgb(127, 196, 29);
 }
+.button.large {
+	background-position: left -104px;
+	font: bold 18px Arial,Helvetica,sans-serif;
+	margin: 0 0 17px 5px;
+	height: 43px;
+	line-height: 43px;
+}
+.button.large.single {
+	float: none;
+	margin: 0 auto;
+	width: 228px;
+}
+.button.large input {
+	font: bold 18px Arial,Helvetica,sans-serif;
+	-webkit-text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+	-moz-text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+	color: #fff;
+	background: 0;
+	padding: 0 20px;
+	border: 0;
+	outline: 0;
+	cursor: pointer;
+	width: 228px;
+	height: 43px;
+}
+.form-horizontal input[disabled], .form-stacked input[disabled], .form-horizontal input[disabled]:hover, .form-stacked input[disabled]:hover {
+	-khtml-opacity: .6;
+	-moz-opacity: .6;
+	-ms-filter: alpha(opacity=60);
+	filter: alpha(opacity=60);
+	opacity: .6;
+}
 .form-horizontal .section-header, .form-horizontal .section-header-plain {
   padding-bottom: 18px;
   padding-top: 18px;
@@ -346,4 +379,9 @@ h4.sidebar_header_orange {
 #total_box_total td {
   border-top: 1px solid rgb(217, 208, 182);
   padding-top: 6px;
+}
+#stripe_error {
+	color: red;
+	font-size: 14pt;
+	margin-left: 60px;
 }
