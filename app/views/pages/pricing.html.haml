@@ -271,7 +271,7 @@
             .controls  
               .span-11
                 =text_field_tag :card_number, nil, name:nil, :class=>"input-large",:onkeypress => "return numbersonly2(this, event)"
-                .example.first
+                .example
                   Number
               .span-4
                 =text_field_tag :card_code, nil, name:nil, :class=>"input-mini"
@@ -279,11 +279,11 @@
                   CCV
                   <i class="icon-info-sign" data-title="What's a CCV?" data-content="The little code to verify the number...you know the one."></i>      
           .control-group
-            =label_tag :card_expiry, "Expiry date"
+            =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
             .controls
               .span-6.append-bottom-1
                 =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month"}
-                .example.first
+                .example
                   Month
               .span-6.append-bottom-1
                 =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
