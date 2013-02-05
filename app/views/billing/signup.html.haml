@@ -111,7 +111,7 @@
           %a.button.medium.green.a_package81{:href => ""}
             %span Select
 
-  = form_for @day_home_signup_request,:url => billing_register(), :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>""} do |f|
+  = form_for @day_home_signup_request,:url => billing_register_path(),:method => :put, :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>""} do |f|
     = hidden_field_tag 'choose-package', "78"
     = hidden_field_tag 'plan', "baby"
     %br

@@ -388,15 +388,20 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         // Disable the button.
         self.payNowButton.val('Loading…').prop('disabled', true);
 
-        var card = {
-            number: $('#card_number').val(),
-            cvc: $('#card_code').val(),
-            expMonth: $('#card_month').val(),
-            expYear: $('#card_year').val()
-        };
-        Stripe.createToken(card, self.handleStripeResponse);
-        event.preventDefault();
-        return false;
+        if (!isCurrentPackageFree()) {
+          var card = {
+              number: $('#card_number').val(),
+              cvc: $('#card_code').val(),
+              expMonth: $('#card_month').val(),
+              expYear: $('#card_year').val()
+          };
+          Stripe.createToken(card, self.handleStripeResponse);
+          event.preventDefault();
+          return false;
+        } 
+        //we just submit the form
+        return true;
+        
     },
 
     handleStripeResponse: function (status, response) {

@@ -18,6 +18,7 @@
  
 */
 $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
+$iconLogoPath: asset-url("mini-logo.jpg", image) !default;
 @import "bootstrap";
 
 $green: #52BE60;
@@ -75,7 +76,7 @@ header > div {
 #logo {
   height: 85px;  
   float: left;
-  background: #ffffff  url('http://dl.dropbox.com/u/76665191/mini-logo.jpg') no-repeat;
+  background: #ffffff  $iconLogoPath no-repeat;
   
   width: 100px;
 }
