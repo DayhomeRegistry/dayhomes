@@ -4,7 +4,7 @@ class CreateFeatures < ActiveRecord::Migration
       t.date :start
       t.date :end
 
-      t.timestamps
+      t.timestamps 
     end
   end
 end

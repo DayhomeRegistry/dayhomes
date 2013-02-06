@@ -25,6 +25,7 @@ gem 'client_side_validations', '3.2.0.beta.6', :git => 'https://github.com/bcard
 gem 'actionmailer-instyle', :require => 'action_mailer/in_style'
 gem 'stripe'
 gem 'thin', '~>1.5'
+gem 'foreigner'
 
 platforms :mswin, :mingw do
   #gem 'eventmachine', '1.0.0.beta.4.1'

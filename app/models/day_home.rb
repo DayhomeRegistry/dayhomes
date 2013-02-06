@@ -33,8 +33,7 @@ class DayHome < ActiveRecord::Base
     has_many :agencies, :through => :day_home_agencies
   # to here
 
-  has_many :location_day_homes, :dependent => :destroy
-  has_many :locations, :through => :location_day_homes
+  belongs_to :location
 
   has_many :features, :dependent => :destroy
 

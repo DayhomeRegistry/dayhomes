@@ -18,7 +18,7 @@ class CopyDayhomesToOrg < ActiveRecord::Migration
 				:street2 => dayhome.street2,
 				:postal_code => dayhome.postal_code,
 				:phone_number => dayhome.phone_number,
-				:stripe_customer_token => user.stripe_customer_token
+				:stripe_customer_token => user.stripe_customer_token 
 			)
 			org.save
 			org.users << user

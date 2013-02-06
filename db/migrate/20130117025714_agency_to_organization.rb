@@ -17,7 +17,7 @@ class AgencyToOrganization < ActiveRecord::Migration
 	create_table :organization_users do |t|
       t.column :user_id, :integer
       t.column :organization_id, :integer
-
+ 
       t.timestamps
     end
 	
