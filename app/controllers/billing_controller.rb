@@ -5,11 +5,12 @@ class BillingController < ApplicationController
   def register
     @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])   
     @day_home_signup_request.plan=params[:plan]
-
+    
 
     #I don't know how to make the checkbox mandatory, so we'll check here first
     if(params["ack"].nil?)
-      flash[:error] = "Acknowledging the Privacy Policy and Terms of Use is required."
+      flash.now['page-error'] = "Acknowledging the Privacy Policy and Terms of Use is required."
+      #raise flash.to_json
       #raise "param[ack] was missing: " + params.to_json
       return render :action => :signup    
     end
@@ -21,7 +22,7 @@ class BillingController < ApplicationController
       #Create the user
         user = User.find_by_email(@day_home_signup_request.contact_email)      
         if(!user.nil?)
-          flash.now[:error] = "Looks as though you've already registered.  Do you want to try <a href='"+login_path()+"'>logging in</a> instead?"
+          flash.now['page-error'] = "Looks as though you've already registered.  Do you want to try <a href='"+login_path()+"'>logging in</a> instead?"
           return render :action => :signup
         end
         #no one here, create a new one
@@ -44,9 +45,9 @@ class BillingController < ApplicationController
         org.phone_number = @day_home_signup_request.contact_phone_number
         org.users << user
 
-        if(!@day_home_signup_request.plan=="baby") do
+        if(@day_home_signup_request.plan!="baby") 
           org.stripe_card_token = @day_home_signup_request.stripe_card_token
-          if !user.save_with_payment 
+          if !org.save_with_payment 
             handle_org_error(org)
           end
         else
@@ -56,7 +57,7 @@ class BillingController < ApplicationController
         end
       #Create the location
         loc = Location.new()
-        loc.name = @day_home_signup_request.day_home_city
+        loc.name = @day_home_signup_request.day_home_city || 'Edmonton'
         loc.organization = org
 
         if(!org.save)
@@ -80,11 +81,11 @@ class BillingController < ApplicationController
         end
       end
     rescue Exception => e    
-      #raise e          
+      raise e          
       if(!e.message.nil?)
-        flash[:error] = e.message
+        flash.now['page-error'] = e.message
       else
-        flash[:error] = e
+        flash.now['page-error'] = e
       end
       return render :action => :signup
     end
@@ -101,31 +102,31 @@ class BillingController < ApplicationController
   private
   def handle_user_error(user)
     user.errors.full_messages.each do |err|
-      @error_msg << "user:"+err
+      @error_msg << err+" (user)"
     end
     raise @error_msg.join("<br/>").html_safe
   end
   def handle_org_error(org)
     org.errors.full_messages.each do |err|
-      @error_msg << "org:"+err
+      @error_msg << err+" (org)"
     end
     raise @error_msg.join("<br/>").html_safe
   end
   def handle_location_error(loc)
     loc.errors.full_messages.each do |err|
-      @error_msg << "location:"+err
+      @error_msg << err+" (location)"
     end
     raise @error_msg.join("<br/>").html_safe
   end 
   def handle_day_home_signup_request_error
     @day_home_signup_request.errors.full_messages.each do |err|
-      @error_msg << "signup_request:"+err
+      @error_msg << err+" (signup request)"
     end
     raise @error_msg.join("<br/>").html_safe
   end
   def handle_dayhome_error
     @day_home.errors.full_messages.each do |err|
-      @error_msg << "dayhome:"+err
+      @error_msg << err+" (dayhome)"
     end
     raise @error_msg.join("<br/>").html_safe
   end

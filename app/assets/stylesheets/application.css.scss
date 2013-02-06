@@ -20,7 +20,7 @@
 $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 $iconLogoPath: asset-url("mini-logo.jpg", image) !default;
 @import "bootstrap";
-
+ 
 $green: #52BE60;
 $yellow: #f0df73;
 $red: #FE1A00;
@@ -44,8 +44,12 @@ input {
 }
 
 body {
+  font-size: 16px;
   width: 100%;
   border: 0;
+  margin: 0;
+}
+form {
   margin: 0;
 }
 ul {
@@ -56,6 +60,7 @@ a {
   color: $green;
   text-decoration: none;
 }
+
 h1 {
   font-size: 25.888px;
 }
@@ -103,6 +108,7 @@ header > div {
 
     a:hover {
       border-top: 2px solid $dark-grey;
+      text-decoration: none;
     }      
   }
 
@@ -132,6 +138,10 @@ header > div {
     
   }
 }
+.searchWrapper {
+  margin-top: -.2em;
+}
+
 #subnav {
   clear:left;
   ul {
@@ -171,6 +181,7 @@ header > div {
   margin-right:4px;
   font-size:16px;
 }
+
 #charm {
   background-color: $light-grey;
   color: $dark-grey;
@@ -200,6 +211,7 @@ header > div {
     }
     a:hover {
       border-top: 2px solid $dark-grey;
+      text-decoration: none;
     }
   }
 }

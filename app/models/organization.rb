@@ -14,7 +14,7 @@ class Organization < ActiveRecord::Base
       #raise stripe_card_token.blank?.to_s
       if !stripe_card_token.blank?
         if self.stripe_customer_token.nil?
-          customer = Stripe::Customer.create(email: email, description: full_name, plan: plan, card: stripe_card_token)
+          customer = Stripe::Customer.create(email: billing_email, description: name, plan: plan, card: stripe_card_token)
           #raise customer.to_json
           self.stripe_customer_token = customer.id
         else

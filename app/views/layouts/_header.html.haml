@@ -8,17 +8,17 @@
 %header
   #logo
   #nav
-    = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
-      %ul.main-nav
-        - if request.path != pages_path
-          %li
-            = link_to 'Home', pages_path
+    %ul.main-nav
+      - if request.path != pages_path
         %li
-          = link_to 'About', about_pages_path
-        %li
-          = link_to 'Blog', "http://blog.dayhomeregistry.com"
-        %li
-          %div
+          = link_to 'Home', pages_path
+      %li
+        = link_to 'About', about_pages_path
+      %li
+        = link_to 'Blog', "http://blog.dayhomeregistry.com"
+      %li
+        = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
+          .searchWrapper
             = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
             = link_to "Search", "#",:id=>'searchSubmit',:class=>"yellow"
       -if current_user && (current_user.day_home_owner? || current_user.agency_admin?)

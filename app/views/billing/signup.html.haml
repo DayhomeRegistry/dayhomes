@@ -204,7 +204,10 @@
     .clear
     %h3.section-header
       Tell us a little about yourself
-      
+    - flash.each do |type, value|
+      -if type.to_s.starts_with?('page')
+        .flash{ :class => "alert alert-" + type.to_s }
+          = raw (value )  
     .control-group
       = f.label :day_home_name, 'Dayhome Name', :class=>"control-label"
       .controls
@@ -341,6 +344,13 @@
         %input#pay-now-button{:name => "paynow", :type => "submit", :value => "Pay Now"}
 :javascript
   $('.icon-info-sign').popover() ;
+  if($('.alert-page-error').length>0) {
+    try {
+      $.scrollTo($('.alert-page-error').position().top - ($(window).height() / 2),
+        { speed: 'slow'}
+      );
+    } catch(err) {alert(err);}
+  }
   
   Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
 

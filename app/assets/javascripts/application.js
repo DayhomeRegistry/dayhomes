@@ -26,6 +26,7 @@
 //= require jquery.rest
 //= require jquery-star-rating
 //= require jquery.cycle.lite
+//= require jquery.scrollTo
 //= require common
 //= require externals/modernizr
 //= require externals/html5support/jquery.html5support
