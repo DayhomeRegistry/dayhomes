@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   acts_as_authentic
-  validates_presence_of :first_name, :last_name
+  #validates_presence_of :first_name, :last_name
 
   has_many :reviews
   has_many :user_day_homes, :dependent => :destroy

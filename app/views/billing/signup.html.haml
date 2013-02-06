@@ -249,11 +249,15 @@
             = f.text_field :day_home_postal_code, :class=>"input-mini"
             .example
               Postal/Zip Code
-    .control-group.append-bottom-1
-      %label.control-label{:for => "EMAIL"}
-        Email Address
+    .control-group
+      = f.label :contact_phone_number, 'Phone Number', :class=>"control-label"        
       .controls
-        %input#EMAIL.input-large{:name => "EMAIL", :type => "text", }
+        = f.text_field :contact_phone_number
+    .clearb              
+    .control-group.append-bottom-1
+      = f.label :contact_email, 'Email Address', :class=>"control-label"        
+      .controls
+        = f.text_field :contact_email
     .clearb
     #credit-card-section{:style => "display:none;"}
       = f.hidden_field :stripe_card_token
