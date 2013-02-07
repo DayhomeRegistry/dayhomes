@@ -161,7 +161,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         //update the details on the page.
         var period_total = this.updateDetails(packageid);
 
-        if (period_total.toFixed(2) - Dayhome.upgradePage.payment_amount.toFixed(2) <= 0) {
+        if (period_total.toFixed(2)<=0) {
             $('#credit-card-section').slideUp().find('input, select').prop('disabled', true);
         } else {
             $('#credit-card-section').slideDown().find('input, select').prop('disabled', false);
@@ -256,9 +256,9 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         var package_price = period_total;
 
         // If there is no new package use the existing price to calculate the period_total.
-        if (totalBoxBase.css('display') == 'none') {
-            period_total = Number($('#current_plan .amount').text());
-        }
+        //if (totalBoxBase.css('display') == 'none') {
+        //    period_total = Number($('#current_plan .amount').text());
+        //}
 
         //Hide + disable any addons that are blocked by the base package
         var visibleAddons = 0;

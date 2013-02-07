@@ -49,10 +49,14 @@ $(function () {
         }
     );
     
-    //select the current package
+    //highlight the selected package, for when a POST fails.
     var packageid = Dayhome.upgradePage.existing.id;
     if (packageid) {
-      $('table.pricingTable .package_' + packageid).addClass('selected_package');
-      $('table.pricingTable .package_' + packageid + ' a.button.green').html('<span>Free Trial</span>');
+      $('table.pricingTable .package_' + packageid)
+            .addClass('selected_package')
+            .find('.button.medium')
+            .trigger('click');
     }
+
+
 });

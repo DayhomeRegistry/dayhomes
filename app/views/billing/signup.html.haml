@@ -113,7 +113,7 @@
 
   = form_for @day_home_signup_request,:url => billing_register_path(),:method => :put, :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>""} do |f|
     = hidden_field_tag 'choose-package', "78"
-    = hidden_field_tag 'plan', "baby"
+    = hidden_field_tag 'plan', @day_home_signup_request.plan
     %br
     %h3#addon-header.section-header.section-header-first
       Choose Any Extras You May Need
@@ -414,8 +414,6 @@
               "block_locales_addon": "0"
           }
       },
-      payment_frequency: 1,
-      payment_amount: 19.950,
       additional_cost: {
           staff: function (n) {
               return parseInt(n, 10) * 10 || 0;
@@ -425,5 +423,10 @@
               return parseInt(n, 10) * 10 || 0;
           }
       },
-      existingDeprecated: false
+      index: {
+        "baby":78, "mama":79, "papa":80, "goldilocks":81
+      }
   };
+  var index = Dayhome.upgradePage.index[$('#plan').val()];
+  Dayhome.upgradePage.existing = Dayhome.upgradePage.packages[index];
+  Dayhome.upgradePage.existing.id = index;

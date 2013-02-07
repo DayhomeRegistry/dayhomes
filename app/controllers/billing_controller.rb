@@ -47,6 +47,7 @@ class BillingController < ApplicationController
 
         if(@day_home_signup_request.plan!="baby") 
           org.stripe_card_token = @day_home_signup_request.stripe_card_token
+          org.plan = @day_home_signup_request.plan
           if !org.save_with_payment 
             handle_org_error(org)
           end
