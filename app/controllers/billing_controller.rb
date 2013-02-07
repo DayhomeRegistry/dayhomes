@@ -82,7 +82,7 @@ class BillingController < ApplicationController
         end
       end
     rescue Exception => e    
-      raise e          
+      #raise e          
       if(!e.message.nil?)
         flash.now['page-error'] = e.message
       else

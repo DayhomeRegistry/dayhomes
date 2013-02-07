@@ -282,14 +282,14 @@
             =label_tag :card_number, "Card Number", :class=>"control-label"            
             .controls  
               .span-11
-                =text_field_tag :card_number, nil, name:nil, :class=>"input-large",:onkeypress => "return numbersonly2(this, event)"
+                =text_field_tag :card_number, '', :name=>nil, :class=>"input-large",:onkeypress => "return numbersonly2(this, event)"
                 .example
                   Number
               .span-4
                 =text_field_tag :card_code, nil, name:nil, :class=>"input-mini"
                 .example
-                  CCV
-                  <i class="icon-info-sign" data-title="What's a CCV?" data-content="The little code to verify the number...you know the one."></i>      
+                  CVV
+                  <i class="icon-info-sign" data-title="What's a CVV?" data-content="The CVV Number ("Card Verification Value") on your credit card or debit card is a 3 digit number on VISA®, MasterCard® and Discover® branded credit and debit cards. On your American Express® branded credit or debit card it is a 4 digit numeric code."></i>      
           .control-group
             =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
             .controls

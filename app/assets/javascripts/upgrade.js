@@ -41,7 +41,6 @@
         })(name, prop[name]) :
         prop[name];
     }
-    
     // The dummy class constructor
     function Class() {
       // All construction is actually done in the init method
@@ -61,7 +60,18 @@
     return Class;
   };
 })();
-
+function ensure_nonempty_field(e, t, n) {
+    return !e[t].disabled && (e[t].val() === "") ? (alert(n), e[t].focus(), !1) : !0
+}
+function build_validator(e) {
+    return function (t) {
+        for (var n in e) {
+            if (t[n] && !ensure_nonempty_field(t, n, e[n])) 
+                return !1;
+        }
+        return !0
+    }
+}
 
 Dayhome.upgradePage.Upgrade = Class.extend({
 	defaults: {
@@ -105,6 +115,8 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         
         this.packageInput = $('#choose-package');
         this.plan = $('#plan');
+        this.CREDIT_CARD_NUMBER = $('#card_number');
+        this.CVV = $('#card_code');
         //this.country = $('#p_country');
         //this.is_mobile = $('#is_mobile');
 
@@ -331,39 +343,32 @@ Dayhome.upgradePage.Upgrade = Class.extend({
     Event handler for form submissions and validates form data before sending it
     */
     handleForm: function (self, event) {
-        /*var ccnum = $('#CREDIT_CARD_NUMBER').val(),
-            cardchanged = $('#credit_card_changed').val(),
+        var ccnum = $('#card_number').val(),
             isnum = /(^\d+$)|(^\d+\.\d+$)/,
             now = new Date(),
             curyear = now.getFullYear(), curmonth = now.getMonth() + 1,
-            expyear = $('#EXPIRE_YEAR').val(),
-            expmonth = $('#EXPIRE_MONTH').val(),
+            expyear = $('#card_year').val(),
+            expmonth = $('#card_month').val(),
             curdate = new Date(curyear, curmonth, 1).getTime(),
             expdate = new Date(expyear, expmonth, 1).getTime(),
 
             validators = {
-                "p_country": "You must select your country.",
-                "BILL_ADDRESS_ONE": "You must enter your address.",
-                "BILL_CITY": "You must enter your city.",
-                "BILL_ZIP_OR_POSTAL_CODE": "You must enter your postal code / zip.",
-                "EMAIL": "You must enter your email.",
-                "CARD_BRAND": "You must select your credit card type.",
-                "BILL_NAME": "You must enter the name on your credit card.",
-                "CREDIT_CARD_NUMBER": "You must enter your credit card number."
+                "CREDIT_CARD_NUMBER": "You must enter your credit card number.",
+                "CVV":"You must enter your Card Verification Value."
             };
 
         // if doing a downgrade, don't validate these fields as they are not required
         if ($('#credit-card-section').is(':hidden')) {
             delete validators.CREDIT_CARD_NUMBER;
-            delete validators.CARD_BRAND;
         }
 
         var agreed = true;
-        if ($('#agree').length) {
-            agreed = $('#agree').is(':checked');
+        if ($('#ack').length) {
+            agreed = $('#ack').is(':checked');
         }
         if (!agreed) {
-            alert('You must agree to the terms and services.');
+            alert('You must agree to the privacy policy and terms of use.');
+            $('#ack').focus();
         }
 
         if (!agreed || !build_validator(validators)(this)) {
@@ -371,20 +376,19 @@ Dayhome.upgradePage.Upgrade = Class.extend({
             return false;
         }
 
-        if (validators.CREDIT_CARD_NUMBER && cardchanged == 1 && !isnum.test(ccnum)) {
+        if (validators.CREDIT_CARD_NUMBER && !isnum.test(ccnum)) {
             alert("Please re-enter your credit card number using only numbers.");
-            document.form.CREDIT_CARD_NUMBER.focus();
+            $('#card_number').focus();
             event.preventDefault();
             return false;
         }
         if (validators.CREDIT_CARD_NUMBER && expdate < curdate) {
             alert("Your expiry date is in the past.");
-            $('#EXPIRE_MONTH').focus();
+            $('#card_month').focus();
             event.preventDefault();
             return false;
         }
 
-        return true;*/
         // Disable the button.
         self.payNowButton.val('Loading…').prop('disabled', true);
 
