@@ -1,4 +1,8 @@
 Dayhomes::Application.routes.draw do
+  get "organization/edit"
+
+  get "organization/show"
+
   get "billing/signup"
   put "billing/register"
   get "billing/welcome"
