@@ -32,6 +32,9 @@ class User < ActiveRecord::Base
   def agency_admin?
     agencies.any?
   end
+  def dayhome_admin?
+    agencies.any?||day_homes.any?
+  end
   
   def assign_day_home_ids=(day_home_id_attrs=[])
     self.user_day_homes = []

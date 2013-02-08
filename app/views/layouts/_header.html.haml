@@ -21,27 +21,23 @@
           .searchWrapper
             = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
             = link_to "Search", "#",:id=>'searchSubmit',:class=>"yellow"
-      -if current_user && (current_user.day_home_owner? || current_user.agency_admin?)
-        %ul.client-menu
-          %li
-            %a{:href => ""}
-              Overview
-          %li
-            %a{:href => ""}
-              Upgrades
-          %li
-            %a{:href => ""}
-              Buy Extras    
+      
     .clear
-  -if current_user && current_user.agency_admin?
+  -if current_user && current_user.dayhome_admin?
     #subnav  
       %ul
+        %li
+          = link_to 'Overview', agency_path(current_user.agencies.first)
         %li
           = link_to 'People', users_path
         %li
           = link_to 'DayHomes', day_homes_path
         %li
-          = link_to 'Company Info', agency_path(current_user.agencies.first)
+          %a{:href => ""}
+            Upgrades
+        %li
+          %a{:href => ""}
+            Buy Extras    
       .clear
   -if current_user && current_user.admin?
     #subnav  

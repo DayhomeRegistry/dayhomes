@@ -86,6 +86,9 @@ header > div {
       float: left;
       margin: 0 1em 0 1em;
     }
+    li:last-child {
+      margin: 0 0 0 1em;
+    }
   }
   a {
     color: $dark-grey;
@@ -101,9 +104,9 @@ header > div {
   }
 }
 #searchQuery {
-  width:200px;
+  width:175px;
   margin-right:4px;
-  font-size: 16px;
+  font-size: 14px;
 }
 #charm {
   background-color: $light-grey;
@@ -275,7 +278,25 @@ a.signup-link {
   -ms-transform: rotate(15deg);
   transform: rotate(15deg);
 }
-
+.social-home {
+  color: #999;
+  font-size: 15px;
+}
+.social-home-twitter {
+  width: 43px;
+  float: left;
+  margin: 15px 15px 0 0;
+}
+.social-home-facebook {
+  width: 43px;
+  float: left;
+  margin: 15px 15px 0 0;
+}
+.social-home-pinterest {
+  width: 43px;
+  float: left;
+  margin: 15px 15px 0 0;
+}
 footer {
   clear: both;
   border-top: 1px solid $dark-grey;
@@ -283,7 +304,7 @@ footer {
   margin: 2.68em auto;
 }
 footer > div {
-  width: 30%;
+  width: 29%;
   float: left;
   padding: 1em;
 }

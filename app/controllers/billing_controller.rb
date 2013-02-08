@@ -3,9 +3,18 @@ class BillingController < ApplicationController
     @day_home_signup_request = DayHomeSignupRequest.new
   end
   def register
+    staff = 0
+    locales = 0
+
     @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])   
     @day_home_signup_request.plan=params[:plan]
     
+    if(params[:staff])
+      staff = Integer(params[:staff])
+    end
+    if(params[:locales])
+      locales = Integer(params[:staff])
+    end
 
     #I don't know how to make the checkbox mandatory, so we'll check here first
     if(params["ack"].nil?)

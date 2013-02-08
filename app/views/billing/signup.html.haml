@@ -115,92 +115,93 @@
     = hidden_field_tag 'choose-package', "78"
     = hidden_field_tag 'plan', @day_home_signup_request.plan
     %br
-    %h3#addon-header.section-header.section-header-first
-      Choose Any Extras You May Need
-    .span-22.append-bottom-1
-      #addon_staff{:style => "display: none;"}
-        .control-group
-          %label.control-label{:for => "staff"}
-            Extra Staff
-          .controls
-            %input#staff.addonInput.input-mini{:maxlength => "4", :name => "staff", :onkeypress => "return numbersonly2(this, event)", :type => "text", :value => ""}
-              \
-              %span.example $10/month each
-      #addon_locales{:style => "display: none;"}
-        .control-group
-          %label.control-label{:for => "locales"}
-            Extra Locales
-          .controls
-            %select#locales.formSelect.addonInput.input-large{:disabled => "", :name => "locales"}
-              %option{:value => "0"}
-              %option{:value => "1"} +1 locale ($10/month)
-              %option{:value => "2"} +2 locale ($20/month)
-              %option{:value => "3"} +3 locale ($30/month)
-              %option{:value => "4"} +4 locale ($40/month)
-              %option{:value => "5"} +5 locale ($50/month)
-      %div
-        %div{:style => "margin: 0 45px; font-weight: bold; padding-left: 45px;"}
-          You can add
-          = succeed "like" do
-            %a#A1{:href => "buy.htm"}
-              %span one-time use extras
-          Featuring your dayhome or adding a waiting list later.
-    .span-13.append-bottom-2
-      #total_box.bg_orange.hide{:style => "display: block;"}
-        %h4.sidebar_header_orange
-          %span Upgrade Details
-        %table.fs_11{:cellpadding => "2", :cellspacing => "0", :width => "100%"}
-          %tbody
-            %tr#total_box_base{:style => "", :valign => "top"}
-              %td
-                %strong
-                  New plan -
-                  %span#package_name Baby Bear
-                %br
-                  %div{:style => "padding-left: 15px;"}
-                    (
-                    %span#limit_day_homes> 1
-                    \dayhome(s),
-                    = succeed " staff," do
-                      %span#limit_staff 0
-                    = succeed " locale(s))" do
-                      %span#limit_locales 1
-              %td{:align => "right"}
-                %span.amount 0.00
-            %tr#total_box_staff{:style => "display: none;"}
-              %td
-                %span.num>
-                Extra staff
-              %td{:align => "right"}
-                %span.amount
-            %tr#total_box_locales{:style => "display: none;"}
-              %td
-                %span.num>
-                Extra locales
-              %td{:align => "right"}
-                %span.amount
-            %tr#total_box_auto_bill{:style => "display: none;"}
-              %td
-                %span.num>
-                Extra auto-bills
-              %td{:align => "right"}
-                %span.amount
-            %tr#total_box_storage{:style => "display: none;"}
-              %td
-                %span.num>
-                MB Extra document space
-              %td{:align => "right"}
-                %span.amount
-            %tr
-              %td{:colspan => "2", :style => "height: 5px; overflow: hidden;"}
-            %tr#total_box_total
-              %td
-                %strong.title> Monthly Rate
-                \:
-              %td{:align => "right"}
-                %strong
-                  $
+    #add-on-section{:style=>"display:none;"}
+      %h3#addon-header.section-header.section-header-first
+        Choose Any Extras You May Need
+      .span-22.append-bottom-1
+        #addon_staff{:style => "display: none;"}
+          .control-group
+            %label.control-label{:for => "staff"}
+              Extra Staff
+            .controls
+              %input#staff.addonInput.input-mini{:maxlength => "4", :name => "staff", :onkeypress => "return numbersonly2(this, event)", :type => "text", :value => ""}
+                \
+                %span.example $10/month each
+        #addon_locales{:style => "display: none;"}
+          .control-group
+            %label.control-label{:for => "locales"}
+              Extra Locales
+            .controls
+              %select#locales.formSelect.addonInput.input-large{:disabled => "", :name => "locales"}
+                %option{:value => "0"}
+                %option{:value => "1"} +1 locale ($10/month)
+                %option{:value => "2"} +2 locale ($20/month)
+                %option{:value => "3"} +3 locale ($30/month)
+                %option{:value => "4"} +4 locale ($40/month)
+                %option{:value => "5"} +5 locale ($50/month)
+        %div
+          %div{:style => "margin: 0 45px; font-weight: bold; padding-left: 45px;"}
+            You can add
+            = succeed "like" do
+              %a#A1{:href => "buy.htm"}
+                %span one-time use extras
+            Featuring your dayhome or adding a waiting list later.
+      .span-13.append-bottom-2
+        #total_box.bg_orange.hide{:style => "display: block;"}
+          %h4.sidebar_header_orange
+            %span Upgrade Details
+          %table.fs_11{:cellpadding => "2", :cellspacing => "0", :width => "100%"}
+            %tbody
+              %tr#total_box_base{:style => "", :valign => "top"}
+                %td
+                  %strong
+                    New plan -
+                    %span#package_name Baby Bear
+                  %br
+                    %div{:style => "padding-left: 15px;"}
+                      (
+                      %span#limit_day_homes> 1
+                      \dayhome(s),
+                      = succeed " staff," do
+                        %span#limit_staff 0
+                      = succeed " locale(s))" do
+                        %span#limit_locales 1
+                %td{:align => "right"}
                   %span.amount 0.00
+              %tr#total_box_staff{:style => "display: none;"}
+                %td
+                  %span.num>
+                  Extra staff
+                %td{:align => "right"}
+                  %span.amount
+              %tr#total_box_locales{:style => "display: none;"}
+                %td
+                  %span.num>
+                  Extra locales
+                %td{:align => "right"}
+                  %span.amount
+              %tr#total_box_auto_bill{:style => "display: none;"}
+                %td
+                  %span.num>
+                  Extra auto-bills
+                %td{:align => "right"}
+                  %span.amount
+              %tr#total_box_storage{:style => "display: none;"}
+                %td
+                  %span.num>
+                  MB Extra document space
+                %td{:align => "right"}
+                  %span.amount
+              %tr
+                %td{:colspan => "2", :style => "height: 5px; overflow: hidden;"}
+              %tr#total_box_total
+                %td
+                  %strong.title> Monthly Rate
+                  \:
+                %td{:align => "right"}
+                  %strong
+                    $
+                    %span.amount 0.00
     .clear
     %h3.section-header
       Tell us a little about yourself

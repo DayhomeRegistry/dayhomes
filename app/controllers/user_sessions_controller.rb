@@ -18,10 +18,8 @@ class UserSessionsController < ApplicationController
       #if (@user.day_home_owner?) || (@user.admin?) 
       if (@user.admin?)
         redirect_to admin_root_path
-      elsif (@user.day_home_owner?)
-        redirect_to day_homes_path
       else
-        redirect_to root_path
+        redirect_to day_homes_path
       end
     else
       flash[:error] = "Please enter a valid email and password combination."
