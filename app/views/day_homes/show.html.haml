@@ -81,12 +81,12 @@
       %div
         This dayhome is proudly managed through 
         %span.external
-          #{@day_home.agencies.first.name}
+          #{@day_home.organization.name}
         , click here for
-        = link_to(" other locations near this one.",searches_path('search[agency]'=>@day_home.agencies.first.id,'search[address]'=>@day_home.address))   
+        = link_to(" other locations near this one.",searches_path('search[organization]'=>@day_home.organization.id,'search[address]'=>@day_home.address))   
         %br
         Phone:
-        =@day_home.agencies.first.phone_number
+        =@day_home.organization.phone_number
     - else
       %div
         = @day_home.address

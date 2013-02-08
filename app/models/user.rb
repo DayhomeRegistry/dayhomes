@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   def day_home_owner?
     day_homes.any? 
   end
-  def agency_admin?
+  def organization_admin?
     agencies.any?
   end
   def dayhome_admin?

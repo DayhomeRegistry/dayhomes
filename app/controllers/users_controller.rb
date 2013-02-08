@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   helper_method :sort_column, :sort_direction
-  before_filter :require_no_user, :only => [:new, :create], :unless => :agency_user
+  before_filter :require_no_user, :only => [:new, :create], :unless => :organization_user
   before_filter :require_user, :only => [:show, :update, :index]
-  before_filter :require_user_to_be_agency_admin, :only=>[:index]
+  before_filter :require_user_to_be_organization_admin, :only=>[:index]
   
   def show
     @user = current_user
@@ -10,8 +10,8 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    if(current_user.agency_admin?)
-      return render :action=>:agency_new
+    if(current_user.organization_admin?)
+      return render :action=>:organization_new
     end
   end
 
@@ -19,9 +19,9 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     
     if @user.save
-      if(current_user.agency_admin?)
-        current_user.agencies.first.add_user(@user);
-        current_user.agencies.first.save
+      if(current_user.organization_admin?)
+        current_user.organization.add_user(@user);
+        current_user.organization.save
         redirect_to users_path
       else
         redirect_to root_path
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
-    if (@user.agency_admin? && !params[:id].nil?)
+    if (@user.organization_admin? && !params[:id].nil?)
       @user = User.find(params[:id])
     end
     #raise current_user.stripe_customer_token
@@ -71,8 +71,8 @@ class UsersController < ApplicationController
   end
 
   def index
-    #this is just for agency admin to edit the users associated with the agency
-    @users = current_user.agencies.first.users.page(params[:page] || 1).per(params[:per_page] || 10)
+    #this is just for org admin to edit the users associated with the org
+    @users = current_user.organization.users.page(params[:page] || 1).per(params[:per_page] || 10)
   end
 
   def destroy
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
   end  
 
-  def agency_user
-    return current_user.agency_admin?
+  def organization_user
+    return current_user.organization_admin?
   end
 end

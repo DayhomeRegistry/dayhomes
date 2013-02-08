@@ -7,7 +7,7 @@ class DayHomeMailer < ActionMailer::Base
 
     if (Rails.env.development?)
       if (dayhome.agencies.any?)
-        emails=dayhome.agencies.first.users.map(&:email).join(', ')
+        emails=dayhome.organization.users.map(&:email).join(', ')
         
         mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => contact.subject+"["+emails+"]", :reply_to=>contact.email)
       else
@@ -16,7 +16,7 @@ class DayHomeMailer < ActionMailer::Base
       
     else 
       if (dayhome.agencies.any?)
-        dayhome.agencies.first.users.find_each do |user|
+        dayhome.organization.users.find_each do |user|
           mail(:to => user.email, :subject => contact.subject, :reply_to=>contact.email)
         end
       else

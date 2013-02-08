@@ -1,7 +1,7 @@
 class DayHomesController < ApplicationController
 
   before_filter :require_user, :except => [:show, :contact, :calendar, :followup]
-  before_filter :require_user_to_be_day_home_owner_or_admin, :except => [:show, :contact, :calendar, :followup]
+  before_filter :require_user_to_be_organization_admin, :except => [:show, :contact, :calendar, :followup]
   helper_method :sort_column, :sort_direction
     
   def index
@@ -14,11 +14,11 @@ class DayHomesController < ApplicationController
       clause = clause.gsub(feature,"")
       clause = clause.gsub(approve,"")            
       
-      if (current_user.agency_admin?)
+      if (current_user.organization_admin?)
         if (!clause.empty?)
-          @day_homes = current_user.agencies.first.day_homes.where("name like ?", "%#{clause.strip}%")
+          @day_homes = current_user.organization.day_homes.where("name like ?", "%#{clause.strip}%")
         else
-          @day_homes = current_user.agencies.first.day_homes
+          @day_homes = current_user.organization.day_homes
         end
       else 
         if (!clause.empty?)
@@ -40,8 +40,8 @@ class DayHomesController < ApplicationController
       @query = params[:query]
     else 
       
-      if (current_user.agency_admin?)      
-        @day_homes = current_user.agencies.first.day_homes
+      if (current_user.organization_admin?)      
+        @day_homes = current_user.organization.day_homes
       else
         @day_homes = current_user.day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)      
       end
@@ -102,16 +102,16 @@ class DayHomesController < ApplicationController
 
 
   def edit
-    if(current_user.agency_admin?)
-      @day_home = current_user.agencies.first.day_homes.find(params[:id])
+    if(current_user.organization_admin?)
+      @day_home = current_user.organization.day_homes.find(params[:id])
     else
       @day_home = current_user.day_homes.find(params[:id])
     end
   end
   
   def update
-    if(current_user.agency_admin?)
-      @day_home = current_user.agencies.first.day_homes.find(params[:id])
+    if(current_user.organization_admin?)
+      @day_home = current_user.organization.day_homes.find(params[:id])
     else
       @day_home = current_user.day_homes.find(params[:id])
     end

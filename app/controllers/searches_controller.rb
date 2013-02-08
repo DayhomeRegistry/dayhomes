@@ -12,20 +12,11 @@ class SearchesController < ApplicationController
       end
 
       # set the pins for gmaps
-      @agency = Agency.find_by_id(@search.agency)
       @day_homes = @search.day_homes
     end
 
     # make sure the search object keeps its persistance
     @advanced_search = params.has_key?(:search) ? @search : Search.new
   end
-  #def getInboundsMarkers
-  #  bounds = paras[:bounds]
-  #  
-  #  respond_to do |format|
-  #    format.js {
-  #      render(:partial => "/searches/day_home", :locals => { :day_home => DayHome.within_bounds(bounds)})
-  #    }
-  #  end
-  #end
+  
 end

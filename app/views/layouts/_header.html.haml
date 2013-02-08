@@ -27,7 +27,7 @@
     #subnav  
       %ul
         %li
-          = link_to 'Overview', agency_path(current_user.agencies.first)
+          = link_to 'Overview', organization_path(current_user.organization)
         %li
           = link_to 'People', users_path
         %li

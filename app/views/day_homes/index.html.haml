@@ -9,8 +9,8 @@
     });
   });  
 %h2
-  -if (current_user.agency_admin?)
-    #{current_user.agencies.first.name} dayhomes
+  -if (current_user.organization_admin?)
+    #{current_user.organization.name} dayhomes
   -else
     My dayhomes
 =form_tag({:controller => "day_homes", :action => "index"},:method=>"get", :id => :searchForm) do 

@@ -34,6 +34,7 @@ class DayHome < ActiveRecord::Base
   # to here
 
   belongs_to :location
+  has_one :organization, :through=>:location
 
   has_many :features, :dependent => :destroy
 

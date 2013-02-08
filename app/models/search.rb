@@ -58,9 +58,9 @@ class Search
     dayhome_query = determine_joins(dayhome_query)
 
     # filter for agencies
-    if(params.has_key?(:agency))
+    if(params.has_key?(:organization))
       #raise params[:agency].to_s
-      dayhome_query = apply_agency_filter(params[:agency],dayhome_query)
+      dayhome_query = apply_agency_filter(params[:organization],dayhome_query)
   	end
 
     # if the user uses the advanced search, we use the values from the search screen
@@ -161,11 +161,12 @@ class Search
     dayhome_query
   end
 
-  # show only those dayhomes for a particular agency
-  def apply_agency_filter(agency_id,dayhome_query)
+  # show only those dayhomes for a particular organization
+  def apply_agency_filter(organization_id,dayhome_query)
     
-    dayhome_query = dayhome_query.joins(:agencies)
-    dayhome_query = dayhome_query.where("agencies.id = #{agency_id}")
+    dayhome_query = dayhome_query.joins(:organization)
+    dayhome_query = dayhome_query.joins(:locations)
+    dayhome_query = dayhome_query.where("organization.id = #{organization_id}")
     dayhome_query
   end
 

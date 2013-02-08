@@ -1,7 +1,7 @@
 Dayhomes::Application.routes.draw do
-  get "organization/edit"
+  #get "organization/edit"
 
-  get "organization/show"
+  #get "organization/show"
 
   get "billing/signup"
   put "billing/register"
@@ -13,7 +13,7 @@ Dayhomes::Application.routes.draw do
     resources :agencies 
   end
 
-  resources :agencies
+  resources :organization
   resources :categories, :except => [:index, :show]
   resources :forums, :except => :index do
     resources :topics, :shallow => true, :except => :index do
@@ -25,11 +25,6 @@ Dayhomes::Application.routes.draw do
   root :to => 'pages#index'
 
   resources :searches
-  #resources :day_home_signup_requests do
-  #  collection do
-  #    get :welcome
-  #  end
-  #end
   resources :day_homes do
     resources :reviews
     resources :events
