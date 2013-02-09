@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :user_agencies, :dependent => :destroy
   has_many :agencies, :through => :user_agencies
 
+  has_one :user_organization, :dependent => :destroy
   has_one :organization, :through => :user_organizations
 
   has_many :topics, :dependent => :destroy
@@ -27,14 +28,12 @@ class User < ActiveRecord::Base
   end
   
   def day_home_owner?
-    day_homes.any? 
+    organization.any?
+    #day_homes.any? 
   end
   def organization_admin?
-    agencies.any?
-  end
-  def dayhome_admin?
-    agencies.any?||day_homes.any?
-  end
+    organization.any?
+  end  
   
   def assign_day_home_ids=(day_home_id_attrs=[])
     self.user_day_homes = []

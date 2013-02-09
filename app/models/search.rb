@@ -6,7 +6,7 @@ class Search
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
                 :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
-                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group, :agency
+                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group, :organization
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => 'Full Days'}
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
@@ -164,9 +164,9 @@ class Search
   # show only those dayhomes for a particular organization
   def apply_agency_filter(organization_id,dayhome_query)
     
+    
     dayhome_query = dayhome_query.joins(:organization)
-    dayhome_query = dayhome_query.joins(:locations)
-    dayhome_query = dayhome_query.where("organization.id = #{organization_id}")
+    dayhome_query = dayhome_query.where("organizations.id = #{organization_id}")
     dayhome_query
   end
 
