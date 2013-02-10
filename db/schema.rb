@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117223356) do
+ActiveRecord::Schema.define(:version => 20130117025714) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -144,10 +144,8 @@ ActiveRecord::Schema.define(:version => 20130117223356) do
     t.boolean  "licensed",               :default => false, :null => false
     t.string   "highlight"
     t.boolean  "approved",               :default => true
-    t.integer  "location_id"
+    t.integer  "organization_id"
   end
-
-  add_index "day_homes", ["location_id"], :name => "day_homes_location_id_fk"
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -162,13 +160,6 @@ ActiveRecord::Schema.define(:version => 20130117223356) do
 
   add_index "events", ["day_home_id"], :name => "index_events_on_day_home_id"
 
-  create_table "features", :force => true do |t|
-    t.date     "start"
-    t.date     "end"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "forums", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -181,22 +172,6 @@ ActiveRecord::Schema.define(:version => 20130117223356) do
   end
 
   add_index "forums", ["category_id"], :name => "index_forums_on_category_id"
-
-  create_table "locations", :force => true do |t|
-    t.string   "name"
-    t.integer  "organization_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "locations", ["organization_id"], :name => "locations_organization_id_fk"
-
-  create_table "organization_users", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "organization_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
 
   create_table "organizations", :force => true do |t|
     t.string   "name"
@@ -305,9 +280,5 @@ ActiveRecord::Schema.define(:version => 20130117223356) do
     t.string   "stripe_customer_token"
     t.string   "plan",                             :default => "baby"
   end
-
-  add_foreign_key "day_homes", "locations", :name => "day_homes_location_id_fk", :dependent => :delete
-
-  add_foreign_key "locations", "organizations", :name => "locations_organization_id_fk"
 
 end

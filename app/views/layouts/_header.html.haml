@@ -23,7 +23,7 @@
             = link_to "Search", "#",:id=>'searchSubmit',:class=>"yellow"
       
     .clear
-  -if current_user && current_user.dayhome_admin?
+  -if current_user && current_user.organization_admin?
     #subnav  
       %ul
         %li

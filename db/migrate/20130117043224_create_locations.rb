@@ -1,18 +1,21 @@
 class CreateLocations < ActiveRecord::Migration
-  def change
+  def up
     create_table :locations do |t|
       t.string :name
       t.integer :organization_id
-      t.foreign_key :organizations
+      #t.foreign_key :organizations
 
       t.timestamps
     end
 
-    change_table :day_homes do |t|
-      t.integer :location_id
-      t.foreign_key :locations, dependent: :delete
-    end
+    add_column :day_homes,:location_id,:integer
     
 	  
   end
+
+  def down
+    drop_table :locations
+    remove_column :day_homes,:location_id
+  end
+
 end

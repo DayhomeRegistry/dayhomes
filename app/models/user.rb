@@ -9,8 +9,8 @@ class User < ActiveRecord::Base
   has_many :user_agencies, :dependent => :destroy
   has_many :agencies, :through => :user_agencies
 
-  has_one :user_organization, :dependent => :destroy
-  has_one :organization, :through => :user_organizations
+  
+  belongs_to :organization
 
   has_many :topics, :dependent => :destroy
   has_many :posts, :dependent => :destroy
@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
     #day_homes.any? 
   end
   def organization_admin?
-    organization.any?
+    raise organization.to_json
   end  
   
   def assign_day_home_ids=(day_home_id_attrs=[])
