@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117025714) do
+ActiveRecord::Schema.define(:version => 20130209022438) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(:version => 20130117025714) do
     t.boolean  "licensed",               :default => false, :null => false
     t.string   "highlight"
     t.boolean  "approved",               :default => true
-    t.integer  "organization_id"
+    t.integer  "location_id"
   end
 
   create_table "events", :force => true do |t|
@@ -160,6 +160,13 @@ ActiveRecord::Schema.define(:version => 20130117025714) do
 
   add_index "events", ["day_home_id"], :name => "index_events_on_day_home_id"
 
+  create_table "features", :force => true do |t|
+    t.date     "start"
+    t.date     "end"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "forums", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -172,6 +179,13 @@ ActiveRecord::Schema.define(:version => 20130117025714) do
   end
 
   add_index "forums", ["category_id"], :name => "index_forums_on_category_id"
+
+  create_table "locations", :force => true do |t|
+    t.string   "name"
+    t.integer  "organization_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "organizations", :force => true do |t|
     t.string   "name"
@@ -279,6 +293,7 @@ ActiveRecord::Schema.define(:version => 20130117025714) do
     t.date     "privacy_effective_date"
     t.string   "stripe_customer_token"
     t.string   "plan",                             :default => "baby"
+    t.integer  "organization_id"
   end
 
 end
