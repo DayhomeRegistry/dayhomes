@@ -1,7 +1,9 @@
   class Organization < ActiveRecord::Base
   
   has_many :users
-  
+  #has_many :organization_users, :dependent => :destroy
+  #has_many :users, :through => :organization_users
+
   has_many :locations
   has_many :day_homes, :through=>:locations
 

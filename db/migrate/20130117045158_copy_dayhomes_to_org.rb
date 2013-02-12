@@ -6,8 +6,14 @@ class CopyDayhomesToOrg < ActiveRecord::Migration
   	Location.all.each do |l|
   		l.destroy
   	end
+
+  	remove_column :users,:organization_id
   end
   def up
+  	drop_table :organization_users #permanent
+ 	add_column :users, :organization_id, :integer
+ 	
+
 	User.find(:all, :include => "user_day_homes", :conditions => ["user_day_homes.day_home_id IS NOT NULL"]).each do |user|
 		user.day_homes.each do |dayhome|
 			org = Organization.new(
@@ -21,8 +27,8 @@ class CopyDayhomesToOrg < ActiveRecord::Migration
 				:stripe_customer_token => user.stripe_customer_token 
 			)
 			org.save
-			org.users << user
-			org.save
+			user.organization = org
+			user.save
 			l = Location.new(
 	    		:name => org.city
 	    	)
@@ -53,8 +59,12 @@ class CopyDayhomesToOrg < ActiveRecord::Migration
 			:stripe_customer_token => stripe
 		)
 		org.save
-		org.users << agency.users
-		org.save
+		agency.users.each do |u|
+			u.organization=org
+			u.save
+		end
+		#org.users << agency.users
+		#org.save
 		l = Location.new(
     		:name => org.city
     	)

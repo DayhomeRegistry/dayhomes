@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
     #day_homes.any? 
   end
   def organization_admin?
-    raise organization.to_json
+    !organization.nil?
   end  
   
   def assign_day_home_ids=(day_home_id_attrs=[])
