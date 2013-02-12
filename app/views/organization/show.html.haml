@@ -1,26 +1,144 @@
 #notice
   = notice
 
-%p
-  %b
-    Name:
-  = @organization.name
-
-%p
-  %b
-    Address:</b>
-  = @organization.street1
-  -if !@organization.street2.nil? 
-    =@organization.street2
-  = @organization.city + "," + @organization.province
-  = @organization.postal_code
-  
-
-%p
-  %b
-    Phone:</b>
-  = @organization.phone_number
-    
-= link_to 'Edit', edit_organization_path(@organization) 
-|
-= link_to 'Back', 'somewhere' 
+.form-horizontal
+  .form-header
+    %h2 Billing Information
+    Here you'll find your current package, account limits, and payment history.
+  .control-group
+    .control-label.fs_22
+      Current Fee
+    .controls.fs_22
+      .float_left
+        %strong
+          $250.00
+          per month
+      .float_left.prepend-1
+        %a.button.medium.green{:href => "fresh.htm"}
+          %span Upgrade Account
+  .control-group
+    .control-label
+      Dayhomes
+    .controls
+      .progress-bar.pg-neutral
+        .fill{:style => "width: 53.6%"}
+      134 of 250
+  .control-group
+    .control-label
+      Staff
+    .controls
+      .progress-bar.pg-neutral.no-fill
+        .fill{:style => "width: 50%"}
+      1 of 2
+  .control-group
+    .control-label
+      Locales
+    .controls
+      .progress-bar.pg-neutral
+        .fill{:style => "width: 20%"}
+      1 of 5
+  .control-group
+    .control-label
+      Feature credits
+    .controls
+      .span-11.append-bottom-1
+        2
+      .span-14.append-bottom-1
+        %a{:href => "stamps.htm"} Buy credits
+  .control-group.section-start
+    .control-label.fs_22
+      Organization
+    .controls.fs_22
+      .float_left
+        Some info about your organization    
+  .control-group
+    .control-label
+      Name
+    .controls
+      the name goes here
+  .control-group
+    .control-label
+      Street Address
+    .controls
+      .append-bottom-1.first
+        = label_tag :street1
+        .example.first
+          Street
+      .append-bottom-1
+        .span-7
+          = label_tag :city
+          .example
+            City
+        .span-10
+          = label_tag :province
+          .example
+            Province
+        .span-6
+          = label_tag :postal_code
+          .example
+            Postal/Zip Code
+  .control-group
+    .controls
+      .example.first
+        = link_to 'Edit', edit_organization_path(@organization) 
+  .control-group.section-start
+    .control-label
+      Upgrades
+    .controls
+      %table#upgrades
+        %tbody
+          %tr
+            %td.span-11
+              Jun 01, 2012
+              [250
+              ,
+              1
+              ,
+              1]
+            %td.span-14
+              $50.00
+              per month
+  .control-group
+    .control-label
+      Payments
+    .controls
+      %table#payments
+        %tbody
+          %tr
+            %td.span-11 Nov 01, 2012
+            %td.span-14
+              $50.00
+          %tr
+            %td.span-11 Oct 01, 2012
+            %td.span-14
+              $50.00
+          %tr
+            %td.span-11 Sep 01, 2012
+            %td.span-14
+              $50.00
+          %tr
+            %td.span-11 Aug 01, 2012
+            %td.span-14
+              $50.00
+          %tr
+            %td.span-11 Jul 01, 2012
+            %td.span-14
+              $50.00
+          %tr{:style => "display: none;"}
+            %td.span-11 Jun 01, 2012
+            %td.span-14
+              $50.00
+  .control-group.append-bottom-1
+    .controls
+      .example.first            
+        %a{:href => "#"} 
+          Show all payments
+  .control-group.section-start
+    .controls
+      .append-bottom-1
+        Go here to
+        %a{:href => "https://dayhomeregistry.freshbooks.com/"} downgrade to free
+        or
+        %a{:href => "https://dayhomeregistry.freshbooks.com/"} cancel
+        your account.
+      
