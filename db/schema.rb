@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117223356) do
+ActiveRecord::Schema.define(:version => 20130209022438) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -187,6 +187,11 @@ ActiveRecord::Schema.define(:version => 20130117223356) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "organization_users", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "organization_id"
+  end
+
   create_table "organizations", :force => true do |t|
     t.string   "name"
     t.string   "city"
@@ -293,6 +298,7 @@ ActiveRecord::Schema.define(:version => 20130117223356) do
     t.date     "privacy_effective_date"
     t.string   "stripe_customer_token"
     t.string   "plan",                             :default => "baby"
+    t.integer  "organization_id"
   end
 
 end

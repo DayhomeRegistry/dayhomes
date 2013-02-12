@@ -8,7 +8,7 @@ class RemoveOrganizationUsers < ActiveRecord::Migration
  		u.save
  	end
 
-  	drop_table :organization_users
+  	#drop_table :organization_users
 
   end
   def down
