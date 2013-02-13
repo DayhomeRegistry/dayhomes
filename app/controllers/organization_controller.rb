@@ -6,6 +6,11 @@ class OrganizationController < ApplicationController
   def show
     @organization = Organization.find(params[:id])
     @plan = Plan.where(:plan=>@organization.plan).first
+raise @organization.stripe_customer_token.to_s
+    @payments = Stripe::Invoice.all(
+      :customer => @organization.stripe_customer_token,
+      :count => 100
+    )
 
     respond_to do |format|
       format.html # show.html.haml

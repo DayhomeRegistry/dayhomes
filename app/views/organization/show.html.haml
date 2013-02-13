@@ -1,3 +1,14 @@
+:javascript
+  var convert_stripe_date = function(jsonDate) {
+    var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+    //return d.toDateString();
+    d.setUTCSeconds(jsonDate);
+    return d.toDateString();
+  };
+  function formatCurrency(num) {
+    num = isNaN(num) || num === '' || num === null ? 0.00 : num;
+    return parseFloat(num).toFixed(2);
+  }
 #notice
   = notice
 
@@ -118,39 +129,25 @@
               per month
   .control-group
     .control-label
-      Payments
+      Payments      
     .controls
+      /=@payments.to_json
       %table#payments
         %tbody
-          %tr
-            %td.span-11 Nov 01, 2012
-            %td.span-14
-              $50.00
-          %tr
-            %td.span-11 Oct 01, 2012
-            %td.span-14
-              $50.00
-          %tr
-            %td.span-11 Sep 01, 2012
-            %td.span-14
-              $50.00
-          %tr
-            %td.span-11 Aug 01, 2012
-            %td.span-14
-              $50.00
-          %tr
-            %td.span-11 Jul 01, 2012
-            %td.span-14
-              $50.00
-          %tr{:style => "display: none;"}
-            %td.span-11 Jun 01, 2012
-            %td.span-14
-              $50.00
+          -@payments.each_with_index do |p, index|
+            %tr{:style=> (index > 4?'display:none;':'')}
+              %td.span-11
+                :javascript
+                  document.write(convert_stripe_date(#{p.date}));
+              %td.span-14
+                :javascript
+                  document.write('$'+formatCurrency(#{p.total/100.0}))
+          
   .control-group.append-bottom-1
     .controls
       .example.first            
         %a{:href => "#"} 
-          Show all payments
+          Show last 100 payments
   .control-group.section-start
     .controls
       .append-bottom-1
