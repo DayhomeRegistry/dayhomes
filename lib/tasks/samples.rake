@@ -8,6 +8,12 @@ namespace :db do
 
   namespace :seed do
     task :samples => :environment do
+      # create plans
+      baby = Plan.create!({:name=>"Baby",:plan=>"baby",:day_homes=>1, :staff=>0,:locales=>1,:price=>0.00,:block_staff_addon=>1,:block_locales_addon=>1, :active=>Time.now})
+      mama= Plan.create!({:name=>"Mama",:plan=>"mama",:day_homes=>50, :staff=>1,:locales=>1,:price=>50.00,:block_staff_addon=>0,:block_locales_addon=>1, :active=>Time.now})
+      papa=Plan.create!({:name=>"Papa",:plan=>"papa",:day_homes=>250, :staff=>2,:locales=>5,:price=>250.00,:block_staff_addon=>0,:block_locales_addon=>0, :active=>Time.now})
+      goldilocks=Plan.create!({:name=>"Goldilocks",:plan=>"goldilocks",:day_homes=>-1, :staff=>3,:locales=>-1,:price=>400.00,:block_staff_addon=>0,:block_locales_addon=>0, :active=>Time.now})
+
       # create certification types
       level_1 = CertificationType.where({:kind => 'Child Care Level 1'}).first
       level_2 = CertificationType.where({:kind => 'Child Care Level 2'}).first
@@ -49,13 +55,15 @@ namespace :db do
       users = [ user0, user1, user2, user3, user4, user5, user6]
 
       # Create basic agency
-      agency = Agency.create!({:name=>"Child Development Dayhomes",:postal_code => 'T5N1Y6', :street1 => '131 St NW',:city=>'Edmonton',:province=>'Alberta'})
+      org = Organization.create!({:name=>"Child Development Dayhomes",:postal_code => 'T5N1Y6', :street1 => '131 St NW',:city=>'Edmonton',:province=>'Alberta',:plan=>'papa'})
       agencyUser1 = User.create!({:email => 'agency1@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Bobby', :last_name => 'Arya', :admin => false})
       agencyUser2 = User.create!({:email => 'agency2@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Brenda', :last_name => 'Schuler', :admin => false})
-      agency.add_user(agencyUser1)
-      agency.add_user(agencyUser2)
-      
-      
+      org.users << agencyUser1
+      org.users << agencyUser2
+      location = Location.create!({:name=>"Edmonton"})
+      org.locations<<location
+      org.save
+
       # address hashes
       fulltime_addresses = [
           {:postal_code => 'T5N1Y6', :street1 => '131 St NW'},
@@ -309,6 +317,9 @@ namespace :db do
       end
 
       # Create a dayhome with reviews
+      o1 = Organization.create!({:name=>"DayHome With Reviews",:postal_code => 'T6L5M6', :street1 => '4138 36st NW',:city=>'Edmonton',:province=>'Alberta'})
+      l1 = Location.create!({:name=>"Edmonton"})
+      o1.locations << l1
       day_home_with_reviews = DayHome.create!({:name => "DayHome With Reviews",
                                                :gmaps =>  true,
                                                :city =>  'Edmonton',
@@ -324,6 +335,9 @@ namespace :db do
                                                :blurb => 'Dayhome With Reviews is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.'                                               
                                               })
       day_home_with_reviews.availability_types << full_time_full_days
+      l1.day_homes << day_home_with_reviews
+      o1.save
+      l1.save
       photos = [
           { :caption => "Six and counting.", :photo => "counting.jpg"},
           { :caption => "We provide arts and crafts.", :photo => "crayons.jpg"},
@@ -349,6 +363,7 @@ namespace :db do
           { :caption => "Healthy food alternatives.", :photo => "fruit_salad.jpg" }
       ]
       fulltime_addresses.each_with_index  do |street_and_postal, index|
+        
         d = DayHome.create!({:name => fulltime_names[index],
                              :gmaps =>  true,
                              :city =>  'Edmonton',
@@ -373,7 +388,8 @@ namespace :db do
           d.certification_types << infant_cpr
         end
         add_photos_to_dayhome(photos, d)
-        agency.add_day_home(d)
+        location.day_homes << d
+        location.save
       end
 
       # Create a couple of dayhomes with part time
@@ -384,6 +400,9 @@ namespace :db do
           { :caption => "Stimulating activities.", :photo => "lego.jpg" },
       ]
       part_time_addresses.each_with_index  do |street_and_postal, index|
+        o = Organization.create!({:name=>part_time_names[index]}.merge(street_and_postal))
+        l = Location.create!({:name=>"Edmonton"})
+        o.locations << l
         d = DayHome.create!({:name => part_time_names[index],
                              :gmaps =>  true,
                              :city =>  'Edmonton',
@@ -403,10 +422,17 @@ namespace :db do
           d.availability_types << part_time_afternoon
         end
         add_photos_to_dayhome(photos, d)
+        l.day_homes << d
+        o.save
+        l.save
+        d.save
       end
 
       # Create a couple of dayhomes with no availability
       no_availability_addresses.each_with_index  do |street_and_postal, index|
+        o = Organization.create!({:name=>no_availability_names[index]}.merge(street_and_postal))
+        l = Location.create!({:name=>"Edmonton"})
+        o.locations << l
         d = DayHome.create!({:name => no_availability_names[index],
                              :gmaps =>  true,
                              :city =>  'Edmonton',
@@ -426,6 +452,10 @@ namespace :db do
           d.dietary_accommodations = true
           d.save!
         end
+        l.day_homes << d
+        o.save
+        l.save
+        d.save        
       end
 
       # create a user related to a dayhome

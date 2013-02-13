@@ -11,7 +11,7 @@
     .controls.fs_22
       .float_left
         %strong
-          $250.00
+          =number_to_currency(@plan.price)
           per month
       .float_left.prepend-1
         %a.button.medium.green{:href => "fresh.htm"}
@@ -21,22 +21,34 @@
       Dayhomes
     .controls
       .progress-bar.pg-neutral
-        .fill{:style => "width: 53.6%"}
-      134 of 250
+        
+        - percentFill = number_to_percentage([(@organization.day_homes.count*100.0/@plan.day_homes),100.0].min)
+        .fill{:style => "width: #{percentFill};"}
+      =@organization.day_homes.count 
+      of
+      =@plan.day_homes
   .control-group
     .control-label
-      Staff
+      Extra Staff
     .controls
       .progress-bar.pg-neutral.no-fill
-        .fill{:style => "width: 50%"}
-      1 of 2
+        - percentFill = number_to_percentage(100)
+        - if (@plan.staff>0) 
+          - percentFill = number_to_percentage([(@organization.users.count/@plan.staff*100),100.0].min)          
+        .fill{:style => "width: #{percentFill}"}
+      =@organization.users.count
+      of 
+      =@plan.staff
   .control-group
     .control-label
       Locales
     .controls
       .progress-bar.pg-neutral
-        .fill{:style => "width: 20%"}
-      1 of 5
+        - percentFill = number_to_percentage([(@organization.locations.count*100.0/@plan.locales),100.0].min)
+        .fill{:style => "width: #{percentFill}"}
+      =@organization.locations.count 
+      of 
+      =@plan.locales
   .control-group
     .control-label
       Feature credits
@@ -55,28 +67,34 @@
     .control-label
       Name
     .controls
-      the name goes here
+      =@organization.name
   .control-group
     .control-label
       Street Address
     .controls
       .append-bottom-1.first
-        = label_tag :street1
+        = @organization.street1
         .example.first
           Street
       .append-bottom-1
         .span-7
-          = label_tag :city
+          = @organization.city
           .example
             City
         .span-10
-          = label_tag :province
+          = @organization.province
           .example
             Province
         .span-6
-          = label_tag :postal_code
+          = @organization.postal_code
           .example
-            Postal/Zip Code
+            Postal Code
+  .control-group
+    .control-label
+      Phone
+    .controls
+      .append-bottom-1.first
+        = @organization.phone_number.nil? ? "None":@organization.phone_number
   .control-group
     .controls
       .example.first

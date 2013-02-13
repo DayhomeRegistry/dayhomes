@@ -5,6 +5,7 @@ class OrganizationController < ApplicationController
   
   def show
     @organization = Organization.find(params[:id])
+    @plan = Plan.where(:plan=>@organization.plan).first
 
     respond_to do |format|
       format.html # show.html.haml
