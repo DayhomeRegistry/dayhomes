@@ -48,6 +48,12 @@ $(function () {
             $('td.' + packageClass).removeClass('over_package');
         }
     );
+    //select the current package
+    var packageid = Dayhome.upgradePage.existing.id;
+    if (packageid) {
+        $('table.pricingTable .package_' + packageid).addClass('current_package');
+        $('table.pricingTable .package_' + packageid + ' .button span').html('Your Plan');
+    }
     
     //highlight the selected package, for when a POST fails.
     var packageid = Dayhome.upgradePage.existing.id;

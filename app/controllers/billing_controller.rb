@@ -104,8 +104,16 @@ class BillingController < ApplicationController
   def welcome
   end
   def options
+    @upgrade = Upgrade.new()
+    @existing = Plan.find_by_name(current_user.organization.plan)
+    @packages = {}
+    Plan.all.each do |p|
+      @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+    end
+    
   end
   def upgrade
+
   end
 
 
