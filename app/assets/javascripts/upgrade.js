@@ -286,7 +286,24 @@ Dayhome.upgradePage.Upgrade = Class.extend({
             visibleAddons++;
             }
         });
+        
+        // figure out what the cost of the current staff and locales they have is going to be
+        /*var current_staff = $('#total_box_cur_staff');
+        var current_locales = $('#total_box_cur_locales');
+        var extra_staff = Math.max.apply(null,[Dayhome.upgradePage.current.staff-base_package.staff,0])
+        var extra_locales = Math.max.apply(null,[Dayhome.upgradePage.current.locales-base_package.locales,0])
+        var extra_staff_cost = parseFloat(Dayhome.upgradePage.additional_cost["staff"](extra_staff));
+        var extra_locales_cost = parseFloat(Dayhome.upgradePage.additional_cost["locales"](extra_locales));
 
+        current_staff.show()
+          .find(self.options.numberClass).text(extra_staff + ' ')
+          .end()
+          .find(self.options.amountClass).text(extra_staff_cost);
+        current_locales.show()
+          .find(self.options.numberClass).text(extra_locales + ' ')
+          .end()
+          .find(self.options.amountClass).text(extra_locales_cost);
+        */
         // update the Upgrade Details amounts + pricing.
         var selectedExtraCount = 0;
         $.each(this.costElements, function (type, element) {
@@ -360,6 +377,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         // if doing a downgrade, don't validate these fields as they are not required
         if ($('#credit-card-section').is(':hidden')) {
             delete validators.CREDIT_CARD_NUMBER;
+            delete validators.CVV;
         }
 
         var agreed = true;

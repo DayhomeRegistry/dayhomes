@@ -79,10 +79,10 @@
               %span Select  
 
   = form_for @upgrade,:url => billing_upgrade_path(),:method => :put, :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>""} do |f|
-    = hidden_field_tag 'choose-package', "78"
+    = hidden_field_tag 'choose-package', @existing.id
     = hidden_field_tag 'plan', @upgrade.plan
     %br
-    #add-on-section{:style=>"display:none;"}
+    #add-on-section{:style=>""}
       %h3#addon-header.section-header.section-header-first
         Choose Any Extras You May Need
       .span-22.append-bottom-1
@@ -135,12 +135,26 @@
                         %span#limit_locales 1
                 %td{:align => "right"}
                   %span.amount 0.00
+              /
+                %tr#total_box_cur_staff{:style => "display: none;"}
+                  %td
+                    %span.num>
+                    Current staff 
+                  %td{:align => "right"}
+                    %span.amount
               %tr#total_box_staff{:style => "display: none;"}
                 %td
                   %span.num>
-                  Extra staff
+                  Extra staff 
                 %td{:align => "right"}
                   %span.amount
+              /
+                %tr#total_box_cur_locales{:style => "display: none;"}
+                  %td
+                    %span.num>
+                    Current Locales 
+                  %td{:align => "right"}
+                    %span.amount
               %tr#total_box_locales{:style => "display: none;"}
                 %td
                   %span.num>
@@ -169,11 +183,11 @@
                   %strong
                     $
                     %span.amount 0.00
-    .clearb
+    .clear
     #credit-card-section{:style => "display:none;"}
-      = f.hidden_field :stripe_card_token
       %h3.section-header
         Enter Your Credit Card Information
+      = f.hidden_field :stripe_card_token
       .append-bottom-1  
         #stripe_error
           %noscript
@@ -218,40 +232,13 @@
                 %br
                   at +1-780-975-1290
                 %br
-      .clear                            
-      
-      .clear
-    /  
-      %h3#choose-subscription.section-header
-        Choose Your Subscription
-      #green_box
-        .control-group
-          .controls
-            %label{:for => "monthly", :style => "font-weight: normal;"}
-              %input#monthly{:checked => "checked", :name => "pay_yearly", :type => "radio", :value => "0"}
-                %strong Monthly Payments:
-                $19.95
-                + $1.00 GST (5%)
-                \.
-        .control-group
-          .controls
-            .red{:style => "padding-bottom: 5px;"}
-              %strong Special:
-              Save 10% by paying Yearly - no lock-in, cancel any time.
-            %label{:for => "yearly", :style => "font-weight: normal;"}            
-              %input#yearly{:name => "pay_yearly", :type => "radio", :value => "1"}
-                %strong Yearly Payments:
-                $215.46
-                + $10.77 GST (5%)
-                \. You'll save 10%
-                or $23.94/year. Cancel any time and receive a refund for any unused months. Our best value.
-        .clear
-        .clear
-    .submit-container
-      %span.button.large.green.single
-        %input#pay-now-button{:name => "paynow", :type => "submit", :value => "Pay Now"}
+      .clear                              
+      .clear    
+    %h3
+      .submit-container
+        %span.button.large.green.single
+          %input#pay-now-button{:name => "paynow", :type => "submit", :value => "Pay Now"}
 :javascript
-
   Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
 
   var Dayhome = Dayhome || {};
@@ -267,6 +254,10 @@
             //return { "1": 10, "2": 20, "3": 30, "4": 40, "5": 50, "1500": 60, "1750": 70, "2000": 80, "3000": 120, "4000": 160, "5000": 200}[n] || 0;
             return parseInt(n, 10) * 10 || 0;
         }
+    },
+    current:{
+      staff: #{[(@organization.users.count-1),0].max.to_s},
+      locales: #{[@organization.locations.count,0].max.to_s}
     },
     index: {
     }

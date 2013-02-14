@@ -104,8 +104,9 @@ class BillingController < ApplicationController
   def welcome
   end
   def options
+    @organization = current_user.organization
     @upgrade = Upgrade.new()
-    @existing = Plan.find_by_name(current_user.organization.plan)
+    @existing = Plan.find_by_name(@organization.plan)
     @packages = {}
     Plan.all.each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
@@ -113,7 +114,7 @@ class BillingController < ApplicationController
     
   end
   def upgrade
-
+    raise params.to_json
   end
 
 
