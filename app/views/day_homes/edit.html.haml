@@ -22,6 +22,10 @@
   = f.text_area :blurb, :rows=>10, :style=>"width:90%"
   
   %h3
+    Locale
+  = collection_select(:day_home, :location_id, Location.where("organization_id = "+ @day_home.organization.id.to_s), :id, :name)
+  
+  %h3
     Photos
     
   = f.fields_for :photos do |p|
