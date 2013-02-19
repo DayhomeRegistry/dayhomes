@@ -117,6 +117,12 @@ class BillingController < ApplicationController
     raise params.to_json
   end
 
+  def extras
+    @organization = current_user.organization
+  end
+  def add
+    raise params.to_json
+  end
 
   private
   def handle_user_error(user)

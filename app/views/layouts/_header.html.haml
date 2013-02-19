@@ -33,10 +33,10 @@
         %li
           = link_to 'DayHomes', day_homes_path
         %li
-          %a{:href => ""}
+          %a{:href => billing_options_path()}
             Upgrades
         %li
-          %a{:href => ""}
+          %a{:href => billing_extras_path()}
             Buy Extras    
       .clear
   -if current_user && current_user.admin?

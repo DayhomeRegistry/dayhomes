@@ -1,0 +1,25 @@
+.row
+  .span12
+    %h2
+      Extras
+
+.row
+  .span12
+    %p
+      Featuring your dayhome on Dayhome registry has been shown to increase traffic by up to 300%.  If you've got a space to fill, it's a no-brainer.
+    =form_for @organization, :url => organization_add_path(@organization) do |p|  
+      .add_multiples.clear{'data-group' => 'feature'}      
+        - if p.object.photo?
+          .remove_contents
+            = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'
+          
+        = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
+        = p.text_field :caption
+        %br
+        = p.file_field :photo
+        = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link'
+    .clear
+    %strong= link_to 'Add Another Photo', '#', :class => 'add_multiples_link', 'data-group' => 'feature', 'data-attribute-key' => 'feature_attributes'
+    %br
+    %br
+     
