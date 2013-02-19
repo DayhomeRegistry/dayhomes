@@ -119,6 +119,7 @@ class BillingController < ApplicationController
 
   def extras
     @organization = current_user.organization
+    #raise @organization.day_homes.joins(:features).to_sql
   end
   def add
     raise params.to_json

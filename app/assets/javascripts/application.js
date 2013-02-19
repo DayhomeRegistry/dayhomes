@@ -18,8 +18,7 @@
 //= require bootstrap
 //= require fullcalendar
 //= require_tree ./gmaps4rails
-//= require jquery.ui
-//= require jquery.ui.timepicker
+//= require jquery.ui.all
 //= require jquery.add_more
 //= require jquery.colorbox
 //= require jquery.modal
