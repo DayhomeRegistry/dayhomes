@@ -9,8 +9,6 @@
     num = isNaN(num) || num === '' || num === null ? 0.00 : num;
     return parseFloat(num).toFixed(2);
   }
-#notice
-  = notice
 
 .form-horizontal
   .form-header
@@ -110,6 +108,27 @@
     .controls
       .example.first
         = link_to 'Edit', edit_organization_path(@organization) 
+  .control-group.section-start
+    .control-label.fs_22
+      Locales
+    .controls.fs_22
+      .float_left
+        The places you do business    
+  .control-group
+    .control-label
+      Name
+    .controls
+      -@organization.locations.each_with_index do |locale, index|
+        .append-bottom-1
+          %div{:class=>"#{index>0?'span-7' : ''}"}
+            =locale.name
+            -if (@organization.locations.count > 1)
+              =link_to "Remove", organization_location_path(@organization,locale), confirm: 'Are you sure?',:method=>:delete
+            =link_to "Edit", edit_organization_location_path(@organization,locale)  
+  .control-group
+    .controls
+      .example.first
+        = link_to 'Add Locales', new_organization_location_path(@organization) 
   .control-group.section-start
     .control-label
       Upgrades

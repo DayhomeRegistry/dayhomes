@@ -1,0 +1,9 @@
+= form_for [@organization,@location] do |f|
+  = f.label :name
+  = f.text_field :name
+
+  %br
+  %br
+  = f.submit (@location.id.nil? ? 'Add' : 'Update') , :class => :btn
+  |
+  = link_to 'Cancel', organization_path(@organization)

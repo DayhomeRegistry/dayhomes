@@ -1,4 +1,4 @@
-class OrganizationController < ApplicationController
+class OrganizationsController < ApplicationController
   before_filter :require_user
   before_filter :require_user_to_be_organization_admin
   helper_method :sort_column, :sort_direction
@@ -48,4 +48,6 @@ class OrganizationController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 end

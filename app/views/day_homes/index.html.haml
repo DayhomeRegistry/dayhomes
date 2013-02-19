@@ -28,6 +28,8 @@
     %thead
       %tr
         %th
+          = sortable "location_id","Locale"
+        %th
           = sortable "name","Name"
         %th
           Address
@@ -40,6 +42,8 @@
     %tbody
       - @day_homes.each do |day_home|
         %tr
+          %td
+            = day_home.location.name
           %td
             = link_to day_home.name, day_home
           %td
@@ -55,4 +59,4 @@
           %td
             = link_to 'Edit', [:edit, day_home]
             |
-            = link_to('View Calendar', "/day_homes/#{day_home.id}/calendar")
+            = link_to('Calendar', "/day_homes/#{day_home.id}/calendar")

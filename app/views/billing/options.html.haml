@@ -83,9 +83,9 @@
     = hidden_field_tag 'plan', @upgrade.plan
     %br
     #add-on-section{:style=>""}
-      %h3#addon-header.section-header.section-header-first
+      %h3#addon-header.section-header.section-header-first{:style => "display: none;"}
         Choose Any Extras You May Need
-      .span-22.append-bottom-1
+      .span-22.append-bottom-1{:style => "display: none;"}
         #addon_staff{:style => "display: none;"}
           .control-group
             %label.control-label{:for => "staff"}
@@ -122,7 +122,7 @@
               %tr#total_box_base{:style => "", :valign => "top"}
                 %td
                   %strong
-                    New plan -
+                    Selected plan -
                     %span#package_name Baby Bear
                   %br
                     %div{:style => "padding-left: 15px;"}

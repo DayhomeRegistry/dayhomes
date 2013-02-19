@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130214030441) do
+ActiveRecord::Schema.define(:version => 20130219013514) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -265,7 +265,7 @@ ActiveRecord::Schema.define(:version => 20130214030441) do
   add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
 
   create_table "upgrades", :force => true do |t|
-    t.datetime "effective_date", :default => '2013-02-14 20:53:22'
+    t.datetime "effective_date", :default => '2013-02-14 03:16:55'
     t.integer  "plan_id"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
@@ -316,6 +316,7 @@ ActiveRecord::Schema.define(:version => 20130214030441) do
     t.string   "stripe_customer_token"
     t.string   "plan",                             :default => "baby"
     t.integer  "organization_id"
+    t.integer  "location_id"
   end
 
 end

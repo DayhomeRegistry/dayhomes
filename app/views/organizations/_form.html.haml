@@ -3,13 +3,13 @@
     add_another_mangement();
   });
   
-- @agency.users.build if @agency.users.blank? 
-- @agency.day_homes.build if @agency.day_homes.blank? 
-= simple_form_for(@agency) do |f| 
-  - if (@agency.errors.keys.include?(:users))
+- @organization.users.build if @organization.users.blank? 
+- @organization.day_homes.build if @organization.day_homes.blank? 
+= simple_form_for(@organization) do |f| 
+  - if (@organization.errors.keys.include?(:users))
     .alert.alert-error
       = f.full_error(:users)
-  - if (@agency.errors.keys.count>1)
+  - if (@organization.errors.keys.count>1)
     = f.error_notification 
 
   
@@ -23,7 +23,6 @@
     = f.input :province
     = f.input :postal_code
       
-  
-  
+    
   .form-actions
     = f.button :submit 

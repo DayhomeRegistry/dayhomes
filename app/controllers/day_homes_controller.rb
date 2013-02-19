@@ -10,9 +10,14 @@ class DayHomesController < ApplicationController
       result = clause.scan(/(\bfeatured:\b[^\s]*)/)            
       feature = result.length==0 ? "" : result[0][0]
       result = clause.scan(/(\bapproved:\b[^\s]*)/)
-      approve = result.length==0 ? "" : result[0][0]  
+      approve = result.length==0 ? "" : result[0][0] 
+      result = clause.scan(/(\blocation:\b[^\s]*)/)
+      location = result.length==0 ? "" : result[0][0]   
       clause = clause.gsub(feature,"")
       clause = clause.gsub(approve,"")            
+      clause = clause.gsub(location,"")  
+      location = location.gsub("location:","")
+
       
       if (current_user.organization_admin?)
         if (!clause.empty?)
@@ -28,7 +33,13 @@ class DayHomesController < ApplicationController
         end
       end
       #return render :text=> clause.strip+"|"+feature+"|"+approve
+
       
+      if(!location.empty?)
+        #raise @day_homes.where("locations.name like '%#{location}%'").to_json
+        @day_homes = @day_homes.where("locations.name like '%#{location}%'")
+      end
+
       if(!feature.empty?)            
         @day_homes = @day_homes.where(:featured=> feature=="featured:yes")
       end
