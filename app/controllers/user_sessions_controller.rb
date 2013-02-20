@@ -14,8 +14,11 @@ class UserSessionsController < ApplicationController
       @user = User.new
     end     
     
-    if @user_session.save    
-      #if (@user.day_home_owner?) || (@user.admin?) 
+    if @user_session.save   
+      raise session[:return_to].to_json
+      if (!session[:return_to].nil?)
+        return redirect_to session[:return_to]
+      end
       if (@user.admin?)
         redirect_to admin_root_path
       else

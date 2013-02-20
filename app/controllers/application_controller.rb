@@ -38,12 +38,13 @@ class ApplicationController < ActionController::Base
     return current_user_session && current_user_session.user
   end
   
-  # Make sure they are an admin!
   def require_user
     unless current_user
+     raise request.referer.to_s
      if current_user
        redirect_to logout_path
      else
+       session[:return_to] ||= request.referer
        redirect_to login_path
      end
  
