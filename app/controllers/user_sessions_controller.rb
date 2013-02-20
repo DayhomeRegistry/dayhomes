@@ -14,10 +14,11 @@ class UserSessionsController < ApplicationController
       @user = User.new
     end     
     
-    if @user_session.save   
-      raise session[:return_to].to_json
+    if @user_session.save         
       if (!session[:return_to].nil?)
-        return redirect_to session[:return_to]
+        url = session[:return_to]
+        session[:return_to] = null
+        return redirect_to url
       end
       if (@user.admin?)
         redirect_to admin_root_path

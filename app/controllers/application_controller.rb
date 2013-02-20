@@ -40,11 +40,10 @@ class ApplicationController < ActionController::Base
   
   def require_user
     unless current_user
-     raise request.referer.to_s
      if current_user
        redirect_to logout_path
      else
-       session[:return_to] ||= request.referer
+       session[:return_to] ="#{request.protocol}#{request.host_with_port}#{request.fullpath}"
        redirect_to login_path
      end
  
