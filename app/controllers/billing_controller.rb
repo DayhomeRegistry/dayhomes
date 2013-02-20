@@ -122,7 +122,36 @@ class BillingController < ApplicationController
     #raise @organization.day_homes.joins(:features).to_sql
   end
   def add
-    raise params.to_json
+    @organization = current_user.organization
+    
+    saved = true
+    error = ""
+    begin
+      Feature.transaction do
+        params[:number].to_i.times do |i|
+          feature = Feature.new()
+          feature.organization = @organization
+          saved = saved & feature.save
+
+        end
+      end
+    rescue Exception => e
+      if(!e.message.nil?)
+        error = e.message
+      else
+        error = e
+      end
+    end
+    
+    respond_to do |format|  
+      if saved
+        format.html { redirect_to :action=>"extras" }  
+        format.js  {render :json=>@organization.features.where("day_home_id is null").count}
+      else  
+        format.html { render :action => "extras", :notice => error }  
+        format.js { render :text=>error}
+      end  
+    end  
   end
 
   private

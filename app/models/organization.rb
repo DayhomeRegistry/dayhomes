@@ -7,6 +7,8 @@
   has_many :locations
   has_many :day_homes, :through=>:locations
 
+  has_many :features
+
   attr_accessor :stripe_card_token
   
   before_destroy :destroy_customer

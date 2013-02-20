@@ -1,3 +1,15 @@
 // Place all the styles related to the Billing controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.feature-count {
+	font-size: 26px;
+	line-height: 22px;
+	padding: 2px;
+	margin: 2px;
+	background-color: rgb(241,241,212);
+	border-radius: 8px;
+}
+.credit-container{
+	padding: 7px 0;
+}

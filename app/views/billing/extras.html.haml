@@ -10,9 +10,9 @@
       tips
         .text( t )
         .addClass( "ui-state-highlight" );
-      setTimeout(function() {
-        tips.removeClass( "ui-state-highlight", 1500 );
-      }, 500 );
+      //setTimeout(function() {
+      //  tips.removeClass( "ui-state-highlight", 1500 );
+      //}, 500 );
     }
  
     function checkLength( o, n, min, max ) {
@@ -42,26 +42,26 @@
       width: 350,
       modal: true,
       buttons: {
-        "Create an account": function() {
+        "Purchase Credits": function() {
           var bValid = true;
           allFields.removeClass( "ui-state-error" );
- 
-          bValid = bValid && checkLength( name, "username", 3, 16 );
-          bValid = bValid && checkLength( email, "email", 6, 80 );
-          bValid = bValid && checkLength( password, "password", 5, 16 );
- 
-          bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-          // From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-          bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-          bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
- 
+          var self = $(this);
           if ( bValid ) {
-            $( "#users tbody" ).append( "<tr>" +
-              "<td>" + name.val() + "</td>" +
-              "<td>" + email.val() + "</td>" +
-              "<td>" + password.val() + "</td>" +
-            "</tr>" );
-            $( this ).dialog( "close" );
+            
+            $.ajax({
+              type: 'POST',
+              url: "#{billing_add_path()}",
+              data: $("#dialog-form form").serializeArray(),
+              dataType: 'json'
+            })
+            .done(function(data, text, xhr){
+              $('.feature-count').html(data);
+              //success
+              self.dialog( "close" );
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+              updateTips(jqXHR.responseText);
+            }); 
           }
         },
         Cancel: function() {
@@ -91,27 +91,38 @@
       Featuring your dayhome on Dayhome registry has been shown to increase traffic by up to 300%.  If you've got a space to fill, it's a no-brainer.
     %h3
       Feature credits
-    =form_for @organization, :url => billing_add_path(@organization) do |f|
-      - @organization.day_homes.joins(:features).each do |feature|   
-        = f.fields_for @feature do |feature_form|          
-          .add_multiples.clear{'data-group' => 'feature'}                   
-            = feature_form.check_box :_destroy, :style => 'display: none;' unless feature.object.new_record?
-            = feature_form.text_field :start
-            = feature_form.text_field :end
-            %br        
-            = link_to 'Remove', '#', :class => 'remove_fieldset_link'
+    %div
+      .span-12.credit-container
+        You can currently feature 
+        %span.feature-count>
+          =@organization.features.where("day_home_id is null").count
+        dayhomes for month.
+      .span-12
+        %strong= link_to 'Buy a credit', '#', :id=>"create-user",:class => 'add_multiples_link', 'data-group' => 'feature', 'data-attribute-key' => 'feature_attributes'
+      .clear
+    %h3
+      Featured dayhomes
+    .span-12
+      You can feature a dayhome on the 
+      =link_to 'dayhomes page', day_homes_path()
+    .clear
+      %br
+    .span-12
+      - Feature.joins(:organization).where("organizations.id = ?",@organization.id).where("end > now()").each do |feature|                    
+        .row
+          .span-4
+            =link_to feature.day_home.name,day_home_path(feature.day_home)
+          .span-12
+            Featured from
+            = feature.start
+            to
+            = feature.end
       .clear
       
-      %strong= link_to 'Buy a credit', '#', :id=>"create-user",:class => 'add_multiples_link', 'data-group' => 'feature', 'data-attribute-key' => 'feature_attributes'
-      %br
-      %br
-#dialog-form{:title => "Create new user"}
-  %p.validateTips All form fields are required.
-  %form
+#dialog-form{:title => "Buy credits"}
+  %p.validateTips 
+  =form_for(Feature.new, :url=>billing_add_path(), :method=>:put, :remote=>true) do |f|
     %fieldset
-      %label{:for => "name"} Name
-      %input#name.text.ui-widget-content.ui-corner-all{:name => "name", :type => "text"}/
-      %label{:for => "email"} Email
-      %input#email.text.ui-widget-content.ui-corner-all{:name => "email", :type => "text", :value => ""}/
-      %label{:for => "password"} Password
-      %input#password.text.ui-widget-content.ui-corner-all{:name => "password", :type => "password", :value => ""}/     
+      %label{:for => "number"} Number of Credits
+      %input#number.span1.text.ui-widget-content.ui-corner-all{:name => "number", :type => "text"}/
+      
