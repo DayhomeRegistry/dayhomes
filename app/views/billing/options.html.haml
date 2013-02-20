@@ -30,22 +30,7 @@
               -if (value.day_homes < 0)
                 Unlimited
               -else
-                =value.day_homes
-      /    
-        %tr
-          %td.pricingLeft
-            Waiting lists
-          %td.package_78.enabled{:rel => "78", :style => "cursor: pointer;"}
-            %span 0
-            %span.row-tiny ($10 each additional)
-          %td.package_79.enabled{:rel => "79"}
-            %span 10
-            %span.row-tiny ($10 each additional)
-          %td.package_80.enabled{:rel => "80"}
-            %span 100
-            %span.row-tiny ($10 each additional)
-          %td.package_81.enabled{:rel => "81"}
-            %span Unlimited
+                =value.day_homes   
       %tr
         %td.pricingLeft
           Additional staff who can access your account
@@ -70,6 +55,12 @@
                 =value.locales
             -if (value.block_locales_addon==0)
               %span.row-tiny ($10 each additional)  
+      %tr
+        %td.pricingLeft
+          Free monthly features
+        - @packages.each_with_index do |(key,value),index|
+          %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
+            =value.free_features
       %tr.last-row
         %td.pricingLeft
           \

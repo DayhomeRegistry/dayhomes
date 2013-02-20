@@ -1,8 +1,4 @@
-function integersonly(e,t){
-  var n=jQuery.event.fix(t||window.event),r=n.which,i=String.fromCharCode(r);
-  return r===undefined?!0:isPrintableKey(n)?"0123456789".indexOf(i)>-1?!0:!1:!0;
-}
-window.numbersonly2=integersonly;
+
 
 $(function () {
     var upgrader = new Dayhome.upgradePage.Upgrade();

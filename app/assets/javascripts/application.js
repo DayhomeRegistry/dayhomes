@@ -30,4 +30,13 @@
 //= require externals/modernizr
 //= require externals/html5support/jquery.html5support
 //= require organization
-
+function isPrintableKey(e){if(e.altKey||e.ctrlKey||e.metaKey)return!1;var t=e.which;return t<32||t==144?!1:!0}
+function integersonly(e,t){
+  var n=jQuery.event.fix(t||window.event),r=n.which,i=String.fromCharCode(r);
+  return r===undefined?!0:isPrintableKey(n)?"0123456789".indexOf(i)>-1?!0:!1:!0;
+}
+function roundFloat2(e){
+  return isNaN(e)&&(e=0),String(Number(e).toFixed(2))
+}
+window.numbersonly2=integersonly;
+window.roundFloat2=roundFloat2;

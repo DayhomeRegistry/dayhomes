@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130219201040) do
+ActiveRecord::Schema.define(:version => 20130220125427) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -215,8 +215,9 @@ ActiveRecord::Schema.define(:version => 20130219201040) do
     t.integer  "block_locales_addon"
     t.datetime "active"
     t.datetime "inactive"
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
+    t.datetime "created_at",                                                        :null => false
+    t.datetime "updated_at",                                                        :null => false
+    t.integer  "free_features",                                      :default => 0
   end
 
   create_table "posts", :force => true do |t|

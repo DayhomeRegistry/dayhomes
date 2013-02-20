@@ -1,4 +1,7 @@
 class BillingController < ApplicationController
+  before_filter :require_user, :except=>[:signup, :register]
+  before_filter :require_user_to_be_organization_admin, :except=>[:signup, :register]
+  
   def signup
     @day_home_signup_request = DayHomeSignupRequest.new
   end

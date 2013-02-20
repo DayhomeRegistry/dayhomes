@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   
   belongs_to :organization
-  has_one :location
+  belongs_to :location
 
   has_many :topics, :dependent => :destroy
   has_many :posts, :dependent => :destroy

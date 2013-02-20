@@ -10,9 +10,9 @@ namespace :db do
     task :samples => :environment do
       # create plans
       baby = Plan.create!({:name=>"Baby",:plan=>"baby",:day_homes=>1, :staff=>0,:locales=>1,:price=>0.00,:block_staff_addon=>1,:block_locales_addon=>1, :active=>Time.now})
-      mama= Plan.create!({:name=>"Mama",:plan=>"mama",:day_homes=>50, :staff=>1,:locales=>1,:price=>50.00,:block_staff_addon=>0,:block_locales_addon=>1, :active=>Time.now})
-      papa=Plan.create!({:name=>"Papa",:plan=>"papa",:day_homes=>250, :staff=>2,:locales=>5,:price=>250.00,:block_staff_addon=>0,:block_locales_addon=>0, :active=>Time.now})
-      goldilocks=Plan.create!({:name=>"Goldilocks",:plan=>"goldilocks",:day_homes=>-1, :staff=>3,:locales=>-1,:price=>400.00,:block_staff_addon=>0,:block_locales_addon=>0, :active=>Time.now})
+      mama= Plan.create!({:name=>"Mama",:plan=>"mama",:day_homes=>50, :staff=>1,:locales=>1,:price=>50.00,:block_staff_addon=>0,:block_locales_addon=>1, :active=>Time.now, :free_features => 1})
+      papa=Plan.create!({:name=>"Papa",:plan=>"papa",:day_homes=>250, :staff=>2,:locales=>5,:price=>250.00,:block_staff_addon=>0,:block_locales_addon=>0, :active=>Time.now, :free_features => 5})
+      goldilocks=Plan.create!({:name=>"Goldilocks",:plan=>"goldilocks",:day_homes=>-1, :staff=>3,:locales=>-1,:price=>400.00,:block_staff_addon=>0,:block_locales_addon=>0, :active=>Time.now, :free_features => 8})
 
       # create certification types
       level_1 = CertificationType.where({:kind => 'Child Care Level 1'}).first
@@ -319,6 +319,7 @@ namespace :db do
       # Create a dayhome with reviews
       o1 = Organization.create!({:name=>"DayHome With Reviews",:postal_code => 'T6L5M6', :street1 => '4138 36st NW',:city=>'Edmonton',:province=>'Alberta'})
       l1 = Location.create!({:name=>"Edmonton"})
+      agencyUser2.location = l1
       o1.locations << l1
       day_home_with_reviews = DayHome.create!({:name => "DayHome With Reviews",
                                                :gmaps =>  true,

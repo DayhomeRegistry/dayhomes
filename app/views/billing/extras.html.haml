@@ -39,7 +39,7 @@
     $( "#dialog-form" ).dialog({
       autoOpen: false,
       height: 300,
-      width: 350,
+      width: 600,
       modal: true,
       buttons: {
         "Purchase Credits": function() {
@@ -73,6 +73,34 @@
       }
     });
  
+    var input = $('#number');
+    var total = $('#buy-credits-total');
+    var creditOrCredits = $('#credits-or-credits');
+
+    input.on('keypress', function (event) {
+      return numbersonly2(this, event);
+    });
+
+    var updateSubtotal = function () {
+      var numCredits = parseInt(input.val(), 10) || 0;
+      var price = 0;
+      switch (true) {
+        case (numCredits >= 100):
+          price = 1.00;
+          break;
+        case (numCredits >= 12):
+          price = 2.50;
+          break;
+        default:
+          price = 5.00;
+      }
+
+      total.html(roundFloat2(numCredits * price));
+      creditOrCredits.html(numCredits == 1 ? 'credit' : 'credits');
+    };
+    input.on('keyup', updateSubtotal);
+    updateSubtotal();
+
     $( "#create-user" )
       .button()
       .click(function() {
@@ -80,49 +108,75 @@
       });
   });
 
-.row
-  .span12
-    %h2
-      Extras
 
-.row
-  .span12
-    %p
-      Featuring your dayhome on Dayhome registry has been shown to increase traffic by up to 300%.  If you've got a space to fill, it's a no-brainer.
-    %h3
-      Feature credits
-    %div
-      .span-12.credit-container
-        You can currently feature 
-        %span.feature-count>
-          =@organization.features.where("day_home_id is null").count
-        dayhomes for month.
-      .span-12
-        %strong= link_to 'Buy a credit', '#', :id=>"create-user",:class => 'add_multiples_link', 'data-group' => 'feature', 'data-attribute-key' => 'feature_attributes'
-      .clear
-    %h3
-      Featured dayhomes
+%div
+  #help_box.rounded-container.dashboard-header.peel-shadows.no-border
+    .content.cutline-bottom
+      %h2.banner-title.nomargin.ta_center Real advertising. Real easy.
+    .content.clearfix
+      .prepend-1.append-1.prepend-top-1.clearfix
+        %h4.white Feature your dayhome to all of our parents with a click of a button
+        .span-18
+          %p.light-blue-text Dayhomes featured on our homepage get more attention.  When you have an available space or are looking to get your name out, ensuring you show up on our homepage is as simple as a click of a button.  A month on the featured list costs a single feature credit, and you can pre-purchase those at any time, or set it up as a recurring fee if you'd like to stay featured.
+        = image_tag("feature.png", :alt => "Feature window", :title => "Feature window", :style => "float:left;padding-left: 50px;", :width => "150px")  
+%div
+  %div
+    .span-12.credit-container
+      You can currently feature 
+      %span.feature-count>
+        =@organization.features.where("day_home_id is null").count
+      dayhomes for month.
     .span-12
-      You can feature a dayhome on the 
-      =link_to 'dayhomes page', day_homes_path()
+      %strong= link_to 'Buy a credit', '#', :id=>"create-user",:class => 'add_multiples_link', 'data-group' => 'feature', 'data-attribute-key' => 'feature_attributes'
     .clear
-      %br
-    .span-12
-      - Feature.joins(:organization).where("organizations.id = ?",@organization.id).where("end > now()").each do |feature|                    
-        .row
-          .span-4
-            =link_to feature.day_home.name,day_home_path(feature.day_home)
-          .span-12
-            Featured from
-            = feature.start
-            to
-            = feature.end
-      .clear
+  %h3
+    Featured dayhomes
+  .span-12
+    You can feature a dayhome on the 
+    =link_to 'dayhomes page', day_homes_path()
+  .clear
+    %br
+  .span-12
+    - features = Feature.joins(:organization).where("organizations.id = ?",@organization.id).where("end > now()")
+    - if (features.count ==0)
+      None
+    - features.each do |feature|                    
+      .row
+        .span-4
+          =link_to feature.day_home.name,day_home_path(feature.day_home)
+        .span-12
+          Featured from
+          = feature.start
+          to
+          = feature.end
+    .clear
       
 #dialog-form{:title => "Buy credits"}
   %p.validateTips 
   =form_for(Feature.new, :url=>billing_add_path(), :method=>:put, :remote=>true) do |f|
-    %fieldset
-      %label{:for => "number"} Number of Credits
-      %input#number.span1.text.ui-widget-content.ui-corner-all{:name => "number", :type => "text"}/
-      
+    .span-12.append-2
+      Add
+      %input#number.span1.text.ui-widget-content.ui-corner-all{:maxlength => "4",:name => "number", :type => "text"}/
+      %span#credit-or-cedits credits
+      to my account
+    .span-6.ta_right
+      %strong Subtotal:
+      $
+      %span#buy-credits-total 0.00
+      %br/
+      %span.light-blue-text.fs_11 Taxes may apply
+    .clear
+    .span-18
+      %h5 Bulk Discount Pricing
+      %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
+        %tbody
+          %tr
+            %td 1 – 11
+            %td.ta_right $5.00 ea.
+          %tr
+            %td 12 – 99
+            %td.ta_right $2.00 ea.
+          %tr
+            %td 100+
+            %td.ta_right $1.00 ea.
+    .clear   
