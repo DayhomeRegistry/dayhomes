@@ -40,8 +40,7 @@ class DayHomesController < ApplicationController
         @day_homes = @day_homes.where("locations.name like '%#{location}%'")
       end
 
-      if(!feature.empty?)  
-      raise @day_homes.where(:featured=> feature=="featured:yes").to_sql          
+      if(!feature.empty?)            
         @day_homes = @day_homes.where(:featured=> feature=="featured:yes")
       end
       if(!approve.empty?)
@@ -53,7 +52,7 @@ class DayHomesController < ApplicationController
     else 
       
       if (current_user.organization_admin?)      
-        @day_homes = current_user.organization.day_homes
+        @day_homes = current_user.organization.day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)      
       else
         @day_homes = current_user.day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)      
       end
@@ -137,6 +136,20 @@ class DayHomesController < ApplicationController
   def followup  
     @day_home = DayHome.find(params[:id])
   end  
+    def new
+    @day_home = DayHome.new
+    @day_home.photos.build
+  end
+
+  def create
+    @day_home = DayHome.new(params[:day_home])
+    
+    if @day_home.save
+      redirect_to admin_day_homes_path
+    else
+      render :action => :new
+    end
+  end
   
   private
   def sort_column

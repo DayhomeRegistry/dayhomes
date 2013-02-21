@@ -43,7 +43,7 @@
       .progress-bar.pg-neutral.no-fill
         - percentFill = number_to_percentage(100)
         - if (@plan.staff>0) 
-          - percentFill = number_to_percentage([(@organization.users.count/@plan.staff*100),100.0].min)          
+          - percentFill = number_to_percentage([((@organization.users.count-1)*100.0/@plan.staff),100.0].min)          
         .fill{:style => "width: #{percentFill}"}
       =@organization.users.count
       of 
@@ -63,9 +63,9 @@
       Feature credits
     .controls
       .span-11.append-bottom-1
-        2
+        =@organization.feature_count
       .span-14.append-bottom-1
-        %a{:href => "stamps.htm"} Buy credits
+        %a{:href => billing_extras_path()} Buy credits
   .control-group.section-start
     .control-label.fs_22
       Organization

@@ -1,0 +1,105 @@
+:javascript
+  $(function(){
+    add_another_mangement();
+    $(".photo_preview").colorbox({rel:'photo_preview'});
+    
+    $('#day_home_name').keyup(function(e) {
+      var parsed_subdomain = $(this).attr('value').replace(/[^a-z0-9]/gi,'').toLowerCase();
+      $('#day_home_slug').empty().attr('value', parsed_subdomain);
+    });
+
+    
+  });
+  
+
+= form_for @day_home, :html => {:multipart => true} do |f|
+
+	
+  = f.label :name
+  = f.text_field :name
+  
+  = f.label :slug, 'Dayhome Slug'
+  .input-prepend
+    %span.add-on
+      http://dayhomeregistry.com/
+    = f.text_field :slug
+  
+  = f.label :phone_number
+  = f.text_field :phone_number
+
+  = f.label :email
+  = f.text_field :email
+  
+  = f.label :highlight
+  = f.text_area :highlight, :class=>"span8"
+  
+  = f.label :blurb
+  = f.text_area :blurb, :class=>"span8"
+
+  = f.label :street1, 'Street 1'
+  = f.text_field :street1
+
+  = f.label :street2, 'Street 2'
+  = f.text_field :street2
+  
+  = f.label :postal_code, 'Postal Code'
+  = f.text_field :postal_code
+  
+  = f.label :city
+  = f.text_field :city
+  
+  = f.label :province
+  = f.state_select :province, 'CA'
+  
+  = f.fields_for :photos do |p|
+    .add_multiples.clear{'data-group' => 'photos'}
+      = p.label :caption, 'Caption & Photo'
+      - if p.object.photo?
+        .remove_contents
+          = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'
+        
+      = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
+      = p.text_field :caption
+      %br
+      = p.file_field :photo
+      = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link'
+  .clear
+  %strong= link_to 'Add Another Photo', '#', :class => 'add_multiples_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
+  %br
+  %br
+  = f.label :availability_types, 'Full-time Availability', :style => 'font-weight: bold'
+  
+  - AvailabilityType.full_time.each do |availability|
+    = f.label availability.kind, :class => :checkbox do 
+      = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
+      = availability.kind
+  
+  = f.label :availability_types, 'Part-time Availability', :style => 'font-weight: bold'
+  - AvailabilityType.part_time.each do |availability|
+    = f.label availability.kind, :class => :checkbox do 
+      = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
+      = availability.kind
+  
+  = f.label :certification_types, 'Certification', :style => 'font-weight: bold'
+  - CertificationType.all.each do |certification|
+    = f.label certification.kind, :class => :checkbox do 
+      = check_box_tag 'day_home[assign_certification_type_ids][]', certification.id, @day_home.certification_type_ids.include?(certification.id)
+      = certification.kind
+  
+  
+  = f.label :dietary_accommodations, 'Dietary Accommodations', :style => 'font-weight: bold'
+  = f.label :dietary_accommodations, 'Dietary Accommodations', :class => :checkbox do
+    = f.check_box :dietary_accommodations
+    Accommodates for Food Allergies
+
+  = f.label :licensed, 'Licensed', :style => 'font-weight: bold'
+  = f.label :licensed, 'Licensed', :class => :checkbox do
+    = f.check_box :licensed
+    Licensed
+  
+
+        
+  %br
+  = f.submit 'Save', :class => 'btn'
+  |
+  = link_to 'Cancel', :day_homes

@@ -13,6 +13,8 @@
     #{current_user.organization.name} dayhomes
   -else
     My dayhomes
+%p
+  = link_to 'Create dayhome', [:new, :day_home], :class => :btn    
 =form_tag({:controller => "day_homes", :action => "index"},:method=>"get", :id => :searchForm) do 
   %div.input-prepend.pull-right
     %span.add-on
@@ -60,3 +62,4 @@
             = link_to 'Edit', [:edit, day_home]
             |
             = link_to('Calendar', "/day_homes/#{day_home.id}/calendar")
+= paginate @day_homes, :window => 1,:left => 3,:right => 3            

@@ -18,6 +18,7 @@
  *= require billing
  *= require organization
  *= require dayhomes
+ *= require slides
 
  *= require gmaps4rails
  *= require searches
@@ -294,6 +295,7 @@ div.span-1, div.span-2, div.span-3, div.span-4, div.span-5, div.span-6, div.span
   text-align: right;
   width: 160px;
 }
+/*
 .form-horizontal input[type=text],.form-horizontal input[type=password],.form-horizontal textarea,.form-horizontal select,.form-stacked input[type=text],.form-stacked input[type=password],.form-stacked textarea,.form-stacked select
 {
   background-color:#fafafa;
@@ -309,7 +311,32 @@ div.span-1, div.span-2, div.span-3, div.span-4, div.span-5, div.span-6, div.span
   border-radius:3px;
   padding:4px 3px;
   margin-top:-4px;
+}*/
+.input-prepend .add-on, .input-prepend .btn {
+margin-right: -5px;
+}
+label {
+margin-top: 5px;
+margin-bottom: 0;
 }
 .floatr {
   float:right;
+}
+.pagination a {
+  padding: 0 5px;
+  border: none;
+}
+
+.pagination .page.active a{
+  color: red;
+}
+.pagination span.first {
+  line-height: 34px;
+  color: #999;
+}
+.pagination li span {
+  float:left;
+  padding: 0 5px;
+}
+.pagination li {
 }

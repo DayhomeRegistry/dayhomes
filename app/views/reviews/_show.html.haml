@@ -1,5 +1,5 @@
 -reviews.each_with_index do |rev, index|
-  .review{:class => index.even? ? "white" : "grey", :style => 'padding: 15px'}
+  .review{:class => index.even? ? "white-stripe" : "grey-stripe", :style => 'padding: 15px'}
     .review_rating
       .starz
         - (1..5).each do |i|

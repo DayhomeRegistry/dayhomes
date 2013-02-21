@@ -39,7 +39,7 @@
     # how many to create
     # 5 - 1 - 4 
     to_create = [(plan - started - freebees),0].max
-    #raise to_create.to_json
+    #øraise to_create.to_json
 
     Feature.transaction do
       to_create.times do |i|
