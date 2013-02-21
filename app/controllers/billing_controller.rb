@@ -152,9 +152,48 @@ class BillingController < ApplicationController
         format.js  {render :json=>@organization.feature_count}
       else  
         format.html { render :action => "extras", :notice => error }  
-        format.js { render :text=>error}
+        format.js { render :text=>error, :status=>500}
       end  
     end  
+  end
+  def activate
+    #activate a feature
+    @organization = current_user.organization
+    @day_home = @organization.day_homes.find(params["day_home_id"])
+    features = Feature.joins(:organization).where("day_home_id is null")
+    
+    saved = true
+    #check if there are enough credits
+    how_many_months = params["months"].to_i
+    if(how_many_months<features.count)
+      Feature.transaction do
+        how_many_months.times do |f|
+          feature = features[f]
+          feature.day_home = day_home
+          now = Time.now()
+          feature.start = now
+          feature.end = how_many_months.months_since(now)
+          saved = saved && feature.save
+        end
+      end
+    else
+      respond_to do |format|  
+        error = "You don't have enough credits to feature your dayhome for #{how_many_months}."
+        format.html { render :action => "extras", :notice => error }  
+        format.js { render :text=>error, :status=>500}        
+      end  
+    end
+    respond_to do |format|  
+      if saved
+        format.html { redirect_to :controller=>:day_homes,:action=>:edit }  
+        format.js  {render :json=>"Success"}
+      else  
+        format.html { render :action => "extras", :notice => error }  
+        format.js { render :text=>error, :status=>500}
+      end  
+    end  
+    
+    
   end
 
   private

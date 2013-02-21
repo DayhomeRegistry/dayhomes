@@ -13,8 +13,8 @@
     %p
       Have any questions or concerns about the Dayhome Registry? We'd love to hear from you.
     %p
-      Email us at 
-      = link_to 'contact@dayhomeregistry.com','mailto:contact@dayhomeregistry.com', :target=>'_blank'
+      Email us at       
+      = mail_to 'contact@dayhomeregistry.com', 'contact@dayhomeregistry.com',:encode=>'javascript'
   #social
     %h2 We're Social
     %p Join the conversation and connect with other dayhomes and parents in your area.
