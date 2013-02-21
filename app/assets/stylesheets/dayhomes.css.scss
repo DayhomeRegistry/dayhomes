@@ -102,7 +102,15 @@
 }
 
 .featured {
-  background-color: red;
+background: #fefcea;
+background: -moz-linear-gradient(top,  #fefcea 0%, #f1da36 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefcea), color-stop(100%,#f1da36));
+background: -webkit-linear-gradient(top,  #fefcea 0%,#f1da36 100%);
+background: -o-linear-gradient(top,  #fefcea 0%,#f1da36 100%);
+background: -ms-linear-gradient(top,  #fefcea 0%,#f1da36 100%);
+background: linear-gradient(to bottom,  #fefcea 0%,#f1da36 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 );
+
 }
 .featured-button {
   display: inline-block;
@@ -111,7 +119,6 @@ position: relative;
 padding: 0;
 line-height: normal;
 margin-right: .1em;
-cursor: pointer;
 vertical-align: middle;
 text-align: center;
 overflow: visible;
@@ -135,6 +142,7 @@ font-family: Verdana,sans-serif;
 line-height: 16px;
 }
 .featured-button.feature-me {
+  cursor: pointer;
   background: #b4e391;
 background: -moz-linear-gradient(top,  #b4e391 0%, #61c419 50%, #b4e391 100%);
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b4e391), color-stop(50%,#61c419), color-stop(100%,#b4e391));
