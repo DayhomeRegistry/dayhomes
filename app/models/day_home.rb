@@ -11,7 +11,10 @@ class DayHome < ActiveRecord::Base
     where("availability_types.availability IN (?) AND availability_types.kind = ?", default_availability_types[:availability], default_availability_types[:kind]).
     uniq
   }
-  scope :featured, where(:featured => true)
+  scope :featured, lambda {|*args|
+      #where(:featured => true)
+      joins(:features).where("end > ?",Time.now())
+  }
 
   # availability types
   has_many :day_home_availability_types, :dependent => :destroy
@@ -88,6 +91,13 @@ class DayHome < ActiveRecord::Base
   
   def featured_photo
     photos.first
+  end
+
+  def featured?
+    !self.features.where("end > ?",Time.now()).empty?
+  end
+  def feature_end_date
+    self.features.where("end > ?",Time.now()).first.end
   end
   
   # this method is called when updating the lat long (this is what's fed to google maps)

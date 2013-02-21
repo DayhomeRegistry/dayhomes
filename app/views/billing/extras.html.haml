@@ -124,7 +124,7 @@
     .span-12.credit-container
       You can currently feature 
       %span.feature-count>
-        =@organization.features.where("day_home_id is null").count
+        =@organization.feature_count
       dayhomes for month.
     .span-12
       %strong= link_to 'Buy a credit', '#', :id=>"create-user",:class => 'add_multiples_link', 'data-group' => 'feature', 'data-attribute-key' => 'feature_attributes'

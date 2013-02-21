@@ -17,6 +17,7 @@
  *= require pricing
  *= require billing
  *= require organization
+ *= require dayhomes
 
  *= require gmaps4rails
  *= require searches
@@ -308,4 +309,7 @@ div.span-1, div.span-2, div.span-3, div.span-4, div.span-5, div.span-6, div.span
   border-radius:3px;
   padding:4px 3px;
   margin-top:-4px;
+}
+.floatr {
+  float:right;
 }

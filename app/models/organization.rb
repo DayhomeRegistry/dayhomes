@@ -13,6 +13,44 @@
   
   before_destroy :destroy_customer
   
+  def feature_count
+    update_free_features()
+
+    self.features.where("day_home_id is null").count
+
+  end
+
+  def update_free_features
+    #need to add enough "empty" features for the month
+    # how many freebees based on plan
+    plan = Plan.find_by_name(self.plan).free_features
+    #raise plan.to_json
+
+    # how many active freebee features are 
+    #range = Time.now().beginning_of_day..1.month.from_now
+    #started = self.features.where("freebee is true").find(:all, :conditions=>{:start => range}).count || 0
+    started = self.features.where("freebee is true and end > ?", Time.now()).count || 0
+    #raise started.to_json
+
+    # how many freebees are there now
+    freebees = self.features.where("freebee is true").where("day_home_id is null").count || 0
+    #raise freebees.to_json
+
+    # how many to create
+    # 5 - 1 - 4 
+    to_create = [(plan - started - freebees),0].max
+    #raise to_create.to_json
+
+    Feature.transaction do
+      to_create.times do |i|
+        feature = Feature.new()
+        feature.organization = self
+        feature.freebee = true
+        saved = saved & feature.save
+      end
+    end
+  end
+
   def save_with_payment 
     if valid?
       #raise stripe_card_token.blank?.to_s

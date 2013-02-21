@@ -149,7 +149,7 @@ class BillingController < ApplicationController
     respond_to do |format|  
       if saved
         format.html { redirect_to :action=>"extras" }  
-        format.js  {render :json=>@organization.features.where("day_home_id is null").count}
+        format.js  {render :json=>@organization.feature_count}
       else  
         format.html { render :action => "extras", :notice => error }  
         format.js { render :text=>error}

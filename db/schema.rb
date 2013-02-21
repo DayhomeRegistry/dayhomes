@@ -163,9 +163,11 @@ ActiveRecord::Schema.define(:version => 20130220125427) do
   create_table "features", :force => true do |t|
     t.date     "start"
     t.date     "end"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.integer  "day_home_id"
+    t.integer  "organization_id",                    :null => false
+    t.boolean  "freebee",         :default => false
   end
 
   create_table "forums", :force => true do |t|
@@ -267,7 +269,7 @@ ActiveRecord::Schema.define(:version => 20130220125427) do
   add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
 
   create_table "upgrades", :force => true do |t|
-    t.datetime "effective_date", :default => '2013-02-14 20:53:22'
+    t.datetime "effective_date", :default => '2013-02-14 03:16:55'
     t.integer  "plan_id"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false

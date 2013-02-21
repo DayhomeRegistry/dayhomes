@@ -40,7 +40,8 @@ class DayHomesController < ApplicationController
         @day_homes = @day_homes.where("locations.name like '%#{location}%'")
       end
 
-      if(!feature.empty?)            
+      if(!feature.empty?)  
+      raise @day_homes.where(:featured=> feature=="featured:yes").to_sql          
         @day_homes = @day_homes.where(:featured=> feature=="featured:yes")
       end
       if(!approve.empty?)

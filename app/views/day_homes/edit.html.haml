@@ -12,9 +12,21 @@
   = @day_home.name
 
 = form_for @day_home, :html => {:multipart => true} do |f|
+  .floatr
+    -if @day_home.featured?
+      %strong
+        .featured-button.featured
+          .ui-button-text
+            Featured
+            %span.fs_11
+              until #{@day_home.feature_end_date}
+    -else
+      %strong
+        = link_to '#', :id=>"feature-me", :class=>"featured-button feature-me" do
+          .ui-button-text
+            Feature me!
   %h3
     Description  
-    
   = f.label :highlight
   = f.text_area :highlight, :rows=>10, :style=>"width:90%"
   

@@ -100,3 +100,48 @@
   display: block;
   width:400px;
 }
+
+.featured {
+  background-color: red;
+}
+.featured-button {
+  display: inline-block;
+  width: 217px;
+position: relative;
+padding: 0;
+line-height: normal;
+margin-right: .1em;
+cursor: pointer;
+vertical-align: middle;
+text-align: center;
+overflow: visible;
+font-family: Verdana,Arial,sans-serif;
+font-size: 1.1em;
+border: 1px solid #d3d3d3;
+/*background: #e6e6e6 url(/assets/jquery-ui/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;*/
+font-weight: normal;
+color: #555555;
+border-radius: 4px;
+}
+.featured-button, .featured-button:link, .featured-button:visited, .featured-button:hover, .featured-button:active {
+text-decoration: none;
+}
+.featured-button .ui-button-text {
+padding: .4em 1em;
+}
+.fs_11 {
+font-size: 11px;
+font-family: Verdana,sans-serif;
+line-height: 16px;
+}
+.featured-button.feature-me {
+  background: #b4e391;
+background: -moz-linear-gradient(top,  #b4e391 0%, #61c419 50%, #b4e391 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b4e391), color-stop(50%,#61c419), color-stop(100%,#b4e391));
+background: -webkit-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%);
+background: -o-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%);
+background: -ms-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%);
+background: linear-gradient(to bottom,  #b4e391 0%,#61c419 50%,#b4e391 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4e391', endColorstr='#b4e391',GradientType=0 );
+
+}
