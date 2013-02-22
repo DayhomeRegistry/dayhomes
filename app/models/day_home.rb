@@ -97,7 +97,7 @@ class DayHome < ActiveRecord::Base
     !self.features.where("end > ?",Time.now()).empty?
   end
   def feature_end_date
-    self.features.where("end > ?",Time.now()).first.end
+    self.features.where("end > ?",Time.now()).order("end desc").first.end
   end
   
   # this method is called when updating the lat long (this is what's fed to google maps)

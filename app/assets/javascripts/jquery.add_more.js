@@ -30,7 +30,7 @@ function add_another_mangement() {
     return false;
   });
   
-  $('.remove_fieldset_link').live('click', function(){
+  $('.remove_fieldset_link').on('click', function(){
     var destroy_elem = $(this).closest('.add_multiples').find('input[type=checkbox]');
     
     if(destroy_elem.length == 0){

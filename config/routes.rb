@@ -10,6 +10,7 @@ Dayhomes::Application.routes.draw do
   put "billing/upgrade"
   get "billing/extras"
   put "billing/add"
+  put "billing/activate"
 
   namespace :admin do 
     resources :agencies 

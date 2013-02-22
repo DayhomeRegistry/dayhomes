@@ -40,17 +40,18 @@
       :markdown
         #{@day_home.blurb}
         
-  .span6.margin10
+  .span5
     - unless @day_home.photos.blank?
       .slides
         - @day_home.photos.each do |dh_photo| 
           .slide
             %img{:src=>"#{dh_photo.photo_url(:reg)}"}
-            - if dh_photo.caption.present?
-              .slide-desc
-                .slide-desc-inset
-                  %p
-                    = dh_photo.caption
+            /
+              - if dh_photo.caption.present?
+                .slide-desc
+                  .slide-desc-inset
+                    %p
+                      = dh_photo.caption
 .row
   %br
 .row
@@ -73,7 +74,7 @@
       - @day_home.availability_types.each do |av|
         = "#{av.availability} -  #{av.kind}"
         %br
-  .span4
+  .span3
     %h3.singleViewH3
       Contact Information
     .contact_info
@@ -143,7 +144,7 @@
                                  :auto_zoom => false,
                                  :provider_key => gmaps_api_key},
                :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
-  .span5
+  .span3
     %h3.singleViewH3
       Other Information
     %h4

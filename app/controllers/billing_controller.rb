@@ -160,36 +160,40 @@ class BillingController < ApplicationController
     #activate a feature
     @organization = current_user.organization
     @day_home = @organization.day_homes.find(params["day_home_id"])
-    features = Feature.joins(:organization).where("day_home_id is null")
-    
+    features = @organization.features
+    features = features.where("day_home_id is null")
+
     saved = true
+    last_date = Time.now()
     #check if there are enough credits
     how_many_months = params["months"].to_i
     if(how_many_months<features.count)
       Feature.transaction do
         how_many_months.times do |f|
           feature = features[f]
-          feature.day_home = day_home
-          now = Time.now()
-          feature.start = now
-          feature.end = how_many_months.months_since(now)
+          feature.day_home = @day_home
+          feature.start = last_date
+          last_date = last_date.advance(:months => 1)
+          feature.end = last_date
           saved = saved && feature.save
         end
       end
     else
       respond_to do |format|  
-        error = "You don't have enough credits to feature your dayhome for #{how_many_months}."
-        format.html { render :action => "extras", :notice => error }  
-        format.js { render :text=>error, :status=>500}        
+        error = "You don't have enough credits to feature your dayhome for #{how_many_months} #{how_many_months>1?'months':'month'}.  "
+        error = error + "You might want to go <a href='" + billing_extras_path() + "'>buy extras</a>."
+
+        format.html { return redirect_to edit_day_home_path(@day_home), :notice=>error }  
+        format.js { return render :text=>error, :status=>500}        
       end  
     end
     respond_to do |format|  
       if saved
-        format.html { redirect_to :controller=>:day_homes,:action=>:edit }  
-        format.js  {render :json=>"Success"}
+        format.html { return redirect_to edit_day_home_path(@day_home) }  
+        format.js  {return render :json=>"Success"}
       else  
-        format.html { render :action => "extras", :notice => error }  
-        format.js { render :text=>error, :status=>500}
+        format.html { return redirect_to edit_day_home_path(@day_home), :notice=>error}  
+        format.js { return render :text=>error, :status=>500}
       end  
     end  
     

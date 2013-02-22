@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/bcardarella/client_side_validations.git
-  revision: a7fcf0cecea15859d647f2205d8c466408062563
+  revision: a6a515504520e9925ca63524ae9854168163283e
   specs:
-    client_side_validations (3.2.0.beta.6)
+    client_side_validations (3.2.1)
 
 GEM
   remote: http://rubygems.org/
@@ -290,7 +290,7 @@ DEPENDENCIES
   capybara
   carmen
   carrierwave
-  client_side_validations (= 3.2.0.beta.6)!
+  client_side_validations (~> 3.2)!
   coffee-rails (~> 3.2.1)
   factory_girl_rails
   fog

@@ -1,8 +1,53 @@
-:javascript
+ï»¿:javascript
+
   $(function(){
+    tips = $( ".validateTips" );
+    function updateTips( t ) {
+      tips
+        .text( t )
+        .addClass( "ui-state-highlight" );
+    }
+
     add_another_mangement();
     $(".photo_preview").colorbox({rel:'photo_preview'});
     
+    $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 200,
+      width: 400,
+      modal: true,
+      buttons: {
+        "Feature!": function() {
+          var self = $(this);  
+          $("#dialog-form form")[0].submit();
+          /*
+          $.ajax({
+            type: 'POST',
+            url: "#{billing_activate_path()}",
+            data: $("#dialog-form form").serializeArray(),
+            dataType: 'json'
+          })
+          .done(function(data, text, xhr){
+            //success
+            self.dialog( "close" );
+          })
+          .fail(function(jqXHR, textStatus, errorThrown) {
+            updateTips(jqXHR.responseText);
+          }); */
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }}
+    });
+    var input = $('#months');
+    var monthOrMonthss = $('#month-or-months');
+    var updateSubtotal = function () {
+      var numMonths = parseInt(input.val(), 10) || 0;
+      monthOrMonthss.html(numMonths == 1 ? 'month' : 'months');
+    };
+    input.on('keyup', updateSubtotal);
+    updateSubtotal();
+
     $( "#feature-me" )
       .click(function() {
         $( "#dialog-form" ).dialog( "open" );
@@ -102,32 +147,14 @@
   |
   = link_to 'Cancel', :day_homes
   
- #dialog-form{:title => "Feature me"}
+#dialog-form{:title=>"Feature #{@day_home.name}"}
   %p.validateTips 
-  =form_for(Feature.new, :url=>billing_add_path(), :method=>:put, :remote=>true) do |f|
+  =form_for(@day_home, :url=>billing_activate_path(), :method=>:put, :remote=>true) do |f|
     .span-12.append-2
-      Add
-      %input#number.span1.text.ui-widget-content.ui-corner-all{:maxlength => "4",:name => "number", :type => "text"}/
-      %span#credit-or-cedits credits
-      to my account
-    .span-6.ta_right
-      %strong Subtotal:
-      $
-      %span#buy-credits-total 0.00
-      %br/
-      %span.light-blue-text.fs_11 Taxes may apply
-    .clear
-    .span-18
-      %h5 Bulk Discount Pricing
-      %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
-        %tbody
-          %tr
-            %td 1 – 11
-            %td.ta_right $5.00 ea.
-          %tr
-            %td 12 – 99
-            %td.ta_right $2.00 ea.
-          %tr
-            %td 100+
-            %td.ta_right $1.00 ea.
+      Feature me for 
+      %input#months.span1.text.ui-widget-content.ui-corner-all{:maxlength => "4",:name => "months", :type => "text"}/
+      %span#month-or-months months
+      = hidden_field_tag :day_home_id, @day_home.id
+    
+    
     .clear   
