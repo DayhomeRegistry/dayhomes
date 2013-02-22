@@ -123,6 +123,9 @@ class BillingController < ApplicationController
   def extras
     @organization = current_user.organization
     #raise @organization.day_homes.joins(:features).to_sql
+    sql = Feature.joins(:organization).where("organizations.id = ?",@organization.id).where("end > now()").to_sql
+    @features = Feature.find_by_sql("select organization_id,day_home_id,min(start) as start, max(end) as end from (#{sql}) as active group by organization_id,day_home_id")
+    
   end
   def add
     @organization = current_user.organization

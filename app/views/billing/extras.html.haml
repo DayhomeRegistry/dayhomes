@@ -137,10 +137,11 @@
   .clear
     %br
   .span-12
-    - features = Feature.joins(:organization).where("organizations.id = ?",@organization.id).where("end > now()")
-    - if (features.count ==0)
+    /- features = Feature.joins(:organization).where("organizations.id = ?",@organization.id).where("end > now()").orderby("day_home_id,end")
+    /- features = Feature.where.select("min(created_at) as ordered_date, sum(price) as total_price").group("date(created_at)")
+    - if (@features.count ==0)
       None
-    - features.each do |feature|                    
+    - @features.each do |feature|                    
       .row
         .span-4
           =link_to feature.day_home.name,day_home_path(feature.day_home)
