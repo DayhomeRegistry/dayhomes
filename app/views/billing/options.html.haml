@@ -60,7 +60,10 @@
           Free monthly features
         - @packages.each_with_index do |(key,value),index|
           %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
-            =value.free_features
+            -if (value.free_features < 0)
+              Unlimited
+            -else
+              =value.free_features
       %tr.last-row
         %td.pricingLeft
           \

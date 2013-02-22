@@ -32,15 +32,14 @@
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 .row
-  .span4.well.wellSize
+  .span3.well.wellSize
     .textSize20
       :markdown
         #{@day_home.highlight}
     .textSize20
       :markdown
-        #{@day_home.blurb}
-        
-  .span5
+        #{@day_home.blurb}    
+  .span4{:style=>"margin: 0 auto;"}
     - unless @day_home.photos.blank?
       .slides
         - @day_home.photos.each do |dh_photo| 
@@ -52,6 +51,7 @@
                   .slide-desc-inset
                     %p
                       = dh_photo.caption
+
 .row
   %br
 .row
@@ -129,13 +129,13 @@
         = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
         .submit
           = cf.button :submit,  "Contact", :class => 'btn btn-primary span3'
-  .span4
+  .span3
     = link_to 'Contact Dayhome', '#contact-form', :rel => 'modal:open', :class => "callToActionButton gradient"
 .row
   %br
 
 .row
-  .mediaAlign.span7
+  .mediaAlign.span6
     %h3.singleViewH3
       Location
     = gmaps(:map_options => { :center_latitude => @day_home.lat,

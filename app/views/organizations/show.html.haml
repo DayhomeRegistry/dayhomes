@@ -45,7 +45,7 @@
         - if (@plan.staff>0) 
           - percentFill = number_to_percentage([((@organization.users.count-1)*100.0/@plan.staff),100.0].min)          
         .fill{:style => "width: #{percentFill}"}
-      =@organization.users.count
+      =@organization.users.count-1
       of 
       =@plan.staff
   .control-group

@@ -30,7 +30,7 @@ class OrganizationsController < ApplicationController
     respond_to do |format|
       if @organization.update_attributes(params[:organization])
         #raise @organization.errors.messages.inspect
-        format.html { redirect_to organzation_path(@organization), notice: 'Organization was successfully updated.' }
+        format.html { redirect_to organization_path(@organization), notice: 'Organization was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
