@@ -117,7 +117,34 @@ class BillingController < ApplicationController
     
   end
   def upgrade
-    raise params.to_json
+    #{"utf8":"\u2713","_method":"put","authenticity_token":"x5RaRd1i0qB3gsrwBqKGXCwtV+5h1AzJeetIJVrCCAE=","choose-package":"4","plan":"goldilocks","staff":"","locales":"0","upgrade":{"stripe_card_token":""},"controller":"billing","action":"upgrade"}
+
+    @organization = current_user.organization
+    @existing = Plan.find_by_name(@organization.plan)
+    anew = Plan.find(params["choose-package"])
+
+    @upgrade = Upgrade.new();
+    @upgrade.old_plan_id = @existing.id
+    @upgrade.new_plan_id = anew.id
+    @upgrade.effective_date = Time.now()
+
+    if(!@upgrade.save)
+      flash[:error] = "Something seems to have gone wrong."
+    else
+      @organization.plan = anew.name
+      if(@organization.save)
+        flash[:message] = "Congrats! You're now on the #{anew.name} plan."
+      else
+        flash[:error] = "Something seems to have gone wrong."
+      end
+    end
+
+    @packages = {}
+    Plan.all.each do |p|
+      @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+    end
+    redirect_to :action=>:options
+
   end
 
   def extras

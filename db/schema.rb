@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130220125427) do
+ActiveRecord::Schema.define(:version => 20130226040306) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -270,9 +270,10 @@ ActiveRecord::Schema.define(:version => 20130220125427) do
 
   create_table "upgrades", :force => true do |t|
     t.datetime "effective_date", :default => '2013-02-14 03:16:55'
-    t.integer  "plan_id"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
+    t.integer  "old_plan_id"
+    t.integer  "new_plan_id"
   end
 
   create_table "user_agencies", :force => true do |t|

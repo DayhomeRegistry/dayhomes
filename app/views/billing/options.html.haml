@@ -74,7 +74,7 @@
 
   = form_for @upgrade,:url => billing_upgrade_path(),:method => :put, :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>""} do |f|
     = hidden_field_tag 'choose-package', @existing.id
-    = hidden_field_tag 'plan', @upgrade.plan
+    = hidden_field_tag 'plan', @upgrade.new_plan
     %br
     #add-on-section{:style=>""}
       %h3#addon-header.section-header.section-header-first{:style => "display: none;"}
