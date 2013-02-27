@@ -149,8 +149,12 @@ Dayhome.upgradePage.Upgrade = Class.extend({
     },
     
     isCurrentPackageFree: function () {
+        var base_package = Dayhome.upgradePage.existing;
         var packageid = Number(this.packageInput.val());
-        return packageid=="78";
+        if (packageid && Dayhome.upgradePage.packages[packageid]) {
+            base_package = Dayhome.upgradePage.packages[packageid];
+        }
+        return base_package.price == 0;
     },
     checkPackageSwitch: function (event) {
         var packageid = Number(this.packageInput.val());
@@ -428,7 +432,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
 
     handleStripeResponse: function (status, response) {
       if(status == 200) {
-        $('#day_home_signup_request_stripe_card_token').val(response.id);
+        $('input[name$="[stripe_card_token]"]').val(response.id);
         $('form')[1].submit();
       } else {
         // Enable the button.

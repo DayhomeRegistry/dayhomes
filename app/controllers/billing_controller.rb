@@ -114,10 +114,26 @@ class BillingController < ApplicationController
     Plan.all.each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
+
+    if(!@organization.stripe_customer_token.nil?)
+      
+      customer = Stripe::Customer.retrieve(@organization.stripe_customer_token)
+      #raise customer.to_json
+      @credit_card = {
+        last4: customer.active_card.last4,
+        month: customer.active_card.exp_month,
+        year: customer.active_card.exp_year
+      }  
+    end
     
   end
   def upgrade
     #{"utf8":"\u2713","_method":"put","authenticity_token":"x5RaRd1i0qB3gsrwBqKGXCwtV+5h1AzJeetIJVrCCAE=","choose-package":"4","plan":"goldilocks","staff":"","locales":"0","upgrade":{"stripe_card_token":""},"controller":"billing","action":"upgrade"}
+
+    @packages = {}
+    Plan.all.each do |p|
+      @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+    end
 
     @organization = current_user.organization
     @existing = Plan.find_by_name(@organization.plan)
@@ -128,21 +144,45 @@ class BillingController < ApplicationController
     @upgrade.new_plan_id = anew.id
     @upgrade.effective_date = Time.now()
 
-    if(!@upgrade.save)
-      flash[:error] = "Something seems to have gone wrong."
-    else
-      @organization.plan = anew.name
-      if(@organization.save)
-        flash[:message] = "Congrats! You're now on the #{anew.name} plan."
+    #are we downgrading to free?
+    if(anew.price == 0)
+      @organization.plan = anew.plan
+      if(!@organization.save_with_payment)
+        flash.now[:error] = "Something seems to have gone wrong."
+        return render :action=>:options
       else
-        flash[:error] = "Something seems to have gone wrong."
+        if(@upgrade.save)
+          flash[:message] = "Congrats! You're now on the #{anew.name} plan."
+        else
+          flash.now[:error] = "Something seems to have gone wrong."
+          return render :action=>:options
+        end
+      end
+    else
+      saved = true
+      @organization.plan = anew.plan
+
+      #did we change/add the credit card?
+      token = params[:upgrade]["stripe_card_token"]
+
+      if !token.nil?
+        @organization.stripe_card_token = token
+        saved = @organization.save_with_payment
+        #raise @organization.errors.to_json
+      else
+        saved = @organization.save
+      end
+      if(!saved)
+        return render :action=>:options
+      else
+        if(@upgrade.save)
+          flash[:message] = "Congrats! You're now on the #{anew.name} plan."
+        else
+          return render :action=>:options
+        end
       end
     end
 
-    @packages = {}
-    Plan.all.each do |p|
-      @packages.merge!({"#{p.id}" => p}) #unless p===@existing
-    end
     redirect_to :action=>:options
 
   end

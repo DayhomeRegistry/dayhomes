@@ -64,16 +64,26 @@
           customer.card = stripe_card_token
           customer.save
         end
+      else
+        #check to make sure that we're not downgrading
+        plan = Plan.find_by_name(self.plan).price
+        if plan==0 && !self.stripe_customer_token.nil?
+          #if the customer_token is nil, there's nothing to cancel
+          customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+          customer.cancel_subscription
+        end 
       end
       save!
     end
   rescue Stripe::InvalidRequestError => e
+    #raise e.to_json
     logger.error "Stripe error while creating customer: #{e.message}"
-    errors.add :base, "There was a problem with your credit card: #{e.message}"
+    self.errors.add :base, "There was a problem with your credit card: #{e.message}"
     false
   rescue Stripe::CardError => e
+    #raise e.to_json
     logger.error "Stripe error while creating customer: #{e.message}"
-    errors.add :base, e.message
+    self.errors.add :base, e.message
     false  
   end
   
