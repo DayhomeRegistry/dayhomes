@@ -3,7 +3,15 @@ class BillingController < ApplicationController
   before_filter :require_user_to_be_organization_admin, :except=>[:signup, :register]
   
   def signup
+    if(current_user)
+      redirect_to :action=>:options
+    end
     @day_home_signup_request = DayHomeSignupRequest.new
+    @existing = Plan.find_by_plan("baby")
+    @packages = {}
+    Plan.all.each do |p|
+      @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+    end
   end
   def register
     staff = 0

@@ -23,7 +23,7 @@
   def update_free_features
     #need to add enough "empty" features for the month
     # how many freebees based on plan
-    plan = Plan.find_by_name(self.plan).free_features
+    plan = Plan.find_by_plan(self.plan).free_features
     #raise plan.to_json
 
     # how many active freebee features are 

@@ -6,54 +6,31 @@
       %tr{:valign => "top"}
         %th.pricingSelect
           Choose Your Plan
-        %th.package_78.enabled.column_4.selected_package{ :width => "135"}
-          Baby Bear
-          .price
-            %strong
-              %span.dollar-sign Free
-          %a.button.medium.green{:href => ""}
-            %span Select
-        %th.package_79.enabled.column_3{ :width => "135"}
-          Mama Bear
-          .price
-            %strong
-              %span.dollar-sign> $
-              %span> 50
-              %span.cents 00
-            %span.permonth> /mth
-          %a.button.medium.green{:href => ""}
-            %span Select
-        %th.package_80.enabled.column_2{ :width => "135"}
-          Papa Bear
-          .price
-            %strong
-              %span.dollar-sign> $
-              %span> 250
-              %span.cents> 00
-            %span.permonth> /mth
-          %a.button.medium.green{:href => ""}
-            %span Select
-        %th.package_81.enabled.column_1{ :width => "135"}
-          Goldilocks
-          .price
-            %strong
-              %span.dollar-sign> $
-              %span> 400
-              %span.cents> 00
-            %span.permonth> /mth
-          %a.button.medium.green{:href => ""}
-            %span Select
+        - @packages.each_with_index do |(key,value),index|
+          %th.enabled{ :width=>"135" ,:class=>"package_#{key} column_#{@packages.count-index}"}
+            =value.name
+            .price
+              %strong                
+                -if(value.price<=0)
+                  %span.dollar-sign>
+                    Free
+                -else
+                  %span.dollar-sign> $
+                  %span> #{value.price}
+                  %span.cents> 00
+                  %span.permonth> /mth
+            %a.button.medium.green{:href => ""}
+              %span Select               
       %tr
         %td.pricingLeft
           \# of dayhomes you can manage
-        %td.package_78.enabled{:rel => "78"}
-          %strong 1
-        %td.package_79.enabled{:rel => "79"}
-          %strong 50
-        %td.package_80.enabled{:rel => "80"}
-          %strong 250
-        %td.package_81.enabled{:rel => "81"}
-          %strong Unlimited
+        - @packages.each_with_index do |(key,value),index|
+          %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
+            %strong
+              -if (value.day_homes < 0)
+                Unlimited
+              -else
+                =value.day_homes   
       /    
         %tr
           %td.pricingLeft
@@ -72,55 +49,43 @@
       %tr
         %td.pricingLeft
           Additional staff who can access your account
-        %td.package_78.enabled{:rel => "78"}
-          %span 0
-        %td.package_79.enabled{:rel => "79"}
-          %span 1
-          %span.row-tiny ($10 each additional)
-        %td.package_80.enabled{:rel => "80"}
-          %span 2
-          %span.row-tiny ($10 each additional)
-        %td.package_81.enabled{:rel => "81"}
-          %span 3
-          %span.row-tiny ($10 each additional)
+        - @packages.each_with_index do |(key,value),index|
+          %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
+            %span
+              -if (value.staff < 0)
+                Unlimited
+              -else
+                =value.staff
+            -if (value.block_staff_addon==0)
+              %span.row-tiny ($10 each additional)
       %tr
         %td.pricingLeft
           \# of Locales
-        %td.package_78.enabled{:rel => "78", :style => "cursor: pointer;"}
-          1
-        %td.package_79.enabled{:rel => "79"}
-          %span 1
-        %td.package_80.enabled{:rel => "80"}
-          %span 5
-          %span.row-tiny ($10 each additional)
-        %td.package_81.enabled{:rel => "81"}
-          %span Unlimited
+        - @packages.each_with_index do |(key,value),index|
+          %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
+            %span
+              -if (value.locales < 0)
+                Unlimited
+              -else
+                =value.locales
+            -if (value.block_locales_addon==0)
+              %span.row-tiny ($10 each additional)  
       %tr
         %td.pricingLeft
           \Free Features
-        %td.package_78.enabled{:rel => "78", :style => "cursor: pointer;"}
-          0
-        %td.package_79.enabled{:rel => "79"}
-          %span 1
-        %td.package_80.enabled{:rel => "80"}
-          %span 5
-        %td.package_81.enabled{:rel => "81"}
-          %span 8
+        - @packages.each_with_index do |(key,value),index|
+          %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
+            -if (value.free_features < 0)
+              Unlimited
+            -else
+              =value.free_features
       %tr.last-row
         %td.pricingLeft
           \
-        %td.package_78.enabled.column_3{:rel => "78", :style => "cursor: pointer;"}
-          %a.button.medium.green.a_package78{:href => ""}
-            %span Select
-        %td.package_79.enabled.column_2{:rel => "79"}
-          %a.button.medium.green.a_package79{:href => ""}
-            %span Select
-        %td.package_80.enabled.column_1{:rel => "80"}
-          %a.button.medium.green.a_package80{:href => ""}
-            %span Select
-        %td.package_81.enabled.column_1{:rel => "81"}
-          %a.button.medium.green.a_package81{:href => ""}
-            %span Select
+        - @packages.each_with_index do |(key,value),index|
+          %td.enabled{ :rel=>"#{key}", :class=>"package_#{key} column_#{@packages.count-index}"}
+            %a.button.medium.green{:href => "", :class=>"a_package#{key}"}
+              %span Select  
 
   = form_for @day_home_signup_request,:url => billing_register_path(),:method => :put, :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>""} do |f|
     = hidden_field_tag 'choose-package', "78"
@@ -373,72 +338,20 @@
 
   var Dayhome = Dayhome || {};
 
-  Dayhome.upgradePage = {
-      existing: { 
-              "name": "Baby Bear",
-              "plan": "baby",
-              "day_homes": "1",
-              "staff": "0",
-              "locales": "1",
-              "price": "0.00",
-              "block_staff_addon": "1",
-              "block_locales_addon": "1", 
-              "id": "78" },
-      packages: {
-          "78": {
-              "name": "Baby Bear",
-              "plan": "baby",
-              "day_homes": "1",
-              "staff": "0",
-              "locales": "1",
-              "price": "0.00",
-              "block_staff_addon": "1",
-              "block_locales_addon": "1"
-          },
-          "79": {
-              "name": "Mama Bear",
-              "plan": "mama",
-              "day_homes": "50",
-              "staff": "1",
-              "locales": "1",
-              "price": "50.00",
-              "block_staff_addon": "0",
-              "block_locales_addon": "1"
-          },
-          "80": {
-              "name": "Papa Bear",
-              "plan": "papa",
-              "day_homes": "250",
-              "staff": "2",
-              "locales": "3",
-              "price": "250.00",
-              "block_staff_addon": "0",
-              "block_locales_addon": "0"
-          },
-          "81": {
-              "name": "Goldilocks",
-              "plan": "goldilocks",
-              "day_homes": null,
-              "staff": "5",
-              "locales": null,
-              "price": "400.00",
-              "block_staff_addon": "0",
-              "block_locales_addon": "0"
-          }
-      },
-      additional_cost: {
-          staff: function (n) {
-              return parseInt(n, 10) * 10 || 0;
-          },
-          locales: function (n) {
-              //return { "1": 10, "2": 20, "3": 30, "4": 40, "5": 50, "1500": 60, "1750": 70, "2000": 80, "3000": 120, "4000": 160, "5000": 200}[n] || 0;
-              return parseInt(n, 10) * 10 || 0;
-          }
-      },
-      index: {
-        "baby":78, "mama":79, "papa":80, "goldilocks":81
-      }
+    Dayhome.upgradePage = {
+    existing: #{@existing.to_json},
+    packages: #{@packages.to_json},
+    additional_cost: {
+        staff: function (n) {
+            return parseInt(n, 10) * 10 || 0;
+        },
+        locales: function (n) {
+            //return { "1": 10, "2": 20, "3": 30, "4": 40, "5": 50, "1500": 60, "1750": 70, "2000": 80, "3000": 120, "4000": 160, "5000": 200}[n] || 0;
+            return parseInt(n, 10) * 10 || 0;
+        }
+    },
+    current:{
+    },
+    index: {
+    }
   };
-  var index = Dayhome.upgradePage.index[$('#plan').val()];
-  Dayhome.upgradePage.existing = Dayhome.upgradePage.packages[index];
-  Dayhome.upgradePage.existing.id = index;
