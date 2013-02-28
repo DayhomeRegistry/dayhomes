@@ -17,7 +17,7 @@ class UserSessionsController < ApplicationController
     if @user_session.save         
       if (!session[:return_to].nil?)
         url = session[:return_to]
-        session[:return_to] = null
+        session[:return_to] = nil
         return redirect_to url
       end
       if (@user.admin?)

@@ -118,7 +118,7 @@
                 %span one-time use extras
             Featuring your dayhome or adding a waiting list later.
       .span-13.append-bottom-2
-        #total_box.bg_orange.hide{:style => "display: block;"}
+        #total_box.bg_orange.hide{:style => "display: none;"}
           %h4.sidebar_header_orange
             %span Upgrade Details
           %table.fs_11{:cellpadding => "2", :cellspacing => "0", :width => "100%"}
@@ -191,13 +191,22 @@
     #credit-card-section{:style => "display:none;"}
       %h3.section-header
         Credit Card Information  
-      = f.hidden_field :stripe_card_token
-      -if !@credit_card.nil?        
-        =label_tag "Credit Card"
+      = f.hidden_field :stripe_card_token   
+      -if !@credit_card.nil?
         #existingCard
-          =label_tag :existing_card_number, "**** **** **** "+@credit_card[:last4], :style=>"width:150px;"
-          =label_tag :existing_card_exp, "Exp:"+@credit_card[:month].to_s+"/"+@credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"        
-      -else
+          .control-group                
+            .control-label
+              Current Card
+            .controls  
+              .append-bottom-1.first            
+                =label_tag :existing_card_number, "**** **** **** "+@credit_card[:last4], :style=>"width:150px;"
+                .span-7
+                  =label_tag :existing_card_exp, "Exp:"+@credit_card[:month].to_s+"/"+@credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"        
+                .clear
+              .append-bottom-1
+                .span-7
+                  = link_to 'Enter a new credit card','#', :id=>'change_credit_card_link'   
+      #newCard{:style=>"display:#{(@credit_card.nil? && 'block') || 'none'};"}
         .append-bottom-1  
           #stripe_error
             %noscript
@@ -232,18 +241,23 @@
                 .span-6.append-bottom-1
                   =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
                   .example.first
-                    Year   
-        .span-12
-          %strong Need Help? Call us!
-          %br
-            .gray50.fs_11
-              .append-bottom-half
-                Call us Monday-Friday, 8am-4pm MST
-                %br
-                  at +1-780-975-1290
-                %br
-      .clear                              
-      .clear    
+                    Year  
+            - if !@credit_card.nil?
+              .control-group
+                .controls
+                  .span-7
+                    = link_to 'Keep card on record', '#', :id=>'cancel_credit_card_link'
+          .span-12
+            %strong Need Help? Call us!
+            %br
+              .gray50.fs_11
+                .append-bottom-half
+                  Call us Monday-Friday, 8am-4pm MST
+                  %br
+                    at +1-780-975-1290
+                  %br
+        .clear                              
+        .clear    
     %h3
       .submit-container
         %span.button.large.green.single
@@ -272,3 +286,14 @@
     index: {
     }
   }
+  $('#change_credit_card_link').click(function(){
+    $('#existingCard').hide();
+    $('#newCard').show();
+    return false;
+  });
+  $('#cancel_credit_card_link').click(function(){
+    $('#newCard').hide();
+    $('#existingCard').show();
+    $('#card_number').val("")
+    return false;
+  });

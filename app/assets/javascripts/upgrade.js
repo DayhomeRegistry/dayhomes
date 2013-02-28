@@ -147,8 +147,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
     get_additional_value: function (type) {
         return parseInt($('#' + type + ':enabled').val(), 10) || 0;
     },
-    
-    isCurrentPackageFree: function () {
+    isSelectedPackageFree: function(){
         var base_package = Dayhome.upgradePage.existing;
         var packageid = Number(this.packageInput.val());
         if (packageid && Dayhome.upgradePage.packages[packageid]) {
@@ -156,13 +155,21 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         }
         return base_package.price == 0;
     },
+    isCurrentPackageFree: function () {
+        var base_package = Dayhome.upgradePage.existing;
+        return base_package.price == 0;
+    },
     checkPackageSwitch: function (event) {
         var packageid = Number(this.packageInput.val());
         var self = this;
-        if (this.isCurrentPackageFree())
+        if (this.isSelectedPackageFree())
         {
             $('#credit-card-section').hide();
-            this.payNowButton.val('Signup Now');
+            if(!this.isCurrentPackageFree()) {
+              this.payNowButton.val('Downgrade');
+            } else {
+              this.payNowButton.val('Signup Now');
+            }
         } else {
             $('#credit-card-section').show();
             this.payNowButton.val('Pay Now');
@@ -335,7 +342,8 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         if (selectedExtraCount === 0 && totalBoxBase.css('display') === 'none') {
             $('#total_box').hide();
         } else {
-            $('#total_box').show();
+            //This is until we figure out how to do per user & locale charges
+            //$('#total_box').show();
         }
 
         //$('#total_box_total .amount').text(this.currency.round(period_total));
@@ -414,7 +422,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         // Disable the button.
         self.payNowButton.val('Loading…').prop('disabled', true);
 
-        if (!self.isCurrentPackageFree()) {
+        if (!self.isSelectedPackageFree()) {
           var card = {
               number: $('#card_number').val(),
               cvc: $('#card_code').val(),

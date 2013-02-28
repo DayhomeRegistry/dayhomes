@@ -66,7 +66,7 @@
         end
       else
         #check to make sure that we're not downgrading
-        plan = Plan.find_by_name(self.plan).price
+        plan = Plan.find_by_plan(self.plan).price
         if plan==0 && !self.stripe_customer_token.nil?
           #if the customer_token is nil, there's nothing to cancel
           customer = Stripe::Customer.retrieve(self.stripe_customer_token)
