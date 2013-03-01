@@ -8,6 +8,7 @@
   has_many :day_homes, :through=>:locations
 
   has_many :features
+  has_many :upgrades
 
   attr_accessor :stripe_card_token
   
@@ -61,16 +62,25 @@
           self.stripe_customer_token = customer.id
         else
           customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-          customer.card = stripe_card_token
-          customer.save
+          if(customer.subscription.plan.id != self.plan)
+            customer.update_subscription(:plan => self.plan, :card=>stripe_card_token, :prorate=>true)
+          else
+            customer.card = stripe_card_token
+            customer.save
+          end
         end
       else
         #check to make sure that we're not downgrading
-        plan = Plan.find_by_plan(self.plan).price
-        if plan==0 && !self.stripe_customer_token.nil?
+        plan = Plan.find_by_plan(self.plan)
+        if plan.price==0 && !self.stripe_customer_token.nil?
           #if the customer_token is nil, there's nothing to cancel
           customer = Stripe::Customer.retrieve(self.stripe_customer_token)
           customer.cancel_subscription
+        elsif !self.stripe_customer_token.nil?
+        #update the subscription to the new plan  
+          customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+
+          customer.update_subscription(:plan => self.plan, :prorate=>true)
         end 
       end
       save!

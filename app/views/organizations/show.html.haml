@@ -136,29 +136,30 @@
       %table#upgrades
         %tbody
           %tr
-            %td.span-11
-              Jun 01, 2012
-              [250
-              ,
-              1
-              ,
-              1]
-            %td.span-14
-              $50.00
-              per month
+            -if @organization.upgrades.count>0
+              -upgrade = @organization.upgrades.order("effective_date desc").first
+              -plan = Plan.find(upgrade.new_plan_id)
+              %td.span-14
+                =upgrade.effective_date.strftime("%a %b %d, %Y")
+                ="[#{(plan.day_homes==-1 ? 'Unlimited' : plan.day_homes.to_s)}, #{(plan.staff==-1 ? 'Unlimited' : plan.staff.to_s)}, #{(plan.locales==-1 ? 'Unlimited' : plan.locales.to_s)}]"
+              %td.span-11
+                ="$#{plan.price}"
+                per month
+            -else
+              None
   .control-group
     .control-label
       Payments      
     .controls
-      /=@payments.to_json
+      =@payments.to_json
       %table#payments
         %tbody
           -@payments.each_with_index do |p, index|
             %tr{:style=> (index > 4?'display:none;':'')}
-              %td.span-11
+              %td.span-14
                 :javascript
                   document.write(convert_stripe_date(#{p.date}));
-              %td.span-14
+              %td.span-11
                 :javascript
                   document.write('$'+formatCurrency(#{p.total/100.0}))
           
@@ -171,8 +172,10 @@
     .controls
       .append-bottom-1
         Go here to
-        %a{:href => "https://dayhomeregistry.freshbooks.com/"} downgrade to free
-        or
-        %a{:href => "https://dayhomeregistry.freshbooks.com/"} cancel
-        your account.
+        %a{:href => billing_options_path()} downgrade 
+        to a free account
+        /
+          or
+          %a{:href => "#"} cancel
+          your account.
       

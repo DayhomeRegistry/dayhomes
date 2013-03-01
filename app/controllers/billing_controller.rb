@@ -143,11 +143,23 @@ class BillingController < ApplicationController
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
 
+
     @organization = current_user.organization
+    if(!@organization.stripe_customer_token.nil?)
+      
+      customer = Stripe::Customer.retrieve(@organization.stripe_customer_token)
+      #raise customer.to_json
+      @credit_card = {
+        last4: customer.active_card.last4,
+        month: customer.active_card.exp_month,
+        year: customer.active_card.exp_year
+      }  
+    end
     @existing = Plan.find_by_plan(@organization.plan)
     anew = Plan.find(params["choose-package"])
 
     @upgrade = Upgrade.new();
+    @upgrade.organization = @organization
     @upgrade.old_plan_id = @existing.id
     @upgrade.new_plan_id = anew.id
     @upgrade.effective_date = Time.now()

@@ -192,6 +192,10 @@
       %h3.section-header
         Credit Card Information  
       = f.hidden_field :stripe_card_token   
+      .append-bottom-1  
+        #stripe_error
+          %noscript
+            Javascript is not enabled and is required for this form.  First enable it in your web browser settings.   
       -if !@credit_card.nil?
         #existingCard
           .control-group                
@@ -206,11 +210,7 @@
               .append-bottom-1
                 .span-7
                   = link_to 'Enter a new credit card','#', :id=>'change_credit_card_link'   
-      #newCard{:style=>"display:#{(@credit_card.nil? && 'block') || 'none'};"}
-        .append-bottom-1  
-          #stripe_error
-            %noscript
-              Javascript is not enabled and is required for this form.  First enable it in your web browser settings.                
+      #newCard{:style=>"display:#{(@credit_card.nil? && 'block') || 'none'};"}      
         .append-bottom-1
           .span-25
             /
