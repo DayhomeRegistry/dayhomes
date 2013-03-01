@@ -106,4 +106,13 @@
     errors.add :base, "There was a problem with removing your credit card: #{e.message}"
     false
   end
+  
+  def buy_features(number)
+    if (self.stripe_customer_token.nil?)
+      self.errors.add :base, "Hmmm...looks like you'll need to update your credit card information before you do that."
+      return false
+    end
+    customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+    return true
+  end
 end

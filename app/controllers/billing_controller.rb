@@ -217,22 +217,24 @@ class BillingController < ApplicationController
   def add
     @organization = current_user.organization
     
-    saved = true
+    saved = @organization.buy_features(params[:number])
     error = ""
-    begin
-      Feature.transaction do
-        params[:number].to_i.times do |i|
-          feature = Feature.new()
-          feature.organization = @organization
-          saved = saved & feature.save
+    if(saved)
+      begin
+        Feature.transaction do
+          params[:number].to_i.times do |i|
+            feature = Feature.new()
+            feature.organization = @organization
+            saved = saved & feature.save
 
+          end
         end
-      end
-    rescue Exception => e
-      if(!e.message.nil?)
-        error = e.message
-      else
-        error = e
+      rescue Exception => e
+        if(!e.message.nil?)
+          error = e.message
+        else
+          error = e
+        end
       end
     end
     
