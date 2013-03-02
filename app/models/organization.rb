@@ -39,7 +39,10 @@
 
     # how many to create
     # 5 - 1 - 4 
-    to_create = [(plan - started - freebees),0].max
+    to_create = 5-freebees
+    if plan > 0
+      to_create = [(plan - started - freebees),0].max
+    end
     #øraise to_create.to_json
 
     Feature.transaction do

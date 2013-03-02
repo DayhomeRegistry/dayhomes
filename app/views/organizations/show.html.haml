@@ -9,7 +9,8 @@
     num = isNaN(num) || num === '' || num === null ? 0.00 : num;
     return parseFloat(num).toFixed(2);
   }
-
+-content_for :footer_scripts do
+  = javascript_include_tag :organization
 .form-horizontal
   .form-header
     %h2 Billing Information
@@ -30,12 +31,13 @@
       Dayhomes
     .controls
       .progress-bar.pg-neutral
-        
         - percentFill = number_to_percentage([(@organization.day_homes.count*100.0/@plan.day_homes),100.0].min)
+        -if @plan.day_homes <=0
+          - percentFill = number_to_percentage([(@organization.day_homes.count % 50),100.0].min)
         .fill{:style => "width: #{percentFill};"}
       =@organization.day_homes.count 
       of
-      =@plan.day_homes
+      =@plan.day_homes>0 ? @plan.day_homes.to_s : "Unlimited"
   .control-group
     .control-label
       Extra Staff
@@ -151,7 +153,7 @@
     .control-label
       Payments      
     .controls
-      =@payments.to_json
+      /=@payments.to_json
       %table#payments
         %tbody
           -@payments.each_with_index do |p, index|

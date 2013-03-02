@@ -30,7 +30,8 @@
 //= require common
 //= require externals/modernizr
 //= require externals/html5support/jquery.html5support
-//= require organization
+//= require class
+
 function isPrintableKey(e){if(e.altKey||e.ctrlKey||e.metaKey)return!1;var t=e.which;return t<32||t==144?!1:!0}
 function integersonly(e,t){
   var n=jQuery.event.fix(t||window.event),r=n.which,i=String.fromCharCode(r);

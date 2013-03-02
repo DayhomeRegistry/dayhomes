@@ -219,6 +219,9 @@ class BillingController < ApplicationController
     
     saved = @organization.buy_features(params[:number])
     error = ""
+    if (@organization.errors.count>0)
+      error = @organization.errors.messages[:base].map(&:inspect).join(',')
+    end
     if(saved)
       begin
         Feature.transaction do
