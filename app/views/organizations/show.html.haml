@@ -9,6 +9,14 @@
     num = isNaN(num) || num === '' || num === null ? 0.00 : num;
     return parseFloat(num).toFixed(2);
   }
+  $(document).ready(function() {
+    $('#show_payments_link').on('click',function(event){
+      $('#payments').find('tr').filter(':hidden').show();
+      $(this).hide();
+      event.preventDefault();
+      return false;
+    });
+  });
 .form-horizontal
   .form-header
     %h2 Billing Information
@@ -178,12 +186,11 @@
               %td.span-11
                 :javascript
                   document.write('$'+formatCurrency(#{p.total/100.0}))
-          
-  .control-group.append-bottom-1
-    .controls
-      .example.first            
-        %a{:href => "#"} 
-          Show last 100 payments
+  -if @payments.count > 0
+    .control-group.append-bottom-1
+      .controls
+        .example.first       
+          = link_to 'Show last 100 payments', '#', :id=>'show_payments_link'     
   .control-group.section-start
     .controls
       .append-bottom-1

@@ -6,10 +6,14 @@ class OrganizationsController < ApplicationController
   def show
     @organization = Organization.find(params[:id])
     @plan = Plan.where(:plan=>@organization.plan).first
-    @payments = Stripe::Invoice.all(
-      :customer => @organization.stripe_customer_token,
-      :count => 100
-    )
+    @payments = {}
+    if (!@organization.stripe_customer_token.nil?)
+      @payments = Stripe::Invoice.all(
+        :customer => @organization.stripe_customer_token,
+        :count => 100
+      )
+    end
+
 
     respond_to do |format|
       format.html # show.html.haml
