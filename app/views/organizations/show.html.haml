@@ -9,8 +9,6 @@
     num = isNaN(num) || num === '' || num === null ? 0.00 : num;
     return parseFloat(num).toFixed(2);
   }
--content_for :footer_scripts do
-  = javascript_include_tag :organization
 .form-horizontal
   .form-header
     %h2 Billing Information
@@ -106,6 +104,22 @@
     .controls
       .append-bottom-1.first
         = @organization.phone_number.nil? ? "None":@organization.phone_number
+  .control-group
+    .control-label
+      Credit Card
+    -if !@organization.credit_card.nil?  
+      .controls
+        .append-bottom-1.first            
+          =label_tag :existing_card_number, "**** **** **** "+@organization.credit_card[:last4], :style=>"width:150px;"
+          .span-7
+            =label_tag :existing_card_exp, "Exp:"+@organization.credit_card[:month].to_s+"/"+@organization.credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"
+          .clear
+    -else
+      .controls
+        .append-bottom-1.first   
+          .span-7
+            .error.alert-error
+              Please update your credit card information!
   .control-group
     .controls
       .example.first

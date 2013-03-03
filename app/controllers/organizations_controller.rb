@@ -26,9 +26,10 @@ class OrganizationsController < ApplicationController
   def update
     #raise params.to_json
     @organization = Organization.find(params[:id])
+    @organization.assign_attributes(params[:organization])
 
     respond_to do |format|
-      if @organization.update_attributes(params[:organization])
+      if @organization.save_with_payment
         #raise @organization.errors.messages.inspect
         format.html { redirect_to organization_path(@organization), notice: 'Organization was successfully updated.' }
         format.json { head :no_content }

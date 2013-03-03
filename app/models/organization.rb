@@ -118,4 +118,17 @@
     customer = Stripe::Customer.retrieve(self.stripe_customer_token)
     return true
   end
+
+  def credit_card
+    if(!self.stripe_customer_token.nil?)
+      
+      customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+      #raise customer.to_json
+      credit_card = {
+        last4: customer.active_card.last4,
+        month: customer.active_card.exp_month,
+        year: customer.active_card.exp_year
+      }  
+    end
+  end
 end
