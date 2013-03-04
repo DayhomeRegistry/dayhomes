@@ -1,6 +1,26 @@
 :javascript
   $('[rel=tooltip]').tooltip({placement:'right'});
+  var dialog;
+  $(document).ready(function(){
+    dialog = $( "#contact-form" ).dialog({
+      autoOpen: false,
+      height: 890,
+      width: 825,
+      modal: true,
+      close: function() {
+        allFields.val( "" ).removeClass( "ui-state-error" );
+      }
+    });
 
+    $('#linkToContactForm').on('click',function(event){
+      dialog.dialog( "open" );
+    });
+    /*
+    $('#new_day_home_contact').bind('submit', function (event) {
+        self.handleForm( self, event );
+    });
+    */
+  });
 .row
   .span12
     %h2
@@ -32,25 +52,25 @@
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 .row
-  .span3.well.wellSize
-    .textSize20
+  .well.wellSize  
+    %div{:style=>"width:500px;float:right;margin: 0 0 0 1em;"}
+      - unless @day_home.photos.blank?
+        .slides
+          - @day_home.photos.each do |dh_photo| 
+            .slide
+              %img{:src=>"#{dh_photo.photo_url(:reg)}"}
+              /
+                - if dh_photo.caption.present?
+                  .slide-desc
+                    .slide-desc-inset
+                      %p
+                        = dh_photo.caption
+    %div
       :markdown
         #{@day_home.highlight}
-    .textSize20
+    %div
       :markdown
-        #{@day_home.blurb}    
-  .span4{:style=>"margin: 0 auto;"}
-    - unless @day_home.photos.blank?
-      .slides
-        - @day_home.photos.each do |dh_photo| 
-          .slide
-            %img{:src=>"#{dh_photo.photo_url(:reg)}"}
-            /
-              - if dh_photo.caption.present?
-                .slide-desc
-                  .slide-desc-inset
-                    %p
-                      = dh_photo.caption
+        #{@day_home.blurb}                          
 
 .row
   %br
@@ -98,7 +118,8 @@
 
 
     
-    #contact-form.modal
+    #contact-form
+      %p.validateTips 
       %h3
         Contact #{@day_home.name}
       = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home),:validate=>true do |cf|            
@@ -130,7 +151,7 @@
         .submit
           = cf.button :submit,  "Contact", :class => 'btn btn-primary span3'
   .span3
-    = link_to 'Contact Dayhome', '#contact-form', :rel => 'modal:open', :class => "callToActionButton gradient"
+    = link_to 'Contact Dayhome', '#contact-form', :class => "callToActionButton gradient", :id=>"linkToContactForm"
 .row
   %br
 
@@ -195,33 +216,6 @@
 
 
 
-#contact-form.modal
-  %h3 Contacting
-  %h5 #{@day_home.name}
-  = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home), :validate=>true do |cf|
-    = cf.input :name, :label=>"Your name"
-    = cf.input :email, :label=>"Your email"
-    = cf.input :phone, :label=>"Your phone"
-    = cf.input :subject, :label=>"Regarding", :input_html=>{:class=>"span6"}
-    :javascript
-      console.log('help me')
-    .remember
-      = cf.label "Message:"
-      %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
-    = cf.text_area :message, :cols => 90, :rows => 10
 
-    = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
-    .submit
-      = cf.submit "Contact", :class => 'btn btn-primary span3'
 
-:javascript
-  $.modal.defaults = {
-      overlay: "#000",        // Overlay color
-      opacity: 0.75,          // Overlay opacity
-      zIndex: 1,              // Overlay z-index.
-      escapeClose: true,      // Allows the user to close the modal by pressing `ESC`
-      clickClose: true,       // Allows the user to close the modal by clicking the overlay
-      closeText: 'Close',     // Text content for the close <a> tag.
-      showClose: true,         // Shows a (X) icon/link in the top-right corner
-      modalClass: "modal"     // CSS class added to the element being displayed in the modal.
-  };
+

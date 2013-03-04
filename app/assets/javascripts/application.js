@@ -42,3 +42,6 @@ function roundFloat2(e){
 }
 window.numbersonly2=integersonly;
 window.roundFloat2=roundFloat2;
+$(document).ready(function(){
+	$('.icon-info-sign').popover() ;
+});
