@@ -20,6 +20,9 @@
     self.features.where("day_home_id is null").count
 
   end
+  def unlimted_features?
+    Plan.find_by_plan(self.plan).free_features == -1
+  end
 
   def update_free_features
     #need to add enough "empty" features for the month

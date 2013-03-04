@@ -1,16 +1,4 @@
 
-function ensure_nonempty_field(e, t, n) {
-    return !e[t].disabled && (e[t].val() === "") ? (alert(n), e[t].focus(), !1) : !0
-}
-function build_validator(e) {
-    return function (t) {
-        for (var n in e) {
-            if (t[n] && !ensure_nonempty_field(t, n, e[n])) 
-                return !1;
-        }
-        return !0
-    }
-}
 
 Dayhome.upgradePage.Upgrade = Class.extend({
 	defaults: {

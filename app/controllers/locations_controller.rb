@@ -53,7 +53,15 @@ class LocationsController < ApplicationController
 	end
 
 	def new
+		#you can't create one if you're at your limit
 		@organization = Organization.find(params["organization_id"])
+	    plan = Plan.find_by_plan(@organization.plan)
+		#raise organization.users.count().to_s
+	    if(plan.locales <= @organization.locations.count())
+	      flash[:error]="Sorry, you've reached your locales limit."
+	      return redirect_to organization_path(@organization)
+	    end
+
 		@location = Location.new
 		#raise "NEW:" + @organization.to_json
 	end

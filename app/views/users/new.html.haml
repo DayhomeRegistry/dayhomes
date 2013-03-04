@@ -1,33 +1,12 @@
-.row.registrationStyle
-  .span4.well.form-horizontal
+%h2
+  New User
+-if @user.errors.any? 
+  .errorExplanation
     %h2
-      Sign up
-
-    Are you signing up to
-    %b
-      register
-    your dayhome?
-    You're in the
-    %b
-      wrong
-    place! Go
-    %b
-      = link_to 'here', [:new, :day_home_signup_request]
-    to register a dayhome without signing up!
-    = render 'form'
-
-  .offset1.span4
-    .callToAction.margintop50
-      .top
-      %h3 Dayhome owner?
-      %p.point
-        We believe all children should have the best care possible.
-      %p.point
-        We believe Dayhomes provide that level of care.
-      %p.point
-        But, caring for children can be a tough job.
-      %p
-        Let us make that job a little easier for you.
-      %p
-        = link_to 'Register!'.html_safe, [:new, :day_home_signup_request], :class => "callToActionButton", :id => "signUp"
-      .bottom
+      = pluralize(@user.errors.count, "error")
+      prohibited this user from being saved:
+    %ul  
+      - @user.errors.full_messages.each do |msg|
+        %li
+          = msg
+= render 'form'

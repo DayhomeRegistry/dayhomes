@@ -123,11 +123,19 @@
   %div
     .span-12.credit-container
       You can currently feature 
-      %span.feature-count>
-        =@organization.feature_count
+      -if !@organization.unlimted_features?
+        %span.feature-count>
+          =@organization.feature_count
+      -else
+        %span.feature-count>
+          33
+          %span.fraction
+            1/3 *
       dayhomes for a month.
     .span-12
       %strong= link_to 'Buy a credit', '#', :id=>"create-user",:class => 'add_multiples_link', 'data-group' => 'feature', 'data-attribute-key' => 'feature_attributes'
+    .span-12.parenthesis
+      * well, it's actually unlimited, but we had to write something
     .clear
   %h3
     Featured dayhomes
@@ -137,8 +145,6 @@
   .clear
     %br
   .span-12
-    /- features = Feature.joins(:organization).where("organizations.id = ?",@organization.id).where("end > now()").orderby("day_home_id,end")
-    /- features = Feature.where.select("min(created_at) as ordered_date, sum(price) as total_price").group("date(created_at)")
     - if (@features.count ==0)
       None
     - @features.each do |feature|                    
