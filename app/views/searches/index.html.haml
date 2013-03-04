@@ -28,6 +28,8 @@
     var idleSkipped = false;
     var currentInfo = null;
     $(document).ready(function(){
+      //Add the center of the search?
+
       $(document).on('click',".markerCallout",function(){          
           var slug = $(this).attr('id');
           for(i=0;i<Gmaps.map.markers.length;i++){          
@@ -38,11 +40,13 @@
             //});
             if (railsmarker.sidebar.toString().indexOf("/"+slug)>0) {              
               if(currentInfo != null){
+                currentInfo.serviceObject.setIcon("/assets/dayhome.png");
                 currentInfo['infowindow'].close();
               }
               currentInfo = railsmarker;
               try {
                 railsmarker['infowindow'].open(Gmaps.map.map,railsmarker.serviceObject);
+                railsmarker.serviceObject.setIcon("/assets/dayhome-red.png");
               } catch (err) {
                  //wish I knew how to tell someone
               }
@@ -63,6 +67,12 @@
         }
     }
     Gmaps.map.callback = function() {
+      Gmaps.map.markers.push(Gmaps.map.createMarker({
+        Lat: #{@search.center_latitude},
+        Lng: #{@search.center_longitude},
+        marker_picture: "",
+        rich_marker: null
+      }));
       google.maps.event.addListener(Gmaps.map.map,'idle', function(){ 
         if (isMapDragging) {
           idleSkipped=true;
