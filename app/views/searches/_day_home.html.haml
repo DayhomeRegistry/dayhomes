@@ -1,6 +1,7 @@
 %div.dayhome_listing  
   .name
-    %h4=link_to day_home.name,"#",:class=>"markerCallout",:id=>day_home.slug    
+    %h4= link_to day_home.name, day_home_path(day_home)
+    =link_to "Show on map","#",:class=>"markerCallout",:id=>day_home.slug    
   .row
     .span2
       .bubble_pic

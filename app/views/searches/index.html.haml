@@ -24,7 +24,7 @@
     var idleSkipped = false;
     var currentInfo = null;
     $(document).ready(function(){
-      $(".markerCallout").live('click',function(){          
+      $(document).on('click',".markerCallout",function(){          
           var slug = $(this).attr('id');
           for(i=0;i<Gmaps.map.markers.length;i++){          
             var railsmarker = Gmaps.map.markers[i];
@@ -43,7 +43,10 @@
                  //wish I knew how to tell someone
               }
             }
-          }
+          };
+          $.scrollTo($('.map_container').position().top - ($(window).height() / 2),
+            { speed: 'slow'}
+          );
           return false;
       });
     });
