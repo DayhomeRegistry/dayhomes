@@ -2,16 +2,20 @@
   .span3
     =render 'form'
   .span7    
-    =gmaps(:map_options => { :center_latitude => @search.center_latitude,
-                             :center_longitude => @search.center_longitude,
-                             :zoom => @search.zoom,
-                             :auto_adjust =>  @search.auto_adjust,
-                             :auto_zoom => false,
-                             :provider_key => gmaps_api_key,
-                             :list_container => "markers_list" },
-           :markers     => { :data => gmap_prepare_dayhomes(@day_homes), :options => { :do_clustering => true,
-                                                                                       :clusterer_maxZoom => 6,
-                                                                                       }})
+    =gmaps( |
+      :map_options => { |
+        :center_latitude => @search.center_latitude, |
+        :center_longitude => @search.center_longitude, |
+        :zoom => @search.zoom, |
+        :auto_adjust =>  @search.auto_adjust, |
+        :auto_zoom => false, |
+        :provider_key => gmaps_api_key, |
+        :list_container => "markers_list" }, |
+        :markers => { |
+          :data => gmap_prepare_dayhomes(@day_homes), |
+          :options => { |
+            :do_clustering => true, |
+            :clusterer_maxZoom => 6}})
     %h3
       Results
     <ul id="markers_list">  </ul>
