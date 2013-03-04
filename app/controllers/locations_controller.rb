@@ -58,7 +58,7 @@ class LocationsController < ApplicationController
 	    plan = Plan.find_by_plan(@organization.plan)
 		#raise organization.users.count().to_s
 	    if(plan.locales <= @organization.locations.count())
-	      flash[:error]="Sorry, you've reached your locales limit."
+	      flash[:error]="Sorry, you've reached your locales limit. Adding a locale for a fee is coming soon."
 	      return redirect_to organization_path(@organization)
 	    end
 

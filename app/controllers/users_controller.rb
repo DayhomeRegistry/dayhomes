@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     plan = Plan.find_by_plan(organization.plan)
 #raise organization.users.count().to_s
     if(plan.staff <= organization.users.count())
-      flash[:error]="Sorry, you've reached your staff limit."
+      flash[:error]="Sorry, you've reached your staff limit. Adding a user for a fee is coming soon."
       return redirect_to :action=>:index
     end
 

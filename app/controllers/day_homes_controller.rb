@@ -136,7 +136,17 @@ class DayHomesController < ApplicationController
   def followup  
     @day_home = DayHome.find(params[:id])
   end  
-    def new
+  def new
+    #you can't create one if you're at your limit
+    organization = current_user.organization
+    plan = Plan.find_by_plan(organization.plan)
+    
+
+    if(plan.day_homes > 0 && plan.day_homes <= organization.day_homes.count())
+      flash[:error]="Sorry, you've reached your day home limit."
+      return redirect_to :action=>:index
+    end
+
     @day_home = DayHome.new
     @day_home.photos.build
   end
