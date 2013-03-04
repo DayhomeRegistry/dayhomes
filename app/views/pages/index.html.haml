@@ -17,7 +17,8 @@
     %h1
       Do you need a dayhome?
     %div
-      %img(src='http://dl.dropbox.com/u/76665191/map.jpg')
+      %a{:href=>searches_path()}
+        %img(src='http://dl.dropbox.com/u/76665191/map.jpg')
     %div  
       Use our
       =link_to 'advanced search',searches_path
