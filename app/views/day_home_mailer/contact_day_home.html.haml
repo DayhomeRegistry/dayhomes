@@ -1,11 +1,13 @@
 %h2
   Someone on Dayhome Registry has a question!
-%p
-  Someone at has filled out the contact form on 
-  = link_to "#{@dayhome.name}", root_url+"#{@dayhome.slug}"
-  Dayhome Registry.  You can see their question below:
+%div{:style=>"width:540px;"}
+  %p
+    Someone at has filled out the contact form on 
+    = link_to "#{@dayhome.name}", root_url+"#{@dayhome.slug}"
+    Dayhome Registry.  You can see their question below:
+.clear
 .row
-  .span4.well
+  .span3.well
     %p
       %b 
         Name:
@@ -20,7 +22,7 @@
       %b 
         Phone:
       = "#{@contact.phone}"
-  .span4.well
+  .span3.well
     %p
       %b 
         Child's Name:
@@ -39,12 +41,16 @@
       %b 
         Address:
       = "#{@contact.home_address}"  
-%p
-  %b 
-    Subject:
-  = "#{@contact.subject}"
-
-%p
-  %b 
-    Message:
-  = "#{@contact.message}"
+.clear
+.row
+  .span6     
+    %p
+      %b 
+        Subject:
+      = "#{@contact.subject}"
+.row
+  .span6  
+    %p
+      %b 
+        Message:
+      = "#{@contact.message}"

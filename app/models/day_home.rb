@@ -29,11 +29,11 @@ class DayHome < ActiveRecord::Base
   has_many :events
 
   # These are going to get removed
-    has_many :user_day_homes, :dependent => :destroy
-    has_many :users, :through => :user_day_homes
+  #  has_many :user_day_homes, :dependent => :destroy
+  #  has_many :users, :through => :user_day_homes
     
-    has_many :day_home_agencies, :dependent => :destroy
-    has_many :agencies, :through => :day_home_agencies
+  #  has_many :day_home_agencies, :dependent => :destroy
+  #  has_many :agencies, :through => :day_home_agencies
   # to here
 
   belongs_to :location
@@ -145,5 +145,10 @@ class DayHome < ActiveRecord::Base
     
     return dayhome
   end
-  
+  def admin_users
+    self.organization.users.where("location_id is null")
+  end
+  def locale_users
+    self.organization.users.where("location_id = ?",self.location_id)
+  end
 end

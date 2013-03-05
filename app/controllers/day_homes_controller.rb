@@ -153,6 +153,7 @@ class DayHomesController < ApplicationController
 
   def create
     @day_home = DayHome.new(params[:day_home])
+    @day_home.approved = true
     
     if @day_home.save
       redirect_to admin_day_homes_path

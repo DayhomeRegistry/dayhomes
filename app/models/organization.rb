@@ -24,6 +24,7 @@
     Plan.find_by_plan(self.plan).free_features == -1
   end
 
+
   def update_free_features
     #need to add enough "empty" features for the month
     # how many freebees based on plan
@@ -43,7 +44,7 @@
     # how many to create
     # 5 - 1 - 4 
     to_create = 5-freebees
-    if plan > 0
+    if plan >= 0
       to_create = [(plan - started - freebees),0].max
     end
     #øraise to_create.to_json
@@ -63,7 +64,8 @@
       #raise stripe_card_token.blank?.to_s
       if !stripe_card_token.blank?
         if self.stripe_customer_token.nil?
-          customer = Stripe::Customer.create(email: billing_email, description: name, plan: plan, card: stripe_card_token)
+          trial_end = 1.month.since.beginning_of_month.to_i
+          customer = Stripe::Customer.create(email: billing_email, description: name, plan: plan, card: stripe_card_token, trial_end: trial_end)
           #raise customer.to_json
           self.stripe_customer_token = customer.id
         else
@@ -118,8 +120,37 @@
       self.errors.add :base, "Hmmm...looks like you'll need to update your credit card information before you do that."
       return false
     end
-    customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+    price = 0
+    case
+    when (number.to_i >= 100)
+      price = 1.00
+    when (number.to_i >= 12)
+      price = 2.50
+    else
+      price = 5.00
+    end
+    
+    #integer in cents
+    amount = (number.to_i * price * 100).to_i
+    #self.errors.add :base, amount.to_s
+    #return false
+    Stripe::InvoiceItem.create(
+        :customer => self.stripe_customer_token,
+        :amount => amount,
+        :currency => "cad",
+        :description => "#{number} feature #{number.to_i>1 ? 'credits' : 'credit'}"
+    )
     return true
+  rescue Stripe::InvalidRequestError => e
+    #raise e.to_json
+    logger.error "Stripe error while buying features: #{e.message}"
+    self.errors.add :base, "There was a problem with your credit card: #{e.message}"
+    false
+  rescue Stripe::CardError => e
+    #raise e.to_json
+    logger.error "Stripe error while buying features: #{e.message}"
+    self.errors.add :base, e.message
+    false  
   end
 
   def credit_card

@@ -314,7 +314,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
             };
 
         // if doing a downgrade, don't validate these fields as they are not required
-        if ($('#newCard').is(':hidden')) {
+        if ($('#credit-card-section').is(':hidden') || $('#newCard').is(':hidden')) {
             delete validators.CREDIT_CARD_NUMBER;
             delete validators.CVV;
         }
@@ -349,7 +349,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         // Disable the button.
         self.payNowButton.val('Loading…').prop('disabled', true);
 
-        if (!$('#newCard').is(':hidden')) {
+        if (!$('#credit-card-section').is(':hidden') && ($('#newCard').length>0 && !$('#newCard').is(':hidden'))) {
           var card = {
               number: $('#card_number').val(),
               cvc: $('#card_code').val(),
