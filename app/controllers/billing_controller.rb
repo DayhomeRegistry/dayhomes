@@ -50,6 +50,8 @@ class BillingController < ApplicationController
         # Need to set the ack date
         user.privacy_effective_date = Time.now()
         if(!user.save)
+          #email them their password set instructions
+          UserMailer.new_user_password_instructions(user).deliver  
           handle_user_error(user)
         end
 

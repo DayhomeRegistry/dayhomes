@@ -64,7 +64,13 @@
       #raise stripe_card_token.blank?.to_s
       if !stripe_card_token.blank?
         if self.stripe_customer_token.nil?
-          trial_end = 1.month.since.beginning_of_month.to_i
+          trial_end = Time.now.utc.to_i
+          month = Time.now().month
+          #today = Time.now().day
+          today = 17
+          if (Time.days_in_month(month)/2<today)
+            trial_end = 1.month.since.beginning_of_month.to_i
+          end
           customer = Stripe::Customer.create(email: billing_email, description: name, plan: plan, card: stripe_card_token, trial_end: trial_end)
           #raise customer.to_json
           self.stripe_customer_token = customer.id
