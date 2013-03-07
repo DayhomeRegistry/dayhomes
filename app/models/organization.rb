@@ -66,8 +66,7 @@
         if self.stripe_customer_token.nil?
           trial_end = Time.now.utc.to_i
           month = Time.now().month
-          #today = Time.now().day
-          today = 17
+          today = Time.now().day
           if (Time.days_in_month(month)/2<today)
             trial_end = 1.month.since.beginning_of_month.to_i
           end

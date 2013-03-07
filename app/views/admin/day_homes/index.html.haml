@@ -57,8 +57,6 @@
         %th
           = sortable "approved","Approved?"
         %th
-          Owners
-        %th
           Actions
     %tbody
       - @day_homes.each do |day_home|
@@ -79,11 +77,6 @@
             = yes_no(day_home.featured)
           %td
             = yes_no(day_home.approved)			
-          %td
-            - if day_home.users.any?
-              = day_home.users.map(&:full_name).join(', ')
-            - else
-              None
           %td
             = link_to 'Edit', [:edit, :admin, day_home]
             |

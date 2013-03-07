@@ -1,9 +1,10 @@
 
 class DayHome < ActiveRecord::Base
 
-  acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
+  acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => false,
                     :check_process => :prevent_geocoding, :address => :address,
                     :msg => 'Cannot find a location matching that query.'
+                    
 
   # scopes
   scope :with_availability_uniq, lambda { |default_availability_types|
@@ -45,7 +46,7 @@ class DayHome < ActiveRecord::Base
   validates :name,  :postal_code, :slug, :email, :highlight, :presence => true
   validates :highlight,:length => { :maximum => 200 }
 
-  validates_associated :photos
+  #validates_associated :photos
   validates_uniqueness_of :slug #, :email
   validates_format_of :slug, :with => /[a-z0-9]+/
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
@@ -103,9 +104,10 @@ class DayHome < ActiveRecord::Base
   # this method is called when updating the lat long (this is what's fed to google maps)
   def address
     lstreet = "#{street1}#{street2}".blank? ? "" : "#{street1}#{street2},"
-	lcity = "#{city}".blank? ? "" : " #{city},"
+  	lcity = "#{city}".blank? ? "" : " #{city},"
 	
     lstreet+lcity+ ("#{province}".blank? ? "":" #{province},") + " #{postal_code}"
+    #{}"#{street1}#{street2}, #{city}, #{province}, #{postal_code}"
   end
   
   def to_param
