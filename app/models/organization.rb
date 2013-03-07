@@ -64,12 +64,15 @@
       #raise stripe_card_token.blank?.to_s
       if !stripe_card_token.blank?
         if self.stripe_customer_token.nil?
-          trial_end = Time.now.utc.to_i
+          trial_end = "now"
+          #raise trial_end.to_s #1362685090
+          #raise 1.month.since.beginning_of_month.utc.to_i.to_s #1364774400
           month = Time.now().month
           today = Time.now().day
           if (Time.days_in_month(month)/2<today)
-            trial_end = 1.month.since.beginning_of_month.to_i
+            trial_end = 1.month.since.beginning_of_month.utc.to_i
           end
+          #raise trial_end.to_s #1362685060
           customer = Stripe::Customer.create(email: billing_email, description: name, plan: plan, card: stripe_card_token, trial_end: trial_end)
           #raise customer.to_json
           self.stripe_customer_token = customer.id
@@ -92,10 +95,18 @@
         elsif !self.stripe_customer_token.nil?
         #update the subscription to the new plan  
           customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-
-          customer.update_subscription(:plan => self.plan, :prorate=>true)
+          if(customer.subscription.plan.id != self.plan)
+            customer.update_subscription(:plan => self.plan, :prorate=>true)
+          else
+            #Check the name
+            if(customer.description != self.name)
+              customer.description = self.name
+              customer.save
+            end
+            customer.save
+          end
         end 
-      end
+      end      
       save!
     end
   rescue Stripe::InvalidRequestError => e

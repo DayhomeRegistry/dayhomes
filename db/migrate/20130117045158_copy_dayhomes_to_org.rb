@@ -10,14 +10,14 @@ class CopyDayhomesToOrg < ActiveRecord::Migration
   	remove_column :users,:organization_id
   end
   def up
-  	#drop_table :organization_users #permanent
- 	#add_column :users, :organization_id, :integer
+  	drop_table :organization_users #permanent
+ 	add_column :users, :organization_id, :integer
  	
 
 	#User.find(:all, :include => "user_day_homes", :conditions => ["user_day_homes.day_home_id IS NOT NULL"]).each do |user|
 	#User.includes(:user_day_homes).where("user_day_homes.user_id is not null").each do |user|
 	User.where("id in (select user_id from user_day_homes)").each do |user|
-		org = Organization.new(
+		org = Organization.create!(
 			:name => user.day_homes.first.name, 
 			:city => user.day_homes.first.city,
 			:province => user.day_homes.first.province,
@@ -27,9 +27,15 @@ class CopyDayhomesToOrg < ActiveRecord::Migration
 			:phone_number => user.day_homes.first.phone_number,
 			:stripe_customer_token => user.stripe_customer_token 
 		)
-		org.save
+		#say(org.to_json)
 		user.organization = org
-		user.save
+		if(!org.save)
+			raise org.errors.full_messages.join(',')
+		end
+		if(!user.save)
+			raise user.errors.full_messages.join(',')
+		end		
+		say(user.organization.to_json);
 		l = Location.new(
     		:name => org.city
     	)

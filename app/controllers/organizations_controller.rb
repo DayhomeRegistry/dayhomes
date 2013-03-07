@@ -38,6 +38,7 @@ class OrganizationsController < ApplicationController
         format.html { redirect_to organization_path(@organization), notice: 'Organization was successfully updated.' }
         format.json { head :no_content }
       else
+        flash.now[:error] = @organization.errors.full_messages.join(',')
         format.html { render action: "edit" }
         format.json { render json: @organization.errors, status: :unprocessable_entity }
       end

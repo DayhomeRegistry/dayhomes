@@ -39,10 +39,17 @@ Dayhome.editPage.Organization = Class.extend({
             curdate = new Date(curyear, curmonth, 1).getTime(),
             expdate = new Date(expyear, expmonth, 1).getTime(),
 
-            validators = {
-                "CREDIT_CARD_NUMBER": "You must enter your credit card number.",
-                "CVV":"You must enter your Card Verification Value."
-            };
+        validators = {
+            "CREDIT_CARD_NUMBER": "You must enter your credit card number.",
+            "CVV":"You must enter your Card Verification Value."
+        };
+
+        // if doing a downgrade, don't validate these fields as they are not required
+        if ($('#newCard').is(':hidden')) {
+            delete validators.CREDIT_CARD_NUMBER;
+            delete validators.CVV;
+        }
+            
         if (!build_validator(validators)(this)) {
             event.preventDefault();
             return false;

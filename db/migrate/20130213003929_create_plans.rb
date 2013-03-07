@@ -15,5 +15,6 @@ class CreatePlans < ActiveRecord::Migration
 
       t.timestamps
     end
+
   end
 end

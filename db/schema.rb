@@ -190,13 +190,6 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
     t.datetime "updated_at",      :null => false
   end
 
-  create_table "organization_users", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "organization_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
   create_table "organizations", :force => true do |t|
     t.string   "name"
     t.string   "city"
@@ -276,7 +269,7 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
   add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
 
   create_table "upgrades", :force => true do |t|
-    t.datetime "effective_date",  :default => '2013-03-07 04:59:03'
+    t.datetime "effective_date",  :default => '2013-03-07 19:31:23'
     t.datetime "created_at",                                         :null => false
     t.datetime "updated_at",                                         :null => false
     t.integer  "old_plan_id"
@@ -328,6 +321,7 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
     t.date     "privacy_effective_date"
     t.string   "stripe_customer_token"
     t.string   "plan",                             :default => "baby"
+    t.integer  "organization_id"
     t.integer  "location_id"
   end
 
