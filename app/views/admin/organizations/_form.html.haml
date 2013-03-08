@@ -1,0 +1,87 @@
+﻿-content_for :footer_scripts do
+  = javascript_include_tag :organization
+  
+
+= simple_form_for [:admin, @organization], :html => {:multipart => true} do |f|
+  
+  = f.input :name 
+  = f.input :phone_number
+  = f.input :street1 
+  = f.input :street2
+  = f.input :city
+  = f.input :province
+  = f.input :postal_code
+  = f.hidden_field :stripe_card_token
+  -if !@organization.credit_card.nil?
+    #existingCard
+      .control-group                
+        .control-label
+          Credit Card
+        .controls  
+          .append-bottom-1.first            
+            =label_tag :existing_card_number, "**** **** **** "+@organization.credit_card[:last4], :style=>"width:150px;"
+            .span-7
+              =label_tag :existing_card_exp, "Exp:"+@organization.credit_card[:month].to_s+"/"+@organization.credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"
+            .clear
+          .append-bottom-1
+            .span-7
+              = link_to 'Enter a new credit card','#', :id=>'change_credit_card_link'   
+  #newCard{:style=>"display:#{(@organization.credit_card.nil? && 'block') || 'none'};"}      
+    .control-group          
+      =label_tag :card_number, "Card Number", :class=>"control-label"            
+      .controls  
+        .span-11
+          =text_field_tag :card_number, '', :name=>nil, :class=>"input-large",:onkeypress => "return numbersonly2(this, event)"
+          .example
+            Number
+        .span-4
+          =text_field_tag :card_code, nil, name:nil, :class=>"input-mini"
+          .example
+            CVV
+            <i class="icon-info-sign" data-title="What's a CVV?" data-content='The CVV Number ("Card Verification Value") on your credit card or debit card is a 3 digit number on VISA®, MasterCard® and Discover® branded credit and debit cards. On your American Express® branded credit or debit card it is a 4 digit numeric code.'></i>      
+    .control-group
+      =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
+      .controls
+        .span-4
+          =select_month nil, {add_month_numbers: true},{:name=>nil,:id=>"card_month",:style=>"width:100px;"}
+          .example.first
+            Month
+        .span-4
+          =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year",:style=>"width:100px;"}
+          .example
+            Year        
+        - if !@organization.credit_card.nil?
+          .control-group
+            .controls
+              .span-7
+                = link_to 'Keep card on record', '#', :id=>'cancel_credit_card_link'
+  
+
+        
+  .clear  
+  .form-actions
+    %span.button.large.green.single
+      %input#submit-button{:name => "submitButton", :type => "submit", :value => "Save Changes"}
+    %span{:style=>"margin: 0 auto;display: block;width: 228px;text-align: center;"}
+      = link_to 'Cancel', [:admin, :organizations]
+:javascript
+
+  var Dayhome = Dayhome || {};
+
+  Dayhome.editPage = {
+    
+  };
+  $('#change_credit_card_link').click(function(){
+    $('#existingCard').hide();
+    $('#newCard').show();
+    return false;
+  });
+  $('#cancel_credit_card_link').click(function(){
+    $('#newCard').hide();
+    $('#existingCard').show();
+    $('#card_number').val("")
+    return false;
+  });
+
+  Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
+      

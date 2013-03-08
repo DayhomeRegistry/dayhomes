@@ -1,0 +1,63 @@
+:javascript
+  $(function(){
+
+    $("#adminSearchBtn").click(function(event){
+      $("#searchForm").submit();
+      
+      event.preventDefault(); // Prevent link from following its href
+    });
+  });
+
+%p
+  = link_to 'Create organization', [:new, :admin, :organization], :class => :btn
+  = link_to 'Approve','#',:id => 'approveBtn',:class => :btn
+  = link_to 'Feature','#',:id => 'featureBtn',:class => :btn
+=form_tag({:controller => "organizations", :action => "index", :method=>"get"}, :id => :searchForm) do 
+  %div.input-prepend.pull-right
+    %span.add-on
+      %i.icon-search
+    = text_field_tag :query, nil, :placeholder => "Search", :value=> @query
+    = link_to 'Go','#',:id => 'adminSearchBtn',:class => :btn
+- if @organizations.blank?
+  %p    
+    Huh.  There don't seem to be any Organizations like that.
+- else
+  %table.table-striped.table{:cellpadding => '5'}
+    %thead
+      %tr
+        %th
+          = sortable "name","Name"
+        %th
+          Address
+        %th
+          Phone
+        %th
+          =sortable "plan","Plan"
+        %th
+          Dayhomes
+        %th
+          Locales
+        %th
+          Actions
+    %tbody
+      - @organizations.each do |organization|
+        %tr
+          %td
+            = link_to organization.name, admin_organization_path(organization)
+          %td
+            = organization.address
+          %td
+            =organization.phone_number
+          %td
+            = organization.plan_name
+          %td
+            = organization.day_homes.count
+          %td
+            = organization.locations.count
+          %td
+            = link_to 'Details', [:admin, organization]
+            = link_to 'Edit', [:edit, :admin, organization]
+            = link_to 'Delete', [:admin, organization], :method => :delete, :confirm => "Are you sure?"    
+  = paginate @organizations, :window => 1,:left => 3,:right => 3
+:plain
+  </form>    

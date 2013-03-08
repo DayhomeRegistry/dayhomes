@@ -60,7 +60,7 @@ class DayHome < ActiveRecord::Base
     if (!self.id_changed?)
       if (self.approved_changed? && self.approved == true)
         DayHomeMailer.day_home_approval_confirmation(self).deliver
-        self.users.find_each do |user|        
+        self.users.each do |user|        
           if (!user.last_login_ip?)  
             UserMailer.new_user_password_reminder(user).deliver
           end
@@ -146,6 +146,9 @@ class DayHome < ActiveRecord::Base
     #dayhome.plan = signup.plan
     
     return dayhome
+  end
+  def users
+    admin_users+locale_users
   end
   def admin_users
     self.organization.users.where("location_id is null")

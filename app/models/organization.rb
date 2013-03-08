@@ -13,7 +13,16 @@
   attr_accessor :stripe_card_token
   
   before_destroy :destroy_customer
-  
+  def address
+    lstreet = "#{street1}#{street2}".blank? ? "" : "#{street1}#{street2},"
+  	lcity = "#{city}".blank? ? "" : " #{city},"
+	
+    lstreet+lcity+ ("#{province}".blank? ? "":" #{province},") + " #{postal_code}"
+    #{}"#{street1}#{street2}, #{city}, #{province}, #{postal_code}"
+  end
+  def plan_name
+    Plan.find_by_plan(self.plan).name
+  end
   def feature_count
     update_free_features()
 
@@ -23,7 +32,16 @@
   def unlimted_features?
     Plan.find_by_plan(self.plan).free_features == -1
   end
-
+  def payments
+    payments = {}
+    if (!self.stripe_customer_token.nil?)
+      payments = Stripe::Invoice.all(
+        :customer => self.stripe_customer_token,
+        :count => 100
+      )
+    end
+    payments
+  end
 
   def update_free_features
     #need to add enough "empty" features for the month
@@ -65,16 +83,12 @@
       if !stripe_card_token.blank?
         if self.stripe_customer_token.nil?
           trial_end = "now"
-          #raise trial_end.to_s #1362685090
-          #raise 1.month.since.beginning_of_month.utc.to_i.to_s #1364774400
           month = Time.now().month
           today = Time.now().day
           if (Time.days_in_month(month)/2<today)
             trial_end = 1.month.since.beginning_of_month.utc.to_i
           end
-          #raise trial_end.to_s #1362685060
-          customer = Stripe::Customer.create(email: billing_email, description: name, plan: plan, card: stripe_card_token, trial_end: trial_end)
-          #raise customer.to_json
+          customer = Stripe::Customer.create(email: billing_email, description: name, plan: plan, card: stripe_card_token, trial_end: trial_end)          
           self.stripe_customer_token = customer.id
         else
           customer = Stripe::Customer.retrieve(self.stripe_customer_token)

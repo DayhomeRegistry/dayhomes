@@ -269,7 +269,7 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
   add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
 
   create_table "upgrades", :force => true do |t|
-    t.datetime "effective_date",  :default => '2013-03-07 19:31:23'
+    t.datetime "effective_date",  :default => '2013-03-08 19:15:31'
     t.datetime "created_at",                                         :null => false
     t.datetime "updated_at",                                         :null => false
     t.integer  "old_plan_id"

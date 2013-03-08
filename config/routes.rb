@@ -12,10 +12,6 @@ Dayhomes::Application.routes.draw do
   put "billing/add"
   put "billing/activate"
 
-  namespace :admin do 
-    resources :agencies 
-  end
-
   resources :organizations do
     resources :locations
   end
@@ -71,13 +67,17 @@ Dayhomes::Application.routes.draw do
   resources :password_resets
 
   match 'email_dayhome' => 'day_homes#email_dayhome', :via => :post
-
+  namespace :admin do
+    resources :organizations
+    match 'organizations/mass_update' => 'organizations#mass_update'    
+  end
   namespace :admin do
     root :to => 'day_homes#index'
     
     resources :day_homes
     resources :users
     resources :user_sessions
+    
     
     match 'day_homes/mass_update' => 'day_homes#mass_update'    
     match 'login' => 'user_sessions#new', :as => :login

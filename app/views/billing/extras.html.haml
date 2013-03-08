@@ -134,8 +134,9 @@
       dayhomes for a month.
     .span-12
       %strong= link_to 'Buy a credit', '#', :id=>"create-user",:class => 'add_multiples_link', 'data-group' => 'feature', 'data-attribute-key' => 'feature_attributes'
-    .span-12.parenthesis
-      * well, it's actually unlimited, but we had to write something
+    -if @organization.unlimted_features?
+      .span-12.parenthesis
+        * well, it's actually unlimited, but we had to write something
     .clear
   %h3
     Featured dayhomes
