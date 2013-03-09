@@ -9,30 +9,30 @@ class UsersController < ApplicationController
   end
 
   def new
-    #you can't create one if you're at your limit
-    organization = current_user.organization
-    plan = Plan.find_by_plan(organization.plan)
-#raise organization.users.count().to_s
-    if(plan.staff <= organization.users.count())
-      flash[:error]="Sorry, you've reached your staff limit. Adding a user for a fee is coming soon."
-      return redirect_to :action=>:index
-    end
-
-
     @user = User.new
-    @user.organization = organization
-    if(current_user.organization_admin?)
-      return render :action=>:new
+    if (!current_user.nil?)
+      #you can't create one if you're at your limit
+      organization = current_user.organization
+      plan = Plan.find_by_plan(organization.plan)
+  #raise organization.users.count().to_s
+      if(plan.staff <= organization.users.count())
+        flash[:error]="Sorry, you've reached your staff limit. Adding a user for a fee is coming soon."
+        return redirect_to :action=>:index
+      end
+
+
+      @user.organization = organization
     end
   end
 
   def create
-    organization = current_user.organization
     @user = User.new(params[:user])
-    @user.organization = organization
-
+    if(!current_user.nil?)
+      organization = current_user.organization
+      @user.organization = organization
+    end
     if @user.save
-      if(current_user.organization_admin?)
+      if(!current_user.nil? && current_user.organization_admin?)
         current_user.organization.users<<@user;
         current_user.organization.save
         redirect_to users_path
@@ -108,6 +108,7 @@ class UsersController < ApplicationController
   end  
 
   def organization_user
-    return current_user.organization_admin?
+
+    return !current_user.nil? && current_user.organization_admin?
   end
 end

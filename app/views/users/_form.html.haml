@@ -14,8 +14,9 @@
   = f.label :password_confirmation, 'Confirm Password'
   = f.password_field :password_confirmation
 
-  = f.label :location
-  = collection_select(:user, :location_id, Location.where("organization_id = "+ @user.organization.id.to_s), :id, :name,:include_blank=>true)
+  -if (!current_user.nil?)
+    = f.label :location
+    = collection_select(:user, :location_id, Location.where("organization_id = "+ @user.organization.id.to_s), :id, :name,:include_blank=>true)
 
   %br
   %br

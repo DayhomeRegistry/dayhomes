@@ -1,3 +1,4 @@
+
 %p
   = link_to 'Create User', [:new, :admin, :user], :class => :btn
 
@@ -15,11 +16,9 @@
         %th
           Is Admin?
         %th
-          = sortable "plan","Plan"
+          Organization
         %th
-          Dayhomes?
-        %th
-          Agencies?
+          Locale
         %th
           Created
         %th
@@ -34,17 +33,9 @@
           %td
             = yes_no(user.admin?)
           %td
-            = user.plan	            
+            = user.organization.nil? ? "" : user.organization.name            
           %td
-            - if user.organization_admin?
-              = user.day_homes.map(&:name).join(', ')
-            - else
-              None
-          %td
-            - if user.agencies.any?
-              = user.agencies.map(&:name).join(', ')
-            - else
-              None
+            = user.location.nil? ? "" : user.location.name
           %td
             = user.created_at.to_s(:descriptive)
           %td
