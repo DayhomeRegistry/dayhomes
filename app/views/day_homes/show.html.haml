@@ -55,9 +55,9 @@
   .well.wellSize  
     %div{:style=>"width:500px;float:right;margin: 0 0 0 1em;"}
       - unless @day_home.photos.blank?
-        .slides
+        .slides-sm
           - @day_home.photos.each do |dh_photo| 
-            .slide
+            .slide-sm
               %img{:src=>"#{dh_photo.photo_url(:reg)}"}
               /
                 - if dh_photo.caption.present?

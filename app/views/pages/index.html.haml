@@ -4,7 +4,7 @@
       - @featured_day_homes.each do |featured_day_home|
         .slide
           %a{:href => day_home_slug_path(featured_day_home.slug)}
-            %img{:src=>"#{featured_day_home.photos.first.photo_url(:reg)}"}
+            %img{:src=>"#{featured_day_home.photos.first.photo_url(:reg)}", :width=>"700px", :height=>"400px;"}
             .slide-desc
               .slide-desc-inset
                 %h4

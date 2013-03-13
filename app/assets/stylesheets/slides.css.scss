@@ -1,14 +1,28 @@
 .slides {
-	width: 540px;
-	height: 340px;
+	width: 710px;
+	height: 400px;
+	padding: 0;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.slides-sm {
+	width: 500px;
+	height: 315px;
 	padding: 0;
 	margin: 0 auto;
 	overflow: hidden;
 }
 
 .slide {
-	width: 540px;
-	height: 340px;
+	width: 710px;
+	height: 400px;
+	position: relative;
+	cursor: pointer;
+	zoom: 1;
+}
+.slide-sm {
+	width: 500px;
+	height: 315px;
 	position: relative;
 	cursor: pointer;
 	zoom: 1;
