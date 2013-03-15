@@ -16,7 +16,7 @@
 
   -if (!current_user.nil?)
     = f.label :location
-    = collection_select(:user, :location_id, Location.where("organization_id = "+ @user.organization.id.to_s), :id, :name,:include_blank=>true)
+    = collection_select(:user, :location_id, Location.where("organization_id = "+ current_user.organization.id.to_s), :id, :name,:include_blank=>true)
 
   %br
   %br
