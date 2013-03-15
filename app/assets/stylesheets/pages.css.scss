@@ -66,14 +66,14 @@ header > div {
 #logo {
   height: 175px;  
   float: left;
-  background: #ffffff  url('http://staging.dayhomeregistry.com/assets/logo-17985638cc586b2f803a229715586919.png') no-repeat;
+  background: #ffffff  asset-url("logo.png", image) no-repeat;
   
   width: 205px;
   margin-top: 4em;
 }
 #nav {
   font-size: 18px;
-  background: #fff url('http://dl.dropbox.com/u/76665191/arrow.png') no-repeat bottom right;
+  background: #fff asset-url('arrow.png') no-repeat bottom right;
   height: 175px;  
   margin-left: 205px;
   
