@@ -1,7 +1,7 @@
 
 class DayHome < ActiveRecord::Base
 
-  acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => false,
+  acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
                     :check_process => :prevent_geocoding, :address => :address,
                     :msg => 'Cannot find a location matching that query.'
                     
