@@ -27,6 +27,7 @@ gem 'actionmailer-instyle', :require => 'action_mailer/in_style'
 gem 'stripe'
 gem 'thin', '~>1.5'
 gem 'foreigner'
+gem 'ruby-recaptcha'
 
 platforms :mswin, :mingw do
   #gem 'eventmachine', '1.0.0.beta.4.1'

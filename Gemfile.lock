@@ -223,6 +223,7 @@ GEM
       railties (>= 3.0)
       rspec (~> 2.11.0)
     ruby-hmac (0.4.0)
+    ruby-recaptcha (1.0.5)
     rubyzip (0.9.9)
     sass (3.2.1)
     sass-rails (3.2.5)
@@ -310,6 +311,7 @@ DEPENDENCIES
   mysql2
   rails (= 3.2.2)
   rspec-rails (~> 2.6)
+  ruby-recaptcha
   sass-rails (~> 3.1)
   shoulda-matchers
   simple_form

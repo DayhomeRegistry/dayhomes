@@ -148,6 +148,7 @@
             = cf.text_area :message, :style => 'height: 150px !important;'
             
         = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
+        = raw (get_captcha())
         .submit
           = cf.button :submit,  "Contact", :class => 'btn btn-primary span3'
   .span3

@@ -1,5 +1,6 @@
 module ApplicationHelper
-
+  include ReCaptcha::ViewHelper
+  
   def yes_no(bool)
     bool ? 'Yes' : 'No'
   end
