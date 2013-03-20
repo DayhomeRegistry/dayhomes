@@ -73,7 +73,7 @@ header > div {
 }
 #nav {
   font-size: 18px;
-  background: #fff asset-url('arrow.png') no-repeat bottom right;
+  background: #fff asset-url('arrow.png', image) no-repeat bottom right;
   height: 175px;  
   margin-left: 205px;
   
