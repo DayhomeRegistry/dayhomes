@@ -21,7 +21,7 @@ class DayHomesController < ApplicationController
       
       if (current_user.organization_admin?)
         if (!clause.empty?)
-          @day_homes = current_user.organization.day_homes.where("day_homes.name like ?", "%#{clause.strip}%")
+          @day_homes = current_user.organization.day_homes.where("day_homes.name like ?", "%#{clause.strip}%") 
         else
           @day_homes = current_user.organization.day_homes
         end
