@@ -37,6 +37,11 @@ class BillingController < ApplicationController
 
     @error_msg = []
     begin
+      @existing = Plan.find_by_plan("baby")
+      @packages = {}
+      Plan.all.each do |p|
+        @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+      end
       DayHomeSignupRequest.transaction do
       
       #Create the user
@@ -104,17 +109,13 @@ class BillingController < ApplicationController
         end
       end
     rescue Exception => e    
-      #raise e          
+      raise e          
       if(!e.message.nil?)
         flash.now['page-error'] = e.message
       else
         flash.now['page-error'] = e
       end
-      @existing = Plan.find_by_plan("baby")
-      @packages = {}
-      Plan.all.each do |p|
-        @packages.merge!({"#{p.id}" => p}) #unless p===@existing
-      end
+      
       return render :action => :signup
     end
     return redirect_to :action => :welcome
