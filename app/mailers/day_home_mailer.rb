@@ -35,7 +35,7 @@ class DayHomeMailer < ActionMailer::Base
       @dayhome.admin_users.find_each do |user|
         mail(:to => user.email, :subject => "We've received your registration at DayHomeRegistry.com")  
       end
-      @dayhome.locales_users.find_each do |user|
+      @dayhome.locale_users.find_each do |user|
         mail(:to => user.email, :subject => "We've received your registration at DayHomeRegistry.com")  
       end
     end
@@ -50,7 +50,7 @@ class DayHomeMailer < ActionMailer::Base
       @dayhome.admin_users.find_each do |user|
         mail(:to => user.email, :subject => "You've been approved at DayhomeRegistry.com")
       end
-      @dayhome.locales_users.find_each do |user|
+      @dayhome.locale_users.find_each do |user|
         mail(:to => user.email, :subject => "You've been approved at DayhomeRegistry.com")
       end
     end
