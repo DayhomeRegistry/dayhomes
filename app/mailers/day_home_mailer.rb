@@ -31,6 +31,7 @@ class DayHomeMailer < ActionMailer::Base
     if (Rails.env.development?)
       mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => "We've received your registration at DayHomeRegistry.com")	
     else 
+      @dayhome = DayHome.find(@day_home_signup_request.day_home_id)
       @dayhome.admin_users.find_each do |user|
         mail(:to => user.email, :subject => "We've received your registration at DayHomeRegistry.com")  
       end

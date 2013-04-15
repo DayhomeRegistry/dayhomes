@@ -110,6 +110,11 @@ class BillingController < ApplicationController
       else
         flash.now['page-error'] = e
       end
+      @existing = Plan.find_by_plan("baby")
+      @packages = {}
+      Plan.all.each do |p|
+        @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+      end
       return render :action => :signup
     end
     return redirect_to :action => :welcome
