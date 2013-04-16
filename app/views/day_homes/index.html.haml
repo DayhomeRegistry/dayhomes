@@ -62,4 +62,4 @@
             = link_to 'Edit', [:edit, day_home]
             |
             = link_to('Calendar', "/day_homes/#{day_home.id}/calendar")
-= paginate @day_homes, :window => 1,:left => 3,:right => 3            
+= paginate @day_homes, :outer_window => 10, :window => 10
