@@ -92,6 +92,7 @@
     
   = f.fields_for :photos do |p|
     .add_multiples.clear{'data-group' => 'photos'}      
+      = p.label :caption, 'Caption'
       - if p.object.photo?
         .remove_contents
           = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'
