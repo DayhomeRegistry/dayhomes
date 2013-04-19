@@ -102,7 +102,7 @@ class DayHome < ActiveRecord::Base
   
   # this method is called when updating the lat long (this is what's fed to google maps)
   def geo_address
-    "#{street1}#{street2}, #{city}, #{province}, CA, #{postal_code}".gsub!(/&/, 'and')+"&components=country:CA" 
+    "#{street1}#{street2}, #{city}, #{province}, CA, #{postal_code}".gsub(/&/, 'and')+"&components=country:CA" 
   end
   def address
     lstreet = "#{street1}#{street2}".blank? ? "" : "#{street1}#{street2},"
