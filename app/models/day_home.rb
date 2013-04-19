@@ -2,9 +2,8 @@
 class DayHome < ActiveRecord::Base
 
   acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
-                    :check_process => :prevent_geocoding, :address => :address,
-                    :msg => 'Cannot find a location matching that query.'
-                    
+                    :check_process => :prevent_geocoding, :address => :geo_address,
+                    :msg => 'Cannot find a location matching that query.' 
 
   # scopes
   scope :with_availability_uniq, lambda { |default_availability_types|
@@ -102,6 +101,9 @@ class DayHome < ActiveRecord::Base
   end
   
   # this method is called when updating the lat long (this is what's fed to google maps)
+  def geo_address
+    "#{street1}#{street2}, #{city}, #{province}, CA, #{postal_code}".gsub!(/&/, 'and')+"&components=country:CA" 
+  end
   def address
     lstreet = "#{street1}#{street2}".blank? ? "" : "#{street1}#{street2},"
   	lcity = "#{city}".blank? ? "" : " #{city},"
