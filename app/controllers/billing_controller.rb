@@ -55,9 +55,10 @@ class BillingController < ApplicationController
         # Need to set the ack date
         user.privacy_effective_date = Time.now()
         if(!user.save)
-          #email them their password set instructions
-          UserMailer.new_user_password_instructions(user).deliver  
           handle_user_error(user)
+        else
+          #email them their password set instructions
+          UserMailer.new_user_password_instructions(user).deliver            
         end
 
       #Create the org
@@ -88,8 +89,12 @@ class BillingController < ApplicationController
         loc.name = @day_home_signup_request.day_home_city || 'Edmonton'
         loc.organization = org
 
-        if(!org.save)
+        if(!loc.save)
           handle_location_error(loc)
+        end
+        user.location = loc;
+        if(!user.save)
+          handle_user_error(user)
         end
 
       #Create the dayhome
@@ -108,8 +113,7 @@ class BillingController < ApplicationController
           handle_day_home_signup_request_error
         end
       end
-    rescue Exception => e    
-      raise e          
+    rescue => e            
       if(!e.message.nil?)
         flash.now['page-error'] = e.message
       else

@@ -79,8 +79,10 @@ class DayHomesController < ApplicationController
     @day_home = DayHome.find(params[:id])
     @day_home_contact = DayHomeContact.new(params[:day_home_contact].merge(:day_home_id => @day_home.id))
         
+
     if validate_recap(params, @day_home_contact.errors) && @day_home_contact.save
       #redirect_to day_home_slug_path(@day_home.slug), :notice => "#{@day_home.name} has been contacted!"
+
       redirect_to followup_day_home_path(@day_home)
     else
       flash[:error]= "Something went wrong while sending your message - please try again: "+@day_home_contact.errors.full_messages.to_sentence

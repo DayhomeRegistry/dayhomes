@@ -347,7 +347,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         }
 
         // Disable the button.
-        self.payNowButton.val('Loading…').prop('disabled', true);
+        self.payNowButton.val('Processing…').prop('disabled', true);
 
         if (!$('#credit-card-section').is(':hidden') && ($('#newCard').length>0 && !$('#newCard').is(':hidden'))) {
           var card = {

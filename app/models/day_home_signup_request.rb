@@ -4,7 +4,7 @@ class DayHomeSignupRequest < ActiveRecord::Base
   validates :day_home_highlight,:length => { :maximum => 200 }
   validates :contact_email, :presence => {:unless => "day_home_phone_number", :message => "You must enter an email, phone number, or both"}
   
-  validates_uniqueness_of :day_home_slug
+  #validates_uniqueness_of :day_home_slug
   
   #validates_presence_of :preferred_time_to_contact
   
