@@ -4,8 +4,8 @@
     $(".photo_preview").colorbox({rel:'photo_preview'});
     
     $('#day_home_name').keyup(function(e) {
-      var parsed_subdomain = $(this).attr('value').replace(/[^a-z0-9]/gi,'').toLowerCase();
-      $('#day_home_slug').empty().attr('value', parsed_subdomain);
+      var parsed_subdomain = $(this).val().replace(/[^a-z0-9]/gi,'').toLowerCase();
+      $('#day_home_slug').empty().val(parsed_subdomain);
     });
 
     
@@ -50,6 +50,9 @@
   
   = f.label :province
   = f.state_select :province, 'CA'
+  
+  = label_tag "Locale"
+  = collection_select(:day_home, :location_id, Location.where("organization_id = "+ current_user.organization.id.to_s), :id, :name)
   
   = f.fields_for :photos do |p|
     .add_multiples.clear{'data-group' => 'photos'}
