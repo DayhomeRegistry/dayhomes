@@ -52,6 +52,10 @@ class DayHome < ActiveRecord::Base
 
   accepts_nested_attributes_for :photos, :reject_if => :all_blank, :allow_destroy => true
   
+  #before_save :break
+  def break
+    raise "This is intentionally broken."
+  end
 
   after_save :approval_message
   def approval_message

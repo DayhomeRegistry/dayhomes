@@ -1,6 +1,15 @@
+-if @day_home.errors.any?  
+  .alert.alert-error
+    %h3
+      It seems that 
+      = pluralize(@day_home.errors.count, "error")
+      prevented this page from being saved:
+    %ul  
+      - @day_home.errors.full_messages.each do |msg|
+        %li
+          = msg
 .row.registrationStyle
-  .span6.well.form-horizontal
+  .span7.well.form-horizontal
     %h2
       New dayhome
-
     = render 'form'
