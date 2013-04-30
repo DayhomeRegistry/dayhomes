@@ -22,7 +22,7 @@ fanfare_recipe 'colors'
 # fanfare_recipe 'campfire'
 # fanfare_recipe 'airbrake'
 
-set :bundle_shebang,  "ruby"
+#set :bundle_shebang,  "ruby"
 set :branch, "new-prod"
 
 Dir['vendor/gems/*/recipes/*.rb','vendor/plugins/*/recipes/*.rb','lib/cap-tasks/*.rb'].each { |plugin| load(plugin) }
