@@ -1,7 +1,5 @@
 load 'deploy'
 
-set :stages, %w{new-prod staging production}
-set :default_stage, "staging"
 
 require 'capistrano/fanfare'
 
@@ -21,7 +19,12 @@ fanfare_recipe 'colors'
 #fanfare_recipe 'console' #never use this
 # fanfare_recipe 'campfire'
 # fanfare_recipe 'airbrake'
- 
+
+set :stages, %w{new-prod staging production}
+set :default_stage, "staging"
+set :bundle_shebang,  "ruby"
+set :branch, fetch(:branch, "new-prod")
+
 Dir['vendor/gems/*/recipes/*.rb','vendor/plugins/*/recipes/*.rb','lib/cap-tasks/*.rb'].each { |plugin| load(plugin) }
 
 load 'config/deploy'

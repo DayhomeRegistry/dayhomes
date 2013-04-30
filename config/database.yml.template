@@ -16,6 +16,15 @@ test:
  password: password
  host: localhost
 
+new-prod:
+  adapter: mysql2
+  encoding: utf8
+  database: dayhomes_prod
+  pool: 5
+  username: root
+  password: Ll2+8GaFz$8j
+  host: localhost
+
 production:
   adapter: sqlite3
   database: db/production.sqlite3
