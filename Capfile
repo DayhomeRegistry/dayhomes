@@ -1,4 +1,6 @@
 load 'deploy'
+set :stages, %w{new-prod staging production}
+set :default_stage, "staging"
 
 
 require 'capistrano/fanfare'
@@ -20,8 +22,6 @@ fanfare_recipe 'colors'
 # fanfare_recipe 'campfire'
 # fanfare_recipe 'airbrake'
 
-set :stages, %w{new-prod staging production}
-set :default_stage, "staging"
 set :bundle_shebang,  "ruby"
 set :branch, fetch(:branch, "new-prod")
 
