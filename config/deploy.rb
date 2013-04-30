@@ -4,9 +4,9 @@ set :repository,  "git@github.com:DayhomeRegistry/dayhomes.git"
 require './config/boot'
 require 'airbrake/capistrano'
 
-#set :default_environment, {
-#  'PATH' => "/srv/dayhomes_staging/current/bin:/usr/bin/ruby:/usr/local/bin/rails:/usr/local/bin/foreman:/home/deploy/.rbenv/shims:/home/deploy/.rbenv/bin:/usr/local/rbenv/shims:/usr/local/rbenv/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
-#}
+set :default_environment, {
+  'PATH' => "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
+}
 
 
 # Custom maintenance page
