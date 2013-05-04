@@ -9,7 +9,7 @@ fanfare_recipe 'defaults'
 fanfare_recipe 'multistage'
 fanfare_recipe 'git_style'
 fanfare_recipe 'bundler'
-#fanfare_recipe 'assets' #don't think we're using this one
+fanfare_recipe 'assets' #don't think we're using this one
 fanfare_recipe 'db_seed'
 
 fanfare_recipe 'foreman'
