@@ -24,6 +24,7 @@ fanfare_recipe 'colors'
 
 set :bundle_shebang,  "ruby"
 set :branch, "new-prod"
+set :runit_service_path, "/etc/service"
 
 Dir['vendor/gems/*/recipes/*.rb','vendor/plugins/*/recipes/*.rb','lib/cap-tasks/*.rb'].each { |plugin| load(plugin) }
 
