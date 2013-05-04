@@ -62,4 +62,5 @@ group :production do
   # app server and process management
   gem 'unicorn'
   gem 'foreman', '0.47.0'
+  gem 'therubyracer'
 end
