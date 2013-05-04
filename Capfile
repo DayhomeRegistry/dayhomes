@@ -9,7 +9,7 @@ fanfare_recipe 'defaults'
 fanfare_recipe 'multistage'
 fanfare_recipe 'git_style'
 fanfare_recipe 'bundler'
-fanfare_recipe 'assets' #don't think we're using this one
+fanfare_recipe 'assets' 
 fanfare_recipe 'db_seed'
 
 fanfare_recipe 'foreman'
@@ -24,7 +24,6 @@ fanfare_recipe 'colors'
 
 set :bundle_shebang,  "ruby"
 set :branch, "new-prod"
-set :runit_service_path, "/etc/service"
 
 Dir['vendor/gems/*/recipes/*.rb','vendor/plugins/*/recipes/*.rb','lib/cap-tasks/*.rb'].each { |plugin| load(plugin) }
 
