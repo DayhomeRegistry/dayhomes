@@ -1,9 +1,10 @@
 namespace :deploy do
-  desc "cp_stripe_initializer"
-  task :cp_stripe_initializer do
-    run "cp /srv/dayhomes_production/shared/config/initializers/stripe.rb /srv/dayhomes_production/current/config/initializers/stripe.rb"
-
-  end
+	desc <<-DESC
+	  [internal] Copies stripe.rb from shared_path into release_path.
+	DESC
+	task :cp_stripe_initializer do
+		run "cp #{shared_path}/config/initializers/stripe.rb #{release_path}/config/initializers/stripe.rb"
+	end
 end
 
-after 'deploy:update_code', 'deploy:cp_stripe_initializer'
+after "deploy:finalize_update", 'deploy:cp_stripe_initializer'

@@ -28,6 +28,7 @@ gem 'stripe'
 gem 'thin', '~>1.5'
 gem 'foreigner'
 gem 'ruby-recaptcha'
+gem 'execjs'
 
 platforms :mswin, :mingw do
   #gem 'eventmachine', '1.0.0.beta.4.1'
@@ -61,4 +62,5 @@ group :production do
   # app server and process management
   gem 'unicorn'
   gem 'foreman', '0.47.0'
+  gem 'therubyracer'
 end
