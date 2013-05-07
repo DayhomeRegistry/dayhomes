@@ -1,5 +1,5 @@
 load 'deploy'
-set :stages, %w{new-prod staging production}
+set :stages, %w{staging production}
 set :default_stage, "staging"
 
 
@@ -23,7 +23,7 @@ fanfare_recipe 'colors'
 # fanfare_recipe 'airbrake'
 
 set :bundle_shebang,  "ruby"
-set :branch, "new-prod"
+set :branch, "production"
 
 Dir['vendor/gems/*/recipes/*.rb','vendor/plugins/*/recipes/*.rb','lib/cap-tasks/*.rb'].each { |plugin| load(plugin) }
 
