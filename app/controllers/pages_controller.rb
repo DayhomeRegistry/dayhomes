@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   layout 'application'
 
   def index    
+    raise "Yet another test"
     @featured_day_homes = DayHome.featured.reject{|day_home| day_home.photos.blank?||!day_home.approved? }    
     if (@featured_day_homes.count ==0)
       #@featured_day_homes = [DayHome.find(:first, :offset =>rand(DayHome.all.count))]

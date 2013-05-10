@@ -52,12 +52,4 @@ Dayhomes::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = false
 
-  # Setup FogBugz error reporting
-  config.middleware.use ExceptionNotifier,
-    :bugzscout => {
-      :url => 'https://dayhomeregistry.fogbugz.com/scoutSubmit.asp',
-      :username => 'bugzscout',
-      :project => 'Inbox',
-      :area => 'Not Spam'
-    }
 end
