@@ -21,4 +21,4 @@ production:
   container: dayhomes_production
   username: markbennett
   api_key: cb2acd1348d1dccab9ba68ee1eb38229
-  cdn_url: https://storage101.ord1.clouddrive.com
+  cdn_url: http://c10913602.r2.cf2.rackcdn.com
