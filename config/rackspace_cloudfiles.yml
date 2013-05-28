@@ -12,13 +12,13 @@ test:
 
 staging:
   container: dayhomes_staging
-  username: markbennett
-  api_key: cb2acd1348d1dccab9ba68ee1eb38229
-  cdn_url: http://c10913578.r78.cf2.rackcdn.com
+  username: jonmholt
+  api_key: 288bc129beca52ce4818b58e1a8cdc51
+  cdn_url: https://307be285b1e14e0417c2-25181be79b1f36ccdc7d3c4ce16785ec.ssl.cf1.rackcdn.com
 
 
 production:
   container: dayhomes_production
   username: markbennett
   api_key: cb2acd1348d1dccab9ba68ee1eb38229
-  cdn_url: http://c10913602.r2.cf2.rackcdn.com
+  cdn_url: https://storage101.ord1.clouddrive.com
