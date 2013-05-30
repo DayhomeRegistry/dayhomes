@@ -7,7 +7,7 @@ CarrierWave.configure do |config|
     :provider             => 'Rackspace',
     :rackspace_username   => cloudfiles_config[:username],
     :rackspace_api_key    => cloudfiles_config[:api_key],
-    :rackspace_servicenet => cloudfiles_config[:servicenet] || false # NOTE - Can only be used on rackspace VPS, see SNET note at top.
+    :rackspace_servicenet => cloudfiles_config[:servicenet] || false, # NOTE - Can only be used on rackspace VPS, see SNET note at top.
     :rackspace_region     => cloudfiles_config[:region]||:dfw # we're in dfw, but may not be
   }
 
