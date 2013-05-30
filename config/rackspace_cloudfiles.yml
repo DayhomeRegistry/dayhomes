@@ -23,3 +23,5 @@ production:
   username: markbennett
   api_key: cb2acd1348d1dccab9ba68ee1eb38229
   cdn_url: https://539c36d2d071e84529e9-2221339c5e969387c7b26c85c985503c.ssl.cf2.rackcdn.com
+  region: ord
+  servicenet: false
