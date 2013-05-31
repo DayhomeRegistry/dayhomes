@@ -62,6 +62,7 @@
     # how many to create
     # 5 - 1 - 4 
     to_create = 5-freebees
+    #raise "[(plan - started - freebees),0].max=[("+plan.to_s+" - "+ started.to_s + " - " + freebees.to_s + "),0].max="+[(plan - started - freebees),0].max.to_s
     if plan >= 0
       to_create = [(plan - started - freebees),0].max
     end

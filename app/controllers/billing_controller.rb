@@ -20,7 +20,7 @@ class BillingController < ApplicationController
 
     @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])   
     @day_home_signup_request.plan=params[:plan]
-    
+
     if(params[:staff])
       staff = Integer(params[:staff])
     end
@@ -267,6 +267,10 @@ class BillingController < ApplicationController
   def activate
     #activate a feature
     @organization = current_user.organization
+    #make sure the freebees are up to date before we go checking if they have enough
+    @organization.update_free_features
+
+    #ok, now do the math
     @day_home = @organization.day_homes.find(params["day_home_id"])
     features = @organization.features
     features = features.where("day_home_id is null")
@@ -275,7 +279,7 @@ class BillingController < ApplicationController
     last_date = Time.now()
     #check if there are enough credits
     how_many_months = params["months"].to_i
-    if(how_many_months<features.count)
+    if(how_many_months<=features.count)
       Feature.transaction do
         how_many_months.times do |f|
           feature = features[f]
