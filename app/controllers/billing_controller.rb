@@ -14,6 +14,7 @@ class BillingController < ApplicationController
     end
   end
   def register
+
     staff = 0
     locales = 0
 

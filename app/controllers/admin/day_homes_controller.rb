@@ -56,6 +56,7 @@ class Admin::DayHomesController < Admin::ApplicationController
     @day_home = DayHome.find(params[:id])
     @day_home.photos.build if @day_home.photos.blank?
 
+    #raise @day_home.organization.to_json
   end
 
   def update
