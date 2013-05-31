@@ -21,7 +21,10 @@
     = f.input :province
     = f.input :postal_code
     = f.hidden_field :stripe_card_token   
-      
+  .append-bottom-1  
+    #stripe_error
+      %noscript
+        Javascript is not enabled and is required for this form.  First enable it in your web browser settings. 
   -if !@organization.credit_card.nil?
     #existingCard
       .control-group                
