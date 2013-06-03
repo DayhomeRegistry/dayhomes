@@ -50,9 +50,19 @@ Dayhomes::Application.configure do
     
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.delivery_method = :sendmail
+  #config.action_mailer.delivery_method = :sendmail
   config.action_mailer.default_url_options = {:host => "dayhomeregistry.com"}
-
+  ActionMailer::Base.smtp_settings = {
+    #:tls => true,
+    :address => "smtp.gmail.com",
+    :port => "587",
+    :domain => "dayhomeregistry.com",
+    :authentication => :plain,
+    :user_name => "contact@dayhomeregistry.com",
+    :password => "bl@nk4n0w",
+    :enable_starttls_auto =>true,
+    :openssl_verify_mode=>OpenSSL::SSL::VERIFY_NONE
+  }
   # Enable threaded mode
   # config.threadsafe!
 
