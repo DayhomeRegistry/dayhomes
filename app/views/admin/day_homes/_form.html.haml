@@ -14,6 +14,7 @@
 
 = form_for [:admin, @day_home], :html => {:multipart => true} do |f|
   
+  = link_to 'You can edit contact phone in the organization.', [:edit, :admin, @day_home.organization]
   = f.label :approved, :class => 'checkbox' do
     = f.check_box :approved
     Approved to display in searches?
@@ -27,8 +28,9 @@
       http://dayhomeregistry.com/
     = f.text_field :slug
   
-  = f.label :phone_number
-  = f.text_field :phone_number
+  /
+    = f.label :phone_number
+    = f.text_field :phone_number
 
   = f.label :email
   = f.text_field :email

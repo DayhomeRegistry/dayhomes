@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.2'
+gem 'rails', '3.2.13'
 gem 'mysql2'
 gem 'haml'
 #gem 'gmaps4rails', :git => 'git@github.com:RyanonRails/Google-Maps-for-Rails.git'

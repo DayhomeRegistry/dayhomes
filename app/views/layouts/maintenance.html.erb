@@ -46,15 +46,13 @@
 <body>
   <div class="dialog">
     <a href="/"><img src="http://c10913602.r2.cf2.rackcdn.com/logo.png" /></a>
-    <h1>We are launching soon!</h1>
-    <p>Enter your email below and we will let you know when!</p>
-    <form action="https://docs.google.com/spreadsheet/formResponse?formkey=dHNmeEhiWGtTSnN5RjU4aXh1a0p6bHc6MQ&amp;ifq" method="POST" id="ss-form">
+    <h1>We are doing a little house cleaning!</h1>
     <p>
-      <strong>Your Email:</strong>
-      <input type="text" name="entry.0.single" value="" />
-      <input type="submit" name="submit" value="Notify Me!">
+      The system is down for <%= reason ? reason : "maintenance" %> as of <%= Time.now.strftime("%H:%M %Z") %>.
     </p>
-    </form>
+    <p>
+     It'll be back <%= deadline ? deadline : "shortly" %>.
+    </p>
   </div>
 </body>
 </html>
