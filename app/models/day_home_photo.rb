@@ -2,9 +2,10 @@ class DayHomePhoto < ActiveRecord::Base
   mount_uploader :photo, DayHomePhotoUploader
   
   belongs_to :day_home
-  validates :photo, :presence => true
+  validates_presence_of :photo
   
-  
+
+
   # Override to silently ignore trying to remove missing
   # previous photo when destroying a User.
   def remove_photo!

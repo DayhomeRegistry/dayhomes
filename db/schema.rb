@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130301032241) do
+ActiveRecord::Schema.define(:version => 20130515145144) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -94,8 +94,9 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
     t.integer  "day_home_id"
     t.string   "photo"
     t.string   "caption"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "default_photo", :default => false
   end
 
   add_index "day_home_photos", ["day_home_id"], :name => "index_day_home_photos_on_day_home_id"
@@ -145,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
     t.string   "highlight"
     t.boolean  "approved",               :default => true
     t.integer  "location_id"
+    t.string   "plan"
   end
 
   create_table "events", :force => true do |t|
@@ -269,7 +271,7 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
   add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
 
   create_table "upgrades", :force => true do |t|
-    t.datetime "effective_date",  :default => '2013-03-08 19:15:31'
+    t.datetime "effective_date",  :default => '2013-03-13 18:51:31'
     t.datetime "created_at",                                         :null => false
     t.datetime "updated_at",                                         :null => false
     t.integer  "old_plan_id"

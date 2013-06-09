@@ -1,5 +1,17 @@
 :javascript
   $(function(){
+    var changing=false;
+    $('form').on("change","input[name$='[default_photo]']",function(event) {
+      if(!changing){
+        changing=true;
+        $('form input[name$="[default_photo]"][type="checkbox"]').each(function(){
+          $(this).prop("checked",false);
+        });
+        $(this).prop("checked",true);
+        changing=false;
+      }
+    });
+
     add_another_mangement();
     $(".photo_preview").colorbox({rel:'photo_preview'});
     
@@ -70,6 +82,8 @@
         
       = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
       = p.text_field :caption
+      = p.check_box :default_photo
+      = 'Set as default'
       %br
       = p.file_field :photo
       = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link'
