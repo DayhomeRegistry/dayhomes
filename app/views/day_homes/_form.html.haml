@@ -64,6 +64,7 @@
       = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
       = p.text_field :caption
       = p.check_box :default_photo
+      = 'Set as default'
       %br
       = p.file_field :photo
       = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link'

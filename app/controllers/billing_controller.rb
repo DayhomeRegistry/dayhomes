@@ -263,36 +263,51 @@ class BillingController < ApplicationController
       end  
     end  
   end
+  def activate_admin
+    feature = Feature.new();
+    feature.day_home=@day_home
+    feature.start = Time.now()
+    feature.end = Time.now().advance(:months=>1)
+    feature.organization=@organization
+    @organization.features << feature
+    feature.save
+    @organization.save
+  end
   def activate
-    #activate a feature
     @organization = current_user.organization
     @day_home = @organization.day_homes.find(params["day_home_id"])
-    features = @organization.features
-    features = features.where("day_home_id is null")
-
-    saved = true
-    last_date = Time.now()
-    #check if there are enough credits
-    how_many_months = params["months"].to_i
-    if(how_many_months<features.count)
-      Feature.transaction do
-        how_many_months.times do |f|
-          feature = features[f]
-          feature.day_home = @day_home
-          feature.start = last_date
-          last_date = last_date.advance(:months => 1)
-          feature.end = last_date
-          saved = saved && feature.save
-        end
-      end
+    
+    if (current_user.admin?)
+      activate_admin
     else
-      respond_to do |format|  
-        error = "You don't have enough credits to feature your dayhome for #{how_many_months} #{how_many_months>1?'months':'month'}.  "
-        error = error + "You might want to go <a href='" + billing_extras_path() + "'>buy extras</a>."
+      #activate a feature
+      features = @organization.features
+      features = features.where("day_home_id is null")
 
-        format.html { return redirect_to edit_day_home_path(@day_home), :notice=>error }  
-        format.js { return render :text=>error, :status=>500}        
-      end  
+      saved = true
+      last_date = Time.now()
+      #check if there are enough credits
+      how_many_months = params["months"].to_i
+      if(how_many_months<features.count)
+        Feature.transaction do
+          how_many_months.times do |f|
+            feature = features[f]
+            feature.day_home = @day_home
+            feature.start = last_date
+            last_date = last_date.advance(:months => 1)
+            feature.end = last_date
+            saved = saved && feature.save
+          end
+        end
+      else
+        respond_to do |format|  
+          error = "You don't have enough credits to feature your dayhome for #{how_many_months} #{how_many_months>1?'months':'month'}.  "
+          error = error + "You might want to go <a href='" + billing_extras_path() + "'>buy extras</a>."
+
+          format.html { return redirect_to edit_day_home_path(@day_home), :notice=>error }  
+          format.js { return render :text=>error, :status=>500}        
+        end  
+      end
     end
     respond_to do |format|  
       if saved
