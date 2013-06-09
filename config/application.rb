@@ -57,13 +57,5 @@ module Dayhomes
     config.assets.version = '1.0'
 
     
-    # Setup FogBugz error reporting
-    config.middleware.use ExceptionNotifier,
-      :bugzscout => {
-        :url => 'https://dayhomeregistry.fogbugz.com/scoutSubmit.asp',
-        :username => 'bugzscout',
-        :project => 'Inbox',
-        :area => 'Not Spam'
-      }
   end
 end

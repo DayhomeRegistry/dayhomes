@@ -76,4 +76,14 @@ Dayhomes::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  
+    # Setup FogBugz error reporting
+    config.middleware.use ExceptionNotifier,
+      :bugzscout => {
+        :url => 'https://dayhomeregistry.fogbugz.com/scoutSubmit.asp',
+        :username => 'bugzscout',
+        :project => 'Inbox',
+        :area => 'Not Spam'
+      }
 end
