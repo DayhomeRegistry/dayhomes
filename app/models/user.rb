@@ -16,9 +16,6 @@ class User < ActiveRecord::Base
   has_many :topics, :dependent => :destroy
   has_many :posts, :dependent => :destroy
 
-  attr_accessor :stripe_card_token
-  
-  before_destroy :destroy_customer
   
   def full_name
     "#{first_name} #{last_name}"
@@ -81,42 +78,5 @@ class User < ActiveRecord::Base
       :password => random_password,
       :password_confirmation => random_password
     })
-  end
-  
-  
-  def save_with_payment 
-    if valid?
-      #raise stripe_card_token.blank?.to_s
-      if !stripe_card_token.blank?
-        if self.stripe_customer_token.nil?
-          customer = Stripe::Customer.create(email: email, description: full_name, plan: plan, card: stripe_card_token)
-          #raise customer.to_json
-          self.stripe_customer_token = customer.id
-        else
-          customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-          customer.card = stripe_card_token
-          customer.save
-        end
-      end
-      save!
-    end
-  rescue Stripe::InvalidRequestError => e
-    logger.error "Stripe error while creating customer: #{e.message}"
-    errors.add :base, "There was a problem with your credit card: #{e.message}"
-    false
-  rescue Stripe::CardError => e
-    logger.error "Stripe error while creating customer: #{e.message}"
-    errors.add :base, e.message
-    false  
-  end
-  
-  def destroy_customer
-    customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-    customer.delete
-    
-  rescue Stripe::InvalidRequestError => e
-    logger.error "Stripe error while removing customer: #{e.message}"
-    errors.add :base, "There was a problem with removing your credit card: #{e.message}"
-    false
   end
 end
