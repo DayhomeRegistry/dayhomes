@@ -50,17 +50,7 @@ class UsersController < ApplicationController
     if (@user.organization_admin? && !params[:id].nil?)
       @user = User.find(params[:id])
     end
-    #raise current_user.stripe_customer_token
-    if(!@user.stripe_customer_token.nil?)
-      customer = Stripe::Customer.retrieve(@user.stripe_customer_token)
-      #raise customer.to_json
-      @credit_card = {
-        last4: customer.active_card.last4,
-        month: customer.active_card.exp_month,
-        year: customer.active_card.exp_year
-      }
-      
-    end
+    
   end
 
   def update
@@ -68,19 +58,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.assign_attributes(params[:user]) 
 
-    if !@user.stripe_card_token.nil?
-      if @user.save_with_payment
-        redirect_to user_path(@user)
-      else
-        return render :action => :edit
-      end
+    if @user.save
+      redirect_to user_path(@user)
     else
-      if @user.save
-        redirect_to user_path(@user)
-      else
-        return render :action => :edit
-      end
+      return render :action => :edit
     end
+  
   end
 
   def index
