@@ -73,8 +73,7 @@ class User < ActiveRecord::Base
     new({
       :first_name => signup_request.first_name,
       :last_name => signup_request.last_name,
-      :email => signup_request.contact_email , 
-      :plan => signup_request.plan,    
+      :email => signup_request.contact_email ,    
       :password => random_password,
       :password_confirmation => random_password
     })
