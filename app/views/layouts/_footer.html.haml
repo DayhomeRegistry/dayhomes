@@ -34,6 +34,7 @@
     %p
     &copy;
     = link_to "Dayhome Registry #{Date.today.year}", root_path
+    = "(#{Dayhomes::Application::VERSION})"
     | Read our
     = link_to 'Privacy Policy', [:privacy, :pages]
 
