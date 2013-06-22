@@ -12,10 +12,10 @@ class DayHomeMailer < ActionMailer::Base
       
       mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => contact.subject+"[admin:{"+admin_emails+"}, locale:{"+locale_emails+"}]", :reply_to=>contact.email)
     else 
-      dayhome.admin_users.find_each do |user|
+      dayhome.admin_users.each do |user|
         mail(:to => user.email, :subject => contact.subject, :reply_to=>contact.email)
       end
-      dayhome.locale_users.find_each do |user|
+      dayhome.locale_users.each do |user|
         mail(:to => user.email, :subject => contact.subject, :reply_to=>contact.email)
       end
     end
