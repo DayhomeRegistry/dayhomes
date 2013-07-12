@@ -53,10 +53,6 @@
   = f.label :blurb
   = f.text_area :blurb
 
-  
-  = f.label :featured, :class => 'checkbox' do
-    = f.check_box :featured
-    Feature on homepage?
 
   = f.label :street1, 'Street 1'
   = f.text_field :street1
@@ -71,7 +67,7 @@
   = f.text_field :city
   
   = f.label :province
-  = f.state_select :province, 'CA'
+  = f.subregion_select :province,'CA'
   
   = f.fields_for :photos do |p|
     .add_multiples.clear{'data-group' => 'photos'}
