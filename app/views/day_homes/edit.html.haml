@@ -118,7 +118,7 @@
   = f.text_field :city
   
   = f.label :province
-  = f.state_select :province, 'CA'
+  = f.subregion_select :province,'CA'
   %h3
     Locale
   = collection_select(:day_home, :location_id, Location.where("organization_id = "+ @day_home.organization.id.to_s), :id, :name)

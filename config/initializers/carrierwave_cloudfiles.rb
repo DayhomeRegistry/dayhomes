@@ -13,7 +13,10 @@ CarrierWave.configure do |config|
   }
 
   config.fog_directory = cloudfiles_config[:container]
-  config.asset_host = cloudfiles_config[:cdn_url]
+
+  # Commenting this out, otherwise it overrides the local file storage
+  # this forces a lookup every time.
+  #config.asset_host = cloudfiles_config[:cdn_url]
 
   # hack fix for windows machine due to tmp file permission error
   # per https://github.com/jnicklas/carrierwave/issues/220/
