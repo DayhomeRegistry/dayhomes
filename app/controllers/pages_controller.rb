@@ -7,7 +7,7 @@ class PagesController < ApplicationController
       #@featured_day_homes = [DayHome.find(:first, :offset =>rand(DayHome.all.count))]
       @featured_day_homes = DayHome.all.reject{|day_home| day_home.photos.blank?||!day_home.approved? }    
     end
-    render :layout=>'pages'
+    
   end
   
   def about
