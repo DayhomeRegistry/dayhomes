@@ -4,20 +4,15 @@ class DayHomeMailer < ActionMailer::Base
   def contact_day_home(contact, dayhome)
     @contact = contact
     @dayhome = dayhome
+    admin_emails = dayhome.admin_users.map(&:email).join(', ')
+    locale_emails = dayhome.locale_users.map(&:email).join(', ')
+    emails = dayhome.admin_users+dayhome.locale_users
+    to = emails.map(&:email).join(', ')
 
-    if (Rails.env.development?)    
-      admin_emails = dayhome.admin_users.map(&:email).join(', ')
-      locale_emails = dayhome.locale_users.map(&:email).join(', ')
-      emails=dayhome.organization.users.map(&:email).join(', ')
-      
-      mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => contact.subject+"[admin:{"+admin_emails+"}, locale:{"+locale_emails+"}]", :reply_to=>contact.email)
-    else 
-      dayhome.admin_users.find_each do |user|
-        mail(:to => user.email, :subject => contact.subject, :reply_to=>contact.email)
-      end
-      dayhome.locale_users.find_each do |user|
-        mail(:to => user.email, :subject => contact.subject, :reply_to=>contact.email)
-      end
+    if (Rails.env.development?)          
+      mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => contact.subject+"[admin:{"+admin_emails+"}, locale:{"+locale_emails+"}, to:{#{to}}]", :reply_to=>contact.email)
+    else  
+      mail(:to => to, :subject => contact.subject, :reply_to=>contact.email)
     end
   end
   
@@ -32,10 +27,10 @@ class DayHomeMailer < ActionMailer::Base
       mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => "We've received your registration at DayHomeRegistry.com")	
     else 
       @dayhome = DayHome.find_by_slug(@day_home_signup_request.day_home_slug)
-      @dayhome.admin_users.find_each do |user|
+      @dayhome.admin_users.find do |user|
         mail(:to => user.email, :subject => "We've received your registration at DayHomeRegistry.com")  
       end
-      @dayhome.locale_users.find_each do |user|
+      @dayhome.locale_users.find do |user|
         mail(:to => user.email, :subject => "We've received your registration at DayHomeRegistry.com")  
       end
     end
@@ -47,10 +42,10 @@ class DayHomeMailer < ActionMailer::Base
     if (Rails.env.development?)
       mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => "You've been approved at DayhomeRegistry.com")
     else 
-      @dayhome.admin_users.find_each do |user|
+      @dayhome.admin_users.find do |user|
         mail(:to => user.email, :subject => "You've been approved at DayhomeRegistry.com")
       end
-      @dayhome.locale_users.find_each do |user|
+      @dayhome.locale_users.find do |user|
         mail(:to => user.email, :subject => "You've been approved at DayhomeRegistry.com")
       end
     end

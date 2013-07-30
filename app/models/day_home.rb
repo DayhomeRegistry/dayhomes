@@ -13,7 +13,7 @@ class DayHome < ActiveRecord::Base
   }
   scope :featured, lambda {|*args|
       #where(:featured => true)
-      joins(:features).where("end > ?",Time.now())
+      joins(:features).where("end > ?",Time.now()).uniq
   }
 
   # availability types
