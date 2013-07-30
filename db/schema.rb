@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130301032241) do
+ActiveRecord::Schema.define(:version => 20130609230210) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -94,8 +94,9 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
     t.integer  "day_home_id"
     t.string   "photo"
     t.string   "caption"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "default_photo", :default => false
   end
 
   add_index "day_home_photos", ["day_home_id"], :name => "index_day_home_photos_on_day_home_id"
@@ -145,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
     t.string   "highlight"
     t.boolean  "approved",               :default => true
     t.integer  "location_id"
+    t.string   "plan"
   end
 
   create_table "events", :force => true do |t|
@@ -269,7 +271,7 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
   add_index "topics", ["user_id"], :name => "index_topics_on_user_id"
 
   create_table "upgrades", :force => true do |t|
-    t.datetime "effective_date",  :default => '2013-03-08 19:15:31'
+    t.datetime "effective_date",  :default => '2013-03-13 18:51:31'
     t.datetime "created_at",                                         :null => false
     t.datetime "updated_at",                                         :null => false
     t.integer  "old_plan_id"
@@ -296,31 +298,29 @@ ActiveRecord::Schema.define(:version => 20130301032241) do
   add_index "user_day_homes", ["user_id"], :name => "index_user_day_homes_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                                :null => false
+    t.string   "email",                                               :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.boolean  "admin",                            :default => false
-    t.string   "crypted_password",                                     :null => false
-    t.string   "password_salt",                                        :null => false
-    t.string   "persistence_token",                                    :null => false
-    t.string   "single_access_token",                                  :null => false
-    t.string   "perishable_token",                                     :null => false
-    t.integer  "login_count",                      :default => 0,      :null => false
-    t.integer  "failed_login_count",               :default => 0,      :null => false
+    t.string   "crypted_password",                                    :null => false
+    t.string   "password_salt",                                       :null => false
+    t.string   "persistence_token",                                   :null => false
+    t.string   "single_access_token",                                 :null => false
+    t.string   "perishable_token",                                    :null => false
+    t.integer  "login_count",                      :default => 0,     :null => false
+    t.integer  "failed_login_count",               :default => 0,     :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
     t.string   "current_login_ip"
     t.string   "last_login_ip"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
     t.integer  "topics_count",                     :default => 0
     t.integer  "posts_count",                      :default => 0
     t.string   "facebook_access_token"
     t.string   "facebook_access_token_expires_in"
     t.date     "privacy_effective_date"
-    t.string   "stripe_customer_token"
-    t.string   "plan",                             :default => "baby"
     t.integer  "organization_id"
     t.integer  "location_id"
   end

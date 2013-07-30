@@ -3,6 +3,7 @@
 cloudfiles_config = YAML.load_file("#{Rails.root}/config/rackspace_cloudfiles.yml")[Rails.env].with_indifferent_access
 
 CarrierWave.configure do |config|
+
   config.fog_credentials = {
     :provider             => 'Rackspace',
     :rackspace_username   => cloudfiles_config[:username],
@@ -12,7 +13,10 @@ CarrierWave.configure do |config|
   }
 
   config.fog_directory = cloudfiles_config[:container]
-  config.fog_host = cloudfiles_config[:cdn_url]
+
+  # Commenting this out, otherwise it overrides the local file storage
+  # this forces a lookup every time.
+  #config.asset_host = cloudfiles_config[:cdn_url]
 
   # hack fix for windows machine due to tmp file permission error
   # per https://github.com/jnicklas/carrierwave/issues/220/

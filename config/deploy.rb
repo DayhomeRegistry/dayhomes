@@ -2,7 +2,7 @@ set :application, "dayhomes"
 set :repository,  "git@github.com:DayhomeRegistry/dayhomes.git"
 
 require './config/boot'
-require 'airbrake/capistrano'
+#require 'airbrake/capistrano'
 
 set :default_environment, {
   'PATH' => "/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH"

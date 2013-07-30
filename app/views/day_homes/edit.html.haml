@@ -1,6 +1,19 @@
 ﻿:javascript
 
   $(function(){
+    //need to treat the default_photo checkboxes like radio buttons
+    var changing=false;
+    $('form').on("change","input[name$='[default_photo]']",function(event) {
+      if(!changing){
+        changing=true;
+        $('form input[name$="[default_photo]"][type="checkbox"]').each(function(){
+          $(this).prop("checked",false);
+        });
+        $(this).prop("checked",true);
+        changing=false;
+      }
+    });
+
     tips = $( ".validateTips" );
     function updateTips( t ) {
       tips
@@ -105,7 +118,7 @@
   = f.text_field :city
   
   = f.label :province
-  = f.state_select :province, 'CA'
+  = f.subregion_select :province,'CA'
   %h3
     Locale
   = collection_select(:day_home, :location_id, Location.where("organization_id = "+ @day_home.organization.id.to_s), :id, :name)
@@ -118,10 +131,11 @@
       = p.label :caption, 'Caption'
       - if p.object.photo?
         .remove_contents
-          = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'
-        
+          = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'        
       = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
       = p.text_field :caption
+      = p.check_box :default_photo
+      = 'Set as default'
       %br
       = p.file_field :photo
       = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link'

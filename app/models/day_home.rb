@@ -13,7 +13,7 @@ class DayHome < ActiveRecord::Base
   }
   scope :featured, lambda {|*args|
       #where(:featured => true)
-      joins(:features).where("end > ?",Time.now())
+      joins(:features).where("end > ?",Time.now()).uniq
   }
 
   # availability types
@@ -94,10 +94,11 @@ class DayHome < ActiveRecord::Base
   end
   
   def featured_photo
-    photos.first
+    photos.where("default_photo=1").first
   end
 
   def featured?
+
     !self.features.where("end > ?",Time.now()).empty?
   end
   def feature_end_date

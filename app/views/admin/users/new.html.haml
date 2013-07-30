@@ -1,6 +1,6 @@
 %h2
   New User
--if @user.errors.any? %>  
+-if @user.errors.any?   
   .errorExplanation
     %h2
       = pluralize(@user.errors.count, "error")
