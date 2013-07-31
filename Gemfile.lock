@@ -99,7 +99,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     eventmachine (1.0.3-x86-mingw32)
-    excon (0.23.0)
+    excon (0.25.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.2.0)
@@ -111,9 +111,9 @@ GEM
       multipart-post (~> 1.2.0)
     ffi (1.9.0)
     ffi (1.9.0-x86-mingw32)
-    fog (1.12.1)
+    fog (1.13.0)
       builder
-      excon (~> 0.23.0)
+      excon (~> 0.25.0)
       formatador (~> 0.2.0)
       mime-types
       multi_json (~> 1.0)
@@ -327,7 +327,7 @@ DEPENDENCIES
   exception_notification!
   execjs
   factory_girl_rails
-  fog (= 1.12.1)
+  fog (= 1.13.0)
   foreigner
   foreman (= 0.47.0)
   forum_monster
