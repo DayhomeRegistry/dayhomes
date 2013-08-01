@@ -71,7 +71,9 @@ class Admin::DayHomesController < Admin::ApplicationController
 
   def destroy
     @day_home = DayHome.find(params[:id])
-    unless @day_home.destroy
+    @day_home.deleted = true;
+    @day_home.deleted_on = now();
+    unless @day_home.save
       flash[:error] = "Unable to remove #{@day_home.name}"
     end
 

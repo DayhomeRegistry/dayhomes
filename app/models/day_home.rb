@@ -1,5 +1,6 @@
 
 class DayHome < ActiveRecord::Base
+  default_scope :conditions => "deleted < 1"
 
   acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
                     :check_process => :prevent_geocoding, :address => :geo_address,
@@ -99,10 +100,10 @@ class DayHome < ActiveRecord::Base
 
   def featured?
 
-    !self.features.where("end > ?",Time.now()).empty?
+    !self.features.where("deleted != 1 and end > ?",Time.now()).empty?
   end
   def feature_end_date
-    self.features.where("end > ?",Time.now()).order("end desc").first.end
+    self.features.where("deleted != 1 and end > ?",Time.now()).order("end desc").first.end
   end
   
   # this method is called when updating the lat long (this is what's fed to google maps)
