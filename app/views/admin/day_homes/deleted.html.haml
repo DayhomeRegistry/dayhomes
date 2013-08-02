@@ -1,0 +1,91 @@
+:javascript
+  $(function(){
+    $(".photo_preview").colorbox({rel:'photo_preview'});
+    
+    $("#select_all").click(function(){
+        $(".select").prop("checked", true);
+    });
+    
+    $("#approveBtn").click(function(event){
+      $("#day_home_mass_function").val("approve");
+      $("#mass_form").submit();
+      
+      event.preventDefault(); // Prevent link from following its href
+    });
+    $("#featureBtn").click(function(event){
+      $("#day_home_mass_function").val("feature");
+      $("#mass_form").submit();
+      
+      event.preventDefault(); // Prevent link from following its href
+    });
+    $("#adminSearchBtn").click(function(event){
+      $("#searchForm").submit();
+      
+      event.preventDefault(); // Prevent link from following its href
+    });
+  });
+
+%p
+  = link_to 'Create dayhome', [:new, :admin, :day_home], :class => :btn
+  = link_to 'Approve','#',:id => 'approveBtn',:class => :btn
+  = link_to 'Feature','#',:id => 'featureBtn',:class => :btn
+=form_tag({:controller => "day_homes", :action => "index", :method=>"get"}, :id => :searchForm) do 
+  %div.input-prepend.pull-right
+    %span.add-on
+      %i.icon-search
+    = text_field_tag :query, nil, :placeholder => "Search", :value=> @query
+    = link_to 'Go','#',:id => 'adminSearchBtn',:class => :btn
+- if @day_homes.blank?
+  %p    
+    Huh.  There don't seem to be any Dayhomes like that.
+- else
+  = form_tag({:controller => "day_homes", :action => "mass_update"}, :method => "post", :id => "mass_form")
+  =hidden_field(:day_home, :mass_function)  
+  %table.table-striped.table{:cellpadding => '5'}
+    %thead
+      %tr
+        %th          
+          = check_box_tag(:select_all)
+        %th
+          = sortable "name","Name"
+        %th
+          Address
+        %th
+          Photos
+        %th
+          = sortable "featured","Featured?"
+        %th
+          = sortable "approved","Approved?"
+        %th
+          Actions
+    %tbody
+      - @day_homes.each do |day_home|
+        %tr
+          %td
+            = check_box_tag "select["+day_home.slug+"]",day_home.slug,false,:class => "select"
+          %td
+            = link_to day_home.name, day_home_slug_path(day_home.slug)
+          %td
+            = day_home.address
+          %td
+            - if day_home.photos.blank?
+              None
+            - else
+              - day_home.photos.each do |photo|
+                = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 25px; margin: 0 5px 5px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :alt => photo.caption, :title => photo.caption
+          %td
+            = yes_no(day_home.featured)
+          %td
+            = yes_no(day_home.approved)			
+          %td
+            = link_to 'Reactivate', admin_day_home_reactivate_path(day_home), :method=>:put
+            |
+            = link_to 'Obliterate', admin_day_home_obliterate_path(day_home), :method => :delete, :confirm => "Are you sure?"    
+  = paginate @day_homes, :window => 1,:left => 3,:right => 3
+  = link_to 'active',admin_day_homes_path()
+  |
+  %span.red
+    deleted
+  
+:plain
+  </form>    
