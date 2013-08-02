@@ -24,7 +24,7 @@
 
 - if @day_homes.blank?
   %p
-    No dayhomes have been assigned to you or, at least, none that match that criteria!
+    You have not deleted any dayhomes or, at least, none that match that criteria!
 - else
   %table.table-striped.table{:cellpadding => '5'}
     %thead
@@ -59,12 +59,9 @@
           %td
             = yes_no(day_home.featured?)
           %td
-            = link_to 'Edit', [:edit, day_home]
-            |
-            = link_to 'Delete', day_home, :method => :delete, :confirm => "Are you sure?"    
-            |
-            = link_to('Calendar', "/day_homes/#{day_home.id}/calendar")
+            = link_to 'Reactivate', day_home_reactivate_path(day_home)
+            
 = paginate @day_homes, :outer_window => 10, :window => 10
-active 
+= link_to 'active',day_homes_path()
 | 
-= link_to 'deleted',deleted_day_homes_path()
+deleted

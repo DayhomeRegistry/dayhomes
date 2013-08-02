@@ -27,11 +27,12 @@ Dayhomes::Application.routes.draw do
   root :to => 'pages#index'
 
   resources :searches
+  match 'day_homes/deleted' => 'day_homes#deleted', :via=>:get,:as=>:deleted_day_homes
   resources :day_homes do
     resources :reviews
     resources :events
-       
-    match 'deleted' => 'day_homes#deleted', :as=>:deleted  
+    match 'reactivate' => 'day_homes#reactivate', :as=>:reactivate, :via=>:put
+    
     member do
       post :contact
       get :followup

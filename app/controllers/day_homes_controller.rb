@@ -58,6 +58,56 @@ class DayHomesController < ApplicationController
       end
     end
   end
+  def deleted
+    if (!params[:query].nil?)
+      clause = params[:query]      
+      result = clause.scan(/(\bfeatured:\b[^\s]*)/)            
+      feature = result.length==0 ? "" : result[0][0]
+      result = clause.scan(/(\bapproved:\b[^\s]*)/)
+      approve = result.length==0 ? "" : result[0][0] 
+      result = clause.scan(/(\blocation:\b[^\s]*)/)
+      location = result.length==0 ? "" : result[0][0]   
+      clause = clause.gsub(feature,"")
+      clause = clause.gsub(approve,"")            
+      clause = clause.gsub(location,"")  
+      location = location.gsub("location:","")
+
+      
+      if (current_user.organization_admin?)
+        @day_homes = current_user.organization.day_homes.where("deleted=1")
+        if (!clause.empty?)
+          @day_homes = @day_homes.where("day_homes.name like ?", "%#{clause.strip}%") 
+        end
+      else
+        @day_homes = current_user.organization.day_homes.where("deleted=1") 
+        if (!clause.empty?)          
+          @day_homes = @day_homes.where("day_homes.name like ?", "%#{clause.strip}%")
+        end
+      end
+      #return render :text=> clause.strip+"|"+feature+"|"+approve
+
+      
+      if(!location.empty?)
+        #raise @day_homes.where("locations.name like '%#{location}%'").to_json
+        @day_homes = @day_homes.where("locations.name like '%#{location}%'")
+      end
+
+      if(!feature.empty?)            
+        @day_homes = @day_homes.where(:featured=> feature=="featured:yes")
+      end
+      if(!approve.empty?)
+        @day_homes = @day_homes.where(:approved=> approve=="approved:yes")
+                
+      end
+      @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+      @query = params[:query]
+    else 
+      raise current_user.organization.day_homes.where("deleted=1").count.to_json
+      @day_homes = current_user.organization.day_homes.where("deleted=1")
+      @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)      
+    end
+  end
+
   
   def show
     @day_home = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:id])
@@ -168,12 +218,24 @@ class DayHomesController < ApplicationController
   def destroy
     @day_home = DayHome.find(params[:id])
     @day_home.deleted = true;
-    @day_home.deleted_on = now();
+    @day_home.deleted_on = DateTime.now();
     unless @day_home.save
       flash[:error] = "Unable to remove #{@day_home.name}"
     end
 
     redirect_to day_homes_path
+  end
+  def reactivate
+    @day_home = DayHome.deleted.find(params[:day_home_id])
+    @day_home.deleted = false;
+    @day_home.deleted_on = nil;
+    if @day_home.save
+      flash[:success] = "#{@day_home.name} reactivated."
+    else
+      flash[:error] = "Something went wrong trying to reactivate #{@day_home.name}."
+    end
+    redirect_to admin_deleted_day_homes_path
+
   end
   
   private

@@ -102,11 +102,10 @@ class DayHome < ActiveRecord::Base
   end
 
   def featured?
-
-    !self.features.where("deleted != 1 and end > ?",Time.now()).empty?
+    !self.features.where("end > ?",Time.now()).empty?
   end
   def feature_end_date
-    self.features.where("deleted != 1 and end > ?",Time.now()).order("end desc").first.end
+    self.features.where("end > ?",Time.now()).order("end desc").first.end
   end
   
   # this method is called when updating the lat long (this is what's fed to google maps)
