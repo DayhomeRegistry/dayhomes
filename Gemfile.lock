@@ -111,7 +111,7 @@ GEM
       multipart-post (~> 1.2.0)
     ffi (1.9.0)
     ffi (1.9.0-x86-mingw32)
-    fog (1.13.0)
+    fog (1.14.0)
       builder
       excon (~> 0.25.0)
       formatador (~> 0.2.0)
@@ -119,7 +119,7 @@ GEM
       multi_json (~> 1.0)
       net-scp (~> 1.1)
       net-ssh (>= 2.1.3)
-      nokogiri (~> 1.5.0)
+      nokogiri (~> 1.5)
       ruby-hmac
     foreigner (1.4.2)
       activerecord (>= 3.0.0)
@@ -327,7 +327,7 @@ DEPENDENCIES
   exception_notification!
   execjs
   factory_girl_rails
-  fog (= 1.13.0)
+  fog (= 1.14.0)
   foreigner
   foreman (= 0.47.0)
   forum_monster
