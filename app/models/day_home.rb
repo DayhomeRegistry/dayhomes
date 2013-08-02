@@ -13,9 +13,12 @@ class DayHome < ActiveRecord::Base
     uniq
   }
   scope :featured, lambda {|*args|
-      #where(:featured => true)
-      joins(:features).where("end > ?",Time.now()).uniq
+    #where(:featured => true)
+    joins(:features).where("end > ?",Time.now()).uniq
   }
+  def self.deleted
+    DayHome.unscoped.where("deleted = 1")
+  end
 
   # availability types
   has_many :day_home_availability_types, :dependent => :destroy

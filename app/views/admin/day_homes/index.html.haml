@@ -82,5 +82,8 @@
             |
             = link_to 'Delete', [:admin, day_home], :method => :delete, :confirm => "Are you sure?"    
   = paginate @day_homes, :window => 1,:left => 3,:right => 3
+  active 
+  | 
+  = link_to 'deleted',admin_deleted_day_homes_path()
 :plain
   </form>    

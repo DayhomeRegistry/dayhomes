@@ -165,6 +165,16 @@ class DayHomesController < ApplicationController
       render :action => :new
     end
   end
+  def destroy
+    @day_home = DayHome.find(params[:id])
+    @day_home.deleted = true;
+    @day_home.deleted_on = now();
+    unless @day_home.save
+      flash[:error] = "Unable to remove #{@day_home.name}"
+    end
+
+    redirect_to day_homes_path
+  end
   
   private
   def sort_column

@@ -31,6 +31,7 @@ Dayhomes::Application.routes.draw do
     resources :reviews
     resources :events
        
+    match 'deleted' => 'day_homes#deleted', :as=>:deleted  
     member do
       post :contact
       get :followup
@@ -74,7 +75,12 @@ Dayhomes::Application.routes.draw do
   namespace :admin do
     root :to => 'day_homes#index'
     
-    resources :day_homes
+    resources :day_homes do
+      match 'reactivate' => 'day_homes#reactivate', :as=>:reactivate, :via=>:put
+      match 'obliterate' => 'day_homes#obliterate', :as=>:obliterate, :via=>:delete
+    end
+    match 'deleted_day_homes' => 'day_homes#deleted', :as=>:deleted_day_homes  , :via=>:get
+    
     resources :users
     resources :user_sessions
     
