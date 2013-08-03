@@ -59,7 +59,7 @@
           %td
             = yes_no(day_home.featured?)
           %td
-            = link_to 'Reactivate', day_home_reactivate_path(day_home)
+            = link_to 'Reactivate', day_home_reactivate_path(day_home,:params=>params), :method=>:put
             
 = paginate @day_homes, :outer_window => 10, :window => 10
 = link_to 'active',day_homes_path()
