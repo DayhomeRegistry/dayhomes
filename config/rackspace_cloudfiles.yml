@@ -1,14 +1,15 @@
 development:
-  container: dayhomes_development
-  username: markbennett
-  api_key: cb2acd1348d1dccab9ba68ee1eb38229
-  cdn_url: http://c10913533.r33.cf2.rackcdn.com
+  container: dayhomes_staging
+  username: jonmholt
+  api_key: 288bc129beca52ce4818b58e1a8cdc51
+  cdn_url: https://307be285b1e14e0417c2-25181be79b1f36ccdc7d3c4ce16785ec.ssl.cf1.rackcdn.com
+  use_fog: true
 
 test:
-  container: dayhomes_development
-  username: markbennett
-  api_key: cb2acd1348d1dccab9ba68ee1eb38229
-  cdn_url: http://c10913533.r33.cf2.rackcdn.com
+  container: dayhomes_staging
+  username: jonmholt
+  api_key: 288bc129beca52ce4818b58e1a8cdc51
+  cdn_url: https://307be285b1e14e0417c2-25181be79b1f36ccdc7d3c4ce16785ec.ssl.cf1.rackcdn.com
 
 staging:
   container: dayhomes_staging
@@ -16,7 +17,7 @@ staging:
   api_key: 288bc129beca52ce4818b58e1a8cdc51
   cdn_url: https://307be285b1e14e0417c2-25181be79b1f36ccdc7d3c4ce16785ec.ssl.cf1.rackcdn.com
   servicenet: true
-
+  use_fog: true
 
 production:
   container: dayhomes_production
@@ -25,3 +26,4 @@ production:
   cdn_url: https://db21d474e9403503a093-97e12afbe63538dbb594efedc6220dd8.ssl.cf2.rackcdn.com
   region: ord
   servicenet: false
+  use_fog: true
