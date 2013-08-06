@@ -3,7 +3,7 @@ development:
   username: jonmholt
   api_key: 288bc129beca52ce4818b58e1a8cdc51
   cdn_url: https://307be285b1e14e0417c2-25181be79b1f36ccdc7d3c4ce16785ec.ssl.cf1.rackcdn.com
-  use_fog: true
+  use_fog: false
 
 test:
   container: dayhomes_staging
