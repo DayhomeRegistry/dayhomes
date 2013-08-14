@@ -1,6 +1,7 @@
 # SNET Note:
 # https://github.com/jnicklas/carrierwave/wiki/How-To:-Use-Rackspace-ServiceNet-(snet)-to-transfer-from-CloudServer-to-CloudFiles
 cloudfiles_config = YAML.load_file("#{Rails.root}/config/rackspace_cloudfiles.yml")[Rails.env].with_indifferent_access
+Rails.configuration.use_fog = cloudfiles_config[:use_fog] || false
 
 CarrierWave.configure do |config|
 
