@@ -8,6 +8,21 @@ GIT
       nestful
 
 GIT
+  remote: git://github.com/DayhomeRegistry/fog.git
+  revision: b72e5f73f2383e016606e06ebf80905ba87a92cf
+  specs:
+    fog (1.14.0)
+      builder
+      excon (~> 0.25.0)
+      formatador (~> 0.2.0)
+      mime-types
+      multi_json (~> 1.0)
+      net-scp (~> 1.1)
+      net-ssh (>= 2.1.3)
+      nokogiri (~> 1.5)
+      ruby-hmac
+
+GIT
   remote: https://github.com/bcardarella/client_side_validations.git
   revision: a6a515504520e9925ca63524ae9854168163283e
   specs:
@@ -111,16 +126,6 @@ GEM
       multipart-post (~> 1.2.0)
     ffi (1.9.0)
     ffi (1.9.0-x86-mingw32)
-    fog (1.13.0)
-      builder
-      excon (~> 0.25.0)
-      formatador (~> 0.2.0)
-      mime-types
-      multi_json (~> 1.0)
-      net-scp (~> 1.1)
-      net-ssh (>= 2.1.3)
-      nokogiri (~> 1.5.0)
-      ruby-hmac
     foreigner (1.4.2)
       activerecord (>= 3.0.0)
     foreman (0.47.0)
@@ -327,7 +332,7 @@ DEPENDENCIES
   exception_notification!
   execjs
   factory_girl_rails
-  fog (= 1.13.0)
+  fog!
   foreigner
   foreman (= 0.47.0)
   forum_monster
