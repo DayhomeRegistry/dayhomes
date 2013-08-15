@@ -23,7 +23,7 @@ class Admin::OrganizationsController < Admin::ApplicationController
   def show
     @organization = Organization.find(params[:id])
     @plan = Plan.find_by_plan(@organization.plan)
-    @day_homes = DayHome.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+    @day_homes = @organization.day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
   end
 
   def new
