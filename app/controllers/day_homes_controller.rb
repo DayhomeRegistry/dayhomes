@@ -225,15 +225,24 @@ class DayHomesController < ApplicationController
     redirect_to day_homes_path
   end
   def reactivate
-    @day_home = DayHome.deleted.find(params[:day_home_id])
-    @day_home.deleted = false;
-    @day_home.deleted_on = nil;
-    if @day_home.save
-      flash[:success] = "#{@day_home.name} reactivated."
-    else
-      flash[:error] = "Something went wrong trying to reactivate #{@day_home.name}."
-    end
+    organization = current_user.organization
+    plan = Plan.find_by_plan(organization.plan)
     
+
+    max_dayhomes = plan.day_homes
+    if(plan.day_homes > 0 && max_dayhomes <= organization.day_homes.count())
+      flash[:error]="Sorry, you've reached your day home limit."
+    else
+      @day_home = DayHome.deleted.find(params[:day_home_id])
+      @day_home.deleted = false;
+      @day_home.deleted_on = nil;
+      if @day_home.save
+        flash[:success] = "#{@day_home.name} reactivated."
+      else
+        flash[:error] = "Something went wrong trying to reactivate #{@day_home.name}."
+      end
+    end
+
     redirect_to deleted_day_homes_path(:params=>params)
 
   end
