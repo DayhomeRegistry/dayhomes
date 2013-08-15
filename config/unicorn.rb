@@ -45,7 +45,7 @@ unless ENV['HEROKU']
 end
 
 # Nuke workers after 30 seconds instead of 60 seconds (the default)
-timeout 30
+timeout 60
 
 # Load application into the master before forking workers for super-fast
 # worker spawn times
