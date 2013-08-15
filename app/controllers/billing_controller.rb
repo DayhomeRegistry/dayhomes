@@ -104,10 +104,15 @@ class BillingController < ApplicationController
         @day_home.email = @day_home_signup_request.contact_email
         
         @day_home.location = loc
+  
+        #add default availability
+        full_time_full_days = AvailabilityType.where({:availability => 'Full-time', :kind => 'Full Days'}).first
+        @day_home.availability_types << full_time_full_days
 
         if(!@day_home.save)
           handle_dayhome_error
         end
+
 
       #Just for backwards compatibility, save the DayHomeSignupRequest
         if(!@day_home_signup_request.save)
