@@ -78,12 +78,14 @@
           %td
             = yes_no(day_home.approved)			
           %td
-            = link_to 'Edit', [:edit, :admin, day_home]
+            = link_to 'Reactivate', admin_day_home_reactivate_path(day_home), :method=>:put
             |
-            = link_to 'Delete', [:admin, day_home], :method => :delete, :confirm => "Are you sure?"    
+            = link_to 'Obliterate', admin_day_home_obliterate_path(day_home), :method => :delete, :confirm => "Are you sure?"    
   = paginate @day_homes, :window => 1,:left => 3,:right => 3
-  active 
-  | 
-  = link_to 'deleted',admin_deleted_day_homes_path()
+  = link_to 'active',admin_day_homes_path()
+  |
+  %span.red
+    deleted
+  
 :plain
   </form>    
