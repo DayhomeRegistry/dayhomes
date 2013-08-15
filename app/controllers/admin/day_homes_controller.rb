@@ -92,11 +92,17 @@ class Admin::DayHomesController < Admin::ApplicationController
   end
 
   def update
+    #the empty hash we "build" in edit breaks the validation
+    if params[:day_home][:photos_attributes].count==1 && params[:day_home][:photos_attributes]["0"][:photo].nil?
+      params[:day_home][:photos_attributes].reject!{ |k| k == "0" }
+    end
+    
     @day_home = DayHome.find(params[:id])    
-         
+    
     if @day_home.update_attributes(params[:day_home])  
       redirect_to admin_day_homes_path
     else
+
       render :action => :edit
     end
   end
