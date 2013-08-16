@@ -102,6 +102,7 @@ class DayHome < ActiveRecord::Base
   end
 
   def featured?
+    
     !self.features.where("end > ?",Time.now()).empty?
   end
   def feature_end_date

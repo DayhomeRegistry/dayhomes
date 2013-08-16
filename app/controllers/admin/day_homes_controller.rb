@@ -4,8 +4,10 @@ class Admin::DayHomesController < Admin::ApplicationController
     #return render :text=>url_for({:sort => "name", :direction => "asc"})
     if (!params[:query].nil?)
       clause = params[:query]      
+
       result = clause.scan(/(\bfeatured:\b[^\s]*)/)            
       feature = result.length==0 ? "" : result[0][0]
+
       result = clause.scan(/(\bapproved:\b[^\s]*)/)
       approve = result.length==0 ? "" : result[0][0]  
       clause = clause.gsub(feature,"")
@@ -18,8 +20,8 @@ class Admin::DayHomesController < Admin::ApplicationController
       end
       #return render :text=> clause.strip+"|"+feature+"|"+approve
       
-      if(!feature.empty?)            
-        @day_homes = @day_homes.where(:featured=> feature=="featured:yes")
+      if(!feature.empty? && feature=="featured:yes")  
+        @day_homes = @day_homes.featured
       end
       if(!approve.empty?)
         @day_homes = @day_homes.where(:approved=> approve=="approved:yes")
