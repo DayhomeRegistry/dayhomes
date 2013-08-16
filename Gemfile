@@ -33,6 +33,8 @@ gem 'ruby-recaptcha'
 gem 'execjs'
 gem 'carmen-rails', '~> 1.0.0'
 
+gem 'newrelic_rpm'
+
 platforms :mswin, :mingw do
   #gem 'eventmachine', '1.0.0.beta.4.1'
   #gem 'eventmachine', :git=> 'git://github.com/eventmachine/eventmachine.git'
