@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-
+gem 'debugger'
 gem 'rails', '3.2.13'
 gem 'mysql2'
 gem 'haml'
