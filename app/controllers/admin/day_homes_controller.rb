@@ -12,9 +12,9 @@ class Admin::DayHomesController < Admin::ApplicationController
       clause = clause.gsub(approve,"")            
       
       if (!clause.empty?)
-        @day_homes = DayHome.where("name like ?", "%#{clause.strip}%")
+        @day_homes = DayHome.includes(:photos).where("name like ?", "%#{clause.strip}%")
       else
-        @day_homes = DayHome.scoped
+        @day_homes = DayHome.includes(:photos).scoped
       end
       #return render :text=> clause.strip+"|"+feature+"|"+approve
       
@@ -28,7 +28,7 @@ class Admin::DayHomesController < Admin::ApplicationController
       @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
       @query = params[:query]
     else 
-      @day_homes = DayHome.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+      @day_homes = DayHome.includes(:photos).order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
     end
     
   end

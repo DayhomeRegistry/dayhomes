@@ -1,4 +1,4 @@
--photo=nil#dayhome.featured_photo
+-photo=dayhome.featured_photo
 .dayhome_bubble{:class => photo.nil? ? 'bubble_without_pic' : 'bubble_with_pic' }
   .name
     %h4=link_to(dayhome.name, day_home_slug_path(dayhome.slug))

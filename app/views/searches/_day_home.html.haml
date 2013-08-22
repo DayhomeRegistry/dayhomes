@@ -3,9 +3,9 @@
     %h4= link_to day_home.name, day_home_path(day_home)
     =link_to "Show on map","#",:class=>"markerCallout",:id=>day_home.slug    
   .row
-    /.span2
-    /  .bubble_pic
-    /    =link_to(day_home.photos.empty? ? '' : image_tag(day_home.photos.first.photo_url(:thumb)), day_home_slug_path(day_home.slug))
+    .span2
+      .bubble_pic
+        =link_to(day_home.photos.empty? ? '' : image_tag(day_home.photos.first.photo_url(:thumb)), day_home_slug_path(day_home.slug))
     .span5
       %div
         =day_home.highlight
