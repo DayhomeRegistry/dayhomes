@@ -225,7 +225,9 @@ class DayHomesController < ApplicationController
     @day_home = DayHome.find(params[:id])
     @day_home.deleted = true;
     @day_home.deleted_on = DateTime.now();
-    unless @day_home.save
+    if @day_home.save
+      flash[:success] = "#{@day_home.name} has been deleted. Check the deleted tab below to reactivate."
+    else
       flash[:error] = "Unable to remove #{@day_home.name}"
     end
 

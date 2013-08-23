@@ -103,7 +103,7 @@ class Admin::DayHomesController < Admin::ApplicationController
     
     @day_home = DayHome.find(params[:id])    
     if @day_home.update_attributes(params[:day_home])  
-      redirect_to admin_day_homes_path
+      redirect_to admin_day_homes_path(:params=>params)
     else
 
       render :action => :edit
@@ -114,11 +114,13 @@ class Admin::DayHomesController < Admin::ApplicationController
     @day_home = DayHome.find(params[:id])
     @day_home.deleted = true;
     @day_home.deleted_on = DateTime.now();
-    unless @day_home.save
+    if @day_home.save
+      flash[:success] = "#{@day_home.name} has been deleted. Check the deleted tab below to reactivate."
+    else
       flash[:error] = "Unable to remove #{@day_home.name}"
     end
 
-    redirect_to admin_day_homes_path
+    redirect_to admin_day_homes_path(:params=>params)
   end
   def reactivate
     @day_home = DayHome.deleted.find(params[:day_home_id])
@@ -129,7 +131,7 @@ class Admin::DayHomesController < Admin::ApplicationController
     else
       flash[:error] = "Something went wrong trying to reactivate #{@day_home.name}."
     end
-    redirect_to admin_deleted_day_homes_path
+    redirect_to admin_deleted_day_homes_path(:params=>params)(:params=>params)
 
   end
   def obliterate
@@ -140,7 +142,7 @@ class Admin::DayHomesController < Admin::ApplicationController
       flash[:error] = "Unable to obliterate #{@day_home.name}"
     end
 
-    redirect_to admin_deleted_day_homes_path
+    redirect_to admin_deleted_day_homes_path(:params=>params)
   end
   
   def mass_update      
