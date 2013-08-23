@@ -75,11 +75,10 @@
       - if p.object.photo?
         .remove_contents
           = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'
-        
-      = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
       = p.text_field :caption
-      = p.check_box :default_photo
+      = p.check_box :default_photo        
       = 'Set as default'
+      = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
       %br
       = p.file_field :photo
       = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link'

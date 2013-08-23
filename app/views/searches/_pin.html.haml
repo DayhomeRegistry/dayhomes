@@ -1,8 +1,9 @@
-.dayhome_bubble{:class => dayhome.photos.empty? ? 'bubble_without_pic' : 'bubble_with_pic' }
+-photo=dayhome.featured_photo
+.dayhome_bubble{:class => photo.nil? ? 'bubble_without_pic' : 'bubble_with_pic' }
   .name
     %h4=link_to(dayhome.name, day_home_slug_path(dayhome.slug))
-  .bubble_pic
-    =link_to(dayhome.photos.empty? ? '' : image_tag(dayhome.photos.first.photo_url(:thumb)), day_home_slug_path(dayhome.slug))
+  .bubble_pic    
+    =link_to(photo.nil? ? '' : image_tag(photo.photo_url(:thumb)), day_home_slug_path(dayhome.slug))
   %div
     =dayhome.city  + ' , ' + dayhome.province
   %div
