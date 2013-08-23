@@ -173,6 +173,13 @@ class DayHomesController < ApplicationController
   end
   
   def update
+    #the empty hash we "build" in edit breaks the validation
+    params[:day_home][:photos_attributes].each do |k,v|
+      if (v["_destroy"]!="1" && v["photo"].nil?)
+        params[:day_home][:photos_attributes].except!(k)
+      end
+    end
+
     if(current_user.organization_admin?)
       @day_home = current_user.organization.day_homes.find(params[:id])
     else

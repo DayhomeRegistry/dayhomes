@@ -45,10 +45,11 @@ function add_another_mangement() {
   
   $('.remove_fieldset_link').on('click', function(){
     var parent = $(this).closest('.add_multiples');
-    var destroy_elem = parent.find('input[type=checkbox]');
+    var destroy_elem = parent.find('input[type=checkbox]').filter(':hidden');
+    var attribute_key = $(this).attr('data-attribute-key');
     var data_group = parent.attr('data-group');
     if($('.add_multiples[data-group='+data_group+']:visible').length==1) {
-      clone(parent);
+      clone(parent,attribute_key);
     }
     if(destroy_elem.length == 0){
       parent.remove();
