@@ -131,7 +131,7 @@ class Admin::DayHomesController < Admin::ApplicationController
     else
       flash[:error] = "Something went wrong trying to reactivate #{@day_home.name}."
     end
-    redirect_to admin_deleted_day_homes_path(:params=>params)(:params=>params)
+    redirect_to admin_deleted_day_homes_path(:params=>params)
 
   end
   def obliterate
