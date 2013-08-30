@@ -1,5 +1,6 @@
 
 class DayHome < ActiveRecord::Base
+  default_scope :conditions => "deleted < 1"
 
   acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
                     :check_process => :prevent_geocoding, :address => :geo_address,
@@ -12,9 +13,12 @@ class DayHome < ActiveRecord::Base
     uniq
   }
   scope :featured, lambda {|*args|
-      #where(:featured => true)
-      joins(:features).where("end > ?",Time.now()).uniq
+    #where(:featured => true)
+    joins(:features).where("end > ?",Time.now()).uniq
   }
+  def self.deleted
+    DayHome.unscoped.where("deleted = 1")
+  end
 
   # availability types
   has_many :day_home_availability_types, :dependent => :destroy
@@ -98,7 +102,7 @@ class DayHome < ActiveRecord::Base
   end
 
   def featured?
-
+    
     !self.features.where("end > ?",Time.now()).empty?
   end
   def feature_end_date

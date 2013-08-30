@@ -4,8 +4,10 @@ class Admin::DayHomesController < Admin::ApplicationController
     #return render :text=>url_for({:sort => "name", :direction => "asc"})
     if (!params[:query].nil?)
       clause = params[:query]      
+
       result = clause.scan(/(\bfeatured:\b[^\s]*)/)            
       feature = result.length==0 ? "" : result[0][0]
+
       result = clause.scan(/(\bapproved:\b[^\s]*)/)
       approve = result.length==0 ? "" : result[0][0]  
       clause = clause.gsub(feature,"")
@@ -15,6 +17,36 @@ class Admin::DayHomesController < Admin::ApplicationController
         @day_homes = DayHome.includes(:photos).where("name like ?", "%#{clause.strip}%")
       else
         @day_homes = DayHome.includes(:photos).scoped
+      end
+      #return render :text=> clause.strip+"|"+feature+"|"+approve
+      
+      if(!feature.empty? && feature=="featured:yes")  
+        @day_homes = @day_homes.featured
+      end
+      if(!approve.empty?)
+        @day_homes = @day_homes.where(:approved=> approve=="approved:yes")
+                
+      end
+      @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+      @query = params[:query]
+    else 
+      @day_homes = DayHome.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+    end    
+  end
+  def deleted
+    if (!params[:query].nil?)
+      clause = params[:query]      
+      result = clause.scan(/(\bfeatured:\b[^\s]*)/)            
+      feature = result.length==0 ? "" : result[0][0]
+      result = clause.scan(/(\bapproved:\b[^\s]*)/)
+      approve = result.length==0 ? "" : result[0][0]  
+      clause = clause.gsub(feature,"")
+      clause = clause.gsub(approve,"")            
+      
+      if (!clause.empty?)
+        @day_homes = DayHome.deleted.where("name like ?", "%#{clause.strip}%")
+      else
+        @day_homes = DayHome.deleted
       end
       #return render :text=> clause.strip+"|"+feature+"|"+approve
       
@@ -28,9 +60,9 @@ class Admin::DayHomesController < Admin::ApplicationController
       @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
       @query = params[:query]
     else 
-      @day_homes = DayHome.includes(:photos).order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
-    end
-    
+      @day_homes = DayHome.deleted.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+    end    
+
   end
 
   def show
@@ -52,6 +84,8 @@ class Admin::DayHomesController < Admin::ApplicationController
     end
   end
 
+
+
   def edit
     @day_home = DayHome.find(params[:id])
     @day_home.photos.build if @day_home.photos.blank?
@@ -60,22 +94,55 @@ class Admin::DayHomesController < Admin::ApplicationController
   end
 
   def update
+    #the empty hash we "build" in edit breaks the validation
+    params[:day_home][:photos_attributes].each do |k,v|
+      if (v["_destroy"]!="1" && v["photo"].nil?)
+        params[:day_home][:photos_attributes].except!(k)
+      end
+    end
+    
     @day_home = DayHome.find(params[:id])    
-         
     if @day_home.update_attributes(params[:day_home])  
-      redirect_to admin_day_homes_path
+      redirect_to admin_day_homes_path(:params=>params)
     else
+
       render :action => :edit
     end
   end
 
   def destroy
     @day_home = DayHome.find(params[:id])
-    unless @day_home.destroy
+    @day_home.deleted = true;
+    @day_home.deleted_on = DateTime.now();
+    if @day_home.save
+      flash[:success] = "#{@day_home.name} has been deleted. Check the deleted tab below to reactivate."
+    else
       flash[:error] = "Unable to remove #{@day_home.name}"
     end
 
-    redirect_to admin_day_homes_path
+    redirect_to admin_day_homes_path(:params=>params)
+  end
+  def reactivate
+    @day_home = DayHome.deleted.find(params[:day_home_id])
+    @day_home.deleted = false;
+    @day_home.deleted_on = nil;
+    if @day_home.save
+      flash[:success] = "#{@day_home.name} reactivated."
+    else
+      flash[:error] = "Something went wrong trying to reactivate #{@day_home.name}."
+    end
+    redirect_to admin_deleted_day_homes_path(:params=>params)
+
+  end
+  def obliterate
+    @day_home = DayHome.deleted.find(params[:day_home_id])
+    if @day_home.destroy
+      flash[:success] = "#{@day_home.name} has been deleted forever. May it rest in peace."
+    else
+      flash[:error] = "Unable to obliterate #{@day_home.name}"
+    end
+
+    redirect_to admin_deleted_day_homes_path(:params=>params)
   end
   
   def mass_update      
