@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-
+gem 'debugger', group: [:development, :test]
 gem 'rails', '3.2.13'
 gem 'mysql2'
 gem 'haml'
@@ -32,6 +32,8 @@ gem 'foreigner'
 gem 'ruby-recaptcha'
 gem 'execjs'
 gem 'carmen-rails', '~> 1.0.0'
+
+gem 'newrelic_rpm'
 
 platforms :mswin, :mingw do
   #gem 'eventmachine', '1.0.0.beta.4.1'

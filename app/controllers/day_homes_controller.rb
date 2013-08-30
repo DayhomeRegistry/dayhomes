@@ -173,6 +173,13 @@ class DayHomesController < ApplicationController
   end
   
   def update
+    #the empty hash we "build" in edit breaks the validation
+    params[:day_home][:photos_attributes].each do |k,v|
+      if (v["_destroy"]!="1" && v["photo"].nil?)
+        params[:day_home][:photos_attributes].except!(k)
+      end
+    end
+
     if(current_user.organization_admin?)
       @day_home = current_user.organization.day_homes.find(params[:id])
     else
@@ -218,7 +225,9 @@ class DayHomesController < ApplicationController
     @day_home = DayHome.find(params[:id])
     @day_home.deleted = true;
     @day_home.deleted_on = DateTime.now();
-    unless @day_home.save
+    if @day_home.save
+      flash[:success] = "#{@day_home.name} has been deleted. Check the deleted tab below to reactivate."
+    else
       flash[:error] = "Unable to remove #{@day_home.name}"
     end
 
