@@ -277,9 +277,8 @@ class BillingController < ApplicationController
 
     #ok, now do the math
     @day_home = @organization.day_homes.find(params["day_home_id"])
-
     respond_to do |format|  
-      if @day_home.activate
+      if @day_home.activate(false,params[:months])
         format.html { return redirect_to edit_day_home_path(@day_home) }  
         format.js  {return render :json=>"Success"}
       else  

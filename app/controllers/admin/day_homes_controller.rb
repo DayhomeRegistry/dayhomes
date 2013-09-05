@@ -102,7 +102,14 @@ class Admin::DayHomesController < Admin::ApplicationController
       end
     end
     
-    @day_home = DayHome.find(params[:id])    
+    @day_home = DayHome.find(params[:id]) 
+    feature = true
+    
+    if params[:featured?].nil?
+      #the checkbox is not checked
+      feature = false
+    end
+    @day_home.admin_featured=feature
     if @day_home.update_attributes(params[:day_home])  
       redirect_to admin_day_homes_path(:page=>params["page"].keys[0])
     else

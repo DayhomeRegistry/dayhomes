@@ -116,22 +116,28 @@ class DayHome < ActiveRecord::Base
   end
   def admin_featured=(value)
     if value
-      return self.activate(true)
+      return self.activate(true,1)
     else
-      return self.cancel_feature
+      if featured?
+        return self.cancel_feature
+      end
     end
+    return true
   end
-  def featured=(value)
+  def featured=(value)  
     if value
-      return self.activate(false)
+      return self.activate(false,1)
     else
-      raise "I'm in cancel_feature"
-      return self.cancel_feature
+      if featured?
+        return self.cancel_feature
+      end
     end
+    return true
   end
   def cancel_feature
-    self.features.where("end <> null").each do |feature|
-      feature.end=now()
+
+    self.features.where("end > ?",Time.now()).each do |feature|
+      feature.end=Time.now()
       feature.save
     end
   end
@@ -206,8 +212,7 @@ class DayHome < ActiveRecord::Base
     save = feature.save
     return save && self.organization.save
   end
-  def activate(admin)
-    
+  def activate(admin,months)
     saved=true
 
     @organization = self.organization
@@ -220,12 +225,13 @@ class DayHome < ActiveRecord::Base
 
       last_date = Time.now()
       #check if there are enough credits
-      how_many_months = 1
+      how_many_months = months.to_i
       if(how_many_months<=features.count)
         Feature.transaction do
           how_many_months.times do |f|
             feature = features[f]
-            feature.day_home = @day_home
+            feature.day_home = self
+            feature.organization=self.organization
             feature.start = last_date
             last_date = last_date.advance(:months => 1)
             feature.end = last_date
