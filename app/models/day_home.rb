@@ -98,15 +98,42 @@ class DayHome < ActiveRecord::Base
   end
   
   def featured_photo
-    photos.where("default_photo=1").first
+    defaults = photos.where("default_photo=1")
+    if (!defaults.empty?)
+      defaults.first
+    elsif !photos.empty?
+      photos.first
+    else
+      photos.build
+    end
   end
 
   def featured?
-    
     !self.features.where("end > ?",Time.now()).empty?
   end
   def feature_end_date
     self.features.where("end > ?",Time.now()).order("end desc").first.end
+  end
+  def admin_featured=(value)
+    if value
+      return self.activate(true)
+    else
+      return self.cancel_feature
+    end
+  end
+  def featured=(value)
+    if value
+      return self.activate(false)
+    else
+      raise "I'm in cancel_feature"
+      return self.cancel_feature
+    end
+  end
+  def cancel_feature
+    self.features.where("end <> null").each do |feature|
+      feature.end=now()
+      feature.save
+    end
   end
   
   # this method is called when updating the lat long (this is what's fed to google maps)
@@ -167,4 +194,49 @@ class DayHome < ActiveRecord::Base
   def locale_users
     self.organization.users.where("location_id = ?",self.location_id)
   end
+
+  def activate_admin
+    feature = Feature.new();
+    feature.day_home=self
+    feature.start = Time.now()
+    feature.end = Time.now().advance(:months=>1)
+    feature.organization=self.organization
+    feature.freebee = false;
+    @organization.features << feature
+    save = feature.save
+    return save && self.organization.save
+  end
+  def activate(admin)
+    
+    saved=true
+
+    @organization = self.organization
+    if (admin)
+      saved=activate_admin
+    else
+      #activate a feature
+      features = @organization.features
+      features = features.where("day_home_id is null")
+
+      last_date = Time.now()
+      #check if there are enough credits
+      how_many_months = 1
+      if(how_many_months<=features.count)
+        Feature.transaction do
+          how_many_months.times do |f|
+            feature = features[f]
+            feature.day_home = @day_home
+            feature.start = last_date
+            last_date = last_date.advance(:months => 1)
+            feature.end = last_date
+            saved = saved && feature.save
+          end
+        end
+      else
+        return false
+      end
+      return saved
+    end
+  end
+
 end

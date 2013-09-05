@@ -40,6 +40,7 @@
     Huh.  There don't seem to be any Dayhomes like that.
 - else
   = form_tag({:controller => "day_homes", :action => "mass_update"}, :method => "post", :id => "mass_form")
+  =hidden_field(:page, @day_homes.current_page)
   =hidden_field(:day_home, :mass_function)  
   %table.table-striped.table{:cellpadding => '5'}
     %thead
@@ -78,7 +79,8 @@
           %td
             = yes_no(day_home.approved)			
           %td
-            = link_to 'Edit', [:edit, :admin, day_home]
+            /= link_to   'Edit', [:edit, :admin, day_home], :page=>params["page"]
+            = link_to 'Edit', edit_admin_day_home_path(day_home,:page=>params["page"])
             |
             = link_to 'Delete', [:admin, day_home], :method => :delete, :confirm => "Are you sure?"    
   = paginate @day_homes, :window => 1,:left => 3,:right => 3

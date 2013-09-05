@@ -91,6 +91,7 @@ class Admin::DayHomesController < Admin::ApplicationController
     @day_home.photos.build if @day_home.photos.blank?
 
     #raise @day_home.organization.to_json
+    render :params=>{:page=>params["page"]}
   end
 
   def update
@@ -103,7 +104,7 @@ class Admin::DayHomesController < Admin::ApplicationController
     
     @day_home = DayHome.find(params[:id])    
     if @day_home.update_attributes(params[:day_home])  
-      redirect_to admin_day_homes_path(:params=>params)
+      redirect_to admin_day_homes_path(:page=>params["page"].keys[0])
     else
 
       render :action => :edit
@@ -147,8 +148,12 @@ class Admin::DayHomesController < Admin::ApplicationController
   
   def mass_update      
     text = "<div>The following dayhomes were "
+    error = "<div>The following dayhomes had issues being "
+    show_error=false
+    show_success=false
     function = params[:day_home]["mass_function"]
     text += function + "d:<ul>"
+    error += function + "d:<ul>"
     if params[:select]
       case function
         when "approve"
@@ -158,23 +163,34 @@ class Admin::DayHomesController < Admin::ApplicationController
               text += "<li>"+@day_home.name+"</li>"
               @day_home.approved = true
               @day_home.save
+              show_success=true
             end
           end
         when "feature"
           params[:select].each do |dayhome|
             @day_home = DayHome.find_by_slug(dayhome)
-            if(!@day_home.featured)
+            if(!@day_home.featured?)
+              @day_home.admin_featured=true
               text += "<li>"+@day_home.name+"</li>"
-              @day_home.featured = true
-              @day_home.save
+              show_success=true
+            else
+              show_error=true
+              error +="<li>"+@day_home.name+": already featured this month.</li>"
             end
           end
       end
       text += "</ul></div>"
+      error += "</ul></div>"
     end
     #return render :text => text
-    flash[:success] = text
-    redirect_to :action => :index
+    if(show_success)
+      flash[:success] = text
+    end
+    if(show_error)
+      flash[:error] = error
+    end
+    
+    redirect_to :action => :index, :params=>{:page=>params["page"].keys[0]}
   end
   
   private
