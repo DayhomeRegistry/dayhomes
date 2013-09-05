@@ -169,7 +169,7 @@ class DayHomesController < ApplicationController
     else
       @day_home = current_user.day_homes.find(params[:id])
     end
-    #@day_home.photos.build
+    @day_home.photos.build
   end
   
   def update

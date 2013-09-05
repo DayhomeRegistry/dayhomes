@@ -23,14 +23,23 @@
     
   });
   
-
+.floatr
+  -if @day_home.featured?
+    %strong
+      .featured-button.featured
+        .ui-button-text
+          Featured
+          %span.fs_11
+            until #{@day_home.feature_end_date}
 = form_for [:admin, @day_home], :html => {:multipart => true} do |f|
-  
+  =hidden_field(:page, params["page"])
   = link_to 'You can edit contact phone in the organization.', [:edit, :admin, @day_home.organization]
   = f.label :approved, :class => 'checkbox' do
     = f.check_box :approved
     Approved to display in searches?
-	
+  = f.label :featured?, :class => 'checkbox' do
+    = f.check_box :featured?
+    Featured?
   = f.label :name
   = f.text_field :name
   
