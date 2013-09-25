@@ -40,7 +40,6 @@
     Huh.  There don't seem to be any Dayhomes like that.
 - else
   = form_tag({:controller => "day_homes", :action => "mass_update"}, :method => "post", :id => "mass_form")
-  =hidden_field(:page, @day_homes.current_page)
   =hidden_field(:day_home, :mass_function)  
   %table.table-striped.table{:cellpadding => '5'}
     %thead
@@ -75,17 +74,18 @@
               - day_home.photos.each do |photo|
                 = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 25px; margin: 0 5px 5px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :alt => photo.caption, :title => photo.caption
           %td
-            = yes_no(day_home.featured?)
+            = yes_no(day_home.featured)
           %td
             = yes_no(day_home.approved)			
           %td
-            /= link_to   'Edit', [:edit, :admin, day_home], :page=>params["page"]
-            = link_to 'Edit', edit_admin_day_home_path(day_home,:page=>params["page"])
+            = link_to 'Reactivate', admin_day_home_reactivate_path(day_home), :method=>:put
             |
-            = link_to 'Delete', [:admin, day_home], :method => :delete, :confirm => "Are you sure?"    
+            = link_to 'Obliterate', admin_day_home_obliterate_path(day_home), :method => :delete, :confirm => "Are you sure?"    
   = paginate @day_homes, :window => 1,:left => 3,:right => 3
-  active 
-  | 
-  = link_to 'deleted',admin_deleted_day_homes_path()
+  = link_to 'active',admin_day_homes_path()
+  |
+  %span.red
+    deleted
+  
 :plain
   </form>    

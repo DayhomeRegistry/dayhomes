@@ -23,14 +23,23 @@
     
   });
   
-
+.floatr
+  -if @day_home.featured?
+    %strong
+      .featured-button.featured
+        .ui-button-text
+          Featured
+          %span.fs_11
+            until #{@day_home.feature_end_date}
 = form_for [:admin, @day_home], :html => {:multipart => true} do |f|
-  
+  =hidden_field(:page, params["page"])
   = link_to 'You can edit contact phone in the organization.', [:edit, :admin, @day_home.organization]
   = f.label :approved, :class => 'checkbox' do
     = f.check_box :approved
     Approved to display in searches?
-	
+  = f.label :featured?, :class => 'checkbox' do
+    = f.check_box :featured?
+    Featured?
   = f.label :name
   = f.text_field :name
   
@@ -75,14 +84,13 @@
       - if p.object.photo?
         .remove_contents
           = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'
-        
-      = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
       = p.text_field :caption
-      = p.check_box :default_photo
+      = p.check_box :default_photo        
       = 'Set as default'
+      = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
       %br
       = p.file_field :photo
-      = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link'
+      = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
   .clear
   %strong= link_to 'Add Another Photo', '#', :class => 'add_multiples_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
   %br

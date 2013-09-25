@@ -104,10 +104,15 @@ class BillingController < ApplicationController
         @day_home.email = @day_home_signup_request.contact_email
         
         @day_home.location = loc
+  
+        #add default availability
+        full_time_full_days = AvailabilityType.where({:availability => 'Full-time', :kind => 'Full Days'}).first
+        @day_home.availability_types << full_time_full_days
 
         if(!@day_home.save)
           handle_dayhome_error
         end
+
 
       #Just for backwards compatibility, save the DayHomeSignupRequest
         if(!@day_home_signup_request.save)
@@ -264,16 +269,7 @@ class BillingController < ApplicationController
       end  
     end  
   end
-  def activate_admin
-    feature = Feature.new();
-    feature.day_home=@day_home
-    feature.start = Time.now()
-    feature.end = Time.now().advance(:months=>1)
-    feature.organization=@organization
-    @organization.features << feature
-    feature.save
-    @organization.save
-  end
+
   def activate
     @organization = current_user.organization
     #make sure the freebees are up to date before we go checking if they have enough
@@ -281,50 +277,17 @@ class BillingController < ApplicationController
 
     #ok, now do the math
     @day_home = @organization.day_homes.find(params["day_home_id"])
-    
-    if (current_user.admin?)
-      activate_admin
-    else
-      #activate a feature
-      features = @organization.features
-      features = features.where("day_home_id is null")
-
-      saved = true
-      last_date = Time.now()
-      #check if there are enough credits
-      how_many_months = params["months"].to_i
-      if(how_many_months<=features.count)
-        Feature.transaction do
-          how_many_months.times do |f|
-            feature = features[f]
-            feature.day_home = @day_home
-            feature.start = last_date
-            last_date = last_date.advance(:months => 1)
-            feature.end = last_date
-            saved = saved && feature.save
-          end
-        end
-      else
-        respond_to do |format|  
-          error = "You don't have enough credits to feature your dayhome for #{how_many_months} #{how_many_months>1?'months':'month'}.  "
-          error = error + "You might want to go <a href='" + billing_extras_path() + "'>buy extras</a>."
-
-          format.html { return redirect_to edit_day_home_path(@day_home), :notice=>error }  
-          format.js { return render :text=>error, :status=>500}        
-        end  
-      end
-    end
     respond_to do |format|  
-      if saved
+      if @day_home.activate(false,params[:months])
         format.html { return redirect_to edit_day_home_path(@day_home) }  
         format.js  {return render :json=>"Success"}
       else  
+        error = "You don't have enough credits to feature your dayhome for #{how_many_months} #{how_many_months>1?'months':'month'}.  "
+        error = error + "You might want to go <a href='" + billing_extras_path() + "'>buy extras</a>."
         format.html { return redirect_to edit_day_home_path(@day_home), :notice=>error}  
         format.js { return render :text=>error, :status=>500}
       end  
     end  
-    
-    
   end
 
   private

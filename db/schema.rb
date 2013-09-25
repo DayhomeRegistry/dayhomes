@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130609230210) do
+ActiveRecord::Schema.define(:version => 20130801215617) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -147,6 +147,8 @@ ActiveRecord::Schema.define(:version => 20130609230210) do
     t.boolean  "approved",               :default => true
     t.integer  "location_id"
     t.string   "plan"
+    t.boolean  "deleted",                :default => false
+    t.datetime "deleted_on"
   end
 
   create_table "events", :force => true do |t|

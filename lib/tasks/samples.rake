@@ -311,13 +311,17 @@ namespace :db do
           photo[:photo] = File.open(File.dirname(__FILE__) + "/seeds/dayhomes/" + photo[:photo]) unless photo[:photo].respond_to?(:read)
           photo
         end
+        default=true
         photos.each do |photo|
-          day_home.photos.create!(photo)
+          day_home_photo=day_home.photos.create!(photo)
+          day_home_photo.default_photo=default
+          day_home_photo.save
+          default=false
         end
       end
 
       # Create a dayhome with reviews
-      o1 = Organization.create!({:name=>"DayHome With Reviews",:postal_code => 'T6L5M6', :street1 => '4138 36st NW',:city=>'Edmonton',:province=>'Alberta'})
+      o1 = Organization.create!({:name=>"DayHome With Reviews",:postal_code => 'T6L5M6', :phone_number => '780-555-5555',:street1 => '4138 36st NW',:city=>'Edmonton',:province=>'Alberta'})
       l1 = Location.create!({:name=>"Edmonton"})
       agencyUser2.location = l1
       o1.locations << l1
@@ -330,8 +334,6 @@ namespace :db do
                                                :slug => 'DayHomesWithReviews',
                                                :email => 'withreviews123@dayhomeregistry.com',
                                                :postal_code => 'T6L5M6',
-                                               :featured => true,
-                                               :phone_number => '780-555-5555',
                                                :highlight => 'Dayhome With Reviews is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.',
                                                :blurb => 'Dayhome With Reviews is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.'                                               
                                               })
@@ -346,7 +348,8 @@ namespace :db do
           { :caption => "Outdoor playground", :photo => "swing.jpg" }
       ]
       add_photos_to_dayhome(photos, day_home_with_reviews)
-
+      #feature this dayhome
+      f1= Feature.create!({:start=>DateTime.now(),:end=>DateTime.now()+1.month, :day_home_id=>day_home_with_reviews.id,:organization_id=>o1.id,:freebee=>false})
 
       # add reviews to day_home_with_reviews
       reviews.each_with_index do |rev, index|

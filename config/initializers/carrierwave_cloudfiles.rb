@@ -1,6 +1,7 @@
 # SNET Note:
 # https://github.com/jnicklas/carrierwave/wiki/How-To:-Use-Rackspace-ServiceNet-(snet)-to-transfer-from-CloudServer-to-CloudFiles
 cloudfiles_config = YAML.load_file("#{Rails.root}/config/rackspace_cloudfiles.yml")[Rails.env].with_indifferent_access
+Rails.configuration.use_fog = cloudfiles_config[:use_fog] || false
 
 CarrierWave.configure do |config|
 
@@ -14,9 +15,10 @@ CarrierWave.configure do |config|
 
   config.fog_directory = cloudfiles_config[:container]
 
-  # Commenting this out, otherwise it overrides the local file storage
-  # this forces a lookup every time.
-  #config.asset_host = cloudfiles_config[:cdn_url]
+  # Setting asset_host overrides path in the the local file storage
+  if Rails.configuration.use_fog
+    config.asset_host = cloudfiles_config[:cdn_url]
+  end
 
   # hack fix for windows machine due to tmp file permission error
   # per https://github.com/jnicklas/carrierwave/issues/220/

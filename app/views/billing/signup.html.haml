@@ -221,14 +221,26 @@
             = f.text_field :day_home_city, :class=>"input-medium"            
             .example
               City
-          .span-10
+          .span-12
             = f.subregion_select :day_home_province,'CA'
             .example
               Province
-          .span-6
-            = f.text_field :day_home_postal_code, :class=>"input-mini"
+          .span-4
+            = f.text_field :day_home_postal_code, :class=>"input-small"
             .example
               Postal/Zip Code
+    .control-group
+      =f.label :first_name,'Your name', :class=>"control-label"         
+      .controls
+        .append-bottom-1
+          .span-7.first
+            = f.text_field :first_name, :class=>"input-medium"          
+            .example
+              First
+          .span-7
+            = f.text_field :last_name, :class=>"input-medium"            
+            .example
+              Last
     .control-group
       = f.label :contact_phone_number, 'Phone Number', :class=>"control-label"        
       .controls

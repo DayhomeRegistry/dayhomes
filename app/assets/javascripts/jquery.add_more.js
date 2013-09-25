@@ -1,45 +1,64 @@
 function add_another_mangement() {
-  delete_button_check();
+  //delete_button_check();
   
   $('.add_multiples_link').click(function(){
     var data_group = $(this).attr('data-group');
     var attribute_key = $(this).attr('data-attribute-key');
+
+    clone($('.add_multiples[data-group='+data_group+']:visible').last(),attribute_key);
+    
+    //We don't want to keep the last one
+    //delete_button_check();
+    return false;
+  });
+  function clone(jQueryElement, attribute_key){
     var new_object_id = new Date().getTime();
-    var new_elem = $('.add_multiples[data-group='+data_group+']:visible').last().clone(true).insertAfter($('.add_multiples[data-group='+data_group+']:last'));
+    var new_elem = jQueryElement.clone(true).insertAfter(jQueryElement);
     var attribute_re = new RegExp("\\["+attribute_key+"\\]\\[([0-9])+\\]");
           
     // clear out textareas
-    $('.add_multiples[data-group='+data_group+']:last textarea').each(function(){
+    new_elem.children('textarea').each(function(){
       $(this).text('');
-      $(this).attr('name', $(this).attr('name').replace(attribute_re, '['+attribute_key+']['+new_object_id+']'));
+      $(this).attr('name', jQueryElement.attr('name').replace(attribute_re, '['+attribute_key+']['+new_object_id+']'));
     });
     
     // When you add another row - remove stuff you no want
-    $('.add_multiples[data-group='+data_group+']:last .remove_contents').each(function(){
+    new_elem.children('.remove_contents').each(function(){
       $(this).remove();
     });
     
     
     // Clear out inputs
-    $('.add_multiples[data-group='+data_group+']:last input').each(function(){
-      if(!$(this).attr('type').match(/radio|check/)) $(this).attr('value', '');
+    new_elem.children('input').each(function(){
+      if($(this).is(":visible")) {
+        if(!$(this).attr('type').match(/radio|check/)) {
+          $(this).attr('value', '');
+        }else{
+          this.checked=false;
+        }
+      }
       $(this).attr('name', $(this).attr('name').replace(attribute_re, '['+attribute_key+']['+new_object_id+']'));
     });
-    
-    delete_button_check();
-    return false;
-  });
+
+    return new_elem;
+  }
   
   $('.remove_fieldset_link').on('click', function(){
-    var destroy_elem = $(this).closest('.add_multiples').find('input[type=checkbox]');
-    
+    var parent = $(this).closest('.add_multiples');
+    var destroy_elem = parent.find('input[type=checkbox]').filter(':hidden');
+    var attribute_key = $(this).attr('data-attribute-key');
+    var data_group = parent.attr('data-group');
+    if($('.add_multiples[data-group='+data_group+']:visible').length==1) {
+      clone(parent,attribute_key);
+    }
     if(destroy_elem.length == 0){
-      $(this).closest('.add_multiples').remove();
+      parent.remove();
     }else{
       destroy_elem.attr('checked', 'checked');
-      $(this).closest('.add_multiples').hide();
+      parent.hide();
     }
-    delete_button_check();
+    //We don't want to keep the last one
+    //delete_button_check();
     return false;
   });
 }
