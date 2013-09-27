@@ -282,7 +282,7 @@ class BillingController < ApplicationController
         format.html { return redirect_to edit_day_home_path(@day_home) }  
         format.js  {return render :json=>"Success"}
       else  
-        error = "You don't have enough credits to feature your dayhome for #{how_many_months} #{how_many_months>1?'months':'month'}.  "
+        error = "You don't have enough credits to feature your dayhome for #{params[:months]} #{params[:months].to_i>1?'months':'month'}.  "
         error = error + "You might want to go <a href='" + billing_extras_path() + "'>buy extras</a>."
         format.html { return redirect_to edit_day_home_path(@day_home), :notice=>error}  
         format.js { return render :text=>error, :status=>500}
