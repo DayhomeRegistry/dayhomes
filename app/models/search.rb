@@ -10,6 +10,7 @@ class Search
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => 'Full Days'}
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
+  CALGARY_GEO = {:lat => 51.0453246, :lng => -114.0581012 }
 
   def initialize(attributes = {})
 

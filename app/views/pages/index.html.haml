@@ -1,4 +1,4 @@
-/
+﻿/
   #featureReel
     %div
       %h1
@@ -13,19 +13,23 @@
       %h3.title.support
         Find a Dayhome
       %p.rightb_txt{:style=>""}
-        Find a business in and around your local community and give them a Boost!<br><br>
+        Find a dayhome in and around your home, work or wherever.
         
-      %div
+      %div{:style=>"height:60px;"}
         = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f| 
           = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
           = link_to "Search", "#",:id=>'searchSubmit',:class=>"yellow"
 
       .mapdisplay
         .projectMap
-          %a.city{:style=>"left:147px;top:259px;"}
+          %a.city{:style=>"left:147px;top:265px;"}
             154
             %span
               Edmonton
+          %a.city{:style=>"left:135px;top:349px;"}
+            4
+            %span
+              Calgary    
       =link_to "Browse all locations",searches_path,:style=>"color:#cd3c5d;text-decoration: none;padding-top:1em;"
   #leftBar
     .leftb
