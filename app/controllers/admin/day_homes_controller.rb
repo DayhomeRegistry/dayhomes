@@ -111,7 +111,7 @@ class Admin::DayHomesController < Admin::ApplicationController
     end
     @day_home.admin_featured=feature
     if @day_home.update_attributes(params[:day_home])  
-      redirect_to admin_day_homes_path(:page=>params["page"].keys[0])
+      redirect_to admin_day_homes_path(:page=>(params["page"].kind_of?(Array) ? 1 : params["page"].keys[0]))
     else
 
       render :action => :edit
