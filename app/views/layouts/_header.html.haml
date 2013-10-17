@@ -6,55 +6,60 @@
     });
   });
 %header
-  #logo
+  #bounds
+    #logo
+      =image_tag ('logo-white-background.png')
   #nav
-    %ul.main-nav
+    %ul.left
       - if request.path != pages_path
         %li
           = link_to 'Home', pages_path
       %li
-        = link_to 'About', about_pages_path
+        = link_to 'About Us', about_pages_path
       %li
         = link_to 'Blog', "http://blog.dayhomeregistry.com"
-      %li
-        = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f|
-          .searchWrapper
-            = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
-            = link_to "Search", "#",:id=>'searchSubmit',:class=>"yellow"
-      
-    .clear
-  -if current_user && current_user.organization_admin?
-    #subnav  
-      %ul
+      -if current_user 
+        -if !current_user.admin? && current_user.organization_admin? 
+          %li
+            %a{:href => billing_options_path(), :class=>"red"}
+              Upgrade  
+      -else    
+        %li
+          = link_to 'Signup', billing_signup_path, :class=>"red"  
+    %ul.right
+      -if current_user && current_user.organization_admin?
         %li
           = link_to 'Overview', organization_path(current_user.organization)
-        %li
-          = link_to 'People', users_path
-        %li
-          = link_to 'DayHomes', day_homes_path
-        %li
-          %a{:href => billing_options_path()}
-            Upgrades
+        -if current_user.organization.users.count>1
+          %li
+            = link_to 'People', users_path
+        -else
+          %li
+            = link_to 'My Account', user_path(current_user)
+        - if current_user.organization.day_homes.count>1
+          %li
+            = link_to 'Day Homes', day_homes_path
+        - else
+          %li
+            = link_to 'My Dayhome', edit_day_home_path(current_user.organization.day_homes.first)
         %li
           %a{:href => billing_extras_path()}
             Buy Extras    
-      .clear
-  -if current_user && current_user.admin?
-    #subnav  
-      %ul
+        %li
+          = link_to 'Logout', logout_path
+      -elsif current_user && current_user.admin?
         %li
           = link_to 'People', [:admin, :users]
         %li
           = link_to 'DayHomes', [:admin, :day_homes]
         %li
           = link_to 'Manage Organizations', [:admin, :organizations]
-      .clear      
+        %li
+          = link_to 'Logout', logout_path 
+      - else
+        %li
+          = link_to 'Login', login_path
+    .clear
   #charm
-    - if current_user
-      %div
-        = link_to "My Account", user_path(current_user)
-        = link_to 'Logout', logout_path
-    - else
-      %div
-        = link_to 'Login', login_path
+    
   .clear

@@ -89,12 +89,16 @@ class Admin::DayHomesController < Admin::ApplicationController
   def edit
     @day_home = DayHome.find(params[:id])
     @day_home.photos.build if @day_home.photos.blank?
+    @communities = Community.all
 
     #raise @day_home.organization.to_json
     render :params=>{:page=>params["page"]}
   end
 
   def update
+    community = Community.find(params[:location][:community_id]) 
+
+    #raise community.to_json
     #the empty hash we "build" in edit breaks the validation
     params[:day_home][:photos_attributes].each do |k,v|
       if (v["_destroy"]!="1" && v["photo"].nil?)
@@ -111,7 +115,9 @@ class Admin::DayHomesController < Admin::ApplicationController
     end
     @day_home.admin_featured=feature
     if @day_home.update_attributes(params[:day_home])  
-      redirect_to admin_day_homes_path(:page=>params["page"].keys[0])
+      @day_home.location.community_id=community.id
+      @day_home.location.save
+      redirect_to admin_day_homes_path(:page=>(params["page"].kind_of?(Array) ? 1 : params["page"].keys[0]))
     else
 
       render :action => :edit

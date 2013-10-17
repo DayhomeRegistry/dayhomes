@@ -88,7 +88,7 @@ Dayhome.editPage.Organization = Class.extend({
     handleStripeResponse: function (status, response) {
       if(status == 200) {
         $('input[name$="[stripe_card_token]"]').val(response.id);
-        $('form')[1].submit();
+        $('form')[0].submit();
       } else {
         // Enable the button.
         $('#submit-button').val('Save Changes').prop('disabled', false);

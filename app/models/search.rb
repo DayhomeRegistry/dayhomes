@@ -10,6 +10,7 @@ class Search
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => 'Full Days'}
   EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
+  CALGARY_GEO = {:lat => 51.0453246, :lng => -114.0581012 }
 
   def initialize(attributes = {})
 
@@ -92,11 +93,6 @@ class Search
     # hack for ie7 due to placeholder being submitted
     if addr_value =~ /Address or Neighbourhood/
       addr_value = ''
-    end
-
-    # If no major candian city in query - add alberta as default.
-    unless addr_value.downcase =~ /edmonton/
-      addr_value += ' Edmonton'
     end
 
     # If no canadian province in query - add alberta as default.

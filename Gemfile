@@ -33,6 +33,9 @@ gem 'ruby-recaptcha'
 gem 'execjs'
 gem 'carmen-rails', '~> 1.0.0'
 
+gem 'geokit'
+gem 'geokit-rails'
+
 gem 'newrelic_rpm'
 
 platforms :mswin, :mingw do

@@ -40,6 +40,12 @@
   = f.label :featured?, :class => 'checkbox' do
     = f.check_box :featured?
     Featured?
+
+  
+  = f.label :community
+  - @location = @day_home.location
+  = collection_select(:location, :community_id, @communities, :id, :name)
+
   = f.label :name
   = f.text_field :name
   
