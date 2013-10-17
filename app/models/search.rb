@@ -95,11 +95,6 @@ class Search
       addr_value = ''
     end
 
-    # If no major candian city in query - add alberta as default.
-    unless addr_value.downcase =~ /edmonton/
-      addr_value += ' Edmonton'
-    end
-
     # If no canadian province in query - add alberta as default.
     unless addr_value.downcase.include?('alberta') || addr_value.downcase.include?('ab')
       addr_value += ' Alberta'
