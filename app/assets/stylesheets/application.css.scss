@@ -87,6 +87,21 @@ header {
   clear:both;
   width: 487px;
 }
+#searchBox {
+  input {
+    margin-top: 5px;
+  }
+  a{
+    padding-left:0;
+  }
+  a.blue {
+    color:$blue;
+  }
+}
+.rightb a {
+  text-decoration: none;
+  padding-left: 1.25em;
+}
 #nav {
   width: 100%;
   margin: 0 0 0 0;
@@ -116,13 +131,16 @@ header {
     }
   }
   a {
-    color: $dark-grey;
+    color: $green;
   }
   a.red {
     color: $red;
   }
   a.yellow {
     color: $yellow;
+  }
+  a.blue {
+    color: $blue;
   }
   a:hover {
     border-top: 2px solid $dark-grey;
@@ -375,7 +393,7 @@ input.btn.btn2 {
   float: right;
 }
 .rightb {
-  margin: 20px 0 0 30px;
+  margin: 10px 0 0 30px;
 }
 .rightb_txt {
   margin: 10px 0 0 0;position: relative;
@@ -410,7 +428,7 @@ a.city span {
   width: 66%;
 }
 .strt_t {
-  font-size: 28px;  position: relative;  padding-top: 20px;
+  font-size: 28px;  position: relative;  padding-top: 20px; color:#757575;
 }
 .strt_box {
   background: #f6edf0;border-radius: 8px;  -moz-border-radius: 8px;  -webkit-border-radius: 8px; margin: 20px 0 0 0;
@@ -431,7 +449,7 @@ input.btn.btn3 {
   cursor: pointer;  background: transparent;  display: inline-block;  font-weight: normal;  padding: 6px 25px;  border: none;  font-size: 14px;  margin: 0; color: #575522;
 }
 h3.title {
-  position: relative;border-bottom: 1px solid #E5E5E5;padding: 10px 0;color: #757575;font-size: 18px;font-weight: normal;margin: 0 0 16px;
+  position: relative;border-bottom: 1px solid #E5E5E5;padding: 10px 0;color: #52BE60;font-size: 23px;font-weight: normal;margin: 21px 0 16px;
 }
 .prjR {
   overflow: hidden;
@@ -443,19 +461,20 @@ h3.title {
   background: #FFF;position: relative;border: 3px solid #eaeaea;border-radius: 8px;-moz-border-radius: 8px;-webkit-border-radius: 8px;
 }
 .boxwrp a {
-  position: relative;width: 100%;overflow: hidden;display: block;padding: 0 0 10px 0;border-radius: 5px 5px 0 0;-moz-border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;
+  position: relative;width: 100%;overflow: hidden;display: block;;border-radius: 5px 5px 0 0;-moz-border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;color:$green;text-decoration: none;
 }
 .boxwrp a img {
   border: none;width: 100%;height: auto !important;padding: 0;border-radius: 5px 5px 0 0;-moz-border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;
 }
 .boxwrp h4 {
-  margin: 0;padding: 0 10px 4px;font-size: 14px;
+  margin: 0;padding:10px 0 0 10px;font-size: 14px;line-height: 14px; 
 }
-.boxwrp h4 a {
-  color: #8e8e31;text-decoration: none;
+.boxwrp p {
+  font-size: 14px;
 }
+
 .company.shrt {
-  position: relative;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;color: #848689;border: none;margin: 0;padding: 3px 5px 3px 32px;bottom: 0;left: 0;
+  position: relative;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;color: #848689;border: none;margin: 0;padding: 0px 0px 10px 10px;bottom: 0;left: 0;
 }
 .company.shrt.f {
   display: inline;

@@ -21,11 +21,11 @@
       -if current_user 
         -if !current_user.admin? && current_user.organization_admin? 
           %li
-            %a{:href => billing_options_path(), :class=>"red"}
+            %a{:href => billing_options_path(), :class=>"blue"}
               Upgrade  
       -else    
         %li
-          = link_to 'Signup', billing_signup_path, :class=>"red"  
+          = link_to 'Signup', billing_signup_path, :class=>"blue"  
     %ul.right
       -if current_user && current_user.organization_admin?
         %li
