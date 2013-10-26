@@ -15,10 +15,10 @@
       %p.rightb_txt{:style=>""}
         Find a dayhome in and around your home, work or wherever.
         
-      %div{:style=>"height:60px;"}
+      %div{:id=>"searchBox",:style=>"height:60px;"}
         = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f| 
           = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
-          = link_to "Search", "#",:id=>'searchSubmit',:class=>"yellow"
+          = link_to "Search", "#",:id=>'searchSubmit',:class=>"blue"
 
       .mapdisplay
         .projectMap
@@ -30,7 +30,7 @@
             =@calgary
             %span
               Calgary    
-      =link_to "Browse all locations",searches_path,:style=>"color:#cd3c5d;text-decoration: none;padding-top:1em;"
+      =link_to "Browse all locations",searches_path,:style=>""
   #leftBar
     .leftb
       .strt_t{:style=>""}
@@ -57,7 +57,7 @@
                   %a{:style=>"",:href => day_home_slug_path(featured_day_home.slug)}
                     %img{:src=>"#{featured_day_home.featured_photo.photo_url(:thumb)}", :width=>"213px", :height=>"161px;", :style=>""}
                   %h4{:style=>""}
-                    %a{:href => day_home_slug_path(featured_day_home.slug),:style=>"color: #8e8e31;text-decoration: none;"}
+                    %a{:href => day_home_slug_path(featured_day_home.slug),:style=>""}
                       = featured_day_home.name
                   .company.shrt{:style=>""}
                     .f{:style=>""}
