@@ -2,12 +2,18 @@ class PagesController < ApplicationController
   layout 'application'
 
   def index    
+
+    edmonton = Community.where("name like 'Edmonton%'");
+    calgary =  Community.where("name like 'Calgary%'");
+    #@edmonton=DayHome.all(:joins => :location, :conditions=>["locations.name like ?","Edmonton%"]).count
+    @edmonton=DayHome.joins(:location).where(locations: {community_id: edmonton}).count
+    @calgary=DayHome.joins(:location).where(locations: {community_id: calgary}).count
     @featured_day_homes = DayHome.featured.reject{|day_home| !day_home.approved? }    
     if (@featured_day_homes.count ==0)
-      #@featured_day_homes = [DayHome.find(:first, :offset =>rand(DayHome.all.count))]
-      @featured_day_homes = DayHome.all.reject{|day_home| day_home.photos.blank?||!day_home.approved? }    
+      @featured_day_homes = DayHome.find(:all, :offset =>rand(DayHome.all.count-3),:limit=>3)
+      #@featured_day_homes = DayHome.all.reject{|day_home| day_home.photos.blank?||!day_home.approved? }    
     end
-    render :layout=>'pages'
+    
   end
   
   def about
@@ -23,3 +29,25 @@ class PagesController < ApplicationController
   end
   
 end
+
+# +--------------------+
+# | name               |
+# +--------------------+
+# | Edmonton           |
+# | Sherwood Park      |
+# | Fort Saskatchewan  |
+# | Tofield            |
+# | Ardrossan          |
+# | Stony Plain        |
+# | Beaumont           |
+# |                    |
+# | Spruce Grove       |
+# | Leduc              |
+# | Calgary            |
+# | Twin Brooks        |
+# | Millwoods          |
+# | blackfalds         |
+# | Lancaster Park     |
+# | Airdrie            |
+# | St Albert          |
+# +--------------------+

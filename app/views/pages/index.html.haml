@@ -1,4 +1,71 @@
-#featureReel
+﻿/
+  #featureReel
+    %div
+      %h1
+        Got a dayhome?
+      %div  
+        Dayhome registry is about connecting dayhomes with parents so that kids always have good care.  Whether you've got a dayhome to advertise or you're looking to find one, dayhomeregistry.com is the place to be.
+      %label.btn.btn2
+        %input.btn.btn2{:type=>"button", :onclick=>"top.location.href='#{about_pages_path}'", :name=>"button", :value=>"Learn More"}
+#content
+  #rightBar  
+    .rightb
+      %h3.title.support
+        Find a Dayhome
+      %p.rightb_txt{:style=>""}
+        Find a dayhome in and around your home, work or wherever.
+        
+      %div{:id=>"searchBox",:style=>"height:60px;"}
+        = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f| 
+          = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"
+          = link_to "Search", "#",:id=>'searchSubmit',:class=>"blue"
+
+      .mapdisplay
+        .projectMap
+          %a.city{:style=>"left:147px;top:265px;"}
+            =@edmonton
+            %span
+              Edmonton
+          %a.city{:style=>"left:135px;top:349px;"}
+            =@calgary
+            %span
+              Calgary    
+      =link_to "Browse all locations",searches_path,:style=>""
+  #leftBar
+    .leftb
+      .strt_t{:style=>""}
+        Register your dayhome
+      .strt_box{:style=>""}
+        .strt_img{:style=>""}
+        .strt_s{:style=>""}
+          Get the exposure you need to help your business thrive in your own community.
+        .btns_wrap{:style=>""}
+          %label.btn.btn3{:style=>""}
+            %a{:href=>billing_signup_path()}
+              %input#registerBtn.btn.btn3{:type=>"button", :value=>"Register your dayhome", :name=>"button", :style=>""}
+          %label.btn.btn3{:style=>""}
+            %a{:href=>"http://blog.dayhomeregistry.com/how-to-register"}
+              %input.btn.btn3{:type=>"button", :value=>"What do I need to do?", :name=>"button", :style=>""}
+      %h3.title{:style=>""}
+        Featured Dayhomes
+      .prjR{:style=>""}
+        - @featured_day_homes.each do |featured_day_home|
+          .box.box_project.prj{:style=>""}
+            .bxgw{:style=>""}
+              .bxgi{:style=>""}
+                .boxwrp{:style=>""}
+                  %a{:style=>"",:href => day_home_slug_path(featured_day_home.slug)}
+                    %img{:src=>"#{featured_day_home.featured_photo.photo_url(:thumb)}", :width=>"213px", :height=>"161px;", :style=>""}
+                  %h4{:style=>""}
+                    %a{:href => day_home_slug_path(featured_day_home.slug),:style=>""}
+                      = featured_day_home.name
+                  .company.shrt{:style=>""}
+                    .f{:style=>""}
+                      %span.a{:style=>""}
+                        Edmonton, Canada
+                  %p{:style=>""}
+                    = featured_day_home.highlight
+/   
   #feature.drop-shadow
     .slides
       - @featured_day_homes.each do |featured_day_home|
@@ -12,7 +79,7 @@
                 - if featured_day_home.highlight.present?
                   %p
                     = featured_day_home.highlight
-#chooseYourAdventure
+  #chooseYourAdventure
   #parent
     %h1
       Do you need a dayhome?
