@@ -314,7 +314,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
             };
 
         // if doing a downgrade, don't validate these fields as they are not required
-        if ($('#credit-card-section').is(':hidden') || $('#newCard').is(':hidden')) {
+        if ($('#credit-card-section').is(':hidden') || $('#card_number').is(':hidden')) {
             delete validators.CREDIT_CARD_NUMBER;
             delete validators.CVV;
         }
@@ -349,7 +349,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         // Disable the button.
         self.payNowButton.val('Processing…').prop('disabled', true);
 
-        if (!$('#credit-card-section').is(':hidden') && ($('#newCard').length>0 && !$('#newCard').is(':hidden'))) {
+        if (!$('#credit-card-section').is(':hidden') && ($('#card_number').length>0 && !$('#card_number').is(':hidden'))) {
           var card = {
               number: $('#card_number').val(),
               cvc: $('#card_code').val(),
@@ -368,7 +368,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
     handleStripeResponse: function (status, response) {
       if(status == 200) {
         $('input[name$="[stripe_card_token]"]').val(response.id);
-        $('form')[1].submit();
+        $('form')[0].submit();
       } else {
         // Enable the button.
         $('#pay-now-button').val('Pay Now').prop('disabled', false);
