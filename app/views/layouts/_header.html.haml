@@ -18,6 +18,8 @@
         = link_to 'About Us', about_pages_path
       %li
         = link_to 'Blog', "http://blog.dayhomeregistry.com"
+      %li
+        = link_to 'Shop', "http://shop.dayhomeregistry.com"
       -if current_user 
         -if !current_user.admin? && current_user.organization_admin? 
           %li

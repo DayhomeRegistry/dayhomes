@@ -14,6 +14,11 @@
                 -if(value.price<=0)
                   %span.dollar-sign>
                     Free
+                -elsif(value.price==21)
+                  %span.dollar-sign> $
+                  %span> #{value.price}
+                  %span.cents> 00
+                  %span.permonth> /yr
                 -else
                   %span.dollar-sign> $
                   %span> #{value.price}
@@ -31,21 +36,6 @@
                 Unlimited
               -else
                 =value.day_homes   
-      /    
-        %tr
-          %td.pricingLeft
-            Waiting lists
-          %td.package_78.enabled{:rel => "78", :style => "cursor: pointer;"}
-            %span 0
-            %span.row-tiny ($10 each additional)
-          %td.package_79.enabled{:rel => "79"}
-            %span 10
-            %span.row-tiny ($10 each additional)
-          %td.package_80.enabled{:rel => "80"}
-            %span 100
-            %span.row-tiny ($10 each additional)
-          %td.package_81.enabled{:rel => "81"}
-            %span Unlimited
       %tr
         %td.pricingLeft
           Additional staff who can access your account
@@ -88,7 +78,7 @@
               %span Select  
 
   = form_for @day_home_signup_request,:url => billing_register_path(),:method => :put, :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>""} do |f|
-    = hidden_field_tag 'choose-package', "78"
+    = hidden_field_tag 'choose-package', "1"
     = hidden_field_tag 'plan', @day_home_signup_request.plan
     %br
     #add-on-section{:style=>"display:none;"}

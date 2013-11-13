@@ -21,7 +21,7 @@ class BillingController < ApplicationController
     @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])   
     @day_home_signup_request.plan=params[:plan]
 
-    if(params[:staff])
+    if(!params[:staff].blank?)
       staff = Integer(params[:staff])
     end
     if(params[:locales])

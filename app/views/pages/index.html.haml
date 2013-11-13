@@ -31,6 +31,14 @@
             %span
               Calgary    
       =link_to "Browse all locations",searches_path,:style=>""
+      .span4.newsletter
+        %h3
+          Parent Newsletter
+        %p
+          Get recipes, tips for kids and info on our newest dayhomes.
+        = form_tag('http://dayhomeregistry.us7.list-manage.com/subscribe/post?u=cde938b38d19f459bce32538b&amp;id=31701e2e10',:method=>:post,:target=>:_blank) do
+          = email_field_tag 'EMAIL','',:id=>'mail'
+          = submit_tag "Subscribe", :id=>"subscribe",:class=>"btn slim"
   #leftBar
     .leftb
       .strt_t{:style=>""}
@@ -65,48 +73,3 @@
                         Edmonton, Canada
                   %p{:style=>""}
                     = featured_day_home.highlight
-/   
-  #feature.drop-shadow
-    .slides
-      - @featured_day_homes.each do |featured_day_home|
-        .slide
-          %a{:href => day_home_slug_path(featured_day_home.slug)}
-            %img{:src=>"#{featured_day_home.featured_photo.photo_url(:reg)}", :width=>"700px", :height=>"400px;"}
-            .slide-desc
-              .slide-desc-inset
-                %h4
-                  = featured_day_home.name
-                - if featured_day_home.highlight.present?
-                  %p
-                    = featured_day_home.highlight
-  #chooseYourAdventure
-  #parent
-    %h1
-      Do you need a dayhome?
-    %div
-      %a{:href=>searches_path()}
-        %img(src='http://dl.dropbox.com/u/76665191/map.jpg')
-    %div  
-      Use our
-      =link_to 'advanced search',searches_path
-      to find what you need
-  #dayhome
-    %h1
-      Are you a dayhome provider?
-    .signup
-      %a{:href => billing_signup_path(), :class=>'signup-link'}
-        %strong.signin-popup
-          Sign up now
-          %span.starburst-holder
-            %span.starburst
-              %span
-                Free!
-    %h2
-      It takes less than a minute to create your 
-      %span.red
-        free
-      account and start promoting your business!
-    .facebook
-      Have a facebook account? You can use that to 
-      = link_to 'sign in ', login_path
-      too!
