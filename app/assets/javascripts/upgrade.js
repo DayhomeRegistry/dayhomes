@@ -99,7 +99,7 @@ Dayhome.upgradePage.Upgrade = Class.extend({
             }
         } else {
             $('#credit-card-section').show();
-            this.payNowButton.val('Pay Now');
+            this.payNowButton.val('Upgrade');
         }
         self.update();        
     },
@@ -192,91 +192,88 @@ Dayhome.upgradePage.Upgrade = Class.extend({
         // Update the sidebar numbers and text
         var period_total = Number(base_package.price),
         totalBoxBase = $('#total_box_base'),
-        totalBoxTotal = $('#total_box_total');
+        totalBoxTotal = $('#total_box_total'),
+        totalBoxRate = $('#total_box_rate');
+        totalBoxFeatures = $('#total_box_features');
+        totalBoxEvents = $('#total_box_events');
 
-        //adjust payment_frequency based in input selection.
-        var payment_frequency = this.getYearly() == '1' ? 12 : 1;
+        payment_frequency=1;
+        var value_total = 0;
 
-        // update the payment rate text
-        var frequency_text = payment_frequency == 12 ? 'Yearly Rate' : 'Monthly Rate';
-        totalBoxTotal.find('strong.title').text(frequency_text);
+        //Update the package rate and name
+        totalBoxRate.find('span.amount').text(base_package.price);
+        $('#package_name').text(base_package.name);
+        var frequency_text = base_package.subscription == "yr" ? 'You pay (per Year)' : 'You pay (per Month)';
+        totalBoxRate.find('strong.title').text(frequency_text);
 
-        //apply yearly and discount percents if they are available.
-        period_total = this.applyDiscount(period_total, payment_frequency);
-        var package_price = period_total;
-
-        // If there is no new package use the existing price to calculate the period_total.
-        //if (totalBoxBase.css('display') == 'none') {
-        //    period_total = Number($('#current_plan .amount').text());
-        //}
-
-        //Hide + disable any addons that are blocked by the base package
-        var visibleAddons = 0;
-        $.each(this.inputContainers, function (type, element) {
-            if (Number(base_package['block_' + type + '_addon']) === 1 || base_package[type] === null) {
-            element.hide();
-            self.inputs[type].prop('disabled', true).val('');
-            } else {
-            element.show();
-            self.inputs[type].prop('disabled', false);
-            }
-            if (element.length && element.css('display') != 'none') {
-            visibleAddons++;
-            }
-        });
-        
-        // figure out what the cost of the current staff and locales they have is going to be
-        /*var current_staff = $('#total_box_cur_staff');
-        var current_locales = $('#total_box_cur_locales');
-        var extra_staff = Math.max.apply(null,[Dayhome.upgradePage.current.staff-base_package.staff,0])
-        var extra_locales = Math.max.apply(null,[Dayhome.upgradePage.current.locales-base_package.locales,0])
-        var extra_staff_cost = parseFloat(Dayhome.upgradePage.additional_cost["staff"](extra_staff));
-        var extra_locales_cost = parseFloat(Dayhome.upgradePage.additional_cost["locales"](extra_locales));
-
-        current_staff.show()
-          .find(self.options.numberClass).text(extra_staff + ' ')
-          .end()
-          .find(self.options.amountClass).text(extra_staff_cost);
-        current_locales.show()
-          .find(self.options.numberClass).text(extra_locales + ' ')
-          .end()
-          .find(self.options.amountClass).text(extra_locales_cost);
-        */
-        // update the Upgrade Details amounts + pricing.
-        var selectedExtraCount = 0;
-        $.each(this.costElements, function (type, element) {
-            var extra = self.get_additional_value(type);
-            if (extra) {
-                var extra_cost = parseFloat(Dayhome.upgradePage.additional_cost[type](extra));
-
-                //discount the addons
-                extra_cost = self.applyDiscount(extra_cost, payment_frequency);
-                period_total += extra_cost || 0;
-
-                //.find(self.options.amountClass).text(self.currency.round(extra_cost));
-                element.show()
-                  .find(self.options.numberClass).text(extra + ' ')
-                  .end()
-                  .find(self.options.amountClass).text(extra_cost);
-                selectedExtraCount++;
-            } else {
-                element.hide();
-            }
-        });
-        //totalBoxBase.find('span.amount').text(this.currency.round(package_price));
-        totalBoxBase.find('span.amount').text(package_price);
-
-        if (selectedExtraCount === 0 && totalBoxBase.css('display') === 'none') {
-            $('#total_box').hide();
+        //figure out what the base is worth
+        if(base_package.subscription=="yr"){
+            totalBoxBase.find('span.amount').text(base_package.price);
+            value_total+=base_package.price;
         } else {
-            //This is until we figure out how to do per user & locale charges
-            //$('#total_box').show();
+            var val = Math.round((20/12)*(base_package.day_homes>0?base_package.day_homes:500),2);
+            totalBoxBase.find('span.amount').text((base_package.day_homes>0?"":"> ")+val);
+            value_total+=val;
         }
 
+        //figure out what the featuring is worth
+        totalBoxFeatures.find('span.amount').text((5)*base_package.free_features);
+        value_total+=(5)*base_package.free_features;
+
+        //figure out what the events are worth
+        totalBoxEvents.find('span.amount').text((20)*base_package.events);
+        value_total+=(20)*base_package.events;
+
+        //Update the value
+        totalBoxTotal.find('span.amount').text(value_total);
+
+        //Now update the blurbs
+        var feature_frequency = "once a year.";
+        if(base_package.subscription!="yr") {
+            if(base_package.free_features==1){
+                feature_frequency = "once a month."
+            } else {
+                feature_frequency = base_package.free_features + " times a month."
+            }
+        }
+        if(base_package.free_features>0){
+            $('#feature_blurb').find('span.feature_frequency').text(feature_frequency)
+            $('#feature_blurb').show();
+        }else{
+            $('#feature_blurb').hide();
+        }
+        if(base_package.staff>0){
+            $('#staff_blurb').find('span.staff_count').text(base_package.staff)
+            $('#staff_blurb').show();
+        }else {
+            $('#staff_blurb').hide();
+        }
+        if(base_package.day_homes>1){
+            $('#dayhome_blurb').find('span.dayhome_count').text(base_package.day_homes)
+            $('#dayhome_blurb').show();
+        } else if (base_package.day_homes<0){
+            $('#dayhome_blurb').find('span.dayhome_count').text("unlimited")
+            $('#dayhome_blurb').show();
+        }else {
+            $('#dayhome_blurb').hide();
+        }    
+        if(base_package.locales>1){
+            $('#community_blurb').find('span.community_count').text(base_package.locales)
+            $('#community_blurb').show();
+        } else if (base_package.locales<0) {
+            $('#community_blurb').find('span.community_count').text("unlimited")
+            $('#community_blurb').show();
+        }else {
+            $('#community_blurb').hide();
+        }    
+        if(base_package.events>0){
+            $('#event_blurb').show();
+        }else {
+            $('#event_blurb').hide();
+        }   
+
         //$('#total_box_total .amount').text(this.currency.round(period_total));
-        $('#total_box_total .amount').text(period_total);
-        $('#package_name').text(base_package.name);
-        return period_total;
+        return base_package.price;
     },
     /*
     Apply the discounts to the amount provided.  paymentFrequency controls the yearly 

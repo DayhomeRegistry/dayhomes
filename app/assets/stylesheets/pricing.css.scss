@@ -326,7 +326,7 @@ h4.sidebar_header_orange {
 	width: 220px;	
 	margin-left:0;
 }
-#billing-form .span-13 {
+#billing-form .span-13, #upgrade-form .span-13 {
 	width: 260px;	
 	margin-left:0;
 }
@@ -334,7 +334,7 @@ h4.sidebar_header_orange {
 	width: 280px;	
 	margin-left:0;
 }
-#billing-form .span-22 {
+#billing-form .span-22, #upgrade-form .span-22 {
 	width: 440px;
 	margin-left:0;
 }
@@ -381,6 +381,8 @@ h4.sidebar_header_orange {
 }
 
 .blurbs div {
-	font-weight: bold; 
 	margin-top:10px;
+}
+.blurbs .bold {
+	font-weight: bold; 
 }
