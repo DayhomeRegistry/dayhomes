@@ -28,7 +28,7 @@
       .float_left
         %strong
           =number_to_currency(@plan.price)
-          per month
+          ="/#{@plan.subscription}"
       .float_left.prepend-1
         %a.button.medium.green{:href => billing_options_path()}
           %span Upgrade Account

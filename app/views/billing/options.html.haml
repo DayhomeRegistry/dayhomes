@@ -17,7 +17,7 @@
         %th.pricingSelect
           Choose Your Plan
         - @packages.each_with_index do |(key,value),index|
-          %th.enabled{ :width=>"135" ,:class=>"package_#{key} column_#{@packages.count-index}"}
+          %th.enabled{ :width=>"130" ,:class=>"package_#{key} column_#{@packages.count-index}"}
             =value.name
             .price
               %strong                

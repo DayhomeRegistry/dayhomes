@@ -116,7 +116,7 @@ table .pricingTable {
 }
 
 .pricingTable {
-	width: 760px;
+	width: 800px;
 	font-size: 12px;
 	margin: -65px auto 0;
 }
@@ -254,7 +254,29 @@ table .pricingTable {
 	min-height: 510px;
 	overflow: hidden;
 }
-/* Upgrade page overrides */
+/* Upgrade page ovverides */
+.pricingTable.upgrade-page {
+	
+	margin-top: 0px;
+}
+.pricingTable.upgrade-page th.pricingSelect {
+	border-top-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+}
+.pricingTable.upgrade-page th.column_1 {
+	background-image: none;
+	border-top-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+}
+.pricingTable.upgrade-page td .row-tiny {
+	font-size: 11px;
+}
+.pricingTable.upgrade-page tr.last-row td.selected_package {
+	border-bottom: 1px solid #d9d9d9 !important;
+}
+/* Pricing page overrides */
 .pricingTable.billing-page {
 	
 	margin-top: 0px;
