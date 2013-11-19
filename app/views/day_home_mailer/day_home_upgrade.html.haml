@@ -1,0 +1,11 @@
+%h2
+  Dayhome Upgrade!
+%p
+  = "#{@upgrade.organization.name} has upgraded from the #{Plan.find_by_id(@upgrade.old_plan_id).name} to the #{Plan.find_by_id(@upgrade.new_plan_id).name} plan."
+%p
+  = "You should probably email them.  Here's their registered email(s):"
+%ul
+  -@upgrade.organization.users.each do |user|
+    %li
+      =user.email
+
