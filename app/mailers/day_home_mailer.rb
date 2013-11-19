@@ -20,6 +20,11 @@ class DayHomeMailer < ActionMailer::Base
     @day_home_signup_request = day_home_signup_request    
 	  mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => 'DayHomeRegistry.com [DayHome Signup Request]')	
   end
+
+  def day_home_upgrade(upgrade)
+    @upgrade = upgrade
+    mail(:to=> APPLICATION_CONFIG[:signup_request_to], :subject => 'DayHomeRegistry.com [DayHome Upgrade]') 
+  end
   
   def day_home_signup_confirmation(day_home_signup_request)
     @day_home_signup_request = day_home_signup_request    

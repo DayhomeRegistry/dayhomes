@@ -191,6 +191,7 @@ class BillingController < ApplicationController
       else
         if(@upgrade.save)
           flash[:message] = "Congrats! You're now on the #{anew.name} plan."
+          DayHomeMailer.day_home_upgrade(@upgrade).deliver      
         else
           flash.now[:error] = "Something seems to have gone wrong."
           return render :action=>:options
@@ -215,6 +216,7 @@ class BillingController < ApplicationController
       else
         if(@upgrade.save)
           flash[:message] = "Congrats! You're now on the #{anew.name} plan."
+          DayHomeMailer.day_home_upgrade(@upgrade).deliver     
         else
           return render :action=>:options
         end
