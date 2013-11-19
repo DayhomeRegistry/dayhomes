@@ -41,6 +41,9 @@ $dark-grey: #798e94;
 .yellow {
   color: $yellow;
 }
+.blue {
+  color: $blue;
+}
 .clear {
   clear: both;
 }
@@ -394,6 +397,7 @@ input.btn.btn2 {
 }
 .rightb {
   margin: 10px 0 0 30px;
+  width:300px;
 }
 .rightb_txt {
   margin: 10px 0 0 0;position: relative;
@@ -402,7 +406,7 @@ h3.title.support {
   position: relative;border-bottom: 1px solid #E5E5E5;padding: 10px 0;color: #757575;font-size: 28px;font-weight: normal;margin: 0 0 16px;
 }
 .mapdisplay {
-  width:235px; padding: 20px;border-radius: 8px;-moz-border-radius: 8px;-webkit-border-radius: 8px;
+  width:235px; padding: 20px 20px 0 20px;border-radius: 8px;-moz-border-radius: 8px;-webkit-border-radius: 8px;
 }
 .projectMap {
   width: 235px;height: 420px;background: url(/assets/alberta.png) no-repeat;position: relative;
@@ -450,6 +454,18 @@ input.btn.btn3 {
 }
 h3.title {
   position: relative;border-bottom: 1px solid #E5E5E5;padding: 10px 0;color: #52BE60;font-size: 23px;font-weight: normal;margin: 21px 0 16px;
+}
+div.newsletter {
+  .btn  {
+    vertical-align: top;
+  }
+  h3{
+    border-top: solid 1px #E5E5E5;
+    margin-top:10px;
+    padding: 5px 0 10px 0;
+    color: #757575;
+    font-size: 23px;
+  }
 }
 .prjR {
   overflow: hidden;

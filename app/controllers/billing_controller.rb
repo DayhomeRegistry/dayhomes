@@ -7,9 +7,9 @@ class BillingController < ApplicationController
       redirect_to :action=>:options
     end
     @day_home_signup_request = DayHomeSignupRequest.new
-    @existing = Plan.find_by_plan("baby")
+    @existing = Plan.find_by_plan("babyannual")
     @packages = {}
-    Plan.all.each do |p|
+    Plan.where("inactive is null").order(:price).each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
   end
@@ -21,7 +21,7 @@ class BillingController < ApplicationController
     @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])   
     @day_home_signup_request.plan=params[:plan]
 
-    if(params[:staff])
+    if(!params[:staff].blank?)
       staff = Integer(params[:staff])
     end
     if(params[:locales])
@@ -137,7 +137,7 @@ class BillingController < ApplicationController
     @upgrade = Upgrade.new()
     @existing = Plan.find_by_plan(@organization.plan)
     @packages = {}
-    Plan.all.each do |p|
+    Plan.order(:price).all.each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
 
