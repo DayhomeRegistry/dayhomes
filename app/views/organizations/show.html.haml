@@ -28,7 +28,7 @@
       .float_left
         %strong
           =number_to_currency(@plan.price)
-          per month
+          ="/#{@plan.subscription}"
       .float_left.prepend-1
         %a.button.medium.green{:href => billing_options_path()}
           %span Upgrade Account
@@ -165,15 +165,15 @@
               -plan = Plan.find(upgrade.new_plan_id)
               %td.span-14
                 =upgrade.effective_date.strftime("%a %b %d, %Y")
-                ="[#{(plan.day_homes==-1 ? 'Unlimited' : plan.day_homes.to_s)}, #{(plan.staff==-1 ? 'Unlimited' : plan.staff.to_s)}, #{(plan.locales==-1 ? 'Unlimited' : plan.locales.to_s)}]"
+                /="[#{(plan.day_homes==-1 ? 'Unlimited' : plan.day_homes.to_s)}, #{(plan.staff==-1 ? 'Unlimited' : plan.staff.to_s)}, #{(plan.locales==-1 ? 'Unlimited' : plan.locales.to_s)}]"
               %td.span-11
                 ="$#{plan.price}"
-                per month
+                ="per #{plan.subscription}"
             -else
               None
   .control-group
     .control-label
-      Payments      
+      Payments 
     .controls
       /=@payments.to_json
       %table#payments

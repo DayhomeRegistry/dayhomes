@@ -21,7 +21,12 @@
     #{}"#{street1}#{street2}, #{city}, #{province}, #{postal_code}"
   end
   def plan_name
-    Plan.find_by_plan(self.plan).name
+    plan = Plan.find_by_plan(self.plan)
+    begin
+      plan.name
+    rescue
+      raise self.plan.to_s + plan.to_json + Plan.all.to_json
+    end
   end
   def feature_count
     update_free_features()

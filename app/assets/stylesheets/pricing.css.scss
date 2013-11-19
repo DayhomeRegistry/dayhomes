@@ -116,7 +116,7 @@ table .pricingTable {
 }
 
 .pricingTable {
-	width: 760px;
+	width: 800px;
 	font-size: 12px;
 	margin: -65px auto 0;
 }
@@ -217,6 +217,10 @@ table .pricingTable {
 	font-size: 12px;
 	color: #999;
 }
+.pricingTable td .row-tiny-inline {
+	font-size: 12px;
+	color: #999;
+}
 .pricingTable tr.last-row td {
 	margin-bottom: 2px;
 }
@@ -250,7 +254,7 @@ table .pricingTable {
 	min-height: 510px;
 	overflow: hidden;
 }
-/* Upgrade page overrides */
+/* Upgrade page ovverides */
 .pricingTable.upgrade-page {
 	
 	margin-top: 0px;
@@ -270,6 +274,28 @@ table .pricingTable {
 	font-size: 11px;
 }
 .pricingTable.upgrade-page tr.last-row td.selected_package {
+	border-bottom: 1px solid #d9d9d9 !important;
+}
+/* Pricing page overrides */
+.pricingTable.billing-page {
+	
+	margin-top: 0px;
+}
+.pricingTable.billing-page th.pricingSelect {
+	border-top-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+}
+.pricingTable.billing-page th.column_1 {
+	background-image: none;
+	border-top-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+}
+.pricingTable.billing-page td .row-tiny {
+	font-size: 11px;
+}
+.pricingTable.billing-page tr.last-row td.selected_package {
 	border-bottom: 1px solid #d9d9d9 !important;
 }
 #total_box {
@@ -292,27 +318,27 @@ h4.sidebar_header_orange {
 .span-6 select{
 	width:120px;
 }
-#upgrade-form .span-6 {
+#billing-form .span-6 {
 	width:120px;
 	margin-left:0;
 }
-#upgrade-form .span-11 {
+#billing-form .span-11 {
 	width: 220px;	
 	margin-left:0;
 }
-#upgrade-form .span-13 {
+#billing-form .span-13, #upgrade-form .span-13 {
 	width: 260px;	
 	margin-left:0;
 }
-#upgrade-form .span-14 {
+#billing-form .span-14 {
 	width: 280px;	
 	margin-left:0;
 }
-#upgrade-form .span-22 {
+#billing-form .span-22, #upgrade-form .span-22 {
 	width: 440px;
 	margin-left:0;
 }
-#upgrade-form .span-25 {
+#billing-form .span-25 {
   width: 490px;
 	margin-left:0;
 }
@@ -339,7 +365,7 @@ h4.sidebar_header_orange {
   font-weight: 700;
   color: rgb(85, 140, 7);
 }
-#total_box_total td {
+#total_box_rate td {
   border-top: 1px solid rgb(217, 208, 182);
   padding-top: 6px;
 }
@@ -352,4 +378,11 @@ h4.sidebar_header_orange {
   background-color: #f2dede;
   border-color: #eed3d7;
   color: #b94a48;
+}
+
+.blurbs div {
+	margin-top:10px;
+}
+.blurbs .bold {
+	font-weight: bold; 
 }
