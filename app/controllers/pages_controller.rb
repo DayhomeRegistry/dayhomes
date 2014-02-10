@@ -5,9 +5,11 @@ class PagesController < ApplicationController
 
     edmonton = Community.where("name like 'Edmonton%'");
     calgary =  Community.where("name like 'Calgary%'");
+    fortMac =  Community.where("name like 'Fort McMurray%'");
     #@edmonton=DayHome.all(:joins => :location, :conditions=>["locations.name like ?","Edmonton%"]).count
     @edmonton=DayHome.joins(:location).where(locations: {community_id: edmonton}).count
     @calgary=DayHome.joins(:location).where(locations: {community_id: calgary}).count
+    @fortMac=DayHome.joins(:location).where(locations: {community_id: fortMac}).count
     @featured_day_homes = DayHome.featured.reject{|day_home| !day_home.approved? }    
     if (@featured_day_homes.count ==0)
       @featured_day_homes = DayHome.find(:all, :offset =>rand(DayHome.all.count-3),:limit=>3)
