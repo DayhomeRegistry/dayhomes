@@ -146,6 +146,7 @@
         .append-bottom-1
           %div{:class=>"#{index>0?'span-7' : ''}"}
             =locale.name
+            ="(#{pluralize(locale.day_homes.count,'dayhome')})"
             -if (@organization.locations.count > 1)
               =link_to "Remove", organization_location_path(@organization,locale), confirm: 'Are you sure?',:method=>:delete
             =link_to "Edit", edit_organization_location_path(@organization,locale)  
