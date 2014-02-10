@@ -3,5 +3,5 @@ class Location < ActiveRecord::Base
 
 	has_many :day_homes
 	has_many :users
-	has_one :community
+	belongs_to :community
 end
