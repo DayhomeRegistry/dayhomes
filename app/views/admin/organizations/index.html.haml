@@ -7,12 +7,11 @@
       event.preventDefault(); // Prevent link from following its href
     });
   });
-
 %p
   = link_to 'Create organization', [:new, :admin, :organization], :class => :btn
   = link_to 'Approve','#',:id => 'approveBtn',:class => :btn
   = link_to 'Feature','#',:id => 'featureBtn',:class => :btn
-=form_tag({:controller => "organizations", :action => "index", :method=>"get"}, :id => :searchForm) do 
+=form_tag({:controller => "organizations", :action => "index"}, :method=>"get", :id => :searchForm) do 
   %div.input-prepend.pull-right
     %span.add-on
       %i.icon-search
@@ -55,7 +54,7 @@
           %td
             = organization.locations.count
           %td
-            = link_to 'Details', [:admin, organization]
+            = link_to 'Overview', [:admin, organization]
             = link_to 'Edit', [:edit, :admin, organization]
             = link_to 'Delete', [:admin, organization], :method => :delete, :confirm => "Are you sure?"    
   = paginate @organizations, :window => 1,:left => 3,:right => 3

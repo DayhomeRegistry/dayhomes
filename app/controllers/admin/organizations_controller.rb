@@ -1,6 +1,7 @@
 class Admin::OrganizationsController < Admin::ApplicationController
   helper_method :sort_column, :sort_direction
   def index    
+    #raise params[:query].to_s
     #return render :text=>url_for({:sort => "name", :direction => "asc"})
     if (!params[:query].nil?)
       clause = params[:query]      
@@ -57,9 +58,10 @@ class Admin::OrganizationsController < Admin::ApplicationController
   end
 
   def destroy
-    @organization = Organization.find(params[:id])
+    #raise params[:id].to_s
+    @organization = Organization.find_by_id(params[:id])
     unless @organization.destroy
-      flash[:error] = "Unable to remove #{@organization.name}"
+      flash[:error] = "Unable to remove #{@organization.name}: "+@organization.errors[:base][0].to_s
     end
 
     redirect_to admin_organizations_path

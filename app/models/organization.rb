@@ -20,6 +20,12 @@
     lstreet+lcity+ ("#{province}".blank? ? "":" #{province},") + " #{postal_code}"
     #{}"#{street1}#{street2}, #{city}, #{province}, #{postal_code}"
   end
+  def max_dayhomes
+    Plan.find_by_plan(self.plan).day_homes
+  end
+  def max_users
+    Plan.find_by_plan(self.plan).staff
+  end
   def plan_name
     plan = Plan.find_by_plan(self.plan)
     begin
@@ -140,10 +146,12 @@
     self.errors.add :base, e.message
     false  
   end
-  
+
   def destroy_customer
-    customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-    customer.delete
+    if !self.stripe_customer_token.nil?
+      customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+      customer.delete
+    end
     
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while removing customer: #{e.message}"
