@@ -40,13 +40,13 @@
       -if current_user && current_user.organization_admin?
         %li
           = link_to 'Overview', organization_path(current_user.organization)
-        -if current_user.organization.users.count>1
+        -if current_user.organization.max_users>1
           %li
             = link_to 'People', users_path
         -else
           %li
             = link_to 'My Account', user_path(current_user)
-        - if current_user.organization.day_homes.count>1
+        - if current_user.organization.max_dayhomes>1
           %li
             = link_to 'Day Homes', day_homes_path
         - else

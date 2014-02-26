@@ -76,9 +76,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     unless @user.destroy
       flash[:error] = "Unable to remove #{@user.full_name}"
+    else
+      flash[:notice] = "#{@user.full_name} has been removed."
     end
 
-    redirect_to admin_users_path
+    redirect_to users_path
   end
   
     

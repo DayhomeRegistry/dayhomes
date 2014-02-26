@@ -133,28 +133,6 @@
       .example.first
         = link_to 'Edit', edit_organization_path(@organization) 
   .control-group.section-start
-    .control-label.fs_22
-      Locales
-    .controls.fs_22
-      .float_left
-        The places you do business    
-  .control-group
-    .control-label
-      Name
-    .controls
-      -@organization.locations.each_with_index do |locale, index|
-        .append-bottom-1
-          %div{:class=>"#{index>0?'span-7' : ''}"}
-            =locale.name
-            ="(#{pluralize(locale.day_homes.count,'dayhome')})"
-            -if (@organization.locations.count > 1)
-              =link_to "Remove", organization_location_path(@organization,locale), confirm: 'Are you sure?',:method=>:delete
-            =link_to "Edit", edit_organization_location_path(@organization,locale)  
-  .control-group
-    .controls
-      .example.first
-        = link_to 'Add Locales', new_organization_location_path(@organization) 
-  .control-group.section-start
     .control-label
       Upgrades
     .controls
@@ -193,14 +171,71 @@
         .example.first       
           = link_to 'Show last 100 payments', '#', :id=>'show_payments_link'     
   .control-group.section-start
+    .control-label.fs_22
+      Locales
+    .controls.fs_22
+      .float_left
+        The places you do business    
+  .control-group
+    .control-label
+      Name
     .controls
-      .append-bottom-1
-        /
-          Go here to
-          %a{:href => billing_options_path()} downgrade 
-          to a free account
-        /
-          or
-          %a{:href => "#"} cancel
-          your account.
-      
+      -@organization.locations.each_with_index do |locale, index|
+        .append-bottom-1
+          %div{:class=>"#{index>0?'span-7' : ''}"}
+            =locale.name
+            ="(#{pluralize(locale.day_homes.count,'dayhome')})"
+            -if (@organization.locations.count > 1)
+              =link_to "Remove", organization_location_path(@organization,locale), confirm: 'Are you sure?',:method=>:delete
+            =link_to "Edit", edit_organization_location_path(@organization,locale)  
+  .control-group
+    .controls
+      .example.first
+        = link_to 'Add Locales', new_organization_location_path(@organization) 
+  .control-group.section-start
+    .control-label.fs_22
+      Dayhomes
+    .controls.fs_22
+      .float_left
+        Your businesses      
+  =hidden_field_tag 'id',@organization.id
+  %table.table-striped.table{:cellpadding => '5'}
+    %thead
+      %tr
+        %th          
+          = check_box_tag(:select_all)
+        %th
+          = sortable "name","Name"
+        %th
+          Address
+        %th
+          Photos
+        %th
+          = sortable "featured","Featured?"
+        %th
+          = sortable "approved","Approved?"
+        %th
+          Actions
+    %tbody
+      - @day_homes.each do |day_home|
+        %tr
+          %td
+            = check_box_tag "select["+day_home.slug+"]",day_home.slug,false,:class => "select"
+          %td
+            = link_to day_home.name, day_home_slug_path(day_home.slug)
+          %td
+            = day_home.address
+          %td
+            - if day_home.photos.blank?
+              None
+            - else
+              = day_home.photos.count
+          %td
+            = yes_no(day_home.featured)
+          %td
+            = yes_no(day_home.approved)     
+          %td
+            = link_to 'Edit', [:edit, day_home]
+            |
+            = link_to 'Delete', [day_home], :method => :delete, :confirm => "Are you sure?"    
+  = paginate @day_homes, :window => 1,:left => 3,:right => 3        
