@@ -20,6 +20,12 @@ class BillingController < ApplicationController
 
     @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])   
     @day_home_signup_request.plan=params[:plan]
+    @existing = Plan.find_by_plan("baby")
+    @packages = {}
+    Plan.all.each do |p|
+      @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+    end
+      
 
     if(!params[:staff].blank?)
       staff = Integer(params[:staff])
@@ -36,13 +42,21 @@ class BillingController < ApplicationController
       return render :action => :signup    
     end
 
+
     @error_msg = []
     begin
-      @existing = Plan.find_by_plan("baby")
-      @packages = {}
-      Plan.all.each do |p|
-        @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+      #Check for a coupon
+      debugger
+      @coupon = nil
+      begin
+        @coupon = Stripe::Coupon.retrieve(@day_home_signup_request.coupon)
+
+      rescue Stripe::StripeError => e
+        # Invalid parameters were supplied to Stripe's API
+        raise e.json_body[:error][:message]
       end
+
+      #Start making stuff
       DayHomeSignupRequest.transaction do
       
       #Create the user
@@ -62,16 +76,7 @@ class BillingController < ApplicationController
           UserMailer.new_user_password_instructions(user).deliver            
         end
 
-      #Check for a coupon
-        debugger
-        @coupon = nil
-        begin
-          @coupon = Stripe::Coupon.retrieve(params[:coupon])
- 
-        rescue Stripe::StripeError => e
-          # Invalid parameters were supplied to Stripe's API
-          throw new Exception(e.json_body[:error][:message])
-        end
+
 
       #Create the org
         org = Organization.new()

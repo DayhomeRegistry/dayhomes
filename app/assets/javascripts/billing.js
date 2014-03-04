@@ -27,6 +27,7 @@ Dayhome.billingPage.Billing = Class.extend({
     //discounts
     discountAmount: 0,
     discountType: null,
+    couponMessageDisplayed: false,
     
     // 'Constructor'
     init: function (options) {
@@ -67,6 +68,8 @@ Dayhome.billingPage.Billing = Class.extend({
         // List of all the things which can affect pricing 
         
         $(this.options.update_triggers).bind('change', function () {
+            if(this===$(self.options.coupon).get(0))
+                self.couponMessageDisplayed=false;
             self.update();
         });
 
@@ -132,18 +135,24 @@ Dayhome.billingPage.Billing = Class.extend({
             })
             .done(function(data, text, xhr){
               //alert("success: "+data);
-              if(data.percent_discount) {
-                billing.discountAmount = data.percent_discount;
+              $(billing.options.coupon).closest('div[class^="control-group"]').removeClass('error').addClass('success')
+              if(data.percent_off) {
+                billing.discountAmount = data.percent_off;
                 billing.discountType= 'percent';
-              } else if (data.dollar_discount) {
-                billing.discountAmount = data.dollar_discount;
+              } else if (data.amount_off) {
+                billing.discountAmount = data.amount_off/100;
                 billing.discountType= 'dollar';
               }
               
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
-              alert(jqXHR.responseText);
-              jqCoupon.closest('div[class^="control-group"]').removeClass('success').addClass('error')
+                if(!billing.couponMessageDisplayed){
+                    if(jqXHR.responseText){
+                        alert(jqXHR.responseText);
+                        billing.couponMessageDisplayed=true;
+                    }
+                }
+                jqCoupon.closest('div[class^="control-group"]').removeClass('success').addClass('error')
             }); 
 
                
@@ -255,7 +264,7 @@ Dayhome.billingPage.Billing = Class.extend({
             totalAfterCoupon.show();
             if(this.discountType=="percent"){
                 totalAfterCoupon.find('span#coupon_amount').text(this.discountAmount+"%");
-                totalAfterCoupon.find('span.amount').text(base_package.price-(base_package.price*this.discountAmount/100.00));
+                totalAfterCoupon.find('span.amount').text((base_package.price-(base_package.price*this.discountAmount/100.00)).toFixed(2));
             } else {
                 totalAfterCoupon.find('span#coupon_amount').text("$"+this.discountAmount);
                 totalAfterCoupon.find('span.amount').text(base_package.price-this.discountAmount);
