@@ -1,8 +1,12 @@
 %h2
   Thanks for registering at Dayhomeregistry.com
-%p
-  We've received your request and are busily processing it. You'll receive another email as soon as we've approved your dayhome and listed it on the site.
-%p  
-  Cheers,
-  %br
-  Faye
+%div{:style=>"width:540px;"}  
+  %p
+    We've received your request and are busily processing it. You'll receive another email as soon as we've approved your dayhome and listed it on the site.
+  -if (@day_home_signup_request.referral_email)
+    %p
+      We've also entered your friend #{@day_home_signup_request.referral_email} for a draw in thanks for referring you to us.
+  %p  
+    Cheers,
+    %br
+    Faye

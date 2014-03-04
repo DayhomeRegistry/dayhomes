@@ -1,0 +1,10 @@
+%h2
+  ="#{@day_home_signup_request.day_home_name} entered a referral!"
+%div{:style=>"width:540px;"}
+  %p
+    We've just had  
+    = link_to "#{@day_home_signup_request.day_home_name}", root_url+"#{@day_home_signup_request.day_home_slug}"
+    enter a referral when registering their dayhome.  
+  %p
+    ="We need to add #{@day_home_signup_request.referral_email} to a prize draw."
+  

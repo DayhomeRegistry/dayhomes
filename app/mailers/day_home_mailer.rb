@@ -15,6 +15,20 @@ class DayHomeMailer < ActionMailer::Base
       mail(:to => to, :subject => contact.subject, :reply_to=>contact.email)
     end
   end
+
+  def referral(day_home_signup_request)
+    @day_home_signup_request = day_home_signup_request    
+    mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => 'A referral to add to the draw for this month') 
+  end
+
+  def referral_referrer(day_home_signup_request)
+    @day_home_signup_request = day_home_signup_request    
+    if (Rails.env.development?)
+      mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => "Thanks for the referral to DayHomeRegistry.com")  
+    else 
+      mail(:to => to, :subject => "Thanks for the referral to DayHomeRegistry.com", :reply_to=>@day_home_signup_request.referral_email)
+    end
+  end
   
   def day_home_signup_request(day_home_signup_request)
     @day_home_signup_request = day_home_signup_request    
