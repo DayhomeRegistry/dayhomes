@@ -1,6 +1,6 @@
 class BillingController < ApplicationController
-  before_filter :require_user, :except=>[:signup, :register]
-  before_filter :require_user_to_be_organization_admin, :except=>[:signup, :register]
+  before_filter :require_user, :except=>[:signup, :register, :get_coupon]
+  before_filter :require_user_to_be_organization_admin, :except=>[:signup, :register, :get_coupon]
   
   def signup
     if(current_user)
@@ -62,8 +62,20 @@ class BillingController < ApplicationController
           UserMailer.new_user_password_instructions(user).deliver            
         end
 
+      #Check for a coupon
+        debugger
+        @coupon = nil
+        begin
+          @coupon = Stripe::Coupon.retrieve(params[:coupon])
+ 
+        rescue Stripe::StripeError => e
+          # Invalid parameters were supplied to Stripe's API
+          throw new Exception(e.json_body[:error][:message])
+        end
+
       #Create the org
         org = Organization.new()
+        org.stripe_coupon_code = @coupon.id
         org.name = @day_home_signup_request.day_home_name
         org.city = @day_home_signup_request.day_home_city
         org.province = @day_home_signup_request.day_home_province
@@ -290,6 +302,52 @@ class BillingController < ApplicationController
         format.js { return render :text=>error, :status=>500}
       end  
     end  
+  end
+
+  def get_coupon
+      @coupon=nil
+      begin
+        @coupon = Stripe::Coupon.retrieve(params[:coupon])
+
+      
+      rescue Stripe::InvalidRequestError => e
+        # Invalid parameters were supplied to Stripe's API
+        error =  e.json_body[:error][:message]
+        respond_to do |format|
+            format.html {return render json: error}
+            format.js { return render :text=>error, :status=>500}
+        end
+      #rescue Stripe::CardError => e
+        # Since it's a decline, Stripe::CardError will be caught  
+      #rescue Stripe::AuthenticationError => e
+        # Authentication with Stripe's API failed
+        # (maybe you changed API keys recently)
+      #rescue Stripe::APIConnectionError => e
+        # Network communication with Stripe failed
+      #rescue Stripe::StripeError => e
+        # Display a very generic error to the user, and maybe send
+        # yourself an email
+      rescue => e
+        # Something else happened, completely unrelated to Stripe
+        error =  e.json_body[:error][:message]
+        respond_to do |format|
+            format.html {return render json: error, :status=>500}
+            format.js { return render :text=>error, :status=>500}
+        end
+      end
+      
+      if (@coupon)
+        respond_to do |format|
+            format.html {render json: 'Coupon #{@coupon.name} is valid.'}
+            format.js { render json: @coupon }
+        end
+      else
+        error = 'That is not a valid coupon or that coupon has expired.'
+        respond_to do |format|
+            format.html {return render json: error}
+            format.js { return render :text=>error, :status=>500}
+        end
+      end
   end
 
   private

@@ -10,7 +10,7 @@
   has_many :features
   has_many :upgrades
 
-  attr_accessor :stripe_card_token
+  attr_accessor :stripe_card_token, :stripe_coupon_code
   
   before_destroy :destroy_customer
   def address
@@ -100,12 +100,12 @@
           if (Time.days_in_month(month)/2<today)
             trial_end = 1.month.since.beginning_of_month.utc.to_i
           end
-          customer = Stripe::Customer.create(email: billing_email, description: name, plan: plan, card: stripe_card_token, trial_end: trial_end)          
+          customer = Stripe::Customer.create(email: billing_email, description: name, plan: plan, card: stripe_card_token, trial_end: trial_end, coupon: stripe_coupon_code)          
           self.stripe_customer_token = customer.id
         else
           customer = Stripe::Customer.retrieve(self.stripe_customer_token)
           if(customer.subscription.plan.id != self.plan)
-            customer.update_subscription(:plan => self.plan, :card=>stripe_card_token, :prorate=>true)
+            customer.update_subscription(:plan => self.plan, :card=>stripe_card_token, :prorate=>true, coupon: stripe_coupon_code)
           else
             customer.card = stripe_card_token
             customer.save

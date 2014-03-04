@@ -149,7 +149,15 @@
                 %td{:align => "right"}
                   %strong
                     $
-                    %span.amount 0.00              
+                    %span.amount 0.00       
+              %tr#coupon_value{:style =>"display:none;"}
+                %td
+                  %strong.title> Coupon
+                  \:
+                %td{:align => "right"}
+                  %strong
+                    $
+                    %span.amount 0.00         
               %tr
                 %td{:colspan => "2", :style => "height: 5px; overflow: hidden;"}
               %tr#total_box_rate
@@ -160,6 +168,16 @@
                   %strong
                     $
                     %span.amount 0.00
+              %tr#total_after_coupon{:style=>"display:none"}
+                %td
+                  %strong.title> After Coupon
+                  \ (
+                  %span#coupon_amount>$0
+                  ):
+                %td{:align => "right"}
+                  %strong
+                    $
+                    %span.amount 0.00                        
     .clear
     %h3.section-header
       Tell us a little about yourself
@@ -232,6 +250,18 @@
       = f.label :contact_email, 'Email Address', :class=>"control-label"        
       .controls
         = f.text_field :contact_email
+    %h3#addon-header.section-header
+      Good Karma...
+    .control-group
+      = f.label :referral_email, 'Referral Email', :class=>"control-label"        
+      .controls
+        = f.text_field :referral_email
+        <i class="icon-info-sign" data-title="Hear about us from a parent?" data-content="Enter an email address of a parent registered on this site and we'll add them into our monthly draw."></i>
+    .control-group.append-bottom-1
+      = f.label :coupon, 'Coupon code', :class=>"control-label"        
+      .controls
+        = f.text_field :coupon
+        <i class="icon-info-sign" data-title="Have a coupon?" data-content="If you found one of our coupons in an add, enter it here to receive your discount."></i>
     .clearb
     #credit-card-section{:style => "display:none;"}
       = f.hidden_field :stripe_card_token

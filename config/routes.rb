@@ -9,6 +9,7 @@ Dayhomes::Application.routes.draw do
   get "billing/options"
   put "billing/upgrade"
   get "billing/extras"
+  get "billing/get_coupon"
   put "billing/add"
   put "billing/activate"
 
