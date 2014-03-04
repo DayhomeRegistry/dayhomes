@@ -46,14 +46,15 @@ class BillingController < ApplicationController
     @error_msg = []
     begin
       #Check for a coupon
-      debugger
       @coupon = nil
-      begin
-        @coupon = Stripe::Coupon.retrieve(@day_home_signup_request.coupon)
+      if(!@day_home_signup_request.coupon.blank?)
+        begin
+          @coupon = Stripe::Coupon.retrieve(@day_home_signup_request.coupon)
 
-      rescue Stripe::StripeError => e
-        # Invalid parameters were supplied to Stripe's API
-        raise e.json_body[:error][:message]
+        rescue Stripe::StripeError => e
+          # Invalid parameters were supplied to Stripe's API
+          raise e.json_body[:error][:message]
+        end
       end
 
       #Start making stuff
@@ -79,8 +80,10 @@ class BillingController < ApplicationController
 
 
       #Create the org
+      debugger
+      
         org = Organization.new()
-        org.stripe_coupon_code = @coupon.id
+        org.stripe_coupon_code = @coupon.nil? ? nil : @coupon.id
         org.name = @day_home_signup_request.day_home_name
         org.city = @day_home_signup_request.day_home_city
         org.province = @day_home_signup_request.day_home_province
