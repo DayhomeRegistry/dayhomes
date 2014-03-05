@@ -3,13 +3,14 @@
 Dayhome.billingPage.Billing = Class.extend({
 	defaults: {
         form: '#billing-form',
-        update_triggers: '#staff, #locales',
+        update_triggers: '#staff, #locales, #day_home_signup_request_coupon',
         keys: {
             staff: 'staff',
             locales: 'locales'
         },        
         numberClass: '.num',
-        amountClass: '.amount'
+        amountClass: '.amount',
+        coupon: '#day_home_signup_request_coupon'
     },
     //elements used to display the currently selected pricing info
     costElements: {},
@@ -22,6 +23,11 @@ Dayhome.billingPage.Billing = Class.extend({
 
     //limits for the new package
     newLimits: {},
+
+    //discounts
+    discountAmount: 0,
+    discountType: null,
+    couponMessageDisplayed: false,
     
     // 'Constructor'
     init: function (options) {
@@ -62,6 +68,8 @@ Dayhome.billingPage.Billing = Class.extend({
         // List of all the things which can affect pricing 
         
         $(this.options.update_triggers).bind('change', function () {
+            if(this===$(self.options.coupon).get(0))
+                self.couponMessageDisplayed=false;
             self.update();
         });
 
@@ -108,6 +116,50 @@ Dayhome.billingPage.Billing = Class.extend({
         
         var packageid = this.packageInput.val();
 
+        //Figure out the discount, if any
+
+        this.discountAmount = 0;
+        this.discountType= null;
+        billing = this;
+
+        jqCoupon = $(this.options.coupon);
+        coupon = jqCoupon.val();
+        if (coupon){
+            //Validate the coupon
+            // var success=1;
+            $.ajax({
+              url: $('form')[0].action.substring(0,$('form')[0].action.lastIndexOf('/'))+"/get_coupon",
+              data: {"coupon":coupon},
+              dataType: 'json',
+              async: false
+            })
+            .done(function(data, text, xhr){
+              //alert("success: "+data);
+              $(billing.options.coupon).closest('div[class^="control-group"]').removeClass('error').addClass('success')
+              if(data.percent_off) {
+                billing.discountAmount = data.percent_off;
+                billing.discountType= 'percent';
+              } else if (data.amount_off) {
+                billing.discountAmount = data.amount_off/100;
+                billing.discountType= 'dollar';
+              }
+              
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                if(!billing.couponMessageDisplayed){
+                    if(jqXHR.responseText){
+                        alert(jqXHR.responseText);
+                        billing.couponMessageDisplayed=true;
+                    }
+                }
+                jqCoupon.closest('div[class^="control-group"]').removeClass('success').addClass('error')
+            }); 
+
+               
+        } else {
+            $(this.options.coupon).closest('div[class^="control-group"]').removeClass('error').addClass('success')
+        }
+
         //update the details on the page.
         var period_total = this.updateDetails(packageid);
 
@@ -124,7 +176,7 @@ Dayhome.billingPage.Billing = Class.extend({
             province = $('select[name=state_or_province]:enabled');
         }
 
-        
+
 /*
         var heading = $('#choose-subscription'),
 			method = 'show';
@@ -196,15 +248,29 @@ Dayhome.billingPage.Billing = Class.extend({
         totalBoxRate = $('#total_box_rate');
         totalBoxFeatures = $('#total_box_features');
         totalBoxEvents = $('#total_box_events');
+        totalAfterCoupon= $('#total_after_coupon');
 
         payment_frequency=1;
         var value_total = 0;
 
-        //Update the package rate and name
+        //Update the package base rate and name
         totalBoxRate.find('span.amount').text(base_package.price);
         $('#package_name').text(base_package.name);
         var frequency_text = base_package.subscription == "yr" ? 'You pay (per Year)' : 'You pay (per Month)';
         totalBoxRate.find('strong.title').text(frequency_text);
+
+        //apply discount and update package rate
+        if (this.discountAmount!=0){
+            totalAfterCoupon.show();
+            if(this.discountType=="percent"){
+                totalAfterCoupon.find('span#coupon_amount').text(this.discountAmount+"%");
+                totalAfterCoupon.find('span.amount').text((base_package.price-(base_package.price*this.discountAmount/100.00)).toFixed(2));
+            } else {
+                totalAfterCoupon.find('span#coupon_amount').text("$"+this.discountAmount);
+                totalAfterCoupon.find('span.amount').text(base_package.price-this.discountAmount);
+            }
+        }
+
 
         //figure out what the base is worth
         if(base_package.subscription=="yr"){
@@ -299,7 +365,6 @@ Dayhome.billingPage.Billing = Class.extend({
             expmonth = $('#card_month').val(),
             curdate = new Date(curyear, curmonth, 1).getTime(),
             expdate = new Date(expyear, expmonth, 1).getTime(),
-
             validators = {
                 "CREDIT_CARD_NUMBER": "You must enter your credit card number.",
                 "CVV":"You must enter your Card Verification Value."
@@ -337,6 +402,7 @@ Dayhome.billingPage.Billing = Class.extend({
             event.preventDefault();
             return false;
         }
+        
 
         // Disable the button.
         self.payNowButton.val('Processing…').prop('disabled', true);

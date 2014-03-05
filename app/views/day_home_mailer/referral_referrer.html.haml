@@ -1,0 +1,23 @@
+%h2
+  ="#{@day_home_signup_request.day_home_name} took your advice!"
+%div{:style=>"width:540px;"}
+  %p
+    We've just had  
+    = link_to "#{@day_home_signup_request.day_home_name}", root_url+"#{@day_home_signup_request.day_home_slug}"
+    register their dayhome on DayhomeRegistry.com.  
+  %p
+    There is no better complement to us than when a parent or a friend brings another dayhome to our community.  As a thank you for your loyalty, we've entered your name in our monthly draw.  Past prizes have included:
+    %ul
+      %li
+        Gift certificates to Scholars Choice
+      %li
+        Tim Hortons and Starbucks gift cards
+      %li
+        A free Dayhome Registry seminar
+  %p
+    Good luck.  And thanks again for helping us help parents find the best possible care for their children.
+  %p  
+    Cheers,
+    %br
+    Faye
+
