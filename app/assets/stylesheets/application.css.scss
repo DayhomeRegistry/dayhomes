@@ -444,7 +444,7 @@ a.city span {
   line-height: 28px;  margin: 0 20px 0 100px;  position: relative;  padding-top: 20px;
 }
 .btns_wrap {
-  margin: 10px 0 0 100px;  padding-bottom: 20px;
+  margin: 10px 0 0 0px;  padding-bottom: 20px;
 }
 label.btn.btn3 {
   cursor: pointer;  display: inline-block;  border-bottom: 4px solid #747227;  background: #8f8e32;  color: #FFF;  border-radius: 5px;  -moz-border-radius: 5px;  -webkit-border-radius: 5px;  vertical-align: middle;  margin: 0 2px;  padding: 0;  position: relative;    background: #c9ce3c;  border-color: #b0b534;
@@ -497,4 +497,40 @@ div.newsletter {
 }
 .boxwrp p {
   margin: 0;padding: 5px 10px;height: 125px;overflow: hidden;
+}
+
+div.callout {
+  height: 100px;
+  width: 400px;
+  margin-left:auto;margin-right: auto;
+}
+
+div.callout {
+  background-color: $blue;
+  background-image: -moz-linear-gradient(top, $blue, $blue);
+  position: relative;
+  color: $light-grey;
+  padding: 10px;
+  border-radius: 0px;
+  box-shadow: 0px 0px 20px #999;
+  /*margin: 25px;
+  min-height: 50px;
+  border: 1px solid #333;
+  text-shadow: 0 0 1px #000;*/
+  text-align: center;
+  
+  /*box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;*/
+}
+
+.callout::before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  border: 0.8em solid transparent;
+  position: absolute;
+}
+.callout.top-right::before {
+  right: 7px;
+  bottom: -20px;
+  border-top: 10px solid $blue;
 }
