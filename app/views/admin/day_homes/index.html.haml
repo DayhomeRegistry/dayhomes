@@ -58,6 +58,8 @@
         %th
           = sortable "approved","Approved?"
         %th
+          = sortable "created_at", "Created"
+        %th
           Actions
     %tbody
       - @day_homes.each do |day_home|
@@ -77,7 +79,9 @@
           %td
             = yes_no(day_home.featured?)
           %td
-            = yes_no(day_home.approved)			
+            = yes_no(day_home.approved)		
+          %td
+            = day_home.created_at.to_date.to_s(:rfc822)	
           %td
             /= link_to   'Edit', [:edit, :admin, day_home], :page=>params["page"]
             = link_to 'Edit', edit_admin_day_home_path(day_home,:page=>params["page"])
