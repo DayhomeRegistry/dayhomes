@@ -94,6 +94,10 @@ class BillingController < ApplicationController
         org.phone_number = @day_home_signup_request.contact_phone_number
         org.users << user
 
+        if request.env['affiliate.tag'] && affiliate = Organization.find_by_affiliate_tag(request.env['affiliate.tag'])
+          org.mentor = affiliate
+        end
+
         if(@day_home_signup_request.plan!="baby") 
           org.stripe_card_token = @day_home_signup_request.stripe_card_token
           org.plan = @day_home_signup_request.plan

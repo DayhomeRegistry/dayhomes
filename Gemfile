@@ -32,6 +32,7 @@ gem 'foreigner'
 gem 'ruby-recaptcha'
 gem 'execjs'
 gem 'carmen-rails', '~> 1.0.0'
+gem 'rack-affiliates'
 
 gem 'geokit'
 gem 'geokit-rails'

@@ -76,6 +76,47 @@
         %a{:href => billing_extras_path()} Buy credits
   .control-group.section-start
     .control-label.fs_22
+      Mentorees
+    .controls.fs_22
+      .float_left
+        Other dayhomes you've referred to Dayhome Registry      
+  .control-group
+    .control-label      
+    .controls
+      -if (@organization.mentorees.count>= 1)
+        =image_tag "heart-icon-blue.png"
+      -else
+        =image_tag "heart-icon-grey.png"
+      -if (@organization.mentorees.count>= 2)
+        =image_tag "heart-icon-blue.png"
+      -else
+        =image_tag "heart-icon-grey.png"
+      -if (@organization.mentorees.count>= 3)
+        =image_tag "heart-icon-blue.png"
+      -else
+        =image_tag "heart-icon-grey.png"
+      %span{:style=>"padding-left: 20px;"}
+        You are #{3-@organization.mentorees.count} mentorees away from your next reward:
+      %div{:style=>"padding-left:120px;"}
+        %strong
+          One free year of membership to Dayhome Registry
+  .control-group
+    .control-label
+      Name
+    .controls
+      -@organization.mentorees.each_with_index do |mentoree, index|
+        .append-bottom-1
+          %div{:class=>"#{index>0?'span-7' : ''}"}
+            =mentoree.name
+            = link_to 'View', mentoree.day_homes.first
+  .control-group
+    .control-label      
+    .controls
+      Rock at running your dayhome?  Want to get free stuff?  Share this link with other dayhomes to start them down their own journey to success:
+      - link = URI::join(root_url,billing_signup_path,"?ref="+@organization.affiliate_tag).to_s
+      =link_to link,link            
+  .control-group.section-start
+    .control-label.fs_22
       Organization
     .controls.fs_22
       .float_left

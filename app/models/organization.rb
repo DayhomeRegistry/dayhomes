@@ -10,6 +10,9 @@
   has_many :features
   has_many :upgrades
 
+  has_many :mentorees , :foreign_key => 'affiliate_id', :class_name => "Organization"
+  belongs_to :mentor,  :foreign_key => 'affiliate_id', :class_name => "Organization"
+
   attr_accessor :stripe_card_token, :stripe_coupon_code
   
   before_destroy :destroy_customer

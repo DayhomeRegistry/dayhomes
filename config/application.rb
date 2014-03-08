@@ -56,6 +56,8 @@ module Dayhomes
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    #Configure rack middleware for affiliate (i.e. ?ref= ) tracking
+    config.middleware.use Rack::Affiliates
     
   end
 end
