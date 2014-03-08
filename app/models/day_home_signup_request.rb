@@ -18,7 +18,7 @@ class DayHomeSignupRequest < ActiveRecord::Base
     begin
       DayHomeMailer.day_home_signup_request(self).deliver
       DayHomeMailer.day_home_signup_confirmation(self).deliver
-      if(self.referral_email)
+      if(!self.referral_email.blank?)
         DayHomeMailer.referral(self).deliver
         DayHomeMailer.referral_referrer(self).deliver
       end
