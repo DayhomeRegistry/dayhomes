@@ -48,17 +48,17 @@
         %th          
           = check_box_tag(:select_all)
         %th
-          = sortable "name","Name"
+          = sortable "name","Name",params[:query]
         %th
           Address
         %th
           Photos
         %th
-          = sortable "featured","Featured?"
+          = sortable "featured","Featured?",params[:query]
         %th
-          = sortable "approved","Approved?"
+          = sortable "approved","Approved?",params[:query]
         %th
-          = sortable "created_at", "Created"
+          = sortable "created_at", "Created",params[:query]
         %th
           Actions
     %tbody

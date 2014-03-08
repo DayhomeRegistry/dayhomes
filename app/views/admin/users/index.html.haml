@@ -1,18 +1,24 @@
 
 %p
   = link_to 'Create User', [:new, :admin, :user], :class => :btn
-
+=form_tag({:controller => "users", :action => "index"},{ :method=>"get", :id => :searchForm}) do 
+  %div.input-prepend.pull-right
+    %span.add-on
+      %i.icon-search
+    = text_field_tag :query, nil, :placeholder => "Search", :value=> @query
+    = link_to 'Go','#',:id => 'adminSearchBtn',:class => :btn
 - if @users.blank?
-  %p
-    No users have been added yet - how are you logged in?
+  %p    
+    Huh.  There don't seem to be any people like that.
 - else
+
   %table.table-striped.table{:cellpadding => '5'}
     %thead
       %tr
         %th
-          Full Name
+          =sortable 'full_name','Full Name',params[:query]
         %th
-          Email
+          =sortable 'email','Email',params[:query]
         %th
           Is Admin?
         %th
@@ -20,7 +26,7 @@
         %th
           Locale
         %th
-          Created
+          =sortable 'created_at','Created',params[:query]
         %th
           Actions
     %tbody
