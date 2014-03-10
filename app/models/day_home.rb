@@ -54,7 +54,7 @@ class DayHome < ActiveRecord::Base
   validates_format_of :slug, :with => /[a-z0-9]+/
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
 
-  accepts_nested_attributes_for :photos, :reject_if => :all_blank, :allow_destroy => true
+  accepts_nested_attributes_for :photos, :allow_destroy => true #,:reject_if => :all_blank
   
   #before_save :break
   def break
@@ -125,7 +125,7 @@ class DayHome < ActiveRecord::Base
     return true
   end
   def featured=(value)  
-    if value
+    if value && value != "0"
       return self.activate(false,1)
     else
       if featured?
