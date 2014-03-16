@@ -15,8 +15,17 @@ class DayHomeSignupRequest < ActiveRecord::Base
   after_create :send_request_to_dayhome_registry_team
   
   def send_request_to_dayhome_registry_team
-    DayHomeMailer.day_home_signup_request(self).deliver
-    DayHomeMailer.day_home_signup_confirmation(self).deliver
+    begin
+      DayHomeMailer.day_home_signup_request(self).deliver
+      DayHomeMailer.day_home_signup_confirmation(self).deliver
+      if(!self.referral_email.blank?)
+        DayHomeMailer.referral(self).deliver
+        DayHomeMailer.referral_referrer(self).deliver
+      end
+    rescue => e
+      #I should probably do something here
+      puts e.to_json
+    end
   end
   def add_dayhome
     @day_home = DayHome.create_from_signup(self)

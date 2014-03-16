@@ -48,15 +48,17 @@
         %th          
           = check_box_tag(:select_all)
         %th
-          = sortable "name","Name"
+          = sortable "name","Name",params[:query]
         %th
           Address
         %th
           Photos
         %th
-          = sortable "featured","Featured?"
+          = sortable "featured","Featured?",params[:query]
         %th
-          = sortable "approved","Approved?"
+          = sortable "approved","Approved?",params[:query]
+        %th
+          = sortable "created_at", "Created",params[:query]
         %th
           Actions
     %tbody
@@ -77,7 +79,9 @@
           %td
             = yes_no(day_home.featured?)
           %td
-            = yes_no(day_home.approved)			
+            = yes_no(day_home.approved)		
+          %td
+            = day_home.created_at.to_date.to_s(:rfc822)	
           %td
             /= link_to   'Edit', [:edit, :admin, day_home], :page=>params["page"]
             = link_to 'Edit', edit_admin_day_home_path(day_home,:page=>params["page"])

@@ -2,6 +2,28 @@ class Admin::UsersController < Admin::ApplicationController
   helper_method :sort_column, :sort_direction
   def index
     @users = User.page(params[:page] || 1).per(params[:per_page] || 10)
+    sort = sort_column
+    if (sort== 'full_name')
+      sort = 'last_name,first_name'
+    end
+
+    if (!params[:query].nil?)
+      clause = params[:query]      
+       
+      
+      if (!clause.empty?)
+        @users = User.where("concat(first_name,' ',last_name) like ?", "%#{clause.strip}%")
+      else
+        @users = User.scoped
+      end
+      #return render :text=> clause.strip+"|"+feature+"|"+approve
+      
+      @users = @users.order(sort + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+      @query = params[:query]
+    else 
+
+      @users = User.order(sort + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+    end    
   end
 
   def show

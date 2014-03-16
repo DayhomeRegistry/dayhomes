@@ -13,7 +13,7 @@ class OrganizationsController < ApplicationController
         :count => 100
       )
     end
-
+    @day_homes = @organization.day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
 
     respond_to do |format|
       format.html # show.html.haml
@@ -55,5 +55,12 @@ class OrganizationsController < ApplicationController
     end
   end
 
-
+  private
+  def sort_column
+    Organization.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
+  end  
 end

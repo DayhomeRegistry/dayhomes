@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140209023426) do
+ActiveRecord::Schema.define(:version => 20140308180900) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -128,6 +128,8 @@ ActiveRecord::Schema.define(:version => 20140209023426) do
     t.string   "day_home_email"
     t.string   "last_name"
     t.string   "plan",                      :default => "baby"
+    t.string   "referral_email"
+    t.string   "coupon"
   end
 
   create_table "day_homes", :force => true do |t|
@@ -214,6 +216,8 @@ ActiveRecord::Schema.define(:version => 20140209023426) do
     t.string   "plan",                  :default => "baby"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
+    t.integer  "affiliate_id"
+    t.string   "affiliate_tag"
   end
 
   create_table "plans", :force => true do |t|

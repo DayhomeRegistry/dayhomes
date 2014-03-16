@@ -14,8 +14,9 @@ class UsersController < ApplicationController
       #you can't create one if you're at your limit
       organization = current_user.organization
       plan = Plan.find_by_plan(organization.plan)
+  #raise plan.staff.to_s
   #raise organization.users.count().to_s
-      if(plan.staff <= organization.users.count())
+      if(plan.staff <= (organization.users.count()-1))
         flash[:error]="Sorry, you've reached your staff limit. Adding a user for a fee is coming soon."
         return redirect_to :action=>:index
       end
@@ -75,9 +76,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     unless @user.destroy
       flash[:error] = "Unable to remove #{@user.full_name}"
+    else
+      flash[:notice] = "#{@user.full_name} has been removed."
     end
 
-    redirect_to admin_users_path
+    redirect_to users_path
   end
   
     
