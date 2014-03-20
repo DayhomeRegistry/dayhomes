@@ -21,9 +21,16 @@ staging:
 
 production:
   container: dayhomes_production
+  username: jonmholt
+  api_key: 288bc129beca52ce4818b58e1a8cdc51
+  cdn_url: http://de9759d6abc61c1211f8-25181be79b1f36ccdc7d3c4ce16785ec.r16.cf1.rackcdn.com
+  servicenet: true
+  servicenet: false
+  use_fog: true
+
+old_production:
+  container: dayhomes_production
   username: markbennett
   api_key: cb2acd1348d1dccab9ba68ee1eb38229
   cdn_url: https://db21d474e9403503a093-97e12afbe63538dbb594efedc6220dd8.ssl.cf2.rackcdn.com
   region: ord
-  servicenet: false
-  use_fog: true
