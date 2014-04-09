@@ -1,61 +1,76 @@
 = form_for(@advanced_search, :url => searches_path, :method => 'get', :html => {:class => 'well', :id => 'advanced-search'}) do |f|
-  .search_title
-    %h3 Dayhome search
-  .control-group
-    .controls
-      = f.hidden_field(:advanced_search, :value => true)
-      -if !@agency.nil?
-        =f.hidden_field(:agency,:value=>@agency.id)
-      .search_section
-        %h5
-          - if !@agency.nil?
-            #{@agency.name} locations near
-          -else
-            = 'Dayhomes near'
-        = f.text_field :address, :style => 'width: 175px', :placeholder => "Address or Neighbourhood"
-      .search_section
-        %h5
-          ='Full-time Availability'
-        - @advanced_search.availability_types.each do |avail_type|          
-          - if avail_type.availability == 'Full-time'
+  #showSearch
+    .search_title
+      <a id="showSearchLink">Refine search</a>
+  #hideSearch{:style=>'display:none;'}
+    .search_title
+      %h3 Dayhome search
+    .control-group
+      .row
+        .span3
+          .controls
+            = f.hidden_field(:advanced_search, :value => true)
+            -if !@agency.nil?
+              =f.hidden_field(:agency,:value=>@agency.id)
+            .search_section
+              %h5
+                - if !@agency.nil?
+                  #{@agency.name} locations near
+                -else
+                  = 'Dayhomes near'
+              = f.text_field :address, :style => 'width: 175px', :placeholder => "Address or Neighbourhood"
+        .span2
+          .search_section
+            %h5
+              ='Full-time Availability'
+            - @advanced_search.availability_types.each do |avail_type|          
+              - if avail_type.availability == 'Full-time'
+                %label.checkbox
+                  = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
+                  = avail_type.kind
+        .span2
+          .search_section
+            %h5
+              ='Part-time Availability'
+            - @advanced_search.availability_types.each do |avail_type|
+              - if avail_type.availability == 'Part-time'
+                %label.checkbox
+                  = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
+                  = avail_type.kind
+      .row
+        .span3
+          .search_section
+            %h5
+              = 'Certification'
+            - @advanced_search.certification_types.each do |cert_type|
+              %label.checkbox
+                = check_box_tag "search[certification_types][kind][]", cert_type.id, checked = cert_type.checked, :class => 'checkbox'
+                = cert_type.kind
+        .span2
+          .search_section
+            %h5
+              = 'Dietary Accomodations'
             %label.checkbox
-              = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
-              = avail_type.kind
-      .search_section
-        %h5
-          ='Part-time Availability'
-        - @advanced_search.availability_types.each do |avail_type|
-          - if avail_type.availability == 'Part-time'
-            %label.checkbox
-              = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
-              = avail_type.kind
-
-      .search_section
-        %h5
-          = 'Certification'
-        - @advanced_search.certification_types.each do |cert_type|
-          %label.checkbox
-            = check_box_tag "search[certification_types][kind][]", cert_type.id, checked = cert_type.checked, :class => 'checkbox'
-            = cert_type.kind
-      .search_section
-        %h5
-          = 'Dietary Accomodations'
-        %label.checkbox
-          = f.check_box :dietary_accommodations, :class => 'checkbox'
-          = 'Accommodates for Food Allergies'
-      .search_section
-        %h5
-          = 'Licensed / Unlicensed'
-        %label.radio.inline
-          = radio_button_tag "search[license_group]", "licensed", checked = @advanced_search.licensed.nil? ? false : true, :class => 'radio'
-          = 'Licensed'
-        %br
-        %label.radio.inline
-          = radio_button_tag "search[license_group]", "unlicensed",  checked = @advanced_search.unlicensed.nil? ? false : true, :class => 'radio'
-          = 'Unlicensed'
-        %br
-        %label.radio.inline
-          = radio_button_tag "search[license_group]", "both_license_types", checked = @advanced_search.both_license_types.nil? ? false : true, :class => 'radio'
-          = 'Both'
-      .search_section
-        = submit_tag "Search", :class => 'btn btn-primary span2'
+              = f.check_box :dietary_accommodations, :class => 'checkbox'
+              = 'Accommodates for Food Allergies'
+        .span2
+          .search_section
+            %h5
+              = 'Licensed / Unlicensed'
+            %label.radio.inline
+              = radio_button_tag "search[license_group]", "licensed", checked = @advanced_search.licensed.nil? ? false : true, :class => 'radio'
+              = 'Licensed'
+            %br
+            %label.radio.inline
+              = radio_button_tag "search[license_group]", "unlicensed",  checked = @advanced_search.unlicensed.nil? ? false : true, :class => 'radio'
+              = 'Unlicensed'
+            %br
+            %label.radio.inline
+              = radio_button_tag "search[license_group]", "both_license_types", checked = @advanced_search.both_license_types.nil? ? false : true, :class => 'radio'
+              = 'Both'
+      .row
+        .search_section
+          = submit_tag "Search", :class => 'btn btn-primary span2'
+      .row
+        .search_section
+          <a id="hideSearchLink">Hide search</a>
