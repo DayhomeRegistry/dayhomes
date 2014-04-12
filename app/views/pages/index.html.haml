@@ -43,6 +43,10 @@
         = form_tag('http://dayhomeregistry.us7.list-manage.com/subscribe/post?u=cde938b38d19f459bce32538b&amp;id=31701e2e10',:method=>:post,:target=>:_blank) do
           = email_field_tag 'EMAIL','',:id=>'mail'
           = submit_tag "Subscribe", :id=>"subscribe",:class=>"btn slim"
+      .span4
+        <!-- 300x250 -->
+        <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-6835867491393885" data-ad-slot="9053237259"></ins>
+
   #leftBar
     .leftb
       .strt_t{:style=>""}
@@ -81,3 +85,5 @@
                         Edmonton, Canada
                   %p{:style=>""}
                     = featured_day_home.highlight
+:javascript
+  (adsbygoogle = window.adsbygoogle || []).push({});

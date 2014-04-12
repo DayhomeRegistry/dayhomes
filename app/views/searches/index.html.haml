@@ -1,7 +1,8 @@
 .row
-  .span3
+  .span8
     =render 'form'
-  .span7    
+.row
+  .span8    
     =gmaps( |
       :map_options => { |
         :center_latitude => @search.center_latitude, |
@@ -19,7 +20,7 @@
     %h3
       Results
     <ul id="markers_list">  </ul>
-    / 
+    /
       - if !@day_homes.empty?
         =render :partial => 'day_home', :collection => @day_homes 
 - content_for :scripts do
@@ -28,8 +29,15 @@
     var idleSkipped = false;
     var currentInfo = null;
     $(document).ready(function(){
+      $(document).on('click',"#showSearchLink",function(){
+        $('#showSearch').toggle();
+        $('#hideSearch').toggle();
+      });
+      $(document).on('click',"#hideSearchLink",function(){
+        $('#showSearch').toggle();
+        $('#hideSearch').toggle();
+      });
       //Add the center of the search?
-
       $(document).on('click',".markerCallout",function(){          
           var slug = $(this).attr('id');
           for(i=0;i<Gmaps.map.markers.length;i++){          
@@ -60,9 +68,18 @@
     });
     function _respondToMapChange(){
         $("#markers_list").children().remove();
+        var j=0;
+        var lasti=-1;
+        var lastj=-1;
         for(i=0;i<Gmaps.map.markers.length;i++){
             if(Gmaps.map.map.getBounds().contains(new google.maps.LatLng(Gmaps.map.markers[i].lat,Gmaps.map.markers[i].lng))){
               $("#markers_list").append(Gmaps.map.markers[i].sidebar);
+              j++;
+            }
+            if(lasti!=i && lastj!=j && j>0 && j%5==0){
+             $("#markers_list").append("<div class='dayhome_listing'><ins class='adsbygoogle' style='display:inline-block;width:468px;height:60px' data-ad-client='ca-pub-6835867491393885' data-ad-slot='6878500053'></ins></div"); 
+             lasti=i;
+             lastj=j;
             }
         }
     }
