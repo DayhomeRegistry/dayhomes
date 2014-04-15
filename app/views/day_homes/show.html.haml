@@ -103,7 +103,7 @@
     %h3.singleViewH3
       Contact Information
     .contact_info
-    - if @day_home.organization
+    - if @day_home.organization.day_homes.count>1
       %div
         This dayhome is proudly managed through 
         %span.external
