@@ -145,6 +145,7 @@ class Search
 
   # apply the where clauses based on which radio button is selected
   def apply_licensed_filter(dayhome_query)
+
     if !self.licensed.blank? && self.licensed  == true
       dayhome_query = dayhome_query.where("day_homes.licensed = true")
     elsif !self.unlicensed.blank? && self.unlicensed == true
@@ -153,7 +154,6 @@ class Search
       # if the other 2 aren't set, it must be both
       dayhome_query = dayhome_query.where(:licensed => [true, false])
     end
-
     dayhome_query
   end
 

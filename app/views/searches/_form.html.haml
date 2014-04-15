@@ -56,14 +56,14 @@
         .span2
           .search_section
             %h5
-              = 'Licensed / Unlicensed'
+              = 'Accredited / Private'
             %label.radio.inline
               = radio_button_tag "search[license_group]", "licensed", checked = @advanced_search.licensed.nil? ? false : true, :class => 'radio'
-              = 'Licensed'
+              = 'Accredited'
             %br
             %label.radio.inline
               = radio_button_tag "search[license_group]", "unlicensed",  checked = @advanced_search.unlicensed.nil? ? false : true, :class => 'radio'
-              = 'Unlicensed'
+              = 'Private'
             %br
             %label.radio.inline
               = radio_button_tag "search[license_group]", "both_license_types", checked = @advanced_search.both_license_types.nil? ? false : true, :class => 'radio'

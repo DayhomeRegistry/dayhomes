@@ -103,7 +103,7 @@
     %h3.singleViewH3
       Contact Information
     .contact_info
-    - if @day_home.organization
+    - if @day_home.organization.day_homes.count>1
       %div
         This dayhome is proudly managed through 
         %span.external
@@ -140,7 +140,7 @@
           
           = cf.input :home_address, :label=>false do             
             =cf.label :home_address, :style => 'display:inline;'
-            %i.icon-info-sign{:rel=>"tooltip", :title=> "If you are contacting a licensed dayhome, this helps the agency find other options if this one won't work." }
+            %i.icon-info-sign{:rel=>"tooltip", :title=> "If you are contacting an accredited dayhome, this helps the agency find other options if this one won't work." }
             =cf.text_field :home_address
             
         .span9.remember
