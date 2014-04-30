@@ -80,7 +80,6 @@ class BillingController < ApplicationController
 
 
       #Create the org
-      debugger
       
         org = Organization.new()
         org.stripe_coupon_code = @coupon.nil? ? nil : @coupon.id

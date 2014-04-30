@@ -62,10 +62,25 @@
           %a{:href=>"http://blog.dayhomeregistry.com/2013/10/how-to-register/"}
             How do I register?
         %div{:style=>"width:100%;padding-bottom:1em;"}
-          .callout.top-right
-            "Dayhomeregistry has been an invaluable asset for my business. Not a week goes by that I don't receive an enquiry about childcare via this site. In fact, I receive far more requests from here than anywhere else. If you have spaces to fill, I would recommend advertising here immediately!"
-          %i{:style=>"padding-left:300px;margin-top: 1em;"}
-            &#151; Danielle R., Calgary
+          %ul#cyclelist
+            %li
+              .callout.top-right
+                %span
+                  "Dayhomeregistry has been an invaluable asset for my business. Not a week goes by that I don't receive an enquiry about childcare via this site. In fact, I receive far more requests from here than anywhere else. If you have spaces to fill, I would recommend advertising here immediately!"
+              %i{:style=>"padding-left:300px;margin-top: 0.3em;position:absolute;"}
+                &#151; Danielle R., Calgary
+            %li{:style=>"display:none;"}
+              .callout.top-right
+                %span
+                  "As a first-time mom, finding the right dayhome was an overwhelming task and I didn’t know where or how to start looking.  I was thrilled when I came across Dayhome Registry – their search engine was ideal for locating dayhomes in my neighborhood and allowing me to search specific criteria that was important to me.  Thanks Dayhome Registry for providing a much needed service and reducing my stress to find the perfect dayhome for my daughter!"
+              %i{:style=>"padding-left:300px;margin-top: 0.3em;position:absolute;"}
+                &#151; Anna G., Edmonton
+            %li{:style=>"display:none;"}
+              .callout.top-right
+                %span
+                  "We registered our agency with dayhomeregistry.com in March and in 6 months have generated an additional 80 leads. We love the map feature and often use it to help parents locate a dayhome in their specific neighbourhood."
+              %i{:style=>"padding-left:300px;margin-top: 0.3em;position:absolute;"}
+                &#151; Child Development Dayhomes, Edmonton      
       %h3.title{:style=>""}
         Featured Dayhomes
       .prjR{:style=>""}
@@ -87,3 +102,25 @@
                     = featured_day_home.highlight
 :javascript
   (adsbygoogle = window.adsbygoogle || []).push({});
+  $(document).ready(function() {
+
+    var j = 0;
+    var delay = 10000; //millisecond delay between cycles
+    function cycleThru(){
+      var jmax = $("ul#cyclelist li").length -1;
+      $("ul#cyclelist li:eq(" + j + ")").hide("slow", function(){
+        (j == jmax) ? j=0 : j++;
+        $("ul#cyclelist li:eq(" + j + ")").show("slow", function(){
+          setTimeout(function() {
+            cycleThru();
+          }, delay);
+        });
+      });
+    };
+
+    setTimeout(function() {
+      cycleThru();
+    }, delay);
+    
+
+  });
