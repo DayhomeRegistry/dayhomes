@@ -499,13 +499,14 @@ div.newsletter {
   margin: 0;padding: 5px 10px;height: 125px;overflow: hidden;
 }
 
-div.callout {
-  height: 100px;
-  width: 400px;
-  margin-left:auto;margin-right: auto;
-}
+ul#cyclelist {position:relative;overflow:hidden;height:200px}
+ul#cyclelist li {position:absolute;width:100%;}
 
 div.callout {
+  height: 155px;
+  line-height: 155px;
+  width: 400px;
+  margin-left:auto;margin-right: auto;
   background-color: $blue;
   background-image: -moz-linear-gradient(top, $blue, $blue);
   position: relative;
@@ -520,6 +521,11 @@ div.callout {
   text-align: center;
   
   /*box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;*/
+}
+.callout span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
 }
 
 .callout::before {
