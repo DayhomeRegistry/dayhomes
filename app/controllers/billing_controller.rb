@@ -44,22 +44,23 @@ class BillingController < ApplicationController
 
 
     @error_msg = []
+    
     begin
-      #Check for a coupon
-      @coupon = nil
-      if(!@day_home_signup_request.coupon.blank?)
-        begin
-          @coupon = Stripe::Coupon.retrieve(@day_home_signup_request.coupon)
-
-        rescue Stripe::StripeError => e
-          # Invalid parameters were supplied to Stripe's API
-          raise e.json_body[:error][:message]
-        end
-      end
-
-      #Start making stuff
-      DayHomeSignupRequest.transaction do
       
+      DayHomeSignupRequest.transaction do
+      #Check for a coupon
+        @coupon = nil
+        if(!@day_home_signup_request.coupon.blank?)
+          begin
+            @coupon = Stripe::Coupon.retrieve(@day_home_signup_request.coupon)
+
+          rescue Stripe::StripeError => e
+            # Invalid parameters were supplied to Stripe's API
+            raise e.json_body[:error][:message]
+          end
+        end
+
+     
       #Create the user
         user = User.find_by_email(@day_home_signup_request.contact_email)      
         if(!user.nil?)
@@ -149,13 +150,11 @@ class BillingController < ApplicationController
         if(!@day_home_signup_request.save)
           handle_day_home_signup_request_error
         end
-        
-      #Close the transaction  
-      end
 
       #Now that we're all done, email them their password set instructions
-      UserMailer.new_user_password_instructions(user).deliver      
-
+        UserMailer.new_user_password_instructions(user).deliver  
+      #end transaction
+      end
 
     rescue => e    
 
