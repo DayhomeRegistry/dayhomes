@@ -23,7 +23,7 @@ production:
   container: dayhomes_production
   username: jonmholt
   api_key: 288bc129beca52ce4818b58e1a8cdc51
-  cdn_url: http://de9759d6abc61c1211f8-25181be79b1f36ccdc7d3c4ce16785ec.r16.cf1.rackcdn.com
+  cdn_url: http://40325dfc7925a07385f6-11e3d3d0a1159f06aff28541e9c4b079.r81.cf1.rackcdn.com
   servicenet: true
   servicenet: false
   use_fog: true
