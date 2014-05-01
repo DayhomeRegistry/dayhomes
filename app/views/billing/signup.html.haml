@@ -199,7 +199,7 @@
           = f.text_field :day_home_slug, :class=>"span2"
         <i class="icon-info-sign" data-title="What's a slug?" data-content="The slug is the name for the end of our web address that makes it easy for you and your customers to find your page.  The web address that you see to the left will be your home on our website."></i>             
     .control-group
-      = f.label :day_home_highlight, 'Front page highlight', :class=>"control-label"
+      = f.label :day_home_highlight, 'Front page highlight (max 200 chars)', :class=>"control-label"
       .controls
         = f.text_area :day_home_highlight, :rows => 4, :style=>"width:530px;"
         <i class="icon-info-sign" data-title="What's a highlight?" data-content="On our homepage, when we feature a dayhome, the name of the dayhome and the text you put below are displayed over one of your images.  This highlight has to be 200 characters or less so we can still see how wonderful you are in your picture."></i>
