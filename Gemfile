@@ -37,7 +37,7 @@ gem 'rack-affiliates'
 gem 'geokit'
 gem 'geokit-rails'
 
-gem 'newrelic_rpm'
+gem 'newrelic_rpm', '~> 3.8.0'
 
 platforms :mswin, :mingw do
   #gem 'eventmachine', '1.0.0.beta.4.1'

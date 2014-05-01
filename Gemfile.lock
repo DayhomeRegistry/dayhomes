@@ -202,7 +202,7 @@ GEM
     net-ssh (2.7.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    newrelic_rpm (3.6.7.159)
+    newrelic_rpm (3.8.0.218)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     polyglot (0.3.3)
@@ -355,7 +355,7 @@ DEPENDENCIES
   maruku
   mini_magick
   mysql2
-  newrelic_rpm
+  newrelic_rpm (~> 3.8.0)
   rack-affiliates
   rails (= 3.2.13)
   rspec-rails (~> 2.6)

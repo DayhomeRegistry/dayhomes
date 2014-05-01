@@ -44,22 +44,23 @@ class BillingController < ApplicationController
 
 
     @error_msg = []
+    
     begin
-      #Check for a coupon
-      @coupon = nil
-      if(!@day_home_signup_request.coupon.blank?)
-        begin
-          @coupon = Stripe::Coupon.retrieve(@day_home_signup_request.coupon)
-
-        rescue Stripe::StripeError => e
-          # Invalid parameters were supplied to Stripe's API
-          raise e.json_body[:error][:message]
-        end
-      end
-
-      #Start making stuff
-      DayHomeSignupRequest.transaction do
       
+      DayHomeSignupRequest.transaction do
+      #Check for a coupon
+        @coupon = nil
+        if(!@day_home_signup_request.coupon.blank?)
+          begin
+            @coupon = Stripe::Coupon.retrieve(@day_home_signup_request.coupon)
+
+          rescue Stripe::StripeError => e
+            # Invalid parameters were supplied to Stripe's API
+            raise e.json_body[:error][:message]
+          end
+        end
+
+     
       #Create the user
         user = User.find_by_email(@day_home_signup_request.contact_email)      
         if(!user.nil?)
@@ -72,47 +73,11 @@ class BillingController < ApplicationController
         user.privacy_effective_date = Time.now()
         if(!user.save)
           handle_user_error(user)
-        else
-          #email them their password set instructions
-          UserMailer.new_user_password_instructions(user).deliver            
         end
 
-
-
-      #Create the org
-      
-        org = Organization.new()
-        org.stripe_coupon_code = @coupon.nil? ? nil : @coupon.id
-        org.name = @day_home_signup_request.day_home_name
-        org.city = @day_home_signup_request.day_home_city
-        org.province = @day_home_signup_request.day_home_province
-        org.street1 = @day_home_signup_request.day_home_street1
-        #org.street2
-        org.postal_code = @day_home_signup_request.day_home_postal_code
-        org.billing_email = @day_home_signup_request.contact_email
-        org.phone_number = @day_home_signup_request.contact_phone_number
-        org.users << user
-
-        if request.env['affiliate.tag'] && affiliate = Organization.find_by_affiliate_tag(request.env['affiliate.tag'])
-          org.mentor = affiliate
-        end
-
-        if(@day_home_signup_request.plan!="baby") 
-          org.stripe_card_token = @day_home_signup_request.stripe_card_token
-          org.plan = @day_home_signup_request.plan
-          if !org.save_with_payment 
-            handle_org_error(org)
-          end
-        else
-          if(!org.save)
-            handle_org_error(org)
-          end
-        end
       #Create the location
         loc = Location.new()
         loc.name = @day_home_signup_request.day_home_city || 'Edmonton'
-        loc.organization = org
-
         if(!loc.save)
           handle_location_error(loc)
         end
@@ -137,16 +102,68 @@ class BillingController < ApplicationController
         end
 
 
-      #Just for backwards compatibility, save the DayHomeSignupRequest
+      #Create the org
+      
+        org = Organization.new()
+        org.stripe_coupon_code = @coupon.nil? ? nil : @coupon.id
+        org.name = @day_home_signup_request.day_home_name
+        org.city = @day_home_signup_request.day_home_city
+        org.province = @day_home_signup_request.day_home_province
+        org.street1 = @day_home_signup_request.day_home_street1
+        #org.street2
+        org.postal_code = @day_home_signup_request.day_home_postal_code
+        org.billing_email = @day_home_signup_request.contact_email
+        org.phone_number = @day_home_signup_request.contact_phone_number
+        org.users << user
+
+        #update any affiliate data
+        if request.env['affiliate.tag'] && affiliate = Organization.find_by_affiliate_tag(request.env['affiliate.tag'])
+          org.mentor = affiliate
+        end
+
+        #OK, let get the org into the database before we charge the card
+        if(!org.save)
+          handle_org_error(org)
+        end
+
+        #Now tidy up the links
+        loc.organization = org
+        if(!loc.save)
+          handle_location_error(loc)
+        end
+
+        #and now we charge the card
+        if(@day_home_signup_request.plan!="baby") 
+          org.stripe_card_token = @day_home_signup_request.stripe_card_token
+          org.plan = @day_home_signup_request.plan
+          if !org.save_with_payment 
+            handle_org_error(org)
+          end
+        else
+          if(!org.save)
+            handle_org_error(org)
+          end
+        end
+      
+
+      #Save the DayHomeSignupRequest as this sends all the "we got your signup" emails
         if(!@day_home_signup_request.save)
           handle_day_home_signup_request_error
         end
+
+      #Now that we're all done, email them their password set instructions
+        UserMailer.new_user_password_instructions(user).deliver  
+      #end transaction
       end
-    rescue => e            
+
+    rescue => e    
+
       if(!e.message.nil?)
         flash.now['page-error'] = e.message
+        logger.error e.message
       else
         flash.now['page-error'] = e
+        logger.error e
       end
       
       return render :action => :signup
