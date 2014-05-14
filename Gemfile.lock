@@ -310,6 +310,9 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    unicorn-rails (2.1.1)
+      rack
+      unicorn
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -369,4 +372,5 @@ DEPENDENCIES
   thin (~> 1.5)
   uglifier (>= 1.0.3)
   unicorn
+  unicorn-rails
   webrat (~> 0.7.3)

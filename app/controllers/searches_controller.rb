@@ -7,8 +7,11 @@ class SearchesController < ApplicationController
       @search = Search.new(params[:search])
 
       # If any errors, show an error message
-      if @search.errors.count > 0
+      debugger
+      if @search.errors.count > 1
         flash.now[:error] = "Unable to find dayhomes within that criteria, please modifying the critera to be less restrictive"
+      elsif @search.errors.count == 1
+        flash.now[:error] = @search.errors[:base][0]
       end
 
       # set the pins for gmaps

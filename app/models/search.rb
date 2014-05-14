@@ -26,8 +26,12 @@ class Search
     # only do the availability type processing if you've submitted the advanced search form
     if self.advanced_search == 'true'
       # update search vars based on checkboxes
-      update_check_boxes(attributes)
-
+      begin
+        update_check_boxes(attributes)
+      rescue
+        self.errors.add(:base, "We had some trouble with your search and so some criteria may have been removed. If you've bookmarked this search, you may want to update your bookmark." )
+        set_defaults
+      end
       # update the search vars based on the license radio button group
       unless self.license_group.blank?
         self.send("#{self.license_group}=", true)

@@ -70,6 +70,7 @@ end
 group :production do
   # app server and process management
   gem 'unicorn'
+  gem 'unicorn-rails'
   gem 'foreman', '0.47.0'
   gem 'therubyracer'
 end
