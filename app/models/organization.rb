@@ -15,7 +15,20 @@
 
   attr_accessor :stripe_card_token, :stripe_coupon_code
   
+  before_save :check_and_update_affiliate_tag
   before_destroy :destroy_customer
+
+  def check_and_update_affiliate_tag
+    if self.affiliate_tag.nil?
+      a = [('0'..'9')].map { |i| i.to_a }.flatten
+      b = [('A'..'Z')].map { |i| i.to_a }.flatten
+      string = (0...3).map { b[rand(b.length)] }.join
+      string += (0...2).map { a[rand(a.length)] }.join
+      string += (0...3).map { b[rand(b.length)] }.join
+      self.affiliate_tag=string
+    end
+  end
+
   def address
     lstreet = "#{street1}#{street2}".blank? ? "" : "#{street1}#{street2},"
   	lcity = "#{city}".blank? ? "" : " #{city},"
