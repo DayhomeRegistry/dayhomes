@@ -282,7 +282,7 @@
     .control-group
       = f.label :community, 'Community', :class=>"control-label"        
       .controls
-        = select("community", "id", options_from_collection_for_select(@communities, "id", "name",9), {prompt: 'Other'})
+        = select("community", "id", options_from_collection_for_select(@communities, "id", "name",1), {prompt: 'Other'})
         = text_field :community, :name, style:"display:none"
     %h3#addon-header.section-header
       Good Karma...
