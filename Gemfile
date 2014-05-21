@@ -65,6 +65,7 @@ group :development, :test do
   gem 'capybara'
   gem 'guard-rspec'
   gem 'thin', '~> 1.5'
+  gem 'rack-mini-profiler'
 end
 
 group :production do

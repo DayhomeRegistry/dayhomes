@@ -9,6 +9,8 @@ class BillingController < ApplicationController
     @day_home_signup_request = DayHomeSignupRequest.new
     @existing = Plan.find_by_plan("babyannual")
     @packages = {}
+    @communities = Community.all
+    
     Plan.where("inactive is null").order(:price).each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
@@ -74,10 +76,26 @@ class BillingController < ApplicationController
         if(!user.save)
           handle_user_error(user)
         end
+    debugger
+
+      #Find or create the community
+        createdCommunity = false
+        if (!params["community"]["id"].blank?)
+          community = Community.find(params["community"]["id"])
+        else
+          community = Community.new()
+          community.name=params["community"]["name"]
+          if(!community.save)
+            raise "It seems there's an issue with starting that community.  Perhaps try another name?"
+          else
+            createdCommunity=true
+          end
+        end
 
       #Create the location
         loc = Location.new()
         loc.name = @day_home_signup_request.day_home_city || 'Edmonton'
+        loc.community=community
         if(!loc.save)
           handle_location_error(loc)
         end
@@ -153,6 +171,9 @@ class BillingController < ApplicationController
 
       #Now that we're all done, email them their password set instructions
         UserMailer.new_user_password_instructions(user).deliver  
+        if(createdCommunity)
+          DayHomeMailer.new_community(org,community).deliver
+        end
       #end transaction
       end
 
