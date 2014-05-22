@@ -20,6 +20,11 @@ class DayHomeMailer < ActionMailer::Base
     @day_home_signup_request = day_home_signup_request    
     mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => 'A referral to add to the draw for this month') 
   end
+  def new_community(organization, community)
+    @community = community  
+    @organization = organization  
+    mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => 'Someone added a new community') 
+  end
 
   def referral_referrer(day_home_signup_request)
     @day_home_signup_request = day_home_signup_request    

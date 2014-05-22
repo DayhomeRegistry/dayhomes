@@ -1,5 +1,25 @@
 ﻿-content_for :footer_scripts do
   = javascript_include_tag :billing, :billing_init
+  :javascript
+    $('#day_home_signup_request_day_home_city').change(function(){
+      select = $("#community_id option");//[value='"+$(this).val()+"']:first");
+      if(select.length){
+        for(var i = 0; i < select.length; i++) {
+          if($(select[i]).html()==$(this).val()){
+            $(select[i]).attr("selected", true);
+            $(select).change();
+          } 
+        }
+      } 
+    });
+    $('#community_id').change(function(){
+      selected = $("#community_id").find(":selected");
+      if ($(selected).html()=="Other"){
+        $("#community_name").show();
+      } else {
+        $("#community_name").hide();
+      } 
+    });
 .container.primary-content
   %table.pricingTable.billing-page{:align => "center", :cellpadding => "0", :cellspacing => "0"}
     %tbody
@@ -255,6 +275,15 @@
       = f.label :contact_email, 'Email Address', :class=>"control-label"        
       .controls
         = f.text_field :contact_email
+    %h3#addon-header.section-header
+      Your Community...
+    .section-text
+      We're building communities of dayhomes that help parents know where to find you and dayhomes in your community connect.  Which community would you like to be a part of?
+    .control-group
+      = f.label :community, 'Community', :class=>"control-label"        
+      .controls
+        = select("community", "id", options_from_collection_for_select(@communities, "id", "name",1), {prompt: 'Other'})
+        = text_field :community, :name, style:"display:none"
     %h3#addon-header.section-header
       Good Karma...
     .control-group
