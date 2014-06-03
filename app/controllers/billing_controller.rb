@@ -7,11 +7,11 @@ class BillingController < ApplicationController
       redirect_to :action=>:options
     end
     @day_home_signup_request = DayHomeSignupRequest.new
-    @existing = Plan.find_by_plan("babyannual")
+    @existing = Plan.find_by_plan("baby50")
     @packages = {}
     @communities = Community.all
     
-    Plan.where("inactive is null").order(:price).each do |p|
+    Plan.where("inactive is null").order(:price).order("subscription DESC").each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
   end
@@ -76,7 +76,6 @@ class BillingController < ApplicationController
         if(!user.save)
           handle_user_error(user)
         end
-    debugger
 
       #Find or create the community
         createdCommunity = false
