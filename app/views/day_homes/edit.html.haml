@@ -1,6 +1,12 @@
 ﻿:javascript
 
   $(function(){
+    
+    $('#day_home_name').keyup(function(e) {
+      var parsed_subdomain = $(this).val().replace(/[^a-z0-9]/gi,'').toLowerCase();
+      $('#day_home_slug').empty().val(parsed_subdomain);
+    });
+
     //need to treat the default_photo checkboxes like radio buttons
     var changing=false;
     $('form').on("change","input[name$='[default_photo]']",function(event) {
@@ -99,9 +105,19 @@
             Feature me!
   %h3
     Description  
+
+  = f.label :name
+  = f.text_field :name
+
+  = f.label :slug, 'Dayhome Slug'
+  .input-prepend
+    %span.add-on
+      http://dayhomeregistry.com/
+    = f.text_field :slug
+  
   = f.label :highlight
   = f.text_area :highlight, :rows=>10, :style=>"width:90%"
-  
+
   = f.label :blurb
   = f.text_area :blurb, :rows=>10, :style=>"width:90%"
   
