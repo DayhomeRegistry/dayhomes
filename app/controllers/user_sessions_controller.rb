@@ -44,25 +44,31 @@ class UserSessionsController < ApplicationController
   end
 
   def fb_connect_callback
-    client = Koala::Facebook::OAuth.new(FACEBOOK_CONFIG[:app_id], FACEBOOK_CONFIG[:app_secret], fb_connect_callback_user_sessions_url)
-    access_token_info = client.get_access_token_info(params[:code])
-    
-    fb_access_token = access_token_info['access_token']
-    fb_expires_in = access_token_info['expires']
-    fb_user = Koala::Facebook::API.new(fb_access_token).get_object('me')
-    
-    if @user = User.find_by_email(fb_user['email'])
-      @user.update_attribute(:facebook_access_token, fb_access_token)
-      @user.update_attribute(:facebook_access_token_expires_in, fb_expires_in)
+    debugger
 
-      UserSession.new(@user).save
-    else
-      @user = User.new_from_fb_user(fb_user, fb_access_token, fb_expires_in)
-      if @user.save
+    client = Koala::Facebook::OAuth.new(FACEBOOK_CONFIG[:app_id], FACEBOOK_CONFIG[:app_secret], fb_connect_callback_user_sessions_url)
+    begin
+      access_token_info = client.get_access_token_info(params[:code])
+      
+      fb_access_token = access_token_info['access_token']
+      fb_expires_in = access_token_info['expires']
+      fb_user = Koala::Facebook::API.new(fb_access_token).get_object('me')
+      
+      if @user = User.find_by_email(fb_user['email'])
+        @user.update_attribute(:facebook_access_token, fb_access_token)
+        @user.update_attribute(:facebook_access_token_expires_in, fb_expires_in)
+
         UserSession.new(@user).save
       else
-        flash[:error] = "Someting went wrong while trying to log you in with facebook. Please try again."
+        @user = User.new_from_fb_user(fb_user, fb_access_token, fb_expires_in)
+        if @user.save
+          UserSession.new(@user).save
+        else
+          flash[:error] = "Someting went wrong while trying to log you in with facebook. Please try again."
+        end
       end
+    rescue => e
+      flash[:error] = "Someting went wrong while trying to log you in with facebook. Please try again."
     end
     
     redirect_to root_path
