@@ -25,6 +25,17 @@
   .span3.well
     %p
       %b 
+        Start date:
+      = "#{@contact.child_start_date.strftime("%B #{@contact.child_start_date.day.ordinalize} %Y") unless @contact.child_start_date.nil?}"
+
+    %p
+      %b 
+        Address:
+      = "#{@contact.home_address}" 
+.row{:style=>"clear:both;"}
+  .span6.well
+    %p
+      %b 
         Child's Name:
       = "#{@contact.child_name}"
 
@@ -32,15 +43,18 @@
       %b 
         Birthdate:
       = "#{@contact.child_birth_date.strftime("%B %Y") unless @contact.child_birth_date.nil?}"
-    %p
-      %b 
-        Start date:
-      = "#{@contact.child_start_date.strftime("%B #{@contact.child_start_date.day.ordinalize} %Y") unless @contact.child_start_date.nil?}"
+    -if !@contact.child_name2.blank?
+      %hr
+      %p
+        %b 
+          Child's Name:
+        = "#{@contact.child_name2}"
 
-    %p
-      %b 
-        Address:
-      = "#{@contact.home_address}"  
+      %p
+        %b 
+          Birthdate:
+        = "#{@contact.child_birth_date2.strftime("%B %Y") unless @contact.child_birth_date.nil?}"
+
 .clear
 .row
   .span6     
