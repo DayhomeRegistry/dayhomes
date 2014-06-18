@@ -7,7 +7,6 @@ class SearchesController < ApplicationController
       @search = Search.new(params[:search])
 
       # If any errors, show an error message
-      debugger
       if @search.errors.count > 1
         flash.now[:error] = "Unable to find dayhomes within that criteria, please modifying the critera to be less restrictive"
       elsif @search.errors.count == 1

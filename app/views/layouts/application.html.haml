@@ -6,7 +6,10 @@
 %html{:lang => "en-us"}
   / <![endif]
   %head
-    %title Dayhome Registry
+    -if !@content_for_title.nil?
+      %title #{@content_for_title}
+    -else
+      %title Dayhome Registry
     = stylesheet_link_tag :application, :media => :all
     = javascript_include_tag "http://js.stripe.com/v1/",:application
     = csrf_meta_tags
@@ -26,6 +29,7 @@
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
       ga('create', 'UA-31077078-1', 'dayhomeregistry.com');
+      ga('require', 'displayfeatures');
       ga('send', 'pageview');
 
     / yield
