@@ -24,9 +24,10 @@ class BillingController < ApplicationController
     @day_home_signup_request.plan=params[:plan]
     @existing = Plan.find_by_plan("baby")
     @packages = {}
-    Plan.all.each do |p|
+    Plan.where("inactive is null").order(:price).order("subscription DESC").each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
+    @communities = Community.all
       
 
     if(!params[:staff].blank?)
@@ -177,7 +178,7 @@ class BillingController < ApplicationController
       end
 
     rescue => e    
-
+      debugger
       if(!e.message.nil?)
         flash.now['page-error'] = e.message
         logger.error e.message
@@ -424,8 +425,9 @@ class BillingController < ApplicationController
     raise @error_msg.join("<br/>").html_safe
   end
   def handle_dayhome_error
-    @day_home.errors.full_messages.each do |err|
-      @error_msg << err+" (dayhome)"
+    debugger
+    @day_home.errors.messages.each do |err|
+      @error_msg << err[1][0]+" (dayhome)"
     end
     raise @error_msg.join("<br/>").html_safe
   end
