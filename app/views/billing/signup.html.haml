@@ -20,6 +20,37 @@
         $("#community_name").hide();
       } 
     });
+
+    $(function() {
+      $("textarea[maxlength]").each(function() {
+          var $this = $(this);
+          var maxLength = parseInt($this.attr('maxlength'));
+          $this.attr('maxlength', null);
+          var cc = $this.val().length;
+          var el = $("<div class=\"controls character-count\" style=\"margin-left:20px;\">" + (maxLength-cc) + "</div>");
+          el.insertAfter($this.parent().children().last()[0]);
+          
+          $this.bind('keyup', function() {
+              var cc = $this.val().length;
+              if(cc>maxLength){
+                  //var pre= $this.val().slice(1,maxLength);
+                  //$this.html(pre+'<em>'+$this.val().slice(maxLength)+'</em>');
+                  $this.css("background","#FCC");
+              } else {
+                  $this.css("background","#FFF");
+              }
+              
+              el.text(maxLength - cc);
+              
+              if(maxLength < cc) {
+                  el.css('color', 'red');
+              } else {
+                  el.removeAttr("style");
+                  el.css("margin-left","20px");
+              }
+          });
+      });
+    });
 .container.primary-content
   %table.pricingTable.billing-page{:align => "center", :cellpadding => "0", :cellspacing => "0"}
     %tbody
@@ -216,17 +247,17 @@
         = f.text_field :day_home_name
         <i class="icon-info-sign" data-title="What's in a name?" data-content="This is the name of your dayhome. Don't have one? Well, pick something that you'll want your parents to know you by...it's your first impression when attracting new families."></i>
     .control-group
-      = f.label :day_home_slug, 'Dayhome Slug', :class=>"control-label"
+      = f.label :day_home_slug, 'Web Address', :class=>"control-label"
       .controls
         .input-prepend
           %span.add-on
             http://dayhomeregistry.com/
           = f.text_field :day_home_slug, :class=>"span2"
-        <i class="icon-info-sign" data-title="What's a slug?" data-content="The slug is the name for the end of our web address that makes it easy for you and your customers to find your page.  The web address that you see to the left will be your home on our website."></i>             
+        <i class="icon-info-sign" data-title="What's a web address?" data-content="The web address is the short name that makes it easy for you and your customers to find your page.  The web address that you see to the left will be your home on our website."></i>             
     .control-group
       = f.label :day_home_highlight, 'Front page highlight (max 200 chars)', :class=>"control-label"
       .controls
-        = f.text_area :day_home_highlight, :rows => 4, :style=>"width:530px;"
+        = f.text_area :day_home_highlight, :rows => 4, :style=>"width:530px;", :maxLength=>"200"
         <i class="icon-info-sign" data-title="What's a highlight?" data-content="On our homepage, when we feature a dayhome, the name of the dayhome and the text you put below are displayed over one of your images.  This highlight has to be 200 characters or less so we can still see how wonderful you are in your picture."></i>
     .control-group
       = f.label :day_home_highlight, 'Full description', :class=>"control-label"
@@ -393,3 +424,5 @@
     index: {
     }
   };
+
+

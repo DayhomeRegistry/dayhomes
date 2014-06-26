@@ -368,7 +368,10 @@ Dayhome.billingPage.Billing = Class.extend({
             validators = {
                 "CREDIT_CARD_NUMBER": "You must enter your credit card number.",
                 "CVV":"You must enter your Card Verification Value."
-            };
+            },
+            highlight = $('#day_home_highlight').val()
+            highlightMax = $('#day_home_highlight').attr('maxLength');
+            ;
 
         // if doing a downgrade, don't validate these fields as they are not required
         if ($('#credit-card-section').is(':hidden') || $('#card_number').is(':hidden')) {
