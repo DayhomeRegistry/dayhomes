@@ -3,6 +3,9 @@
   = f.text_field :name
 
   %br
+  = f.label :phone_number
+  = f.text_field :phone_number
+  %br
   %br
   = f.submit (@location.id.nil? ? 'Add' : 'Update') , :class => :btn
   |

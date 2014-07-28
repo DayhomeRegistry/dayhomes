@@ -113,7 +113,12 @@
         = link_to(" other locations near this one.",searches_path('search[organization]'=>@day_home.organization.id,'search[address]'=>@day_home.address))   
         %br
         Phone:
-        =@day_home.organization.phone_number
+        - if !@day_home.location.phone_number.blank?
+          =@day_home.location.phone_number
+        -elsif !@day_home.organization.phone_number.blank?
+          =@day_home.organization.phone_number
+        -else
+          None
     - else
       %div
         = @day_home.address
