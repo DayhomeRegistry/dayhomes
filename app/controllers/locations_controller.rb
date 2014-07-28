@@ -8,9 +8,9 @@ class LocationsController < ApplicationController
 	def update
 		@organization = Organization.find(params["organization_id"])
 		@location = Location.find(params[:id])
-    @location.assign_attributes(params[:location]) 
+    	@location.assign_attributes(params[:location]) 
 		if @location.save
-    	flash[:notice] = "Locale successfully updated!"
+    		flash[:notice] = "Locale successfully updated!"
     	redirect_to organization_path(@organization)
     else
     	render :action => :edit
@@ -38,18 +38,18 @@ class LocationsController < ApplicationController
 		    if @location.destroy
 		    	flash[:notice] = "#{@location.name} successfully removed."
 		    else    	
-		      flash[:error] = "Unable to remove #{@location.name}"
+		      	flash[:error] = "Unable to remove #{@location.name}"
 		    end
-		  end
-	  rescue Exception => e    
-      #raise e          
-      if(!e.message.nil?)
-        flash[:error] = e.message
-      else
-        flash[:error] = e
-      end  
 		end
-    redirect_to organization_path(@organization)
+		rescue Exception => e    
+	        #raise e          
+	        if(!e.message.nil?)
+	          	flash[:error] = e.message
+	        else
+	          	flash[:error] = e
+	        end  
+		end
+	    redirect_to organization_path(@organization)
 	end
 
 	def new
@@ -67,15 +67,15 @@ class LocationsController < ApplicationController
 	end
 	def create
 		@organization = Organization.find(params["organization_id"])
-    @location = Location.new(params[:location])
-    @location.organization=@organization
+    	@location = Location.new(params[:location])
+    	@location.organization=@organization
     
-    if @location.save
-    	flash.now[:notice] = "You successfully added a new locale!"
-    	redirect_to organization_path(@organization)
-    else
-    	render :action => :new
-    end
+	    if @location.save
+	    	flash.now[:notice] = "You successfully added a new locale!"
+	    	redirect_to organization_path(@organization)
+	    else
+	    	render :action => :new
+	    end
 
 	end
 
