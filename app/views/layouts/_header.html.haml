@@ -38,7 +38,7 @@
         %li
           = link_to 'Signup', billing_signup_path, :class=>"blue"  
     %ul.right
-      -if current_user && current_user.organization_admin?
+      -if current_user && !current_user.organization.nil? && current_user.organization_admin?
         %li
           = link_to 'Overview', organization_path(current_user.organization)
         -if current_user.organization.max_users>1
@@ -65,6 +65,9 @@
           = link_to 'DayHomes', [:admin, :day_homes]
         %li
           = link_to 'Manage Organizations', [:admin, :organizations]
+        %li
+          = link_to 'Logout', logout_path 
+      -elsif current_user
         %li
           = link_to 'Logout', logout_path 
       - else
