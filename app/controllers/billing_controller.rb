@@ -203,13 +203,14 @@ class BillingController < ApplicationController
     end
 
     if(!@organization.stripe_customer_token.nil?)
-      
       customer = Stripe::Customer.retrieve(@organization.stripe_customer_token)
+      card = customer.cards.retrieve(customer.default_card)
+
       #raise customer.to_json
       @credit_card = {
-        last4: customer.active_card.last4,
-        month: customer.active_card.exp_month,
-        year: customer.active_card.exp_year
+        last4: card.last4,
+        month: card.exp_month,
+        year: card.exp_year
       }  
     end
     
@@ -227,11 +228,13 @@ class BillingController < ApplicationController
     if(!@organization.stripe_customer_token.nil?)
       
       customer = Stripe::Customer.retrieve(@organization.stripe_customer_token)
+      card = customer.cards.retrieve(customer.default_card)
+
       #raise customer.to_json
       @credit_card = {
-        last4: customer.active_card.last4,
-        month: customer.active_card.exp_month,
-        year: customer.active_card.exp_year
+        last4: card.last4,
+        month: card.exp_month,
+        year: card.exp_year
       }  
     end
     @existing = Plan.find_by_plan(@organization.plan)
