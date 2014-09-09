@@ -215,8 +215,6 @@
   end
 
   def credit_card
-    debugger
-    
     if(!self.stripe_customer_token.nil?)
       
       customer = Stripe::Customer.retrieve(self.stripe_customer_token)
