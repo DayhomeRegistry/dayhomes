@@ -203,13 +203,16 @@ class BillingController < ApplicationController
     end
 
     if(!@organization.stripe_customer_token.nil?)
-      
-      customer = Stripe::Customer.retrieve(@organization.stripe_customer_token, :expand => ['default_card'])
+      debugger
+
+      customer = Stripe::Customer.retrieve(@organization.stripe_customer_token)
+      card = customer.cards.retrieve(customer.default_card)
+
       #raise customer.to_json
       @credit_card = {
-        last4: customer.default_card.last4,
-        month: customer.default_card.exp_month,
-        year: customer.default_card.exp_year
+        last4: card.last4,
+        month: card.exp_month,
+        year: card.exp_year
       }  
     end
     
@@ -226,12 +229,14 @@ class BillingController < ApplicationController
     @organization = current_user.organization
     if(!@organization.stripe_customer_token.nil?)
       
-      customer = Stripe::Customer.retrieve(@organization.stripe_customer_token, :expand => ['default_card'])
+      customer = Stripe::Customer.retrieve(@organization.stripe_customer_token)
+      card = customer.cards.retrieve(customer.default_card)
+
       #raise customer.to_json
       @credit_card = {
-        last4: customer.default_card.last4,
-        month: customer.default_card.exp_month,
-        year: customer.default_card.exp_year
+        last4: card.last4,
+        month: card.exp_month,
+        year: card.exp_year
       }  
     end
     @existing = Plan.find_by_plan(@organization.plan)
