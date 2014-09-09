@@ -217,12 +217,12 @@
   def credit_card
     if(!self.stripe_customer_token.nil?)
       
-      customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+      customer = Stripe::Customer.retrieve(self.stripe_customer_token, :expand => ['default_card'])
       #raise customer.to_json
       credit_card = {
-        last4: customer.active_card.last4,
-        month: customer.active_card.exp_month,
-        year: customer.active_card.exp_year
+        last4: customer.default_card.last4,
+        month: customer.default_card.exp_month,
+        year: customer.default_card.exp_year
       }  
     end
   end
