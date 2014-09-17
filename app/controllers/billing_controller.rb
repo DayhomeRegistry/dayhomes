@@ -197,11 +197,13 @@ class BillingController < ApplicationController
     @organization = current_user.organization
     @upgrade = Upgrade.new()
     @existing = Plan.find_by_plan(@organization.plan)
-    @packages = {}
-    Plan.order(:price).all.each do |p|
+    @packages = {"#{@existing.id}" => @existing}
+    Plan.where("inactive is null").where(subscription: "yr").order( price: :asc).each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
-
+    Plan.where("inactive is null").where(subscription: "mth").order( price: :asc).each do |p|
+      @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+    end
     if(!@organization.stripe_customer_token.nil?)
       customer = Stripe::Customer.retrieve(@organization.stripe_customer_token)
       card = customer.cards.retrieve(customer.default_card)

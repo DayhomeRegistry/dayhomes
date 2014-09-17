@@ -74,12 +74,12 @@ class DayHomesController < ApplicationController
 
       
       if (current_user.organization_admin?)
-        @day_homes = current_user.organization.day_homes.unscoped.where("deleted=1")
+        @day_homes = DayHome.unscoped.where("deleted=1 and location_id in (?)",current_user.organization.locations.map(&:id))
         if (!clause.empty?)
           @day_homes = @day_homes.where("day_homes.name like ?", "%#{clause.strip}%") 
         end
       else
-        @day_homes = current_user.organization.day_homes.unscoped.where("deleted=1") 
+        @day_homes = DayHome.unscoped.where("deleted=1 and location_id in (?)",current_user.organization.locations.map(&:id))
         if (!clause.empty?)          
           @day_homes = @day_homes.where("day_homes.name like ?", "%#{clause.strip}%")
         end
@@ -102,7 +102,7 @@ class DayHomesController < ApplicationController
       @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
       @query = params[:query]
     else 
-      @day_homes = current_user.organization.day_homes.unscoped.where("deleted=1")
+      @day_homes = DayHome.unscoped.where("deleted=1 and location_id in (?)",current_user.organization.locations.map(&:id))
       @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)      
     end
   end

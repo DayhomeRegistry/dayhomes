@@ -1,8 +1,7 @@
 class PagesController < ApplicationController
   layout 'application'
 
-  def index    
-
+  def index 
     edmonton = Community.where("name like 'Edmonton%'");
     calgary =  Community.where("name like 'Calgary%'");
     fortMac =  Community.where("name like 'Fort McMurray%'");

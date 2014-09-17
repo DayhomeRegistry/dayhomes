@@ -15,6 +15,8 @@ Dayhomes::Application.routes.draw do
 
   resources :organizations do
     resources :locations
+    get :confirm_cancel
+    post :cancel
   end
 
   resources :categories, :except => [:index, :show]

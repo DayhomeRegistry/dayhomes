@@ -224,6 +224,8 @@
         %th
           = sortable "approved","Approved?"
         %th
+          Deleted
+        %th
           Actions
     %tbody
       - @day_homes.each do |day_home|
@@ -242,7 +244,9 @@
           %td
             = yes_no(day_home.featured)
           %td
-            = yes_no(day_home.approved)			
+            = yes_no(day_home.approved)		
+          %td
+            = yes_no(day_home.deleted	)
           %td
             = link_to 'Edit', [:edit, :admin, day_home]
             |

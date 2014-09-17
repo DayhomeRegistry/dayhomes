@@ -75,5 +75,27 @@ class DayHomeMailer < ActionMailer::Base
     end
     
   end
+  def day_home_cancel_notification(organization,too_expensive,no_contact,closed,comments)
+    @organization=organization
+    @too_expensive=too_expensive
+    @no_contact=no_contact
+    @closed=closed
+    @comments=comments
+    mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => 'Cancel Account Notification') 
+  end
+  def day_home_cancel_confirmation(organization)  
+    @organization=organization
+    if (Rails.env.development?)
+      mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => "Cancel Account Confirmation from DayhomeRegistry.com")
+    else 
+      @dayhome.admin_users.find do |user|
+        mail(:to => user.email, :subject => "Cancel Account Confirmation from DayhomeRegistry.com")
+      end
+      @dayhome.locale_users.find do |user|
+        mail(:to => user.email, :subject => "Cancel Account Confirmation from DayhomeRegistry.com")
+      end
+    end
+    
+  end
   
 end
