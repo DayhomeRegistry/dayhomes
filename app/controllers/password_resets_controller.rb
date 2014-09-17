@@ -4,6 +4,8 @@ class PasswordResetsController < ApplicationController
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
   
   def new
+    debugger
+    url = session[:return_to]
   end
   
   def admin_reset
@@ -18,11 +20,13 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
+    debugger
+
     @user = User.find_by_email(params[:email])
     
     if @user && @user.deliver_password_reset_instructions!
       flash[:notice] = "Instructions for a password reset have been emailed to #{@user.email}."
-      redirect_to root_path
+      redirect_to login_path
     else
       flash.now[:error] = "No user was found for #{params[:email]}"
       render :action => :new
@@ -30,6 +34,8 @@ class PasswordResetsController < ApplicationController
   end
   
   def edit
+    debugger
+    url = session[:return_to]
   end
 
   def update    
@@ -39,10 +45,13 @@ class PasswordResetsController < ApplicationController
     if @user.save
       @user_session = UserSession.new(@user)
       if @user_session.save
-        redirect_to root_path
-      else
-        redirect_to root_path
+        if (!session[:return_to].nil?)
+          url = session[:return_to]
+          session[:return_to] = nil
+          return redirect_to url
+        end
       end
+      redirect_to root_path
 
     else
       render :action => :edit

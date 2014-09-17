@@ -1,0 +1,24 @@
+%h1
+  Cancel Account
+%p
+  We're really sorry to see you go.  We'd appreciate knowing why you're leaving so we can get better:
+= form_tag (organization_cancel_path(@organization))do
+  %div
+    = label_tag :too_expensive, "Too expensive", :class => :checkbox do 
+      = check_box_tag :too_expensive, '0', false
+      Too Expensive
+    
+  %div
+    = label_tag :no_contact,  :class => :checkbox do 
+      = check_box_tag :no_contact, '0', false
+      Nobody contacted me
+
+  %div
+    = label_tag :closed,  :class => :checkbox do 
+      = check_box_tag :closed, '0', false
+      Not running my dayhome anymore
+  %div
+    = label_tag(:comment, "Anything else you'd like us to know?")
+    = text_area_tag(:comments) 
+  = submit_tag("Cancel Account", {:class=>'btn'})
+

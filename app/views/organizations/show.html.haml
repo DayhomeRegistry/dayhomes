@@ -280,3 +280,5 @@
             |
             = link_to 'Delete', [day_home], :method => :delete, :confirm => "Are you sure?"    
   = paginate @day_homes, :window => 1,:left => 3,:right => 3        
+
+= link_to "Cancel Account", organization_confirm_cancel_path(@organization)

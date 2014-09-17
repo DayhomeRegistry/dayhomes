@@ -47,7 +47,7 @@
         -else
           %li
             = link_to 'My Account', user_path(current_user)
-        - if current_user.organization.max_dayhomes>1
+        - if current_user.organization.max_dayhomes>1 || current_user.organization.day_homes.count==0
           %li
             = link_to 'Day Homes', day_homes_path
         - else

@@ -1,0 +1,34 @@
+%h2
+  We've lost a dayhome :(
+%p
+  =link_to @organization.name, admin_organization_path(@organization)
+  has decided to cancel.  Here's why:
+%table
+  %tr
+    %td
+      -if @too_expensive #? '&#x2713;' : '&#x2717;'} Too expensive"
+        &#x2713;&nbsp;
+      -else
+        &nbsp;&nbsp;
+    %td
+      Too Expensive
+  %tr
+    %td
+      -if @no_contact #? '&#x2713;' : '&#x2717;'} Too expensive"
+        &#x2713;&nbsp;
+      -else
+        &nbsp;&nbsp;
+    %td
+      Nobody contacted me
+  %tr
+    %td
+      -if @closed #? '&#x2713;' : '&#x2717;'} Too expensive"
+        &#x2713;&nbsp;
+      -else
+        &nbsp;&nbsp;
+    %td
+      Not running my dayhome anymore
+%p
+  Comments
+%p
+  =@comments

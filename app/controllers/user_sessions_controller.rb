@@ -44,8 +44,6 @@ class UserSessionsController < ApplicationController
   end
 
   def fb_connect_callback
-    debugger
-
     client = Koala::Facebook::OAuth.new(FACEBOOK_CONFIG[:app_id], FACEBOOK_CONFIG[:app_secret], fb_connect_callback_user_sessions_url)
     begin
       access_token_info = client.get_access_token_info(params[:code])
