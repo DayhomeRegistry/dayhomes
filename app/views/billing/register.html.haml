@@ -113,7 +113,7 @@
 
   = form_for @day_home_signup_request,:url => billing_register(), :html=>{:class=>"form-horizontal",:id=>"upgrade-form", :style=>""} do |f|
     = hidden_field_tag 'choose-package', "78"
-    = hidden_field_tag 'plan', "baby"
+    = hidden_field_tag 'plan', "baby50"
     %br
     %h3#addon-header.section-header.section-header-first
       Choose Any Extras You May Need
@@ -350,7 +350,7 @@
   Dayhome.upgradePage = {
       existing: { 
               "name": "Baby Bear",
-              "plan": "baby",
+              "plan": "baby50",
               "day_homes": "1",
               "staff": "0",
               "locales": "1",
@@ -361,7 +361,7 @@
       packages: {
           "78": {
               "name": "Baby Bear",
-              "plan": "baby",
+              "plan": "baby50",
               "day_homes": "1",
               "staff": "0",
               "locales": "1",
