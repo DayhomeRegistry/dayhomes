@@ -22,7 +22,7 @@ class BillingController < ApplicationController
 
     @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])   
     @day_home_signup_request.plan=params[:plan]
-    @existing = Plan.find_by_plan("baby")
+    @existing = Plan.find_by_plan("baby50")
     @packages = {}
     Plan.where("inactive is null").order(:price).order("subscription DESC").each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
