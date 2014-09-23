@@ -343,8 +343,6 @@ ActiveRecord::Schema.define(:version => 20140728213620) do
     t.integer  "location_id"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-
   create_table "users_backup", :force => true do |t|
     t.string   "email",                                               :null => false
     t.string   "first_name"

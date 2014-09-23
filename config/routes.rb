@@ -1,4 +1,6 @@
 Dayhomes::Application.routes.draw do
+  devise_for :users
+
   #get "organization/edit"
 
   #get "organization/show"
