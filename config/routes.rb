@@ -65,7 +65,7 @@ Dayhomes::Application.routes.draw do
   
   # match 'login' => 'Devise::Sessions#create', :as => :login
   # match 'logout' => 'Devise::Sessions#destroy', :as => :logout
-  # resources :users
+  resources :users
   # resources :user_sessions do
   #   collection do
   #     get :fb_connect

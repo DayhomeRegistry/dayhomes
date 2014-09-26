@@ -341,11 +341,12 @@ ActiveRecord::Schema.define(:version => 20140923052256) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
