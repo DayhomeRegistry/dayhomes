@@ -1,6 +1,12 @@
 Dayhomes::Application.routes.draw do
   devise_for :users
-
+  devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
+  as :user do
+    get "/login" => "devise/sessions#new"
+  end
+  devise_scope :user do
+    get "/logout" => "devise/sessions#destroy"
+  end
   #get "organization/edit"
 
   #get "organization/show"
@@ -57,21 +63,21 @@ Dayhomes::Application.routes.draw do
   end
   resources :reviews
   
-  match 'login' => 'user_sessions#new', :as => :login
-  match 'logout' => 'user_sessions#destroy', :as => :logout
-  resources :users
-  resources :user_sessions do
-    collection do
-      get :fb_connect
-      get :fb_connect_callback
-    end
-  end
+  # match 'login' => 'Devise::Sessions#create', :as => :login
+  # match 'logout' => 'Devise::Sessions#destroy', :as => :logout
+  # resources :users
+  # resources :user_sessions do
+  #   collection do
+  #     get :fb_connect
+  #     get :fb_connect_callback
+  #   end
+  # end
   
-  match 'reset_password' => 'password_resets#new', :as => :reset_password
-  match 'reset_password_instructions/:id' => 'password_resets#edit', :as => :reset_password_instructions
-  match 'reset_password_instructions/:id/update' => 'password_resets#update', :as => :update_reset_password_instructions
-  match 'reset_password_admin/:id' => 'password_resets#admin_reset', :as => :reset_password_admin
-  resources :password_resets
+  # match 'reset_password' => 'password_resets#new', :as => :reset_password
+  # match 'reset_password_instructions/:id' => 'password_resets#edit', :as => :reset_password_instructions
+  # match 'reset_password_instructions/:id/update' => 'password_resets#update', :as => :update_reset_password_instructions
+  # match 'reset_password_admin/:id' => 'password_resets#admin_reset', :as => :reset_password_admin
+  # resources :password_resets
 
   match 'email_dayhome' => 'day_homes#email_dayhome', :via => :post
   namespace :admin do
@@ -88,12 +94,12 @@ Dayhomes::Application.routes.draw do
     match 'deleted_day_homes' => 'day_homes#deleted', :as=>:deleted_day_homes  , :via=>:get
     
     resources :users
-    resources :user_sessions
+    # resources :user_sessions
     
     
     match 'day_homes/mass_update' => 'day_homes#mass_update'    
-    match 'login' => 'user_sessions#new', :as => :login
-    match 'logout' => 'user_sessions#destroy', :as => :logout
+    # match 'login' => 'user_sessions#new', :as => :login
+    # match 'logout' => 'user_sessions#destroy', :as => :logout
   end
   
   # NOTE: This needs to stay at the very bottom always; since it's last priority that this gets matched.

@@ -1,9 +1,24 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable,:rememberable, :trackable, :validatable, 
+         :confirmable, :lockable, :timeoutable
 
+  alias :devise_valid_password? :valid_password?
+
+  def valid_password?(password)
+    begin
+      super(password)
+    rescue BCrypt::Errors::InvalidHash
+      debugger
+      digest=password+self.password_salt
+      20.times{digest=Digest::SHA512.hexdigest(digest)}
+      return false unless  digest == encrypted_password
+      logger.info "User #{email} is using the old password hashing method, updating attribute."
+      self.password = password
+      true
+    end
+  end
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   #acts_as_authentic

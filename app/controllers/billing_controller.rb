@@ -1,4 +1,5 @@
 class BillingController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :require_user, :except=>[:signup, :register, :get_coupon]
   before_filter :require_user_to_be_organization_admin, :except=>[:signup, :register, :get_coupon]
   

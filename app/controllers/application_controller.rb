@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include ReCaptcha::AppHelper
   
   before_filter :create_search
-  before_filter :validate_acknowledgement
+  #before_filter :validate_acknowledgement
   protect_from_forgery
 
   def create_search
@@ -23,22 +23,22 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  helper_method :current_user_session, :current_user, :gmaps_api_key
+  helper_method :gmaps_api_key #:current_user_session, :current_user, 
   # ===============================
   # = User Authentication Related =
   # ===============================
 
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-  end
+  # def current_user_session
+  #   return @current_user_session if defined?(@current_user_session)
+  #   @current_user_session = UserSession.find
+  # end
 
-  def current_user    
-    #return @current_user if defined?(@current_user)
+  # def current_user    
+  #   #return @current_user if defined?(@current_user)
     
-    #@current_user = current_user_session && current_user_session.user
-    return current_user_session && current_user_session.user
-  end
+  #   #@current_user = current_user_session && current_user_session.user
+  #   return current_user_session && current_user_session.user
+  # end
   
   def require_user
     unless current_user
