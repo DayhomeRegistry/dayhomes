@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
     end
   end
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name,:last_name
   #acts_as_authentic
   #validates_presence_of :first_name, :last_name
 
@@ -101,4 +101,10 @@ class User < ActiveRecord::Base
       :password_confirmation => random_password
     })
   end
+
+  protected
+
+    def confirmation_required?
+        false
+    end
 end

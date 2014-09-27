@@ -10,6 +10,7 @@ class ConvertFromAuthlogic < ActiveRecord::Migration
 	add_column :users, :confirmation_token, :string, :limit => 255
 	add_column :users, :confirmed_at, :timestamp
 	add_column :users, :confirmation_sent_at, :timestamp
+	add_column :users, :unconfirmed_email, :string
 	execute "UPDATE users SET confirmed_at = created_at, confirmation_sent_at = created_at"
 
 	## Rememberable
@@ -35,6 +36,9 @@ class ConvertFromAuthlogic < ActiveRecord::Migration
 	remove_column :users, :persistence_token
 	remove_column :users, :perishable_token
 	remove_column :users, :single_access_token
+
+	#keep password_salt for conversion, but make it nullable for new rows
+	change_column :users, :password_salt, :string, :null => true
 
 	add_index :users, :confirmation_token,   :unique => true
 	add_index :users, :reset_password_token, :unique => true

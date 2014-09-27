@@ -321,7 +321,7 @@ ActiveRecord::Schema.define(:version => 20140923052256) do
     t.string   "last_name"
     t.boolean  "admin",                            :default => false
     t.string   "encrypted_password",                                  :null => false
-    t.string   "password_salt",                                       :null => false
+    t.string   "password_salt"
     t.integer  "sign_in_count",                    :default => 0,     :null => false
     t.integer  "failed_attempts",                  :default => 0,     :null => false
     t.datetime "last_request_at"
@@ -341,6 +341,7 @@ ActiveRecord::Schema.define(:version => 20140923052256) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
     t.string   "remember_token"
     t.datetime "remember_created_at"
     t.string   "unlock_token"
