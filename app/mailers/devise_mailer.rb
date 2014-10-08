@@ -3,7 +3,6 @@ class DeviseMailer < Devise::Mailer
   include Devise::Controllers::UrlHelpers # Optional. eg. `confirmation_url`
 
   def confirmation_instructions(record, token, opts={})
-  	debugger
   	if (Rails.env.development?)    
   		opts[:to]=APPLICATION_CONFIG[:signup_request_to]
   	end

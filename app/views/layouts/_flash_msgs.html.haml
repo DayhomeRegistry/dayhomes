@@ -1,4 +1,5 @@
 - flash.each do |type, value|
-  -if !type.to_s.starts_with?('page')
-    .flash{ :class => "alert alert-" + type.to_s }
-      = raw (value )
+  -if type.to_s!='timedout'
+    -if !type.to_s.starts_with?('page')
+      .flash{ :class => "alert alert-" + type.to_s }
+        = raw (value )
