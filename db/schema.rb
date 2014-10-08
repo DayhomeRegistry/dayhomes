@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140923052256) do
+ActiveRecord::Schema.define(:version => 20141008160604) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -316,25 +316,24 @@ ActiveRecord::Schema.define(:version => 20140923052256) do
   add_index "user_day_homes", ["user_id"], :name => "index_user_day_homes_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                               :null => false
+    t.string   "email",                                     :null => false
     t.string   "first_name"
     t.string   "last_name"
-    t.boolean  "admin",                            :default => false
-    t.string   "encrypted_password",                                  :null => false
+    t.boolean  "admin",                  :default => false
+    t.string   "encrypted_password",                        :null => false
     t.string   "password_salt"
-    t.integer  "sign_in_count",                    :default => 0,     :null => false
-    t.integer  "failed_attempts",                  :default => 0,     :null => false
+    t.integer  "sign_in_count",          :default => 0,     :null => false
+    t.integer  "failed_attempts",        :default => 0,     :null => false
     t.datetime "last_request_at"
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
-    t.integer  "topics_count",                     :default => 0
-    t.integer  "posts_count",                      :default => 0
-    t.string   "facebook_access_token"
-    t.string   "facebook_access_token_expires_in"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.integer  "topics_count",           :default => 0
+    t.integer  "posts_count",            :default => 0
+    t.string   "uid"
     t.date     "privacy_effective_date"
     t.integer  "organization_id"
     t.integer  "location_id"
@@ -348,6 +347,7 @@ ActiveRecord::Schema.define(:version => 20140923052256) do
     t.datetime "locked_at"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
+    t.string   "provider"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

@@ -1,0 +1,37 @@
+.span9.well.signin-form
+  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    .row.registrationStyle
+      .span5
+        %h2
+          Your Account
+
+          .control-group                
+            .control-label
+              = f.label :email
+            .controls  
+              = f.email_field :email
+          .control-group   
+            .control-label
+              = f.label :password
+            .controls  
+              = f.password_field :password
+          .control-group
+            .controls
+              = f.input :remember_me, :as => :boolean if devise_mapping.rememberable? 
+          %br
+      .span1{:style=>"margin-top:100px"}
+        OR
+      .span3{:style=>"margin-top:100px"}
+        = fb_connect_button
+      .clear 
+    .row
+      .span9 
+        .form-actions
+          %span.button.large.green.single
+            %input#submit-button{:name => "submitButton", :type => "submit", :value => "Sign in"}
+            //= f.button :submit, "Sign in", :class=>'btn'
+        /= f.submit 'Login', :class => 'btn'
+        
+.span9
+  = render "devise/shared/links" 
+

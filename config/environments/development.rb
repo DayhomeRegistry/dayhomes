@@ -19,7 +19,7 @@ Dayhomes::Application.configure do
   # Care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = {:host =>"localhost:3000"}  
-  config.asset_host='http://staging.dayhomeregistry.com'
+  config.action_mailer.asset_host='http://staging.dayhomeregistry.com'
   #ActionMailer::Base.asset_host= 'http://staging.dayhomeregistry.com'
   ActionMailer::Base.smtp_settings = {
     #:tls => true,
@@ -50,6 +50,6 @@ Dayhomes::Application.configure do
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = false
+  config.assets.debug = true
 
 end
