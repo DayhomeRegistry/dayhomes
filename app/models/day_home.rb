@@ -67,7 +67,11 @@ class DayHome < ActiveRecord::Base
     if (!self.id_changed?)
       if (self.approved_changed? && self.approved == true)
         DayHomeMailer.day_home_approval_confirmation(self).deliver
-        self.users.each do |user|        
+        self.users.each do |user|     
+          @user = user
+          raw, enc = Devise.token_generator.generate(user.class, :reset_password_token)
+          user.save(:validate => false)   
+          @token=raw
           if (!user.last_login_ip?)  
             UserMailer.new_user_password_reminder(user).deliver
           end

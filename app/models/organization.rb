@@ -106,7 +106,6 @@
   end
 
   def save_with_payment 
-    debugger
     if valid?
       #raise stripe_card_token.blank?.to_s
       if !stripe_card_token.blank?

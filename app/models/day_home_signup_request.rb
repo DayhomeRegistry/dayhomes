@@ -1,6 +1,9 @@
 class DayHomeSignupRequest < ActiveRecord::Base
-  
-  validates :day_home_name, :first_name, :day_home_postal_code, :day_home_slug, :day_home_highlight, :presence => true
+  # attr_accessible :first_name,:last_name,:day_home_name, :day_home_slug, :day_home_highlight, :day_home_blurb, 
+  #                 :day_home_street1, :day_home_city, :day_home_province, :day_home_postal_code, :contact_phone_number, 
+  #                 :contact_email, :referral_email, :coupon, :stripe_card_token
+
+  validates :day_home_name, :first_name, :day_home_postal_code, :day_home_slug, :day_home_highlight, :contact_phone_number, :presence => true
   validates :day_home_highlight,:length => { :maximum => 200 }
   validates :contact_email, :presence =>true #=> {:unless => "day_home_phone_number", :message => "You must enter an email, phone number, or both"}
   
@@ -10,7 +13,7 @@ class DayHomeSignupRequest < ActiveRecord::Base
   
   #before_save :add_dayhome
   
-  attr_accessor :stripe_card_token
+  attr_accessor :stripe_card_token, :password, :password_confirmation
   
   after_create :send_request_to_dayhome_registry_team
   

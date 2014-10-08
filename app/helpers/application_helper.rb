@@ -7,7 +7,7 @@ module ApplicationHelper
   
   def fb_connect_button
     unless current_user
-      link_to image_tag('fb_connect.gif'), [:fb_connect, :user_sessions], :alt => 'Connect with Facebook', :rel => 'nofollow'
+      link_to image_tag('fb_connect.gif'), omniauth_authorize_path(:user, :facebook), :alt => 'Connect with Facebook', :rel => 'nofollow'
     end
   end
   

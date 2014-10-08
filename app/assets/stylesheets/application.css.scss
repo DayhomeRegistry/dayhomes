@@ -278,6 +278,27 @@ div.span-7.first {
   text-align: right;
   width: 160px;
 }
+.signin-form .control-group::before, .form-horizontal .control-group::after {
+  display: table;
+  content: "";
+}
+.signin-form .control-group::after {
+  clear: both;
+}
+.signin-form .control-group::before, .form-horizontal .control-group::after {
+  display: table;
+  content: "";
+}
+.signin-form .control-label {
+  float: left;
+  font-weight: 700;
+  line-height: 18px;
+  padding-right: 20px;
+  width: 100px;
+}
+.signin-form .controls .checkbox input {
+  margin-left:0;
+}
 /*
 .form-horizontal input[type=text],.form-horizontal input[type=password],.form-horizontal textarea,.form-horizontal select,.form-stacked input[type=text],.form-stacked input[type=password],.form-stacked textarea,.form-stacked select
 {

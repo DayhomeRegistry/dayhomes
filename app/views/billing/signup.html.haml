@@ -290,6 +290,7 @@
             = f.text_field :day_home_postal_code, :class=>"input-small"
             .example
               Postal/Zip Code
+    .section-header
     .control-group
       =f.label :first_name,'Your name', :class=>"control-label"         
       .controls
@@ -302,15 +303,23 @@
             = f.text_field :last_name, :class=>"input-medium"            
             .example
               Last
-    .control-group
+    .control-group.append-bottom-1
       = f.label :contact_phone_number, 'Phone Number', :class=>"control-label"        
       .controls
         = f.text_field :contact_phone_number
-    .clearb              
-    .control-group.append-bottom-1
-      = f.label :contact_email, 'Email Address', :class=>"control-label"        
+    .control-group
+      = f.label :contact_email, 'Email Address (login)', :class=>"control-label"        
       .controls
         = f.text_field :contact_email
+    .control-group
+      = f.label :password, 'Password', :class=>"control-label"        
+      .controls
+        = f.password_field :password
+    .clearb              
+    .control-group.append-bottom-1
+      = f.label :password_confirmation, 'Confirm password', :class=>"control-label"        
+      .controls
+        = f.password_field :password_confirmation
     %h3#addon-header.section-header
       Your Community...
     .section-text
