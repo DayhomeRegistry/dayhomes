@@ -73,7 +73,7 @@ platforms :mswin, :mingw do
 end
 
 group :assets do
-  gem 'bootstrap-sass', '~> 2.0.4'
+  gem 'bootstrap-sass', '~> 2.0.4' #boostrap 3 screws with all the formatting
   gem 'sass-rails', '>= 3.2'
   gem 'autoprefixer-rails'
 
