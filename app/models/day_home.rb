@@ -1,6 +1,6 @@
 
 class DayHome < ActiveRecord::Base
-  default_scope :conditions => "deleted < 1"
+  default_scope {where("deleted < 1")}
 
   acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
                     :check_process => :prevent_geocoding, :address => :geo_address,
@@ -52,7 +52,7 @@ class DayHome < ActiveRecord::Base
   #validates_associated :photos
   validates_uniqueness_of :slug, message: "That web address has already been chosen."
   validates_format_of :slug, :with => /[a-z0-9]+/
-  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
   accepts_nested_attributes_for :photos, :allow_destroy => true #,:reject_if => :all_blank
   

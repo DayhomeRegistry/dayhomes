@@ -14,11 +14,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.browser
-//= require rails.validations
 //= require bootstrap
 //= require fullcalendar
 //= require_tree ./gmaps4rails
-//= require jquery.ui.all
 //= require jquery.add_more
 //= require jquery.colorbox
 //= require jquery.modal

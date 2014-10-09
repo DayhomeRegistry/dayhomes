@@ -11,7 +11,6 @@
  *= require normalize
  *= require_self
  *= require jquery-star-rating
- *= require jquery.ui.all
  *= require jquery.modal
  *= require searches
  *= require pricing
@@ -26,6 +25,7 @@
 */
 $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 $iconLogoPath: asset-url("mini-logo.jpg", image) !default;
+
 @import "bootstrap";
  
 $green: #52BE60;
@@ -48,6 +48,7 @@ $dark-grey: #798e94;
   clear: both;
 }
 
+/* 2520 */
 body,
 input {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;

@@ -1,45 +1,70 @@
 source 'http://rubygems.org'
-gem 'debugger', group: [:development, :test]
-gem 'rails', '3.2.13'
+gem 'byebug', group: [:development, :test]
+gem 'rails' #, '4.1.6'
 gem 'mysql2'
 gem 'haml'
-#gem 'gmaps4rails', :git => 'git@github.com:RyanonRails/Google-Maps-for-Rails.git'
-gem 'gmaps4rails','1.4.8'
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'carmen'
-#gem 'authlogic'
-gem 'devise'
+
+
+#This here is for authentication
+gem 'simple_form', '~>3'
+gem 'protected_attributes'
+gem 'devise', '>=3.4'
 gem 'omniauth-facebook'
-gem 'kaminari'
-gem 'awesome_print'
-#gem 'carrierwave', :git => 'git://github.com/jnicklas/carrierwave.git'
+
+#Jquery assets
+gem 'jquery-rails', '~>3'
+#gem 'jquery-ui-rails'
+
+#Image processing
 gem 'carrierwave'
 gem 'mini_magick'
-#gem 'fog', '=1.14.0'
-gem 'fog', :git => 'git://github.com/DayhomeRegistry/fog.git'
-gem 'jquery-star-rating-rails'
-gem 'forum_monster'
-gem 'bb-ruby'
-gem 'koala'
-#gem 'airbrake'
+gem 'fog' 
+
+#This needs a hefty upgrade
+gem 'gmaps4rails','1.4.8'
+
+# This is used for the country/province select
+gem 'carmen'
+gem 'carmen-rails'
+
+#Send errors to fogbugz
 gem 'exception_notification', :git => 'git://github.com/DayhomeRegistry/exception_notification.git'
+
+#Pagination
+gem 'kaminari'
+
+#You got it...stars
+gem 'jquery-star-rating-rails'
+
+#Markdown interpreter
 gem 'maruku'
-gem 'simple_form'
-gem 'client_side_validations' , '~> 3.2', :git => 'https://github.com/bcardarella/client_side_validations.git'
-gem 'actionmailer-instyle', :require => 'action_mailer/in_style'
+
+#gem 'actionmailer-instyle', :require => 'action_mailer/in_style'
+gem 'premailer-rails'
+
+#Strip API for CCs
 gem 'stripe'
-gem 'thin', '~>1.5'
-gem 'foreigner'
+
+#Recaptchs on contact forms
 gem 'ruby-recaptcha'
+
+#Runs JS in Ruby
 gem 'execjs'
-gem 'carmen-rails', '~> 1.0.0'
+
+#Rack based handling of referral codes
 gem 'rack-affiliates'
 
+#Geocoding
 gem 'geokit'
 gem 'geokit-rails'
 
+#Performance monitoring
 gem 'newrelic_rpm', '~> 3.8.0'
+
+#Not sure what these were for
+#gem 'forum_monster'
+#gem 'bb-ruby'
+
 
 platforms :mswin, :mingw do
   #gem 'eventmachine', '1.0.0.beta.4.1'
@@ -48,14 +73,16 @@ platforms :mswin, :mingw do
 end
 
 group :assets do
-  gem 'sass-rails', '~> 3.1'
-  gem 'bootstrap-sass', '~> 2.0.2'
+  gem 'bootstrap-sass', '~> 2.0.4' #boostrap 3 screws with all the formatting
+  gem 'sass-rails', '>= 3.2'
+  gem 'autoprefixer-rails'
 
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'coffee-rails'
+  gem 'uglifier'
 end
 
 group :development, :test do
+  gem 'foreigner'
   gem 'awesome_print'
   gem 'capistrano', '2.12.0'
   gem 'capistrano-fanfare', '0.0.21'
