@@ -90,7 +90,6 @@ class User < ActiveRecord::Base
 
   #Omniauth stuff
   def self.from_omniauth(auth)
-    debugger
     user = where(provider: auth.provider, uid: auth.uid).first_or_create
     if(!user.persisted?)
       by_email = where(email: auth.info.email).first

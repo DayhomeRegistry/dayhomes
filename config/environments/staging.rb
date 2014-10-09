@@ -87,4 +87,6 @@ Dayhomes::Application.configure do
         :project => 'Inbox',
         :area => 'Not Spam'
       }
+  #Preloader
+  config.eager_load=true
 end
