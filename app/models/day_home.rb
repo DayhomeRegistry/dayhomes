@@ -46,7 +46,7 @@ class DayHome < ActiveRecord::Base
   has_many :features, :dependent => :destroy
 
   #validates :name, :street1, :city, :province, :postal_code, :slug, :email, :phone_number, :highlight, :presence => true
-  validates :name,  :postal_code, :slug, :email, :highlight, :presence => true
+  validates :name,  :postal_code, :slug, :email, :highlight, :phone_number, :presence => true
   validates :highlight,:length => { :maximum => 200 }
 
   #validates_associated :photos

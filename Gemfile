@@ -7,13 +7,13 @@ gem 'haml'
 
 #This here is for authentication
 gem 'simple_form', '~>3'
-gem 'protected_attributes'
-gem 'devise', '>=3.4'
+gem 'devise', '~>3.2'
 gem 'omniauth-facebook'
 
 #Jquery assets
 gem 'jquery-rails', '~>3'
-#gem 'jquery-ui-rails'
+gem 'jquery-ui-rails'
+gem 'gmaps-autocomplete-rails'
 
 #Image processing
 gem 'carrierwave'
@@ -64,6 +64,11 @@ gem 'newrelic_rpm', '~> 3.8.0'
 #Not sure what these were for
 #gem 'forum_monster'
 #gem 'bb-ruby'
+
+# And now for a shop
+gem 'spree', :git => 'https://github.com/spree/spree', branch: '2-3-stable'
+#gem 'spree_auth_devise', :git => 'https://github.com/spree/spree_auth_devise.git', branch: '2-3-stable'
+gem 'spree_gateway', :git => 'https://github.com/spree/spree_gateway.git', :branch => '2-3-stable'
 
 
 platforms :mswin, :mingw do

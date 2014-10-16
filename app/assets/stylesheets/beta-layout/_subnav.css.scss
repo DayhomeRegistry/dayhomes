@@ -1,0 +1,15 @@
+.subnav.hide-print
+  .page-container
+    %ul.subnav-list
+      %li
+        %a.subnav-item{"aria-selected" => "true", :href => "/dashboard"} Dashboard
+      %li
+        %a.subnav-item{"aria-selected" => "false", :href => "/inbox"} Inbox
+      %li
+        %a.subnav-item{"aria-selected" => "false", :href => "/rooms"} Your Listings
+      %li
+        %a.subnav-item{"aria-selected" => "false", :href => "/trips/upcoming"} Your Trips
+      %li
+        %a.subnav-item{"aria-selected" => "false", :href => "/users/edit"} Profile
+      %li
+        %a.subnav-item{"aria-selected" => "false", :href => "/account"} Account
