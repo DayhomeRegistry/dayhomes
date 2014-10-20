@@ -2,20 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-//Airbnb
-@font-face{
-	font-family:Airglyphs;
-	src:url("https://a2.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-989da9a23fafa790c2dfa464c062862f.eot");
-	src:url("https://a2.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-989da9a23fafa790c2dfa464c062862f.eot?#") format("eot"),url("https://a1.muscache.com/s/static/o2.1/build/fonts/airglyphs-267ef9db9038817a1bf80e5bb6466bfc.woff") format("woff"),url("https://a1.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-0edec9d5f22cc0aef7cfdf4206c86ff6.ttf") format("truetype"),url("https://a1.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-4b7393561c90bf8bee868c5a1b3ad7d2.svg") format("svg");
-	font-weight:normal;
-	font-style:normal
-}
-*, *:before, *:after, hr, hr:before, hr:after, input[type="search"], input[type="search"]:before, input[type="search"]:after {
+
+/**, *:before, *:after, hr, hr:before, hr:after, input[type="search"], input[type="search"]:before, input[type="search"]:after {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 
 	line-height: normal;
-}
+}*/
 
 p {
 	margin-top: 0;
@@ -66,23 +59,23 @@ p {
 }
 .panel-header+.panel-body, .panel-body+.panel-body, ul.panel-body>li+.panel-body, ol.panel-body>li+.panel-body, .panel-footer+.panel-body {
   border-top: none;
-}
+}/*
 .row:before, .row:after {
   content: " ";
   display: table;
-}
+}/*
 .row:after {
   clear: both;
-}
+}*/
 .row-table {
 	display: table;
 	table-layout: fixed;
 }
 
-.row {
+/*.row {
   margin-left: -12.5px;
   margin-right: -12.5px;
-}
+}*/
 .row-condensed {
 	margin-left: -6.25px;
 	margin-right: -6.25px;
@@ -185,9 +178,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 h4, .h4 {
   font-size: 18px;
 }
-h1, .h1, h2, .h2, h3, .h3 {
+/*h1, .h1, h2, .h2, h3, .h3 {
   font-weight: normal;
-}
+}*/
 h4, .h4, h5, .h5, h6, .h6 {
   font-weight: bold;
 }
@@ -240,17 +233,17 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
 	background-color: #FFF;
 	max-width: 70%;
 }
-.page-container {
+/*.page-container {
 	margin-left: auto;
 	margin-right: auto;
 	padding-left: 25px;
 	padding-right: 25px;
 	width: 1045px;
-}
-.page-container:before, .page-container:after {
+}*/
+/*.page-container:before, .page-container:after {
 	content: " ";
 	display: table;
-}
+}*/
 .panel-body>*:first-child {
   margin-top: 0;
 }

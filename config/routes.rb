@@ -2,6 +2,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'beta', 'beta'
 end
 Dayhomes::Application.routes.draw do
+
   devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", sessions: 'sessions', registrations: 'registrations' }
   mount Spree::Core::Engine, :at => '/shop'
   
@@ -16,7 +17,10 @@ Dayhomes::Application.routes.draw do
   get '/beta/list', :to=>"beta#list"
   get '/beta/dashboard', to: "beta#dashboard"
   #post '/beta/new', :to=>"beta#new", :as=>"new_beta"
-  resources :beta #, :except=>['new']
+  resource :beta do
+    get 'dayhomes/parents', :to=>"dayhomes#parents"
+    resources :dayhomes
+  end
 
 #     betum_list GET    /beta/:betum_id/list(.:format) beta#list
 #       beta GET    /beta(.:format)                beta#index

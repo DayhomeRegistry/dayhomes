@@ -31,6 +31,11 @@ function integersonly(e,t){
 function roundFloat2(e){
   return isNaN(e)&&(e=0),String(Number(e).toFixed(2))
 }
+function setWrapperTop(){
+	if($('#wrapper')){
+	  	$('#wrapper').css({ top: $('header').outerHeight()+$('.subnav').outerHeight() });
+	}
+}
 window.numbersonly2=integersonly;
 window.roundFloat2=roundFloat2;
 $(document).ready(function(){
@@ -41,5 +46,8 @@ $(document).ready(function(){
 	    e.preventDefault(); 
 	}); 
 
-
+	setWrapperTop();
+	$( window ).resize(function() {
+	  setWrapperTop();
+	});
 });

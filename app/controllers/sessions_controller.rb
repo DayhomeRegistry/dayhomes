@@ -8,7 +8,12 @@ class SessionsController < Devise::SessionsController
     scope = Devise::Mapping.find_scope!(resource_or_scope)
     resource ||= resource_or_scope
     sign_in(scope, resource) unless warden.user(scope) == resource
-    return render :json => {:success => true}
+    yield resource if block_given?
+    if request.format.symbol.to_s=="js"
+      return render :json => {:success => true}
+    else
+      return respond_with resource, location: after_sign_in_path_for(resource)
+    end   
   end
  
   def failure

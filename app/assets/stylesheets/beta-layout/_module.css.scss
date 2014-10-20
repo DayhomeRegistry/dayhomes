@@ -1,13 +1,14 @@
 // Components
 @import "../bootstrap/dropdowns";
+@import "../bootstrap/pagination";
+@import "../bootstrap/navs";
 /*
 @import "../bootstrap/component-animations";
 @import "../bootstrap/button-groups";
 @import "../bootstrap/input-groups";
-@import "../bootstrap/navs";
+
 @import "../bootstrap/navbar";
 @import "../bootstrap/breadcrumbs";
-@import "../bootstrap/pagination";
 @import "../bootstrap/pager";
 @import "../bootstrap/labels";
 @import "../bootstrap/badges";
@@ -77,7 +78,6 @@ header .search-form .search-bar .icon-search {
 
 }
 header .search-form .location {
-	width: 247px;
 	padding: 4px 4px 4px 30px;
 	line-height: 21px;
 	height: 21px;
@@ -91,16 +91,22 @@ header .search-form .location {
 	-ms-user-select: none;
 	user-select: none;
 	background-color: #5cb85c;
+	//@include gradient-vertical-three-colors(#52BE60,#5fda71,35%,#42984f)
+	
 }
 .subnav-list {
 	margin-left: -14px;
 	margin-right: -14px;
 }
+
 .subnav-text, .subnav-item {
 	position: relative;
 	float: left;
 	padding: 10px 14px;
 	color: #FFF;
+}
+.subnav-item {
+    color: #CACCCD;
 }
 .subnav-item:hover, .subnav-item:focus, .subnav-item[aria-selected="true"] {
 	text-decoration: none;
@@ -115,7 +121,61 @@ header .search-form .location {
 	height: 4px;
 	background: #CACCCD;
 }
+footer, .footer {
+	/*margin-top: ($grid-gutter-width / 2);*/
 
+	padding-top: ($grid-gutter-width / 2);
+	background: #FFF;
+	border-top: 1px solid #E4E6E3;
+}
+footer .social-home .wrapper {
+	padding-bottom: ($grid-gutter-width / 2);
+}
+footer .copyright {
+	padding-top: ($grid-gutter-width / 2);
+}
+
+// Side navs
+.sidenav-text, .sidenav-item {
+	display: block;
+	padding: 6px 0;
+	font-size: 16px;
+	color: #82888A;
+}
+.sidenav-item[aria-selected="true"] {
+	text-decoration: none;
+	color: #565A5C;
+	font-weight: bold;
+}
+
+// Panels
+.panel {
+	border: 1px solid #DCE0E0;
+	background-color: #FFF;
+	border-radius: 0;
+}
+.panel-header, .panel-body, ul.panel-body>li, ol.panel-body>li, .panel-footer {
+	position: relative;
+	margin: 0;
+	padding: 20px;
+	border-top: 1px solid #DCE0E0;
+}
+.panel-header {
+	color: #565A5C;
+	font-size: 16px;
+	padding-top: 14px;
+	padding-bottom: 14px;
+	border-bottom: 1px solid #DCE0E0;
+}
+.panel-header {
+	background-color: #EDEFED;
+}
+.panel-header:first-child, .panel-body:first-child, ul.panel-body>li:first-child, ol.panel-body>li:first-child, .panel-footer:first-child {
+	border-top: 0;
+}
+.pagination {
+	margin:0;
+}
 
 // Icons 
 [class^="icon-"], [class*=" icon-"] {

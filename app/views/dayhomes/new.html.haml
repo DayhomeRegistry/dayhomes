@@ -1,0 +1,97 @@
+-content_for :title do
+  %title New Dayhome - Dayhome Registry
+-content_for :subnav do
+  %ul.list-unstyled
+    %li
+      %a.subnav-item{"aria-label"=>"View all your dayhomes.", :href => "/beta/dayhomes"} 
+        %span.glyphicon.glyphicon-arrow-left
+        Back
+    %li
+      %a.subnav-item.pull-right{ :href => "dayhome/preview"}
+        %span.glyphicon.glyphicon-eye-open
+        Preview
+#wrapper
+  #sidebar-left.col-xs-5.col-sm-2.col-md-2
+    #sidebar
+      .row
+        .col-sm-12.col-md-12
+          .h6.section-header.row-space-1.pre-listed
+            Description
+          %ul.nav.nav-sidebar
+            %li.active
+              %span.glyphicon.glyphicon-ok.pull-right.step-complete
+              %a{:href => ""} Overview
+            %li
+              %span.glyphicon.glyphicon-remove.pull-right.step-complete
+              %a{:href => ""} Photos
+          .h6.section-header.row-space-1.pre-listed
+            Settings & Availability
+          %ul.nav.nav-sidebar
+            %li
+              %span.glyphicon.glyphicon-remove.pull-right.step-complete
+              %a{:href => "#"} Location
+            %li
+              %span.glyphicon.glyphicon-remove.pull-right.step-complete
+              %a{:href => "#"} Certifications
+            %li
+              %span.glyphicon.glyphicon-remove.pull-right.step-complete
+              %a{:href => ""} Spots
+          .h6.section-header.row-space-1.pre-listed
+            Plan and Payment
+          %ul.nav.nav-sidebar
+            %li
+              %span.glyphicon.glyphicon-remove.pull-right.step-complete
+              %a{:href => ""} Plans
+    .publish-actions.text-center.publish-actions-overflow
+      #user-suspended
+      #availability-dropdown
+      #js-publish-button
+        .not-post-listed.text-center
+          .animated.text-lead.text-muted.steps-remaining.js-steps-remaining{:style => "display: block; opacity: 1;"}
+            Complete
+            %strong.text-highlight 5 steps
+            to list your dayhome.
+          %button#js-list-space-button.animated.btn.btn-large.btn-special.btn-primary{"data-href" => "complete", "data-track" => "list_space_button_left_nav", :style => "display: none;"}
+            List Space
+  #main-wrapper.col-xs-7.col-xs-offset-5.col-sm-7.col-sm-offset-2.col-md-7.col-md-offset-2.pull-left
+    #main
+      .row.js-section
+        .js-saving-progress.saving-progress{:style => "display:none;"}
+          %h5 Saving...
+        .col-md-4
+          %h3 Overview
+          %p.text-muted
+            A title and summary displayed on your public listing page.
+        .col-md-8
+          #tooltip-help-name.form-group
+            %label.label-large Title
+            %input.input-large.form-control{:maxlength => "35", :name => "name", :placeholder => "Write a title", :type => "text", :value => ""}/
+            %p.hide.icon-red.error-too-long.row-space-top-1 Please shorten to save changes
+            %p.hide.icon-red.error-value-required.row-space-top-1 A value is required to save changes
+            #js-name-count.row-space-top-1.h6.text-right
+              %span 35
+              characters left
+          #tooltip-help-summary.form-group
+            %label.label-large Summary
+            %textarea.input-large.form-control{:maxlength => "250", :name => "summary", :placeholder => "Write a summary in 250 characters or less", :rows => "6"}
+            %p.hide.icon-red.error-too-long.row-space-top-1 Please shorten to save changes
+            %p.hide.icon-red.error-value-required.row-space-top-1 A value is required to save changes
+            #js-summary-count.row-space-top-1.h6.text-right
+              %span 250
+              characters left
+      %hr.section-divider.not-post-listed/
+      %p.text-center.not-post-listed
+        Want to write even more? You can also
+        %a#js-write-more{:href => "#"} add a detailed description
+        to your dayhome.
+  #sidebar-right.col-xs-3.pull-right
+    #sidebar
+      .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-summary", :style => "display: block; top: 156.75px; left: 650px; opacity: 1;"}
+        .media
+          %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
+          .media-body.text-lead.text-muted.help-tooltip-body
+            %strong A great summary
+            %p A great summary is rich and exciting! It should cover the major features of your dayhome and neighbourhood in 250 characters or less.
+            %p
+              %strong> Example:
+              My awesome dayhome has peanuts.

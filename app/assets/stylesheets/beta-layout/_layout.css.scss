@@ -15,7 +15,6 @@
 	margin-right: auto;
 	padding-left: 25px;
 	padding-right: 25px;
-	width: 1045px;
 
 	font-size: 14px;
 	line-height: 1.43;
@@ -39,4 +38,8 @@ header .nav li {
 }
 .subnav:after {
 	clear: both;
+}
+
+.row-space-top-4 {
+	margin-top: 25px;
 }
