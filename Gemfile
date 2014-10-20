@@ -69,7 +69,7 @@ gem 'newrelic_rpm', '~> 3.8.0'
 gem 'spree', :git => 'https://github.com/spree/spree', branch: '2-3-stable'
 #gem 'spree_auth_devise', :git => 'https://github.com/spree/spree_auth_devise.git', branch: '2-3-stable'
 gem 'spree_gateway', :git => 'https://github.com/spree/spree_gateway.git', :branch => '2-3-stable'
-
+#gem 'spree_account_recurring'
 
 platforms :mswin, :mingw do
   #gem 'eventmachine', '1.0.0.beta.4.1'

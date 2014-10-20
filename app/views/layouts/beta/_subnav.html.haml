@@ -1,13 +1,17 @@
-.subnav.hide-print
+/.no-left-gutter.no-right-gutter
+.subnav.hide-print.row
   .page-container
-    %ul.list-unstyled.subnav-list
-      %li
-        %a.subnav-item{"aria-selected" => "true", :href => "/dashboard"} Dashboard
-      %li
-        %a.subnav-item{"aria-selected" => "false", :href => "/inbox"} Inbox
-      %li
-        %a.subnav-item{"aria-selected" => "false", :href => "/rooms"} Your Dayhomes
-      %li
-        %a.subnav-item{"aria-selected" => "false", :href => "/users/edit"} Profile
-      %li
-        %a.subnav-item{"aria-selected" => "false", :href => "/account"} Account
+    - if(content_for?(:subnav))
+      =yield :subnav
+    -else
+      %ul.list-unstyled.subnav-list
+        %li
+          %a.subnav-item{"aria-selected" => "#{current_page?(controller: 'beta', action: 'dashboard')}", :href => "dashboard"} Dashboard
+        %li
+          %a.subnav-item{"aria-selected" => "false", :href => "#"} Inbox
+        %li
+          %a.subnav-item{"aria-selected" => "#{current_page?(controller: 'dayhomes')}", :href => "dayhomes"} Your Dayhomes
+        %li
+          %a.subnav-item{"aria-selected" => "false", :href => edit_user_path(current_user)} Account
+        %li
+          %a.subnav-item{"aria-selected" => "false", :href => "#"} Customer Info

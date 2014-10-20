@@ -1,8 +1,8 @@
 class BetaController < ApplicationController
-	#layout "application", only: [:list]
-	
+	before_filter :authenticate_user!, :except => [:index, :list]
+
   # Redirect default
-  def index
+  def show
     redirect_to beta_list_path()
   end
 	# Landing page
@@ -77,9 +77,6 @@ class BetaController < ApplicationController
 	    else
 	      render :action => :new
 	    end
-	end
-
-	def show
 	end
 
 

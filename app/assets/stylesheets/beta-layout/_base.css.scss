@@ -12,7 +12,17 @@ $blue: #23affa;
 $light-grey: #e3e3e3;
 $dark-grey: #798e94;
 
-$font-family-sans-serif:  Circular, "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+//Airbnb
+@font-face{
+	font-family:Airglyphs;
+	src:url("https://a2.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-989da9a23fafa790c2dfa464c062862f.eot");
+	src:url("https://a2.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-989da9a23fafa790c2dfa464c062862f.eot?#") format("eot"),url("https://a1.muscache.com/s/static/o2.1/build/fonts/airglyphs-267ef9db9038817a1bf80e5bb6466bfc.woff") format("woff"),url("https://a1.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-0edec9d5f22cc0aef7cfdf4206c86ff6.ttf") format("truetype"),url("https://a1.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-4b7393561c90bf8bee868c5a1b3ad7d2.svg") format("svg");
+	font-weight:normal;
+	font-style:normal
+}
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,600);
+$icon-font-path: '/assets/';
+$font-family-sans-serif:  'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !default;
 
 // Bootstrap - Core variables and mixins
 @import "../bootstrap/variables";
@@ -28,6 +38,12 @@ $font-family-sans-serif:  Circular, "Helvetica Neue", Helvetica, Arial, sans-ser
 @import "../bootstrap/type";
 
 // Dayhome Registry
+html, body {
+	height:100%;
+}
+.container-fluid {
+	min-height:100%;
+}
 body {
 	font-family: $font-family-base;
 }
@@ -39,6 +55,9 @@ h6, .h6 {
 }
 .no-left-gutter {
 	margin-left: -15px;
+}
+.no-right-gutter {
+	margin-right: -15px;
 }
 .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
 	position: static;
