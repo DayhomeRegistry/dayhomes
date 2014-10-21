@@ -3,96 +3,103 @@
 = stylesheet_link_tag params[:controller]
 = javascript_include_tag params[:controller]
 
-=form_tag(new_beta_path(), {id:"create_form", method: "get"}) do
+=form_tag(beta_dayhomes_path(), {id:"create_form", method: "post"}) do
   =hidden_field_tag('dayhome[care_type_id]', value = nil, options = {id:"care_type_id"})
   =hidden_field_tag('dayhome[capacity]', value = nil, options = {id:"capacity"})
+  =hidden_field_tag('dayhome[title]', value = nil, options = {id:"title"})
   =hidden_field_tag('dayhome[city]', value = nil, options = {id:"city"})
+  =hidden_field_tag('authenticity_token', value=form_authenticity_token)
 .page-container
-  .panel-light.panel-body
-    .row.row-space-top-6.row-space-6
-      .col-7.col-center.text-center
+  
+  .row.row-space-top-6.row-space-6
+    .col-center.text-center
+      .panel-light.panel-body
         %h1.h2
           List Your Space
         %p.text-lead
           Dayhome Registry lets you connect your childcare space with parents.
-  .panel-medium.panel-body
-    .row.row-space-5.row-space-top-5.row-table
-      .col-3.text-right.col-middle
-        .h4.text-light
-          Care Type
-      .col-9.fieldset.fieldset_care_type.col-middle
-        .btn-group
-          %button.btn.btn-large.type{:data=>{:name=>"Professional", :slug=>"professional", :type=>"Professional Dayhome", "type-id"=>"0", "icon-class"=>"icon-entire-place", :behavior=>"tooltip", :position=>"bottom"}}
-            %i.icon.icon-entire-place.h4.icon-kazan
-            Professional Dayhome
-          %button.btn.btn-large.type{:data=>{:name=>"Accredited", :slug=>"accredited", :type=>"Accredited Dayhome", "type-id"=>"1", "icon-class"=>"icon-private-room", :behavior=>"tooltip", :position=>"bottom"}}
-            %i.icon.icon-private-room.h4.icon-kazan
-            Accredited Dayhome
-          %button.btn.btn-large.type{:data=>{:name=>"Agency", :slug=>"agency", :type=>"Dayhome Agency", "type-id"=>"2", "icon-class"=>"icon-shared-room", :behavior=>"tooltip", :position=>"bottom"}}
-            %i.icon.icon-shared-room.h4.icon-kazan
-            Dayhome Agency  
-          .col-1
-        .active-selection{:style=>"display:none;"}
-          .selected-item.property_type_id{:data=>{:type=>"property_type_id"}}
-            .active-panel
-              .active-title.active-col
-                .h4.title-value
-                  %i.icon.icon-kazan.h4.icon-home
-                  Professional Dayhome
-              .active-caret.active-col
-                %i.icon.icon-caret-right
-              .active-message.active-col
-                A private dayhome operating purposefully and professionally.
-          .col-1
-            %a#change-care-type
-              Change my mind
-    .row.row-space-5.row-space-top-5.row-table
-      .col-3.text-right.col-middle
-        .h4.text-light
-          Spaces
-
-      .col-9.fieldset.fieldset_person_capacity.col-middle
-        .unselected.row.row-condensed
-          .col-3
-            .panel
-              .panel-body.panel-light
-                .row.row-table
-                  .col-2.col-middle
-                    %i.icon.icon-group.h4.icon-kazan  
-                  .col-6.col-middle
-                    .select.select-large
-                      %select#accomodates-select
-                        %option.accomodates{:data=>{:accomodates=>"1"}}
-                          1
-                        %option.accomodates{:data=>{:accomodates=>"2"}}
-                          2
-                        %option.accomodates{:data=>{:accomodates=>"3"}}
-                          3
-                        %option.accomodates{:data=>{:accomodates=>"4"}}
-                          4
-                        %option.accomodates{:data=>{:accomodates=>"5"}}
-                          5
-                        %option.accomodates{:data=>{:accomodates=>"6"}}
-                          6  
-          .col-9.col-middle
-            .help-text
-              You may have a maximum of 6 children, including your own.
-    .row.row-space-5.row-space-top-5.row-table
-      .col-3.text-right.col-middle
-        .h4.text-light
-          City
-      .col-9.fieldset.fieldset_person_capacity.col-middle                          
+    .row
+      .panel-medium.panel-body
+        .row.row-space-3.row-space-top-3.row-table
+          .col-xs-12.col-md-3.col-middle.label-header
+            .h4.text-light
+              Care Type
+          .col-xs-12.col-md-9.fieldset.fieldset_care_type.col-middle
+            .btn-group
+              %button.btn.btn-default.btn-xlg.register-btn{:data=>{:name=>"Professional", :slug=>"professional", :type=>"Professional Dayhome", "type-id"=>"0", "icon-class"=>"icon-entire-place", :behavior=>"tooltip", :position=>"bottom"}}
+                %i.icon.icon-entire-place.h4.icon-kazan
+                Professional Dayhome
+              %button.btn.btn-default.btn-xlg.register-btn{:data=>{:name=>"Accredited", :slug=>"accredited", :type=>"Accredited Dayhome", "type-id"=>"1", "icon-class"=>"icon-private-room", :behavior=>"tooltip", :position=>"bottom"}}
+                %i.icon.icon-private-room.h4.icon-kazan
+                Accredited Dayhome
+              %button.btn.btn-default.btn-xlg.register-btn{:data=>{:name=>"Agency", :slug=>"agency", :type=>"Dayhome Agency", "type-id"=>"2", "icon-class"=>"icon-shared-room", :behavior=>"tooltip", :position=>"bottom"}}
+                %i.icon.icon-shared-room.h4.icon-kazan
+                Dayhome Agency  
+            .active-selection{:style=>"display:none;"}
+              .selected-item.property_type_id{:data=>{:type=>"property_type_id"}}
+                .active-panel
+                  .active-title.active-col
+                    .h4.title-value
+                      %i.icon.icon-kazan.h4.icon-home
+                      Professional Dayhome
+                  .active-caret.active-col
+                    %i.icon.icon-caret-right
+                  .active-message.active-col
+                    A private dayhome operating purposefully and professionally.
+              .col-md-3
+                %a#change-care-type
+                  Change my mind
+        .row.row-space-3.row-space-top-3.row-table
+          .col-xs-12.col-md-3.col-middle.label-header
+            .h4.text-light
+              Spaces
+          .col-xs-12.col-md-9.fieldset.fieldset_person_capacity.col-middle
+            .select-btn
+              %button.btn.btn-default.btn-xlg.register-btn{:data=>{:name=>"Professional", :slug=>"professional", :type=>"Professional Dayhome", "type-id"=>"0", "icon-class"=>"icon-entire-place", :behavior=>"tooltip", :position=>"bottom"}}
+                %i.icon.icon-group.h4.icon-kazan
+                .select.select-large
+                  %select#accomodates-select
+                    %option.accomodates{:data=>{:accomodates=>"1"}}
+                      1
+                    %option.accomodates{:data=>{:accomodates=>"2"}}
+                      2
+                    %option.accomodates{:data=>{:accomodates=>"3"}}
+                      3
+                    %option.accomodates{:data=>{:accomodates=>"4"}}
+                      4
+                    %option.accomodates{:data=>{:accomodates=>"5"}}
+                      5
+                    %option.accomodates{:data=>{:accomodates=>"6"}}
+                      6  
+              %span.help-text
+                You may have a maximum of 6 children, including your own.
+        .row.row-space-3.row-space-top-3.row-table
+          .col-xs-12.col-md-3.col-middle.label-header
+            .h4.text-light
+              Title
+          .col-xs-12.col-md-9.fieldset.fieldset_person_capacity.col-middle                          
+            .row
+              .col-xs-12.col-md-12
+                .panel.location
+                  .panel-body.panel-light.panel-border.location-panel-body.ui-widget
+                    %i.icon.icon.icon-kazan.h4.pull-left
+                    %input#title_input{:name=>"title_input", :type=>"text", :autocomplete=>"off"}
+        .row.row-space-3.row-space-top-3.row-table
+          .col-xs-12.col-md-3.col-middle.label-header
+            .h4.text-light
+              City
+          .col-xs-12.col-md-9.fieldset.fieldset_person_capacity.col-middle                          
+            .row
+              .col-xs-12.col-md-12
+                .panel.location
+                  .panel-body.panel-light.panel-border.location-panel-body.ui-widget
+                    %i.icon.icon.icon-map-marker.icon-kazan.h4.pull-left
+                    %input#location_input{:name=>"location_input",:placeholder=>"Edmonton, Calgary, Fort Mac...", :type=>"text", :class=>"geocomplete", :autocomplete=>"off"}
+                          
         .row
-          .col-6
-            .panel.location
-              .panel-body.panel-light.panel-border.location-panel-body.ui-widget
-                %i.icon.icon.icon-map-marker.icon-kazan.h4.pull-left
-                %input#location_input{:name=>"location_input",:placeholder=>"Edmonton, Calgary, Fort Mac...", :type=>"text", :class=>"geocomplete", :autocomplete=>"off"}
-                      
-    .row.row-space-5
-      .col-9.col-offset-3#js-submit-button
-        %button.btn.btn-primary.btn-large.submit.disabled{:type=>"submit", :disabled=>"true"}
-          Continue
+          .col-xs-12.col-md-9.col-md-offset-3.text-center#js-submit-button
+            %button.btn.btn-primary.btn-lg.submit.disabled{:type=>"submit", :disabled=>"true"}
+              Continue
 
 
 

@@ -10,7 +10,7 @@ class SessionsController < Devise::SessionsController
     sign_in(scope, resource) unless warden.user(scope) == resource
     yield resource if block_given?
     if request.format.symbol.to_s=="js"
-      return render :json => {:success => true}
+      return render :json => {:success => true, :csrf_token=>form_authenticity_token}
     else
       return respond_with resource, location: after_sign_in_path_for(resource)
     end   

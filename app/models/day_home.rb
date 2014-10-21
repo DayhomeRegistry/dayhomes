@@ -46,8 +46,8 @@ class DayHome < ActiveRecord::Base
   has_many :features, :dependent => :destroy
 
   #validates :name, :street1, :city, :province, :postal_code, :slug, :email, :phone_number, :highlight, :presence => true
-  validates :name,  :postal_code, :slug, :email, :highlight, :phone_number, :presence => true
-  validates :highlight,:length => { :maximum => 200 }
+  #validates :name,  :postal_code, :slug, :email, :highlight, :phone_number, :presence => true
+  #validates :highlight,:length => { :maximum => 200 }
 
   #validates_associated :photos
   validates_uniqueness_of :slug, message: "That web address has already been chosen."
@@ -61,7 +61,7 @@ class DayHome < ActiveRecord::Base
     raise "This is intentionally broken."
   end
 
-  after_save :approval_message
+  #after_save :approval_message
   def approval_message
     #Don't do the checks if this has just been created
     if (!self.id_changed?)

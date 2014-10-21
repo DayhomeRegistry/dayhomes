@@ -7,27 +7,34 @@
       %h4.header-title
         Dayhome Registry
   .col-xs-8.col-sm-8.col-md-8.no-left-gutter.nav
-    .col-xs-8.col-sm-8.col-md-8.search
+    .col-xs-10.col-sm-8.col-md-8.search
       %form{action:"/s", id:"search-form", class:"search-form"}
         .search-bar.no-left-gutter
           %i.icon.icon-search.icon-gray.h4
           %input#header-location.location{:autocomplete => "off", :name => "location", :placeholder => "Find your dayhome today", :type => "text"}
-    .col-xs-4.col-sm-4.col-md-4.text-right.menus
+    .col-xs-2.col-sm-4.col-md-4.text-right.menus
       -if(current_user.nil?)
-        %ul.nav.pull-right.logged-out.list-unstyled.medium-right-margin
-          %li#sign_up.pull-left.medium-right-margin
+        %ul.nav.pull-right.logged-out.list-unstyled
+          %li#sign_up.pull-left
             %a.link-reset{"data-signup-modal" => "", :href => "/signup_login?redirect_params[action]=new&redirect_params[controller]=rooms", :rel => "nofollow"} Sign Up
           %li#login.pull-left
             %a.link-reset{"data-login-modal" => "", :href => "/login?redirect_params[action]=new&redirect_params[controller]=rooms", :rel => "nofollow"} Log In
       -else
         %ul.pull-right.logged-in.list-unstyled
-          %li.user-item.pull-left.medium-right-margin.dropdown
-            %a#dLabel.dropdown-toggle{"data-target" => "#", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+          %li#inbox-item.inbox-item.pull-left
+            %a.link-reset.inbox-icon{:href => "#"}
+              %i.alert-count.fade.text-center 0
+              %i.icon.icon-envelope.icon-gray
+                %span.text-hide.hide Inbox
+          %li.user-item.pull-left.dropdown
+            %a#menu-label.dropdown-toggle{"data-target" => "#", "data-toggle" => "dropdown", :href => "#", :role => "button"}
               %span.hide-phone.value_name #{current_user.first_name}
               %span.caret
-            %ul.dropdown-menu.dropdown-menu-right{"aria-labelledby" => "dLabel", :role => "menu"}
+            %ul.dropdown-menu.dropdown-menu-right{"aria-labelledby" => "menu-label", :role => "menu"}
               %li{:role => "presentation"}
                 %a{:href => "dashboard", :role => "menuitem", :tabindex => "-1"} Dashboard
+              %li{:role => "presentation"}
+                %a{:href => "inbox", :role => "menuitem", :tabindex => "-1"} Inbox  
               %li{:role => "presentation"}
                 %a{:href => "dayhomes", :role => "menuitem", :tabindex => "-1"} My Dayhomes
               %li{:role => "presentation"}
@@ -36,11 +43,7 @@
                 %a{:href => "#", :role => "menuitem", :tabindex => "-1"} Customer Info    
               %li.divider{:role => "presentation"}
               %li{:role => "presentation"}
-                %a{:href => destroy_user_session_path(), :role => "menuitem", :tabindex => "-1", :method=>:delete} Logout
-          %li#inbox-item.inbox-item.pull-left
-            %a.link-reset.inbox-icon{:href => "#"}
-              %i.alert-count.fade.text-center 0
-              %i.icon.icon-envelope.icon-gray
-                %span.text-hide.hide Inbox
+                %a{:href => destroy_user_session_path(), :role => "menuitem", :tabindex => "-1", :data=>{:method=>:delete}} Logout
+
 
 =render "/layouts/beta/subnav" unless @disable_subnav 

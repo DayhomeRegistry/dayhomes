@@ -5,13 +5,40 @@
 */
 
 function goNext(){
-	$('#create_form').submit();
+	//beta
+	//$('#create_form').submit();
+	var data = {
+		dayhome: {
+			care_type_id: $('#care_type_id').val(),
+  			capacity: $('#accomodates-select').find('option').filter(":selected").val(),
+  			title: $('#title').val(),
+  			city: $('#city').val()
+		}
+	};
+	var params = {
+	    dataType: "json",
+	    type: "POST",
+	    url: "/beta/dayhomes",
+	    data: data
+	};
+	$(document).ajaxSend(function (e, xhr, options) {
+	  	xhr.setRequestHeader("X-CSRF-Token", $('meta[name="csrf-token"]').attr('content'));
+	});
+	$.ajax(params).done(function(data) {
+		if(data.success) {
+			window.location = data.url;
+		} else {
+			$("#flash-messages").append($('<div class="flash alert alert-danger">'+data.error+'</div>'));
+		}
+
+	});
 }
 var care_type_set = false;
 var city_set = false; 
+var title_set = false;
 function enableNext(){
 	var button = $('#js-submit-button button');
-	if((care_type_set&&city_set)) {
+	if((care_type_set&&city_set&&title_set)) {
 		button.prop('disabled',false);
 		button.removeClass('disabled')
 	} else {
@@ -21,6 +48,11 @@ function enableNext(){
 
 }
 $(document).ready(function(){
+	$.ajaxSetup({
+	  headers: {
+	    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+	  }
+	});
 
 	$('.fieldset_care_type .btn').on("click", function(){
 		var fieldset = $(this).parents(".fieldset");
@@ -58,9 +90,19 @@ $(document).ready(function(){
 		var capacity = $(this).find('option').filter(":selected").val()
 		input.val(capacity);
 	});
+	$('#title_input').on("change",function(){
+		var input = $('#title');
+		var title = $('#title_input').val();
+		input.val(title);
+		title_set=true;
+		enableNext();
+	});
 	$('#js-submit-button button').on("click",function(){
 		
-		$.when($.signedIn()).done(function() {
+		$.when($.signedIn()).done(function(val) {
+			//update the form token...apparently it changes when you login (new session?)
+			$('input[name="authenticity_toke"]').val(val);
+			$('meta[name="csrf-token"]').attr('content',val);
 			//Submit the form
 			goNext();
 		});
