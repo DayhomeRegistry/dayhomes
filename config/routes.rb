@@ -25,6 +25,10 @@ Dayhomes::Application.routes.draw do
 
         get 'overview'
         get 'photos'
+        get 'location'
+        get 'certifications'
+        get 'spots'
+        get 'plans'
 
         # AJAX
         post 'setTitle'

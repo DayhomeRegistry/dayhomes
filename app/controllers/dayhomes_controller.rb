@@ -97,12 +97,20 @@ class DayhomesController < ApplicationController
     end
   end
 
+  # Dayhome actions from single layout
   def overview
     @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
-    
+
+    render "dayhome"
+  end
+  def photos
+    @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
+
+    render "dayhome"
   end
 
   # AJAX posts
+  #   Overview
   def setTitle
     @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
     @dayhome.name=params[:title];
@@ -124,6 +132,8 @@ class DayhomesController < ApplicationController
     @dayhome.save
     ajax_response("Description",@dayhome,request.format)
   end
+  #   Photos
+
 
   private
   def ajax_response(field_name, resource, format) 

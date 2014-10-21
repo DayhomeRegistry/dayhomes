@@ -1,0 +1,68 @@
+= javascript_include_tag "beta/"+params[:controller]
+-content_for :title do
+  %title New Dayhome - Dayhome Registry
+-content_for :subnav do
+  %ul.list-unstyled
+    %li
+      %a.subnav-item{"aria-label"=>"View all your dayhomes.", :href => "/beta/dayhomes"} 
+        %span.glyphicon.glyphicon-arrow-left
+        Back
+    %li
+      %a.subnav-item.pull-right{ :href => "dayhome/preview"}
+        %span.glyphicon.glyphicon-eye-open
+        See my page
+#wrapper
+  #sidebar-left.col-xs-12.col-sm-2.col-md-2
+    #sidebar
+      .row
+        .col-sm-12.col-md-12
+          .h6.section-header.row-space-1.pre-listed
+            Description
+          %ul.nav.nav-sidebar
+            %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'overview') ? 'active' : ''}"}
+              %span.glyphicon.glyphicon-ok.pull-right.dayhome-step
+              %a{:href => beta_dayhome_overview_path()} Overview
+            %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'photos') ? 'active' : ''}"}
+              %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
+              %a{href: beta_dayhome_photos_path()} Photos
+          .h6.section-header.row-space-1.pre-listed
+            Settings & Availability
+          %ul.nav.nav-sidebar
+            %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'location') ? 'active' : ''}"}
+              %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
+              %a{:href => "#"} Location
+            %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'certifications') ? 'active' : ''}"}
+              %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
+              %a{:href => "#"} Certifications
+            %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'spots') ? 'active' : ''}"}
+              %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
+              %a{:href => ""} Spots
+          .h6.section-header.row-space-1.pre-listed
+            Plan and Payment
+          %ul.nav.nav-sidebar
+            %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'plans') ? 'active' : ''}"}
+              %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
+              %a{:href => ""} Plans
+    .publish-actions.text-center.publish-actions-overflow
+      #user-suspended
+      #availability-dropdown
+      #js-publish-button
+        .not-post-listed.text-center
+          .animated.text-lead.text-muted.steps-remaining.js-steps-remaining{:style => "display: block; opacity: 1;"}
+            Complete
+            %strong.text-highlight 5 steps
+            to list your dayhome.
+          %button#js-list-space-button.animated.btn.btn-large.btn-special.btn-primary{"data-href" => "complete", "data-track" => "list_space_button_left_nav", :style => "display: none;"}
+            List Space
+  #main-wrapper.col-xs-12.col-sm-7.col-sm-offset-2.col-md-7.col-md-offset-2.pull-left
+    .js-saving-progress.saving-status.saving-progress
+      %h5{:style => "display:none;"} Saving... 
+    #main 
+      -if current_page?(controller: 'dayhomes', action: 'overview')
+        =render partial: "overview"
+      -if current_page?(controller: 'dayhomes', action: 'photos')
+        =render partial: "photos"
+  #sidebar-right.col-xs-3.pull-right
+    #sidebar
+  - if(content_for?(:tooltips))
+    =yield :tooltips
