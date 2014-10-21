@@ -20,7 +20,7 @@
   %body
     .container-fluid
       = render 'layouts/beta/header'
-      /= render 'layouts/flash_msgs'
+      = render 'layouts/flash_msgs'
       = yield    
     = render 'layouts/beta/footer'
     = yield :footer_scripts

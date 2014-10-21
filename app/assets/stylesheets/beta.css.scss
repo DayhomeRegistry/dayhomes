@@ -59,35 +59,25 @@ p {
 }
 .panel-header+.panel-body, .panel-body+.panel-body, ul.panel-body>li+.panel-body, ol.panel-body>li+.panel-body, .panel-footer+.panel-body {
   border-top: none;
-}/*
-.row:before, .row:after {
-  content: " ";
-  display: table;
-}/*
-.row:after {
-  clear: both;
-}*/
+}
 .row-table {
 	display: table;
 	table-layout: fixed;
 }
 
-/*.row {
-  margin-left: -12.5px;
-  margin-right: -12.5px;
-}*/
 .row-condensed {
 	margin-left: -6.25px;
 	margin-right: -6.25px;
 }
+/*
 .row-space-2 {
   margin-bottom: 12.5px;
 }
-.row-space-5 {
-  margin-bottom: 31.25px;
-}
 .row-space-top-2 {
   margin-top: 12.5px;
+}
+.row-space-5 {
+  margin-bottom: 31.25px;
 }
 .row-space-top-5 {
   margin-top: 31.25px;
@@ -108,12 +98,7 @@ p {
 :root .row.row-table {
   width: 100% \9;
 }
-
-.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
-	float: left;
-	position: relative;
-	min-height: 1px;
-}
+/*
 .col-top, .col-middle, .col-bottom {
 	float: none;
 	display: table-cell;
@@ -126,33 +111,7 @@ p {
 .col-middle {
   vertical-align: middle;
 }
-.col-2 {
-  width: 16.66667%;
-}
-.col-3 {
-  width: 25%;
-}
-.col-6 {
-  width: 50%;
-}
-.col-7 {
-  width: 58.33333%;
-}
-.col-9 {
-  width: 75%;
-}
-.col-offset-3 {
-  margin-left: 25%;
-}
-.row>.col-1, .row>.col-2, .row>.col-3, .row>.col-4, .row>.col-5, .row>.col-6, .row>.col-7, .row>.col-8, .row>.col-9, .row>.col-10, .row>.col-11, .row>.col-12 {
-  padding-left: 12.5px;
-  padding-right: 12.5px;
-}
-
-.row-condensed>.col-1, .row-condensed>.col-2, .row-condensed>.col-3, .row-condensed>.col-4, .row-condensed>.col-5, .row-condensed>.col-6, .row-condensed>.col-7, .row-condensed>.col-8, .row-condensed>.col-9, .row-condensed>.col-10, .row-condensed>.col-11, .row-condensed>.col-12 {
-	padding-left: 6.25px;
-	padding-right: 6.25px;
-}
+*/
 h1 {
 	font-size: 2em;
 	margin: 0.67em 0;
@@ -197,7 +156,7 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
 .text-right {
   text-align: right;
 }
-.active-panel {
+/*.active-panel {
 	display: table;
 	border: 1px solid #CACCCD;
 }
@@ -232,7 +191,7 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
 .active-message {
 	background-color: #FFF;
 	max-width: 70%;
-}
+}*/
 /*.page-container {
 	margin-left: auto;
 	margin-right: auto;
@@ -258,6 +217,7 @@ input, button, select, textarea {
 	-moz-osx-font-smoothing: grayscale;
 	margin:0;
 }
+/*
 .btn {
 	padding: 7px 21px;
 	font-size: 14px;
@@ -266,7 +226,7 @@ input, button, select, textarea {
 	padding: 9px 27px;
 	font-size: 16px;
 }
-
+*/
 
 .icon-entire-place:before {
   content: "\f203";
@@ -294,9 +254,6 @@ input, button, select, textarea {
 .icon-map-marker:before {
   content: "\f041";
 }
-#location_input {
-width: 275px;
-}
 .active-message {
 	width: 440px;
 }
@@ -316,9 +273,11 @@ width: 275px;
 	padding: 8px 10px;
 	width: 100%;
 }
+/*
 button, select {
 	text-transform: none;
 }
+
 .select {
 	position: relative;
 	display: inline-block;
@@ -341,6 +300,7 @@ button, select {
 	font-family: Airglyphs, sans-serif;
 	line-height: 1;
 }
+*/
 .icon-caret-down:before, .select:before {
 	content: "\f0d7";
 }
@@ -1210,7 +1170,7 @@ hr {
 .icon-260:before {
   content: "\f260";
 }
-
+/*
 .btn {
 	display: inline-block;
 	margin-bottom: 0;
@@ -1227,7 +1187,7 @@ hr {
 	white-space: nowrap;
 	cursor: pointer;
 }
-
+*/
 .btn .icon:first-child {
   margin-right: 3px;
 }
@@ -1238,6 +1198,7 @@ hr {
 	height:42px;
 	font-weight: 400;
 }
+/*
 .btn {
 	border-color: #DCE0E0;
 	background: #FFF;
@@ -1250,6 +1211,7 @@ hr {
 	white-space: nowrap;
 	margin-bottom: 11px;
 }
+*/
 .btn-facebook {
 	border-color: #3B5998;
 	border-bottom-color: #263A63;
@@ -1259,11 +1221,13 @@ hr {
 .icon-facebook:before {
 	content: "\f09a";
 }
+/*
 .btn-group .btn {
 	float: left;
 	border-radius: 0;
 	position: relative;
 }
+/*
 .fieldset .btn {
 	padding: 20px 27px;
 	font-weight: normal;
@@ -1272,11 +1236,13 @@ hr {
 	border-top-left-radius: 2px;
 	border-bottom-left-radius: 2px;
 }
+
 .btn-block {
 	display: block;
 	white-space: normal;
 	width: 100%;
 }
+
 .btn-block+.btn-block {
 	margin-top: 8px;
 	margin-left: 0;
@@ -1300,7 +1266,9 @@ hr {
 
 .help-text {
 	padding:23px 27px;
+
 }
+*/
 .forgot-password {
 	font-size: 13px;
 	margin-top: 2px;

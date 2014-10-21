@@ -15,8 +15,8 @@ $.signedIn = function(){
 $(document).ready(function(){
 	$("form#signin-form").bind("ajax:success", function(e, data, status, xhr){
 		if (data.success) {
-		  	$( "#signInForm" ).modal('hide');
-		  	signInPromise.resolve();
+		  	$( "#signInForm" ).modal('hide');		  	
+		  	signInPromise.resolve(data.csrf_token);
 		}else{
 			$( "#signInForm" ).modal('hide');
 			signInPromise.reject('Seems we couldn\'t log you in!')
@@ -26,7 +26,7 @@ $(document).ready(function(){
 		.bind("ajax:success", function(e, data, status, xhr){
 			if (data.success) {
 			  $( "#signInForm" ).modal('hide');
-			  signInPromise.resolve();
+			  signInPromise.resolve(data.csrf_token);
 			}else{
 				//Parse the errors
 				var errors = JSON.parse(data.errors);

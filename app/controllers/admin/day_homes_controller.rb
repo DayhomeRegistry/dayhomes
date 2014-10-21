@@ -174,7 +174,7 @@ class Admin::DayHomesController < Admin::ApplicationController
 
       #add default availability
       full_time_full_days = AvailabilityType.where({:availability => 'Full-time', :kind => 'Full Days'}).first
-      @day_home.availability_types << full_time_full_days
+      #@day_home.availability_types << full_time_full_days
 
       if(!@day_home.save)
         @day_home.errors.full_messages.each do |err|

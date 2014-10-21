@@ -14,25 +14,26 @@ Dayhomes::Application.routes.draw do
     get '/signup', :to => "devise/registrations#new"
     delete '/logout', :to => "devise/sessions#destroy"
   end
-  get '/beta/list', :to=>"beta#list"
-  get '/beta/dashboard', to: "beta#dashboard"
-  #post '/beta/new', :to=>"beta#new", :as=>"new_beta"
-  resource :beta do
+
+  # New Beta Routes
+  #get  '/beta/list',      to: "beta#list" #Replaces New
+  get  '/beta/dashboard', to: "beta#dashboard"
+  resource :beta, except: [:new] do 
     get 'dayhomes/parents', :to=>"dayhomes#parents"
-    resources :dayhomes
+    get 'dayhomes/new', to: "beta#list"
+    resources :dayhomes, except: [:new, :edit] do
+
+        get 'overview'
+        get 'photos'
+
+        # AJAX
+        post 'setTitle'
+        post 'setSummary'
+        post 'setDescription'
+    end
   end
 
-#     betum_list GET    /beta/:betum_id/list(.:format) beta#list
-#       beta GET    /beta(.:format)                beta#index
-#            POST   /beta(.:format)                beta#create
-#  new_betum GET    /beta/new(.:format)            beta#new
-# edit_betum GET    /beta/:id/edit(.:format)       beta#edit
-#      betum GET    /beta/:id(.:format)            beta#show
-#            PATCH  /beta/:id(.:format)            beta#update
-#            PUT    /beta/:id(.:format)            beta#update
-#            DELETE /beta/:id(.:format)            beta#destroy
-
-
+  # Old Billing Routes
   get "billing/signup"
   put "billing/register"
   get "billing/welcome"
