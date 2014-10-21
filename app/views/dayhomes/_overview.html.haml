@@ -1,0 +1,72 @@
+.row.js-section
+  .col-xs-12.col-md-4
+    %h3 Overview
+    %p.text-muted
+      A title and summary displayed on your public listing page.
+  .col-xs-12.col-md-8
+    #tooltip-help-name.form-group
+      %label.label-large Title
+      %input.input-large.form-control.countable{:maxlength => "35", :name => "title",id: "title", :placeholder => "Write a title", :type => "text", :value => "#{@dayhome.name}", "data-url"=>"/setTitle"}/
+      #js-count-title.row-space-top-1.h6.text-right
+        %span #{35-@dayhome.name.length}
+        characters left
+    #tooltip-help-summary.form-group
+      %label.label-large Summary
+      %textarea.input-large.form-control.countable{:maxlength => "200", :name => "summary", id:"summary", :placeholder => "Write a summary in 200 characters or less", :rows => "6", "data-url"=>"/setSummary"}
+        =@dayhome.highlight
+      #js-count-summary.row-space-top-1.h6.text-right
+        %span #{200-(@dayhome.highlight||'').length}
+        characters left
+    #tooltip-help-description.form-group{:style=>(@dayhome.blurb.blank? ? 'display:none;' : '')}
+      %label.label-large Description
+      %textarea.input-large.form-control{ :name => "description", id:"description", :placeholder => "Write even more!", :rows => "12","data-url"=>"/setDescription"}
+        =@dayhome.blurb
+%hr.section-divider.more{:style=>(!@dayhome.blurb.blank? ? 'display:none;' : '')}
+%p.text-center.more{:style=>(!@dayhome.blurb.blank? ? 'display:none;' : '')}
+  Want to write even more? You can also
+  %a#js-write-more{:href => "#"} add a detailed description
+  to your dayhome.
+.row.text-center.row-space-top-2
+  .col-xs-12.col-md-6
+    %button.btn.btn-primary.btn-lg.pull-left.main-nav-btn.disabled{:type=>"submit", :disabled=>"true", :style=>"display:none;"}
+      %span.glyphicon.glyphicon-arrow-left
+      Overview
+  .col-xs-12.col-md-6
+    %a{href:beta_dayhome_photos_path()}
+      %button.btn.btn-primary.btn-lg.pull-right.main-nav-btn{:type=>"submit", }
+        Photos
+        %span.glyphicon.glyphicon-arrow-right
+
+-content_for :tooltips do
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-summary", :style => "display: none; top: 180px;left:770px; opacity: 1; position:absolute; margin:15px;"}
+    .media
+      %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
+      .media-body.text-lead.text-muted.help-tooltip-body
+        %strong A great summary
+        %p A great summary is rich and exciting! It should cover the major features of your dayhome and neighbourhood in 250 characters or less.
+        %p
+          %strong> Example:
+          My awesome dayhome has peanuts.  
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-name", :style => "display: none; top: 60px; left: 770px; opacity: 1; position:absolute; margin:15px;"}
+    .media
+      %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
+      .media-body.text-lead.text-muted.help-tooltip-body
+        %strong A great title
+        %p
+          A great title is unique, personal and descriptive!  Since it's short, it probably doesn't need the word 'Dayhome', but <i>Your name Dayhome</i> is OK too.
+        %p
+          %strong Examples:
+        %ul
+          %li Bundles of Joy
+          %li Danielle's Tiny Tots
+          %li Cindy's Dayhome
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-description", :style => "display: none; top: 280px;left:770px; opacity: 1; position:absolute; margin:15px;"}
+    .media
+      %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
+      .media-body.text-lead.text-muted.help-tooltip-body
+        %strong A great description
+        %p A detailed description is best.  Parents are trusting you with their little ones and they want to get to know you better.  Tell them about you, your philosophy, your daily schedule, or anything you'd like them to know before they call. 
+        %p Don't worry about things like contact info, rates or availability...that all comes later.
+        %p
+          %strong> Example:
+          My awesome dayhome has peanuts.    
