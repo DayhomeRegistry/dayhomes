@@ -34,6 +34,8 @@ Dayhomes::Application.routes.draw do
         post 'setTitle'
         post 'setSummary'
         post 'setDescription'
+        post 'addPhoto'
+        resources :photo, only: [:destroy], to: "dayhomes#removePhoto"
     end
   end
 

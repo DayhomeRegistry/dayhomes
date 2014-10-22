@@ -77,23 +77,7 @@ class DayhomesController < ApplicationController
         end
       end
     rescue => e
-      byebug
-      respond_to do |format|
-          format.html {
-            if(!e.message.nil?)
-              flash.now['error'] = e.message
-              logger.error e.message
-            else
-              flash.now['error'] = e
-              logger.error e
-            end
-            redirect_to "beta/list"
-          }
-          format.json {return render :json => {:success => false, :error=>(e.message||e.to_json)}}
-          
-        end
-      
-      
+      ajax_rescue(e)
     end
   end
 
@@ -116,41 +100,96 @@ class DayhomesController < ApplicationController
     @dayhome.name=params[:title];
 
     @dayhome.save
-    ajax_response("Title",@dayhome,request.format)
+    ajax_response("saving title",@dayhome,request.format)
   end
   def setSummary
     @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
     @dayhome.highlight=params[:summary];
 
     @dayhome.save
-    ajax_response("Summary",@dayhome,request.format)
+    ajax_response("saving summary",@dayhome,request.format)
   end
   def setDescription
     @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
     @dayhome.blurb=params[:description];
 
     @dayhome.save
-    ajax_response("Description",@dayhome,request.format)
+    ajax_response("saving description",@dayhome,request.format)
   end
   #   Photos
+  #   POST - format.html
+  def addPhoto
+    
+    begin
+      @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
+      if params[:image].try(:original_filename) == 'blob'
+        params[:image].original_filename << '.png'
+      end
+      data = params[:image]
+      #image      = Base64.decode64(data[data.index('base64,')+7 .. -1])
+      @photo = DayHomePhoto.new()
+      @photo.day_home = @dayhome
+      @photo.photo = data
+      if(@photo.save)
+        @dayhome.photos << @photo
+        @dayhome.save
 
+        # Since this one is an HTML post (for the file), we can't use ajax_response
+        template = render_to_string partial: "photo"
+        return render :json => {:success=>true, :template => template.to_s}
+      else
+        head :bad_request
+      end
+    rescue => e
+      byebug
+      if(resource.errors.full_messages.length>0)
+        render plain: "Error " + field_name + ": " + resource.errors.full_messages.join(', '), status: bad_request
+      else
+        render plain: e.to_s, status: bad_request
+      end
+    end
+  end
+  def removePhoto
+    photo = DayHomePhoto.find_by(id: params[:id])
+    if(photo.destroy)
+      head :ok
+    else 
+      render plain: "Couldn't delete photo", status: bad_request
+    end
+  end
 
   private
   def ajax_response(field_name, resource, format) 
     if(resource.errors.full_messages.length>0)
       respond_to do |format|
-        format.html {raise "setTitle is AJAX only"}
+        format.html {raise "AJAX only! "+"Error " + field_name + ": " + resource.errors.full_messages.join(', ')}
         format.js {
-          return render :json => {:success => false, :errors => "Error saving " + field_name + ": " + resource.errors.full_messages.join(', ')}
+          return render :json => {:success => false, :errors => "Error " + field_name + ": " + resource.errors.full_messages.join(', ')}
         }
       end
     else 
       respond_to do |format| 
-        format.html {raise "setTitle is AJAX only"}
+        format.html {raise "AJAX only! "}
         format.js {
           return render :json => {:success => true}
         }
       end
+    end
+  end
+  def ajax_rescue(e) 
+    byebug
+    respond_to do |format|
+        format.html {
+          if(!e.message.nil?)
+            flash.now['error'] = e.message
+            logger.error e.message
+          else
+            flash.now['error'] = e
+            logger.error e
+          end
+          redirect_to "beta/list"
+        }
+        format.json {return render :json => {:success => false, :errors=>(e.message||e.to_json)}}    
     end
   end
   def sort_column

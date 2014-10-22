@@ -1,4 +1,3 @@
-= javascript_include_tag "beta/"+params[:controller]
 -content_for :title do
   %title New Dayhome - Dayhome Registry
 -content_for :subnav do
@@ -23,16 +22,16 @@
               %span.glyphicon.glyphicon-ok.pull-right.dayhome-step
               %a{:href => beta_dayhome_overview_path()} Overview
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'photos') ? 'active' : ''}"}
-              %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
+              %span.glyphicon.pull-right.dayhome-step{:class=>"#{@dayhome.photos.count>0 ? 'glyphicon-ok' : 'glyphicon-remove'}"}
               %a{href: beta_dayhome_photos_path()} Photos
           .h6.section-header.row-space-1.pre-listed
             Settings & Availability
           %ul.nav.nav-sidebar
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'location') ? 'active' : ''}"}
-              %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
+              %span.glyphicon.pull-right.dayhome-step{:class=>"#{!@dayhome.city.blank? ? 'glyphicon-ok' : 'glyphicon-remove'}"}
               %a{:href => "#"} Location
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'certifications') ? 'active' : ''}"}
-              %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
+              %span.glyphicon.pull-right.dayhome-step{:class=>"#{@dayhome.certification_types.count>0 ? 'glyphicon-ok' : 'glyphicon-remove'}"} 
               %a{:href => "#"} Certifications
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'spots') ? 'active' : ''}"}
               %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
@@ -41,7 +40,7 @@
             Plan and Payment
           %ul.nav.nav-sidebar
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'plans') ? 'active' : ''}"}
-              %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
+              %span.glyphicon.pull-right.dayhome-step{:class=>"#{@dayhome.location.organization.plan != 'baby' ? 'glyphicon-ok' : 'glyphicon-remove'}"} 
               %a{:href => ""} Plans
     .publish-actions.text-center.publish-actions-overflow
       #user-suspended
@@ -50,7 +49,8 @@
         .not-post-listed.text-center
           .animated.text-lead.text-muted.steps-remaining.js-steps-remaining{:style => "display: block; opacity: 1;"}
             Complete
-            %strong.text-highlight 5 steps
+            %strong.text-highlight 
+              ="#{@dayhome.steps_remaining} steps"
             to list your dayhome.
           %button#js-list-space-button.animated.btn.btn-large.btn-special.btn-primary{"data-href" => "complete", "data-track" => "list_space_button_left_nav", :style => "display: none;"}
             List Space
@@ -66,3 +66,4 @@
     #sidebar
   - if(content_for?(:tooltips))
     =yield :tooltips
+= javascript_include_tag "beta/"+params[:controller]

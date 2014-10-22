@@ -4,7 +4,8 @@ class AvailabilityType < ActiveRecord::Base
 
   validates_presence_of :kind, :availability
   
-  scope :full_time, where("availability_types.availability = 'Full-time'")
-  scope :part_time, where("availability_types.availability = 'Part-time'")
+  # scope :published, -> { where(published: true) }
+  scope :full_time, -> {where("availability_types.availability = 'Full-time'")}
+  scope :part_time, -> {where("availability_types.availability = 'Part-time'")}
   
 end

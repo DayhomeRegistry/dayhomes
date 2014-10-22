@@ -14,6 +14,7 @@
 //= require jquery
 //= require jquery-ui/autocomplete
 //= require jquery_ujs
+//= require jasny-fileinput
 //= require gmaps-auto-complete
 //= require jquery.browser
 //= require bootstrap/bootstrap
@@ -36,6 +37,13 @@ function setWrapperTop(){
 	  	$('#wrapper').css({ top: $('header').outerHeight()+$('.subnav').outerHeight() });
 	}
 }
+
+function updateStepCount() {
+	stepCount = $('.steps-remaining .text-highlight');
+	count = 6-$('.glyphicon-ok').length;
+	stepCount.text(count+ ' step' + (count>1 ? 's' : ''));
+}
+
 window.numbersonly2=integersonly;
 window.roundFloat2=roundFloat2;
 $(document).ready(function(){

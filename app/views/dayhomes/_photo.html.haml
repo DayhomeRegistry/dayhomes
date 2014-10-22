@@ -1,0 +1,7 @@
+.photo
+  .text-center
+    = link_to image_tag(@photo.photo_url(:thumb),  :class => :left), @photo.photo_url, :alt => @photo.caption, :class => 'photo_preview'
+  .text-center{style:"padding:6.5px 0;"}
+    = link_to beta_dayhome_photo_path(@dayhome.id,@photo.id), method: :delete, data:{confirm: 'Delete?'}, class: 'btn btn-warning link-delete', :remote => true do
+      Delete
+  
