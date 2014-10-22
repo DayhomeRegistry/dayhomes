@@ -11,17 +11,18 @@
  *
  * The utility classes need to be loaded last, so those are included here.
  *
+ *= require jasny-fileinput
  *= require jquery-ui/autocomplete
  *= require_self
  *
  */
- @import "bootstrap-sprockets";
+@import "bootstrap-sprockets";
 
- @import "beta-layout/base";
- @import "beta-layout/layout";
- @import "beta-layout/module";
- @import "beta-layout/state";
- @import "beta-layout/theme";
+@import "beta-layout/base";
+@import "beta-layout/layout";
+@import "beta-layout/module";
+@import "beta-layout/state";
+@import "beta-layout/theme";
 
 // Bootstrap - Utility classes 
 @import "bootstrap/utilities";

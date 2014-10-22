@@ -25,8 +25,85 @@ function setSavingStatus(data) {
 		$('.js-saving-progress h5').text('Uh oh: '+data.errors);
 	}
 }
-$(document).ready(function(){
+// Convert dataURL to Blob object
+function dataURLtoBlob(dataURL) {
 
+  // Decode the dataURL
+  var binary = atob(dataURL.split(',')[1]);
+
+  // Create 8-bit unsigned array
+  var array = [];
+  for(var i = 0; i < binary.length; i++) {
+    array.push(binary.charCodeAt(i));
+  }
+
+  // Return our Blob object
+  return new Blob([new Uint8Array(array)], {type: 'image/png'});
+}
+function updateStepComplete(){
+	var span = $('li.active span');
+	if($('.photo-wrapper').length<=0){
+		//update the checkmark
+		span.removeClass('glyphicon-ok');
+		span.addClass('glyphicon-remove');
+		$('.js-next-btn').attr('disabled','disabled');
+		$('.js-next-btn').addClass('disabled');	
+	} else {
+		span.removeClass('glyphicon-remove');
+		span.addClass('glyphicon-ok');
+		$('.js-next-btn').removeAttr('disabled');
+		$('.js-next-btn').removeClass('disabled');
+
+	}
+	updateStepCount();
+}
+$(document).ready(function(){
+	$('.fileinput').fileinput()
+	$('.fileinput').on("change.bs.fileinput", function(){
+		// var data = {};
+		// data['image']=$(this).find('.fileinput-preview img').attr('src');
+		// Get our file
+		var file= dataURLtoBlob($(this).find('.fileinput-preview img').attr('src'));
+
+		// Create new form data
+		var fd = new FormData();
+
+		// Append our Canvas image file to the form data
+		fd.append("image", file);
+		var params = {
+		    //dataType: "json",
+		    type: "POST",
+		    url: getCurrentPath()+"/addPhoto",
+		    data: fd,
+		    processData: false,
+		    contentType: false,
+		};
+		resetSavingStatus();
+		$('.js-saving-progress h5').show();
+		$.ajax(params).done(function(data) {
+			setSavingStatus(data);
+			if(data.success) {
+				//need to clear the loader and add the image
+				$('.fileinput').fileinput('clear');
+
+				var div = $('<div class="col-lg-4 col-sm-6 col-xs-12 photo-wrapper">');
+				div.append($(data.template));
+				$('.photo-grid').append(div)
+				updateStepComplete();
+			}
+		}).error(function( jqXHR, textStatus, errorThrown ){
+			setSavingStatus({success:false, errors: errorThrown});
+		});
+	});
+	$(document.body)
+		.on('ajax:success', '.link-delete', function() {
+	      $(this).parents('.photo-wrapper').remove();
+	      updateStepComplete();
+	    })
+	    .on('ajax:error', '.link-delete', function() {
+	      alert("crap");
+	    }
+	  );
 	// Overview
 	$('[id^="tooltip-help"]')
 		.on("focusin",function(){
@@ -54,8 +131,6 @@ $(document).ready(function(){
 		var val = parseInt(characterCount($(this).val()));
 		$('#js-count-'+$(this).attr("name")+" span").text($(this).attr("maxlength")-val);
 	})
-		
-
 	$('#js-write-more').on("click",function(){
 		$('.more').hide();
 		$('#tooltip-help-description').show();

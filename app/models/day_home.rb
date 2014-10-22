@@ -249,4 +249,14 @@ class DayHome < ActiveRecord::Base
     end
   end
 
+  def steps_remaining
+    count = 5
+    count = count - 1 unless self.photos.count==0
+    count = count - 1 unless self.city.blank?
+    count = count - 1 unless self.certification_types.count==0
+    #count = count - 1 unless self.spots.count==0
+    count = count - 1 unless self.location.organization.plan=="baby"
+    return count
+  end
+
 end
