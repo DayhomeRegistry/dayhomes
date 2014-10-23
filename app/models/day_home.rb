@@ -9,7 +9,7 @@ class DayHome < ActiveRecord::Base
   # scopes
   scope :with_availability_uniq, lambda { |default_availability_types|
     joins(:availability_types).
-    where("availability_types.availability IN (?) AND availability_types.kind = ?", default_availability_types[:availability], default_availability_types[:kind]).
+    where("availability_types.availability IN (?) AND availability_types.kind in (?)", default_availability_types[:availability], default_availability_types[:kind]).
     uniq
   }
   scope :featured, lambda {|*args|
