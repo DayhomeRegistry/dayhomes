@@ -92,7 +92,26 @@ class DayhomesController < ApplicationController
 
     render "dayhome"
   end
+  def location
+    @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
 
+    render "dayhome"
+  end
+  def certifications
+    @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
+
+    render "dayhome"
+  end
+  def spots
+    @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
+
+    render "dayhome"
+  end
+  def plan
+    @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
+
+    render "dayhome"
+  end
   # AJAX posts
   #   Overview
   def setTitle
@@ -156,6 +175,28 @@ class DayhomesController < ApplicationController
     else 
       render plain: "Couldn't delete photo", status: bad_request
     end
+  end
+  def setDefaultPhoto
+    dayhome = DayHome.find_by(id: params[:dayhome_id])
+    dayhome.photos.each do |photo|
+      photo.default_photo=false;
+      photo.save
+    end
+    photo = DayHomePhoto.find_by(id: params[:photo_id])
+    photo.default_photo = true
+
+    if(photo.save)
+      head :ok
+    else 
+      render plain: "Couldn't set default photo", status: bad_request
+    end
+  end
+  def setCaption
+    photo = DayHomePhoto.find_by(id: params[:photo_id])
+    photo.caption = params[:caption]
+
+    photo.save
+    ajax_response("saving description",photo,request.format)
   end
 
   private

@@ -1,0 +1,25 @@
+.row.js-section
+  .col-xs-12.col-md-4
+    %h3 Certifications
+    %p.text-muted
+      Tell parents what you know.
+  .col-xs-12.col-md-8
+.row.text-center.row-space-top-2
+  .col-xs-12.col-md-6
+    %a{href:beta_dayhome_location_path()}
+      %button.btn.btn-primary.btn-lg.pull-left.main-nav-btn
+        %span.glyphicon.glyphicon-arrow-left
+        Location
+  .col-xs-12.col-md-6
+    %a{href:beta_dayhome_spots_path()}
+      %button.btn.btn-primary.btn-lg.pull-right.main-nav-btn.js-next-btn
+        Spots
+        %span.glyphicon.glyphicon-arrow-right
+
+-content_for :tooltips do
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#js-photo-grid", :style =>"display:block; top: 60px;left:770px; opacity: 1; position:absolute; margin:15px;"}
+    .media
+      %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
+      .media-body.text-lead.text-muted.help-tooltip-body
+        %strong Certifications
+        %p Parents can filter search results by the certifcations you hold. Be sure to put select all those you currently have, and you might think about adding some more.

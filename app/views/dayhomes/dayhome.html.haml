@@ -29,19 +29,19 @@
           %ul.nav.nav-sidebar
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'location') ? 'active' : ''}"}
               %span.glyphicon.pull-right.dayhome-step{:class=>"#{!@dayhome.city.blank? ? 'glyphicon-ok' : 'glyphicon-remove'}"}
-              %a{:href => "#"} Location
+              %a{:href => beta_dayhome_location_path()} Location
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'certifications') ? 'active' : ''}"}
               %span.glyphicon.pull-right.dayhome-step{:class=>"#{@dayhome.certification_types.count>0 ? 'glyphicon-ok' : 'glyphicon-remove'}"} 
-              %a{:href => "#"} Certifications
+              %a{:href => beta_dayhome_certifications_path()} Certifications
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'spots') ? 'active' : ''}"}
               %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
-              %a{:href => ""} Spots
+              %a{:href => beta_dayhome_spots_path()} Spots
           .h6.section-header.row-space-1.pre-listed
             Plan and Payment
           %ul.nav.nav-sidebar
-            %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'plans') ? 'active' : ''}"}
+            %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'plan') ? 'active' : ''}"}
               %span.glyphicon.pull-right.dayhome-step{:class=>"#{@dayhome.location.organization.plan != 'baby' ? 'glyphicon-ok' : 'glyphicon-remove'}"} 
-              %a{:href => ""} Plans
+              %a{:href => beta_dayhome_plan_path()} Plans
     .publish-actions.text-center.publish-actions-overflow
       #user-suspended
       #availability-dropdown
@@ -62,6 +62,14 @@
         =render partial: "overview"
       -if current_page?(controller: 'dayhomes', action: 'photos')
         =render partial: "photos"
+      -if current_page?(controller: 'dayhomes', action: 'location')
+        =render partial: "location"
+      -if current_page?(controller: 'dayhomes', action: 'certifications')
+        =render partial: "certifications"
+      -if current_page?(controller: 'dayhomes', action: 'spots')
+        =render partial: "spots"                
+      -if current_page?(controller: 'dayhomes', action: 'plan')
+        =render partial: "plan"  
   #sidebar-right.col-xs-3.pull-right
     #sidebar
   - if(content_for?(:tooltips))

@@ -28,14 +28,17 @@ Dayhomes::Application.routes.draw do
         get 'location'
         get 'certifications'
         get 'spots'
-        get 'plans'
+        get 'plan'
 
         # AJAX
         post 'setTitle'
         post 'setSummary'
         post 'setDescription'
         post 'addPhoto'
-        resources :photo, only: [:destroy], to: "dayhomes#removePhoto"
+        resources :photo, only: [:destroy], to: "dayhomes#removePhoto" do
+          post 'setDefaultPhoto', to:"dayhomes#setDefaultPhoto"
+          post 'setCaption', to:"dayhomes#setCaption"
+        end
     end
   end
 

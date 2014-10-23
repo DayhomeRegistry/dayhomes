@@ -1,0 +1,25 @@
+.row.js-section
+  .col-xs-12.col-md-4
+    %h3 Spots
+    %p.text-muted
+      Where do you have space to fill.
+  .col-xs-12.col-md-8
+.row.text-center.row-space-top-2
+  .col-xs-12.col-md-6
+    %a{href:beta_dayhome_certifications_path()}
+      %button.btn.btn-primary.btn-lg.pull-left.main-nav-btn
+        %span.glyphicon.glyphicon-arrow-left
+        Certifications
+  .col-xs-12.col-md-6
+    %a{href:beta_dayhome_plan_path()}
+      %button.btn.btn-primary.btn-lg.pull-right.main-nav-btn.js-next-btn
+        Plan
+        %span.glyphicon.glyphicon-arrow-right
+
+-content_for :tooltips do
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#js-photo-grid", :style =>"display:block; top: 60px;left:770px; opacity: 1; position:absolute; margin:15px;"}
+    .media
+      %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
+      .media-body.text-lead.text-muted.help-tooltip-body
+        %strong Availability
+        %p Parents can filter search results by the kind of space you have to offer. Be sure to put select all those you currently have, and you might think about adding some more.
