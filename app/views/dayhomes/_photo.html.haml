@@ -1,7 +1,18 @@
 .photo
   .text-center
-    = link_to image_tag(@photo.photo_url(:thumb),  :class => :left), @photo.photo_url, :alt => @photo.caption, :class => 'photo_preview'
+    %fieldset.image-fieldset{:class=>"#{@photo.default_photo ? 'default' : ''}"}
+      %legend.image-legend
+        %span.set-default-link{:style=>"#{@photo.default_photo ? 'display:none;' : ''}"}
+          Set as default
+        %span.default-text{:style=>"#{!@photo.default_photo ? 'display:none;' : ''}"}
+          Default
+      = link_to (!@photo.default_photo ? beta_dayhome_photo_setDefaultPhoto_path(@dayhome.id,@photo.id) : @photo.photo_url), class: 'link-set-default', :remote => (!@photo.default_photo ? true : false), :data=>{"set-default-link"=>beta_dayhome_photo_setDefaultPhoto_path(@dayhome.id,@photo.id),"photo_url"=>@photo.photo_url},method: (!@photo.default_photo ? "post" : "") do
+        = image_tag(@photo.photo_url(:thumb),  :alt => @photo.caption, :class => 'left photo_preview')
+      %textarea.input-large.form-control.countable{:maxlength => "40", :name => "caption",id: "caption", :placeholder => "Describe this photo", :rows => "3", :type => "text", "data-url"=>beta_dayhome_photo_setCaption_path(@dayhome,@photo).sub(beta_dayhome_path(@dayhome),''), :style=>"margin: .35em;width:94%;"}
+        =@photo.caption
+      #js-count-caption.row-space-top-1.h6.text-right
+        %span #{40-(@photo.caption||'').length}
+        characters left
   .text-center{style:"padding:6.5px 0;"}
     = link_to beta_dayhome_photo_path(@dayhome.id,@photo.id), method: :delete, data:{confirm: 'Delete?'}, class: 'btn btn-warning link-delete', :remote => true do
       Delete
-  

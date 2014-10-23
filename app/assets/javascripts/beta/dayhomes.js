@@ -102,8 +102,28 @@ $(document).ready(function(){
 	    })
 	    .on('ajax:error', '.link-delete', function() {
 	      alert("crap");
-	    }
-	  );
+	    });
+	$(document.body)
+		.on('ajax:success', '.link-set-default', function() {
+	      $(document.body).find('.default').removeClass('default');
+	      $(this).find('.image-fieldset').addClass('default');
+	      $('.image-legend .set-default-link').show();
+	      $('.image-legend .default-text').hide();
+	      $(this).find('.set-default-link').hide();
+	      $(this).find('.default-text').show();
+	      $('.link-set-default').each(function(){
+	      	$(this).data("method","post");
+	      	$(this).data("remote",true);
+	      	$(this).attr("href",$(this).attr("data-set-default-link"));
+	      });
+	      $(this).removeAttr("data-method");
+	      $(this).removeAttr("data-remote");
+	      $(this).attr("href",$(this).attr("data-photo-url"));
+
+	    })
+	    .on('ajax:error', '.link-set-default', function(jqXHR, textStatus, errorThrown ) {
+	      alert("crap");
+	    });
 	// Overview
 	$('[id^="tooltip-help"]')
 		.on("focusin",function(){
@@ -112,7 +132,7 @@ $(document).ready(function(){
 		.on("focusout",function(){
 			$('[data-trigger="#'+$(this).attr('id')+'"]').hide();
 		})
-	$('input.form-control,textarea.form-control').on("change",function(){
+	$(document.body).on("change", 'input.form-control,textarea.form-control',function(){
 		var data = {};
 		data[$(this).attr("name")]= $(this).val();
 		var params = {
@@ -123,13 +143,13 @@ $(document).ready(function(){
 		};
 		resetSavingStatus();
 		$('.js-saving-progress h5').show();
-		$.ajax(params).done(function(data) {
+		$.ajax(params).then(function(data) {
 			setSavingStatus(data);
 		});
 	});
-	$('.countable').on("keyup",function(){
+	$(document.body).on("keyup", '.countable',function(){
 		var val = parseInt(characterCount($(this).val()));
-		$('#js-count-'+$(this).attr("name")+" span").text($(this).attr("maxlength")-val);
+		$(this).siblings('#js-count-'+$(this).attr("name")).find("span").text($(this).attr("maxlength")-val);
 	})
 	$('#js-write-more').on("click",function(){
 		$('.more').hide();

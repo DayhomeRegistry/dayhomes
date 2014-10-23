@@ -12,10 +12,11 @@
     .row.row-space-top-3
       .col-lg-11.col-sm-11.col-xs-11.col-lg-offset-1.col-sm-offset-1.col-xs-offset-1
         .fileinput.fileinput-new{"data-provides" => "fileinput"}
-          .fileinput-preview.thumbnail{"data-trigger" => "fileinput", :style => "width: 200px; height: 150px;"}
+          .fileinput-preview.thumbnail{"data-trigger" => "fileinput", :placeholder=>"Upload image", :style => "width: 200px; height: 150px;"}
+            Upload image
           %div
             %span.btn.btn-default.btn-file
-              %span.fileinput-new Select image
+              %span.fileinput-new Upload image
               %span.fileinput-exists Change
               %input{:name => "...", :type => "file"}/
             %a.btn.btn-default.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"} Remove
@@ -27,6 +28,14 @@
         Overview
   .col-xs-12.col-md-6
     %a{href:beta_dayhome_location_path()}
-      %button.btn.btn-primary.btn-lg.pull-right.main-nav-btn.js-next-btn.disabled{:disabled=>"true"}
+      %button.btn.btn-primary.btn-lg.pull-right.main-nav-btn.js-next-btn
         Location
         %span.glyphicon.glyphicon-arrow-right
+
+-content_for :tooltips do
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#js-photo-grid", :style =>"display:block; top: 60px;left:770px; opacity: 1; position:absolute; margin:15px;"}
+    .media
+      %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
+      .media-body.text-lead.text-muted.help-tooltip-body
+        %strong Adding Photos
+        %p Parents browse photos to quickly get a feel for your space. Be sure to put your best photo first and add descriptive captions.        

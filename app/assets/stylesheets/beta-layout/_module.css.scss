@@ -466,3 +466,23 @@ footer .copyright {
 		margin-left: 0 !important;
 	}
 }
+.fileinput .thumbnail {
+	color: lightgray;
+}
+fieldset.image-fieldset {
+	padding: .35em;
+	margin: 2px;
+	border: 2px solid $light-grey;
+}
+fieldset.image-fieldset.default {
+	border: 2px solid $dark-grey;
+}
+legend.image-legend {
+	margin-bottom: 0;
+	font-size: 14px;
+	text-align: left;
+	padding: 0 .35em;
+	width: inherit;
+	border: none;
+	color: $dark-grey;
+}
