@@ -39,6 +39,7 @@ Dayhomes::Application.routes.draw do
           post 'setDefaultPhoto', to:"dayhomes#setDefaultPhoto"
           post 'setCaption', to:"dayhomes#setCaption"
         end
+        post 'setLocation'
     end
   end
 
