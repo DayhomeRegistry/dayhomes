@@ -486,3 +486,17 @@ legend.image-legend {
 	border: none;
 	color: $dark-grey;
 }
+.public-map-overlay {
+	position: absolute;
+	top: 25px;
+	left: 25px;
+	width: 160px;
+	height: 160px;
+	-moz-border-radius: 125px;
+	-webkit-border-radius: 125px;
+	border-radius: 125px;
+	background-color: $green;
+	opacity: 0.25;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+	filter: alpha(opacity=25);
+}

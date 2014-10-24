@@ -1,5 +1,5 @@
 class ConversionUser < ActiveRecord::Base
-    set_table_name "users_backup"
+    self.table_name ="users_backup"
 end
 class ConvertFromAuthlogic < ActiveRecord::Migration
   def up
