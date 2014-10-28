@@ -27,18 +27,18 @@
   %a#js-write-more{:href => "#"} add a detailed description
   to your dayhome.
 .row.text-center.row-space-top-2
-  .col-xs-12.col-md-6
+  .col-xs-12.col-sm-6.col-md-6
     %button.btn.btn-primary.btn-lg.pull-left.main-nav-btn.disabled{:type=>"submit", :disabled=>"true", :style=>"display:none;"}
       %span.glyphicon.glyphicon-arrow-left
       Overview
-  .col-xs-12.col-md-6
+  .col-xs-12.col-sm-6.col-md-6
     %a{href:beta_dayhome_photos_path()}
       %button.btn.btn-primary.btn-lg.pull-right.main-nav-btn
         Photos
         %span.glyphicon.glyphicon-arrow-right
 
 -content_for :tooltips do
-  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-summary", :style => "display: none; top: 180px;left:770px; opacity: 1; position:absolute; margin:15px;"}
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-summary", :style => "display: none; top: 180px;left:75%; opacity: 1; position:absolute; margin:15px;"}
     .media
       %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
       .media-body.text-lead.text-muted.help-tooltip-body
@@ -47,7 +47,7 @@
         %p
           %strong> Example:
           My awesome dayhome has peanuts.  
-  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-name", :style => "display: none; top: 60px; left: 770px; opacity: 1; position:absolute; margin:15px;"}
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-name", :style => "display: none; top: 60px; left:75%; opacity: 1; position:absolute; margin:15px;"}
     .media
       %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
       .media-body.text-lead.text-muted.help-tooltip-body
@@ -60,7 +60,7 @@
           %li Bundles of Joy
           %li Danielle's Tiny Tots
           %li Cindy's Dayhome
-  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-description", :style => "display: none; top: 280px;left:770px; opacity: 1; position:absolute; margin:15px;"}
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-description", :style => "display: none; top: 280px;left:75%; opacity: 1; position:absolute; margin:15px;"}
     .media
       %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
       .media-body.text-lead.text-muted.help-tooltip-body
