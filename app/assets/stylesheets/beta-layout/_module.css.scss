@@ -112,7 +112,7 @@ header .search-form .location {
 .subnav-item {
     color: #CACCCD;
 }
-.subnav-item:hover, .subnav-item:focus, .subnav-item[aria-selected="true"] {
+.subnav-item:hover, .subnav-item:focus, .subnav-item.active, .subnav-item[aria-selected="true"] {
 	text-decoration: none;
 	color: #FFF;
 }
@@ -189,7 +189,12 @@ footer .copyright {
 	    display:initial;
 	}
 }
-
+#sidebar .row {
+	margin: 0;
+}
+#sidebar .col-sm-12, #sidebar .col-md-12 {
+	padding: 0;
+}
 
 #sidebar-right {
 	padding: 40px;
@@ -244,12 +249,15 @@ footer .copyright {
 	  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.1);
 	}
 }
-.form-group .h6 {
+.form-group .h6, .image-fieldset .h6 {
 	font-weight: bold;
 	color: #82888A;
 }
 .row .form-group label {
-	margin-top: 30px;
+	/*margin-top: 30px; Took this out because it made the forms in Dayhomes look goofy...if something else looks goofy we need to balance.*/  
+}
+.photo-wrapper {
+	margin-bottom: 30px; /*This might be the one */
 }
 /*
  * Help panel
@@ -279,8 +287,11 @@ footer .copyright {
 	color: #82888A;
 }
 .help-tooltip-body {
-	max-width: 236px;
+	max-width: calc(25% - 30px);
 	padding-left: 7px;
+}
+.tooltip {
+	max-width: calc(25% - 30px);
 }
 
 
@@ -488,14 +499,12 @@ legend.image-legend {
 }
 .public-map-overlay {
 	position: absolute;
-	top: 25px;
-	left: 25px;
-	width: 160px;
-	height: 160px;
-	-moz-border-radius: 125px;
-	-webkit-border-radius: 125px;
+	top: 15px;
+	left: 15px;
+	width: 120px;
+	height: 120px;
 	border-radius: 125px;
-	background-color: $green;
+	background-color: #52BE60;
 	opacity: 0.25;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
 	filter: alpha(opacity=25);

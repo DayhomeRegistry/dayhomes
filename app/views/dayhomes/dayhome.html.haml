@@ -7,7 +7,11 @@
         %span.glyphicon.glyphicon-arrow-left
         Back
     %li
-      %a.subnav-item.pull-right{ :href => "dayhome/preview"}
+      -if !@dayhome.name.nil?
+        .subnav-item.active
+          =@dayhome.name
+    %li
+      %a.subnav-item.pull-right{ :href => beta_dayhome_path(@dayhome)+"?preview"}
         %span.glyphicon.glyphicon-eye-open
         See my page
 #wrapper

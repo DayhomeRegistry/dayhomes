@@ -4,36 +4,36 @@
     %p.text-muted
       Your address and phone number so we know where you are and how to get a hold of you.
   .col-xs-12.col-md-8
-    = simple_form_for(@dayhome, :url => beta_dayhome_setLocation_path(@dayhome), :html => { :method => :post , :class=>""}) do |f| 
+    = simple_form_for(@dayhome, :url => beta_dayhome_setLocation_path(@dayhome), :html => { :method => :post , :class=>"form-horizontal"}) do |f| 
       .form-group
         =f.label :street1,'Street Address', :class=>"control-label"         
-        = f.text_field :street1, :class=>"form-control input-xxlarge" , :placeholder=>"Enter your street address as it appears in google"        
+        = f.text_field :street1, :class=>"form-control" , :placeholder=>"Enter your street address as it appears in google"        
       .form-group
         =f.label :city,'City', :class=>"control-label"         
         = f.text_field :city, :class=>"form-control input-medium"            
       .form-group
         =f.label :province,'Province', :class=>"control-label"         
-        = f.subregion_select :province,'CA'          
+        = f.subregion_select :province,'CA', {}, :class=>'form-control'
       .form-group
         =f.label :province,'Postal Code', :class=>"control-label"   
-        = f.text_field :postal_code, :class=>"input-small"          
+        = f.text_field :postal_code, :class=>"form-control input-small"          
       .form-group
         =f.label :province,'Phone', :class=>"control-label"   
-        = f.text_field :phone_number
+        = f.text_field :phone_number, :class=>"form-control"       
 .row.text-center.row-space-top-2
-  .col-xs-12.col-md-6
+  .col-xs-12.col-sm-6.col-md-6
     %a{href:beta_dayhome_photos_path()}
       %button.btn.btn-primary.btn-lg.pull-left.main-nav-btn
         %span.glyphicon.glyphicon-arrow-left
         Photos
-  .col-xs-12.col-md-6
+  .col-xs-12.col-sm-6.col-md-6
     %a{href:beta_dayhome_certifications_path()}
       %button.btn.btn-primary.btn-lg.pull-right.main-nav-btn.js-next-btn
         Certifications
         %span.glyphicon.glyphicon-arrow-right
 
 -content_for :tooltips do
-  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#js-location-container", :style => "display: block; top: 47px; left: 650px; opacity: 1;"}
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#js-location-container", :style => "display:block; top: 60px;left:75%; opacity: 1; position:absolute; margin:15px;"}
     .media
       %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
       .media-body.text-lead.text-muted.help-tooltip-body
@@ -42,6 +42,6 @@
         .row-space-1
           .media-photo{style:"position:relative;"}
             %i.public-map-overlay
-            %img{:height => "205", :src => "//maps.googleapis.com/maps/api/staticmap?center=53.520901, -113.450577&zoom=15&size=205x205&maptype=roadmap&sensor=false&style=undefined&key=AIzaSyA8dBXcpx7L0t_36KxQwxwxSX6F5ASthMQ", :width => "205"}/
+            %img{:height => "150", :width => "150", :src => "//maps.googleapis.com/maps/api/staticmap?center=53.520901, -113.450577&zoom=15&size=205x205&maptype=roadmap&sensor=false&style=undefined&key=AIzaSyA8dBXcpx7L0t_36KxQwxwxSX6F5ASthMQ"}/
         %p
           This is how your location appears on your page.
