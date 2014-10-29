@@ -33,6 +33,7 @@ gem 'ruby-recaptcha'
 gem 'execjs'
 gem 'carmen-rails', '~> 1.0.0'
 gem 'rack-affiliates'
+gem 'redcarpet'
 
 gem 'geokit'
 gem 'geokit-rails'
