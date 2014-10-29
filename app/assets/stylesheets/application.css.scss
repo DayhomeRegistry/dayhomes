@@ -545,3 +545,10 @@ div.callout {
   bottom: -20px;
   border-top: 10px solid $blue;
 }
+.markdown ul {
+  list-style: disc;
+}
+span.small {
+  font-size: 13px;
+  margin-left:20px;
+}

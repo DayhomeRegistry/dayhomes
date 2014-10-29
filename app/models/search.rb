@@ -211,7 +211,6 @@ class Search
 
   # set the defaults (no search params entered))
   def set_defaults
-    debugger
     self.availability_types.each do |default_avail_types|
       if DEFAULT_AVAILABILITY_TYPES[:kind].include?(default_avail_types.kind)
         default_avail_types.checked = true

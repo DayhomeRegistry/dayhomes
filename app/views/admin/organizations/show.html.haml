@@ -85,7 +85,12 @@
       Organization
     .controls.fs_22
       .float_left
-        Some info about your organization    
+        Some info about your organization     
+  .control-group
+    .controls.fs_22
+      .span-7
+        -if !@organization.logo.nil?
+          %img{:src=>"#{@organization.logo.photo_url(:thumb)}"}
   .control-group
     .control-label
       Name

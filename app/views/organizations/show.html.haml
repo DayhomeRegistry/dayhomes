@@ -120,7 +120,11 @@
       Organization
     .controls.fs_22
       .float_left
-        Some info about your organization    
+        Some info about your organization   
+  .control-group
+    .controls.fs_22
+      .span-7
+        %img{:src=>"#{@organization.logo.photo_url(:thumb)}"}
   .control-group
     .control-label
       Name
@@ -169,6 +173,12 @@
           .span-7
             .error.alert-error
               Please update your credit card information!
+  .control-group
+    .control-label
+      Description
+    .controls
+      .append-bottom-1.first
+        = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true).render(@organization.blurb).html_safe
   .control-group
     .controls
       .example.first

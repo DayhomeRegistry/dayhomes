@@ -20,6 +20,15 @@
         =image_tag("circle-full.png", :alt=> "Full-time", :title=> "Full-time")
       -if avail.include? "Part-time"
         =image_tag("circle-half.png", :alt=> "Part-time", :title=> "Part-time")
+  - if dayhome.organization.day_homes.count>1
+    %div
+      Operated by:
+      =dayhome.organization.blurb.length
+    %div
+      =image_tag(dayhome.organization.logo.photo_url(:thumb))
+    .markdown
+      -if !dayhome.organization.blurb.blank?
+        = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true).render(dayhome.organization.blurb).html_safe
   .add
     <!-- 234x60 -->
     <ins class="adsbygoogle" style="display:inline-block;width:234px;height:60px" data-ad-client="ca-pub-6835867491393885" data-ad-slot="3925033656"></ins>
