@@ -375,7 +375,7 @@ namespace :db do
                              :street2 =>  '',
                              :slug => "DayHome#{index}single",
                              :email => "dh564f#{index}@dayhomeregistry.com",
-                             :featured => true,
+                             #:featured => true,
                              :phone_number => '780-555-5555',
                              :highlight => fulltime_names[index]+" is a terrific place for children to learn and have fun. With all sorts of activities in store, kids love it.",
                              :blurb => dummy_text[1+Random.rand(4)]+"\n\n"+dummy_text[1+Random.rand(4)]+"\n\n"+dummy_text[1+Random.rand(4)]+"\n\n"

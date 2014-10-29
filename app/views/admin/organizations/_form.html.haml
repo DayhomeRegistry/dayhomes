@@ -3,14 +3,50 @@
   
 
 = simple_form_for [:admin, @organization], :html => {:multipart => true} do |f|
-  
-  = f.input :name 
-  = f.input :phone_number
-  = f.input :street1 
-  = f.input :street2
-  = f.input :city
-  = f.input :province
-  = f.input :postal_code
+  .form-inputs 
+    .control-group
+      .control-label
+        Contact Information
+      .controls
+        .append-bottom-1.first    
+          = f.input :name 
+          = f.input :phone_number
+    .control-group
+      .control-label
+        Address
+      .controls
+        .append-bottom-1.first    
+          = f.input :street1 
+          = f.input :street2
+          = f.input :city
+          = f.input :province
+          = f.input :postal_code
+    .control-group
+      .control-label
+        Description
+      .controls
+        .append-bottom-1.first  
+          .control-group
+            =label_tag "Logo", nil,:class=>"control-label"
+            .controls
+              .logo
+                -if !@organization.logo.nil?
+                  %img{:src=>"#{@organization.logo.photo_url(:thumb)}"}
+              .input
+                =file_field_tag 'organization[logo_attributes][photo]' 
+          .control-group
+            =label_tag "Pin", nil,:class=>"control-label"
+            .controls
+              .logo
+                -if !@organization.pin.nil?
+                  %img{:src=>"#{@organization.pin.photo_url()}"}
+              .input
+                =file_field_tag 'organization[pin_attributes][photo]'       
+          .control-group
+            = f.input :blurb , as: :text, input_html:{maxlength:"250", rows:"12"} 
+            .controls
+              %span.small
+                max 250 characters
   = f.hidden_field :stripe_card_token
   -if !@organization.credit_card.nil?
     #existingCard

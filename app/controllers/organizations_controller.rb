@@ -31,7 +31,7 @@ class OrganizationsController < ApplicationController
   def update
     #raise params.to_json
     @organization = Organization.find(params[:id])
-    @organization.assign_attributes(params[:organization])
+    @organization.update_attributes(params[:organization])
 
     respond_to do |format|
       if @organization.save_with_payment
@@ -66,7 +66,6 @@ class OrganizationsController < ApplicationController
 
   def cancel
     begin
-      debugger
       too_expensive = !params["too_expensive"].nil?
       no_contact = !params["no_contact"].nil?
       closed = !params["closed"].nil?

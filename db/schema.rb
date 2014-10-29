@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009164935) do
+ActiveRecord::Schema.define(:version => 20141028184108) do
 
   create_table "agencies", force: true do |t|
     t.string   "name"
@@ -206,7 +206,22 @@ ActiveRecord::Schema.define(version: 20141009164935) do
     t.string   "phone_number"
   end
 
+<<<<<<< HEAD
   create_table "organizations", force: true do |t|
+=======
+  create_table "organization_photos", :force => true do |t|
+    t.integer  "logo_id"
+    t.integer  "pin_id"
+    t.string   "photo"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "organization_photos", ["logo_id"], :name => "index_organization_photos_on_logo_id"
+  add_index "organization_photos", ["pin_id"], :name => "index_organization_photos_on_pin_id"
+
+  create_table "organizations", :force => true do |t|
+>>>>>>> origin/master
     t.string   "name"
     t.string   "city"
     t.string   "province"
@@ -221,6 +236,7 @@ ActiveRecord::Schema.define(version: 20141009164935) do
     t.datetime "updated_at",                             null: false
     t.integer  "affiliate_id"
     t.string   "affiliate_tag"
+    t.string   "blurb"
   end
 
   create_table "plans", force: true do |t|

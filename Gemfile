@@ -53,6 +53,7 @@ gem 'execjs'
 
 #Rack based handling of referral codes
 gem 'rack-affiliates'
+gem 'redcarpet'
 
 #Geocoding
 gem 'geokit'

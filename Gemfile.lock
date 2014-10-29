@@ -397,6 +397,11 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    rb-kqueue (0.2.0)
+      ffi (>= 0.5.0)
+    rdoc (3.12.2)
+      json (~> 1.4)
+    redcarpet (2.2.2)
     ref (1.0.5)
     rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
@@ -535,6 +540,7 @@ DEPENDENCIES
   rack-affiliates
   rack-mini-profiler
   rails
+  redcarpet
   rspec-rails (~> 2.6)
   ruby-recaptcha
   sass-rails (>= 3.2)
