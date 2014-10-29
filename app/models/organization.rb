@@ -1,8 +1,14 @@
-  class Organization < ActiveRecord::Base
+class Organization < ActiveRecord::Base
   
   has_many :users
-  #has_many :organization_users, :dependent => :destroy
-  #has_many :users, :through => :organization_users
+
+  has_one :logo, :class_name => "OrganizationPhoto", :foreign_key => "logo_id"
+  has_one :pin, :class_name => "OrganizationPhoto", :foreign_key => "pin_id"
+  # #has_and_belongs_to :logo, :class_name => 'OrganizationPhoto', :dependent => :destroy
+  accepts_nested_attributes_for :logo, :allow_destroy => true #,:reject_if => :all_blank
+  
+  # #has_and_belongs_to :pin, :class_name => 'OrganizationPhoto', :dependent => :destroy
+  accepts_nested_attributes_for :pin, :allow_destroy => true #,:reject_if => :all_blank
 
   has_many :locations
   has_many :day_homes, :through=>:locations
@@ -137,16 +143,21 @@
         elsif !self.stripe_customer_token.nil?
         #update the subscription to the new plan  
           customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-          if(customer.subscription.plan.id != self.plan)
-            customer.update_subscription(:plan => self.plan, :prorate=>true)
-          else
-            #Check the name
-            if(customer.description != self.name)
-              customer.description = self.name
-              customer.save
+          customer.subscriptions.each do |subscription|
+            if(subscription.plan.id != self.plan)
+              #customer.update_subscription(:plan => self.plan, :prorate=>true)
+              subscription.plan = self.plan
+              subscription.prorate = true
+              subscription.save
+            else
+              #Check the name
+              if(customer.description != self.name)
+                customer.description = self.name
+                customer.save
+              end
             end
-            customer.save
           end
+          customer.save
         end 
       end      
       save!

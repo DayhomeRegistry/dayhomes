@@ -29,7 +29,11 @@ module GoogleMapsJsonHelper
     day_homes.to_gmaps4rails do |dayhome, marker|
       marker.infowindow render(:partial => "/searches/pin", :locals => { :dayhome => dayhome})
       marker.title dayhome.name
-      marker.picture({ :picture => "/assets/dayhome.png",
+      picture = "/assets/dayhome-private.png"
+      picture = "/assets/dayhome.png" unless !dayhome.licensed
+      picture = dayhome.organization.pin.photo_url(:pin) unless dayhome.organization.pin.nil?
+
+      marker.picture({ :picture => picture,
                        :width => 32,
                        :height => 37
                      })

@@ -29,7 +29,6 @@ class Admin::OrganizationsController < Admin::ApplicationController
 
   def new
     @organization = Organization.new
-    @organization.photos.build
   end
 
   def create
