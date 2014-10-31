@@ -132,21 +132,69 @@ $(document).ready(function(){
 		.on("focusout",function(){
 			$('[data-trigger="#'+$(this).attr('id')+'"]').hide();
 		})
-	$(document.body).on("change", 'input.form-control,textarea.form-control',function(){
-		var data = {};
-		data[$(this).attr("name")]= $(this).val();
+	function submit($element, data) {
 		var params = {
 		    dataType: "json",
 		    type: "POST",
-		    url: getCurrentPath()+$(this).attr("data-url"),//"/setTitle",
+		    url: getCurrentPath()+$element.attr("data-url"),//"/setTitle",
 		    data: data
 		};
 		resetSavingStatus();
 		$('.js-saving-progress h5').show();
-		$.ajax(params).then(function(data) {
-			setSavingStatus(data);
-		});
+		$.ajax(params)
+			.then(function(data) {
+				setSavingStatus(data);
+			})
+			.fail(function(data){
+				setSavingStatus({errors: data.statusText});
+			});
+	}
+	$(document.body).on("change", 'input.form-control,textarea.form-control',function(){
+		var parent = $(this).parents('.js-submit-group')[0];
+		
+		var data = {};
+		if(parent) {
+			var timeoutId = $(parent).data('tid');
+			if(timeoutId) {
+				//we've changed something else since the timer was set, clear it
+				clearTimeout(timeoutId);
+			}
+			data["address"]={}
+			address = data["address"]
+			$(parent).find('input.form-control, textarea.form-control').each(function(){
+				element = $(this).serializeJSON();
+				$.extend(true,address,element);
+			});
+			var tid = setTimeout(function(){
+		        submit($(parent),data);
+		    }, 3000);
+
+		    $(parent).data('tid', tid);
+		} else {
+			data[$(this).attr("name")]= $(this).val();
+			submit($(this),data);
+		}
+		
 	});
+	$('input').focus(function () {
+	    var $parent = $(this).closest('div');
+	    var timeoutId = $parent.data('tid');
+
+	    if (timeoutId) {
+	        // Aborting the blur
+	        clearTimeout(timeoutId);
+	    }
+
+	    $parent.addClass('focused');
+	}).blur(function () {
+	    var $parent = $(this).closest('div');
+
+	    var tid = setTimeout(function(){
+	        $parent.removeClass('focused');
+	    }, 1);
+
+	    $parent.data('tid', tid);
+	})
 	$(document.body).on("keyup", '.countable',function(){
 		var val = parseInt(characterCount($(this).val()));
 		$(this).siblings('#js-count-'+$(this).attr("name")).find("span").text($(this).attr("maxlength")-val);

@@ -14,6 +14,7 @@
 //= require jquery
 //= require jquery-ui/autocomplete
 //= require jquery_ujs
+//= require jquery.serializejson
 //= require jasny-fileinput
 //= require gmaps-auto-complete
 //= require jquery.browser

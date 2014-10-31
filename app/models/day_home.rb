@@ -158,9 +158,9 @@ class DayHome < ActiveRecord::Base
     #{}"#{street1}#{street2}, #{city}, #{province}, #{postal_code}"
   end
   
-  def to_param
-    "#{id}-#{name.parameterize}"
-  end
+  # def to_param
+  #   "#{id}-#{name.parameterize}"
+  # end
   
   def assign_availability_type_ids=(availability_type_id_attrs=[])
     self.day_home_availability_types = []

@@ -41,6 +41,8 @@ Dayhomes::Application.routes.draw do
         end
         post 'setLocation'
     end
+    # default route
+    get ':province/:community/:dayhome_id', to:"dayhomes#show", as:"dayhome_by_location"
   end
 
   # Old Billing Routes
