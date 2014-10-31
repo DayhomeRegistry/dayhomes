@@ -48,7 +48,7 @@
                           %td
                             = day_home.location.name
                           %td
-                            = link_to day_home.name, day_home
+                            = link_to day_home.name, beta_dayhome_path(day_home)
                           %td
                             = day_home.address
                           %td
@@ -60,11 +60,11 @@
                           %td
                             = yes_no(day_home.featured?)
                           %td
-                            = link_to 'Edit', [:edit, day_home]
+                            = link_to 'Edit', beta_dayhome_overview_path(day_home)
                             |
-                            = link_to 'Delete', day_home, :method => :delete, :confirm => "Are you sure?"    
+                            = link_to 'Delete', beta_dayhome_path(day_home), :method => :delete, :confirm => "Are you sure?"    
                             |
-                            = link_to('Calendar', "/day_homes/#{day_home.id}/calendar")
+                            = link_to('Calendar', "/beta/dayhomes/#{day_home.id}/calendar")
           .panel-footer
             .row
               .col-md-12.text-center

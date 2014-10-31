@@ -81,6 +81,11 @@ class DayhomesController < ApplicationController
     end
   end
 
+  def show
+    @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
+    
+  end
+
   # Dayhome actions from single layout
   def overview
     @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
