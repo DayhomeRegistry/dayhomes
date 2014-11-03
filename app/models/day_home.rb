@@ -87,7 +87,16 @@ class DayHome < ActiveRecord::Base
   # it won't make a call to google maps if we already have a lat long however,
     # this method seems to be ignored on update
   def prevent_geocoding
-    (!lat.blank? && !lng.blank?)
+    if (self.street1_changed? || 
+        self.street2_changed? ||
+        self.city_changed? ||
+        self.postal_code_changed? ||
+        self.province_changed?) 
+      false #don't prevent the geocoding
+    else 
+      (!lat.blank? && !lng.blank?)
+    end
+    
   end
 
   # return a unique string array of availability

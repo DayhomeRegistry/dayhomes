@@ -141,19 +141,31 @@ $(document).ready(function(){
 		};
 		resetSavingStatus();
 		$('.js-saving-progress h5').show();
-		$.ajax(params)
+		var ajax = $.ajax(params)
 			.then(function(data) {
 				setSavingStatus(data);
+				if(!(Object.prototype.toString.call(data.data) === '[object Array]')) {
+					for(var key in data.data) {
+						if (data.data.hasOwnProperty(key)) {
+					        $element.data(key,data.data[key]);
+					    }
+					}
+					// data.data.each(function(index){
+					// 	$element.data(data.data.keys[index],data.data[index]);
+					// });
+				}
 			})
 			.fail(function(data){
 				setSavingStatus({errors: data.statusText});
 			});
+		return ajax;
 	}
 	$(document.body).on("change", 'input.form-control,textarea.form-control',function(){
 		var parent = $(this).parents('.js-submit-group')[0];
-		
+		var rootElement = $(this);
 		var data = {};
 		if(parent) {
+			rootElement = $(parent);
 			var timeoutId = $(parent).data('tid');
 			if(timeoutId) {
 				//we've changed something else since the timer was set, clear it
@@ -166,35 +178,19 @@ $(document).ready(function(){
 				$.extend(true,address,element);
 			});
 			var tid = setTimeout(function(){
-		        submit($(parent),data);
+		        submit($(parent),data).then(function(){
+		        	rootElement.trigger("ajax.submit.complete");
+		        });
 		    }, 3000);
 
 		    $(parent).data('tid', tid);
 		} else {
 			data[$(this).attr("name")]= $(this).val();
 			submit($(this),data);
+			rootElement.trigger("ajax.submit.complete");
 		}
 		
 	});
-	$('input').focus(function () {
-	    var $parent = $(this).closest('div');
-	    var timeoutId = $parent.data('tid');
-
-	    if (timeoutId) {
-	        // Aborting the blur
-	        clearTimeout(timeoutId);
-	    }
-
-	    $parent.addClass('focused');
-	}).blur(function () {
-	    var $parent = $(this).closest('div');
-
-	    var tid = setTimeout(function(){
-	        $parent.removeClass('focused');
-	    }, 1);
-
-	    $parent.data('tid', tid);
-	})
 	$(document.body).on("keyup", '.countable',function(){
 		var val = parseInt(characterCount($(this).val()));
 		$(this).siblings('#js-count-'+$(this).attr("name")).find("span").text($(this).attr("maxlength")-val);
@@ -202,5 +198,16 @@ $(document).ready(function(){
 	$('#js-write-more').on("click",function(){
 		$('.more').hide();
 		$('#tooltip-help-description').show();
+	});
+
+	$('#location-form').on('ajax.submit.complete', function(){
+		//update the static map
+		if($(this).data("lat")&&$(this).data("lng")) {
+			lat=$(this).data("lat");//47.5675 //53.520901
+			lng=$(this).data("lng");//-52.7072 //-113.450577
+			src = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zoom=15&size=205x205&maptype=roadmap&key=AIzaSyA1mRvzQVdwJ8k-Z7SI_iDL4utyGdDB3EA"
+			$('#static-map').attr('src',src);
+		}
+		
 	});
 });

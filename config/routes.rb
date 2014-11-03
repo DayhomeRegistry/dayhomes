@@ -39,7 +39,7 @@ Dayhomes::Application.routes.draw do
           post 'setDefaultPhoto', to:"dayhomes#setDefaultPhoto"
           post 'setCaption', to:"dayhomes#setCaption"
         end
-        post 'setLocation'
+        post 'setAddress'
     end
     # default route
     get ':province/:community/:dayhome_id', to:"dayhomes#show", as:"dayhome_by_location"

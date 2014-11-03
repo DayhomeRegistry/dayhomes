@@ -4,8 +4,8 @@
     %p.text-muted
       Your address and phone number so we know where you are and how to get a hold of you.
   .col-xs-12.col-md-8
-    = simple_form_for(@dayhome, :url => beta_dayhome_setLocation_path(@dayhome), :html => { :method => :post , :class=>"form-horizontal"}) do |f| 
-      .js-submit-group{data:{url:"/setAddress"}}
+    = simple_form_for(@dayhome, :url => beta_dayhome_setAddress_path(@dayhome), :html => { :method => :post , :class=>"form-horizontal"}) do |f| 
+      .js-submit-group#location-form{data:{url:"/setAddress"}}
         .form-group
           =f.label :street1,'Street Address', :class=>"control-label"         
           = f.text_field :street1, :class=>"form-control" , :placeholder=>"Enter your street address as it appears in google" 
@@ -43,6 +43,7 @@
         .row-space-1
           .media-photo{style:"position:relative;"}
             %i.public-map-overlay
-            %img{:height => "150", :width => "150", :src => "//maps.googleapis.com/maps/api/staticmap?center=53.520901, -113.450577&zoom=15&size=205x205&maptype=roadmap&sensor=false&style=undefined&key=AIzaSyA8dBXcpx7L0t_36KxQwxwxSX6F5ASthMQ"}/
+            %img#static-map{:height => "150", :width => "150", :src => "https://maps.googleapis.com/maps/api/staticmap?center=#{@dayhome.lat},%20#{@dayhome.lng}&zoom=15&size=205x205&maptype=roadmap&key=AIzaSyA1mRvzQVdwJ8k-Z7SI_iDL4utyGdDB3EA"}
+            /"https://maps.googleapis.com/maps/api/staticmap?center=53.520901,%20-113.450577&zoom=15&size=205x205&maptype=roadmap&key=AIzaSyA1mRvzQVdwJ8k-Z7SI_iDL4utyGdDB3EA"}/
         %p
           This is how your location appears on your page.

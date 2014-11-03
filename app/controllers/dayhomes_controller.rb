@@ -203,9 +203,21 @@ class DayhomesController < ApplicationController
     photo.save
     ajax_response("saving description",photo,request.format)
   end
+  def setAddress
+    dayhome = DayHome.find_by(id: params[:dayhome_id])
+    address = params[:address][:day_home]
+    dayhome.street1 = address[:street1]
+    dayhome.street2 = address[:street2]
+    dayhome.city = address[:city]
+    dayhome.province = address[:province]
+    dayhome.postal_code = address[:postal_code]
+    dayhome.save
+    ajax_response("saving address",dayhome,request.format, {lat: dayhome.lat, lng:dayhome.lng})
+  end
 
   private
-  def ajax_response(field_name, resource, format) 
+  def ajax_response(field_name, resource, format, data=[]) 
+    #byebug
     if(resource.errors.full_messages.length>0)
       respond_to do |format|
         format.html {raise "AJAX only! "+"Error " + field_name + ": " + resource.errors.full_messages.join(', ')}
@@ -217,13 +229,12 @@ class DayhomesController < ApplicationController
       respond_to do |format| 
         format.html {raise "AJAX only! "}
         format.js {
-          return render :json => {:success => true}
+          return render :json => {:success => true, :data=>data}
         }
       end
     end
   end
   def ajax_rescue(e) 
-    byebug
     respond_to do |format|
         format.html {
           if(!e.message.nil?)
