@@ -1,0 +1,8 @@
+-if spree_current_user
+  %li
+    = link_to Spree.t(:logout), spree_logout_path, :method => :delete 
+-else
+  %li
+    = link_to Spree.t(:login), spree_login_path 
+  %li
+    = link_to Spree.t(:signup), spree_signup_path 

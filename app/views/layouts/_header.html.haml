@@ -20,19 +20,19 @@
       =image_tag ('logo-white-background.png')
   #nav
     %ul.left
-      - if request.path != pages_path
+      - if request.path != '/'
         %li
-          = link_to 'Home', pages_path
+          = link_to 'Home', '/'
       %li
-        = link_to 'About Us', about_pages_path
+        = link_to 'About Us', main_app.about_pages_path
       %li
         = link_to 'Blog', "http://blog.dayhomeregistry.com"
       %li
-        = link_to 'Shop', "http://shop.dayhomeregistry.com"
+        = link_to 'Shop', "/shop"
       -if current_user 
         -if !current_user.admin? && current_user.organization_admin? 
           %li
-            %a{:href => billing_options_path(), :class=>"blue"}
+            %a{:href => main_app.billing_options_path(), :class=>"blue"}
               Upgrade  
       -else    
         %li
@@ -40,39 +40,40 @@
     %ul.right
       -if current_user && !current_user.organization.nil? && current_user.organization_admin?
         %li
-          = link_to 'Overview', organization_path(current_user.organization)
+          = link_to 'Overview', main_app.organization_path(current_user.organization)
         -if current_user.organization.max_users>1
           %li
-            = link_to 'People', users_path
+            = link_to 'People', main_app.users_path
         -else
           %li
-            = link_to 'My Account', user_path(current_user)
+            = link_to 'My Account', main_app.user_path(current_user)
         - if current_user.organization.max_dayhomes>1 || current_user.organization.day_homes.count==0
           %li
-            = link_to 'Day Homes', day_homes_path
+            = link_to 'Day Homes', main_app.day_homes_path
         - else
           %li
-            = link_to 'My Dayhome', edit_day_home_path(current_user.organization.day_homes.first)
+            = link_to 'My Dayhome', main_app.edit_day_home_path(current_user.organization.day_homes.first)
         %li
-          %a{:href => billing_extras_path()}
+          %a{:href => main_app.billing_extras_path()}
             Buy Extras    
         %li
-          = link_to 'Logout', logout_path
+          = link_to 'Logout', main_app.logout_path, :method=>:delete
       -elsif current_user && current_user.admin?
         %li
-          = link_to 'People', [:admin, :users]
+          = link_to 'People', main_app.admin_users_path() 
         %li
-          = link_to 'DayHomes', [:admin, :day_homes]
+          = link_to 'DayHomes', main_app.admin_day_homes_path()
         %li
-          = link_to 'Manage Organizations', [:admin, :organizations]
+          = link_to 'Manage Organizations', main_app.admin_organizations_path()
         %li
-          = link_to 'Logout', logout_path 
+          = link_to 'Logout', main_app.logout_path , :method=>:delete
+          /= button_to 'Logout', logout_path, method: 'delete'
       -elsif current_user
         %li
-          = link_to 'Logout', logout_path 
+          = link_to 'Logout', main_app.logout_path , :method=>:delete
       - else
         %li
-          = link_to 'Login', login_path
+          = link_to 'Login', main_app.login_path
     .clear
   #charm
     

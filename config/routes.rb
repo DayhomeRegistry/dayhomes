@@ -1,14 +1,33 @@
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.irregular 'beta', 'beta'
+end
 Dayhomes::Application.routes.draw do
-  devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", sessions: 'sessions', registrations: 'registrations' }
+  mount Spree::Core::Engine, :at => '/shop'
+  
   as :user do
     get "/login" => "devise/sessions#new"
   end
   devise_scope :user do
-    get "/logout" => "devise/sessions#destroy"
+    get '/login', :to => "devise/sessions#new"
+    get '/signup', :to => "devise/registrations#new"
+    delete '/logout', :to => "devise/sessions#destroy"
   end
-  #get "organization/edit"
+  get '/beta/list', :to=>"beta#list"
+  get '/beta/dashboard', to: "beta#dashboard"
+  #post '/beta/new', :to=>"beta#new", :as=>"new_beta"
+  resources :beta #, :except=>['new']
 
-  #get "organization/show"
+#     betum_list GET    /beta/:betum_id/list(.:format) beta#list
+#       beta GET    /beta(.:format)                beta#index
+#            POST   /beta(.:format)                beta#create
+#  new_betum GET    /beta/new(.:format)            beta#new
+# edit_betum GET    /beta/:id/edit(.:format)       beta#edit
+#      betum GET    /beta/:id(.:format)            beta#show
+#            PATCH  /beta/:id(.:format)            beta#update
+#            PUT    /beta/:id(.:format)            beta#update
+#            DELETE /beta/:id(.:format)            beta#destroy
+
 
   get "billing/signup"
   put "billing/register"

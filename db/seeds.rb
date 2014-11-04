@@ -20,3 +20,6 @@ AvailabilityType.create!({:availability => 'Part-time', :kind => 'Before School'
 
 # create Privacy policy 
 PrivacyPolicy.create!({:effective_date=> Time.now, :version=>"1.0"})
+
+Spree::Core::Engine.load_seed if defined?(Spree::Core)
+Spree::Auth::Engine.load_seed if defined?(Spree::Auth)

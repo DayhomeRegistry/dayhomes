@@ -1,0 +1,42 @@
+// Bootstrap - Core CSS
+@import "../bootstrap/code";
+@import "../bootstrap/grid";
+@import "../bootstrap/tables";
+@import "../bootstrap/forms";
+@import "../bootstrap/buttons";
+
+// Our stuff
+.page-container:before, .page-container:after {
+	content: " ";
+	display: table;
+}
+.page-container {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 25px;
+	padding-right: 25px;
+	width: 1045px;
+
+	font-size: 14px;
+	line-height: 1.43;
+	color: #565A5C;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+header .medium-right-margin {
+  	margin-right: 20px;
+}
+header .nav ul {
+	margin-bottom: 0;
+}
+header .nav li {
+  	line-height: 28px;
+}
+.subnav:before, .subnav:after {
+	content: " ";
+	display: table;
+}
+.subnav:after {
+	clear: both;
+}

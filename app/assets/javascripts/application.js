@@ -12,14 +12,15 @@
 //
 
 //= require jquery
+//= require jquery-ui/autocomplete
 //= require jquery_ujs
+//= require gmaps-auto-complete
 //= require jquery.browser
 //= require bootstrap
 //= require fullcalendar
 //= require_tree ./gmaps4rails
 //= require jquery.add_more
 //= require jquery.colorbox
-//= require jquery.modal
 //= require jquery.rest
 //= require jquery-star-rating
 //= require jquery.cycle.lite
@@ -41,4 +42,16 @@ window.numbersonly2=integersonly;
 window.roundFloat2=roundFloat2;
 $(document).ready(function(){
 	$('.icon-info-sign').popover() ;
+
+	$('a[data-popup]').on('click', function(e) { 
+	    window.open($(this).attr('href'), "Sign in",  "width=640,height=480"); 
+	    e.preventDefault(); 
+	}); 
+
+	//Do call back from facebook auth
+	if(window.opener && (window.opener.$('#signupPage').filter(':visible')||window.opener.$('#signinPage').filter(':visible'))) {
+		window.opener.goNext();
+		window.close();
+
+	}
 });

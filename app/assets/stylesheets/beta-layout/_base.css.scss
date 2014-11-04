@@ -1,0 +1,46 @@
+// Variable adjustments
+$brand-primary:         #52BE60 !default;
+$brand-success:         #52BE60 !default;
+$brand-info:            #23affa !default;
+$brand-warning:         #f08816 !default;
+$brand-danger:          #d9534f !default;
+
+$green: #52BE60;
+$yellow: #f0df73;
+$red: #FE1A00;
+$blue: #23affa;
+$light-grey: #e3e3e3;
+$dark-grey: #798e94;
+
+$font-family-sans-serif:  Circular, "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+
+// Bootstrap - Core variables and mixins
+@import "../bootstrap/variables";
+@import "../bootstrap/mixins";
+
+// Bootstrap - Reset and dependencies
+@import "../bootstrap/normalize";
+@import "../bootstrap/print";
+@import "../bootstrap/glyphicons";
+
+// Bootstrap - Core
+@import "../bootstrap/scaffolding";
+@import "../bootstrap/type";
+
+// Dayhome Registry
+body {
+	font-family: $font-family-base;
+}
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.no-left-gutter {
+	margin-left: -15px;
+}
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+	position: static;
+	margin-left: 0;
+}

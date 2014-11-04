@@ -19,9 +19,8 @@ class User < ActiveRecord::Base
     end
   end
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid
-  #acts_as_authentic
-  #validates_presence_of :first_name, :last_name
+  #attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid
+
 
   has_many :reviews
   has_many :user_day_homes, :dependent => :destroy
@@ -123,5 +122,10 @@ class User < ActiveRecord::Base
 
     def confirmation_required?
         false
+    end
+
+  private
+    def user_params
+      params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid)
     end
 end

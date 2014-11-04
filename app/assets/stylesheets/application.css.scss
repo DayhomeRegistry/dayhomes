@@ -11,13 +11,13 @@
  *= require normalize
  *= require_self
  *= require jquery-star-rating
- *= require jquery.modal
  *= require searches
  *= require pricing
  *= require billing
  *= require organization
  *= require dayhomes
  *= require slides
+ *= require jquery-ui/autocomplete
 
  *= require gmaps4rails
  *= require searches
@@ -149,6 +149,12 @@ header {
   a:hover {
     border-top: 2px solid $dark-grey;
   }
+
+  .button_to div {
+    overflow:visible;
+    height:18px;
+  }
+
 }
 .searchWrapper {
   margin-top: -.2em;
