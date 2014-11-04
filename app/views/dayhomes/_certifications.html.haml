@@ -2,11 +2,15 @@
   .col-xs-12.col-md-4
     %h3 Certifications
     %p.text-muted
-      Tell parents what you know.
+      Tell parents what you know. Check all that apply.
   .col-xs-12.col-md-8
-    .row
-      .col-xs-12.col-md-12
-        Something goes here
+    = simple_form_for(@dayhome, :url => beta_dayhome_setAddress_path(@dayhome), :html => { :method => :post , :class=>"form-horizontal"}) do |f| 
+      .js-submit-group#certifications-form{data:{url:"/setCertifications"}}
+        - CertificationType.all.each do |certification|
+          .form-group
+            = f.label certification.kind, :class => :checkbox do 
+              = check_box_tag 'day_home[assign_certification_type_ids]['+certification.id.to_s+']', certification.id, @dayhome.certification_type_ids.include?(certification.id), class: 'checkbox-control'
+              = certification.kind
 .row.text-center.row-space-top-2
   .col-xs-12.col-sm-6.col-md-6
     %a{href:beta_dayhome_location_path()}

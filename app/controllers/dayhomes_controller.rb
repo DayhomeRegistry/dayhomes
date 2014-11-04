@@ -205,7 +205,7 @@ class DayhomesController < ApplicationController
   end
   def setAddress
     dayhome = DayHome.find_by(id: params[:dayhome_id])
-    address = params[:address][:day_home]
+    address = params[:form][:day_home]
     dayhome.street1 = address[:street1]
     dayhome.street2 = address[:street2]
     dayhome.city = address[:city]
@@ -213,6 +213,14 @@ class DayhomesController < ApplicationController
     dayhome.postal_code = address[:postal_code]
     dayhome.save
     ajax_response("saving address",dayhome,request.format, {lat: dayhome.lat, lng:dayhome.lng})
+  end
+  def setCertifications
+    byebug
+    dayhome = DayHome.find_by(id: params[:dayhome_id])
+    form_params = params[:form]
+    dayhome.update_attributes(form_params[:day_home].permit(:assign_certification_type_ids))
+    dayhome.save
+    ajax_response("saving certifications",dayhome,request.format, {})
   end
 
   private

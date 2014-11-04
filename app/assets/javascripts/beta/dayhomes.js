@@ -160,7 +160,7 @@ $(document).ready(function(){
 			});
 		return ajax;
 	}
-	$(document.body).on("change", 'input.form-control,textarea.form-control',function(){
+	$(document.body).on("change", 'input.form-control,textarea.form-control, .form-group .checkbox-control',function(){
 		var parent = $(this).parents('.js-submit-group')[0];
 		var rootElement = $(this);
 		var data = {};
@@ -171,11 +171,19 @@ $(document).ready(function(){
 				//we've changed something else since the timer was set, clear it
 				clearTimeout(timeoutId);
 			}
-			data["address"]={}
-			address = data["address"]
-			$(parent).find('input.form-control, textarea.form-control').each(function(){
+			data["form"]={};
+			form_data = data["form"];
+			//Checkboxes just have to be special
+			// // var checkbox_list = [];
+			// // $(parent).find('.form-group .checkbox-control').each(function(){
+			// // 	checkbox_list.push($(this).value);
+			// // });
+			// // day_home={}
+			// // day_home["assign_certification_type_ids"]
+			// $.extend(true,form_data,checkbox_list.serializeJSON)
+			$(parent).find('input.form-control, textarea.form-control, .form-group .checkbox-control').each(function(){
 				element = $(this).serializeJSON();
-				$.extend(true,address,element);
+				$.extend(true,form_data,element);
 			});
 			var tid = setTimeout(function(){
 		        submit($(parent),data).then(function(){
