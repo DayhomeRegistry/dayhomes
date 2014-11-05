@@ -509,3 +509,37 @@ legend.image-legend {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
 	filter: alpha(opacity=25);
 }
+label.checkbox {
+	font-weight: normal;
+}
+input[type="checkbox"] {
+	border: 1px solid #C4C4C4;
+	border-radius: 2px;
+	background-color: #FFF;
+	color: #565A5C;
+	box-sizing: border-box;
+	padding: 0;
+}
+input[type="checkbox"] {
+	position: relative;
+	-webkit-appearance: none;
+	height: 1.25em;
+	width: 1.25em;
+	margin-bottom: -0.25em;
+	margin-right: 5px;
+	vertical-align: top;
+}
+input[type="checkbox"]:checked:before {
+	content: "\2713";
+	position: absolute;
+	left: 1px;
+	width: 1.25em;
+	color: #52BE60;
+	top: -2px;
+}
+hr {
+	/*Override bootstrap scaffolding*/
+	margin-top: 10px;
+  	margin-bottom: 10px;
+  	border-top: 1px solid $dark-grey; 
+}

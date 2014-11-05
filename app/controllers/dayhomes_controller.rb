@@ -215,7 +215,6 @@ class DayhomesController < ApplicationController
     ajax_response("saving address",dayhome,request.format, {lat: dayhome.lat, lng:dayhome.lng})
   end
   def setCertifications
-    byebug
     dayhome = DayHome.find_by(id: params[:dayhome_id])
     form_params = params[:form]
     dayhome.update_attributes(form_params[:day_home].permit(:assign_certification_type_ids))

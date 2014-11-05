@@ -9,8 +9,7 @@
         - @photo = photo
         .col-lg-4.col-sm-6.col-xs-12.photo-wrapper
           =render partial: "photo"
-    .row.row-space-top-3
-      .col-lg-11.col-sm-11.col-xs-11.col-lg-offset-1.col-sm-offset-1.col-xs-offset-1
+      .col-lg-4.col-sm-6.col-xs-12.photo-wrapper
         .fileinput.fileinput-new{"data-provides" => "fileinput"}
           .fileinput-preview.thumbnail{"data-trigger" => "fileinput", :placeholder=>"Upload image", :style => "width: 200px; height: 150px;"}
             Upload image
@@ -20,6 +19,10 @@
               %span.fileinput-exists Change
               %input{:name => "...", :type => "file"}/
             %a.btn.btn-default.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"} Remove
+%hr.section-divider
+%p.text-center
+  This dayhome may qualify for free professional photography. 
+  %a{:href => "#"} Apply Now
 .row.text-center.row-space-top-2
   .col-xs-12.col-sm-6.col-md-6
     %a{href:beta_dayhome_overview_path()}
