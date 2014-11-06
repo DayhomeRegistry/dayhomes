@@ -4,6 +4,15 @@
     %p.text-muted
       Start with our basic <i>Baby Bear</i> plan, and upgrade for more features.
   .col-xs-12.col-md-8
+    -if @dayhome.organization.plan =="baby"
+      =@dayhome.organization.plan
+    -else 
+      %p
+        You don't have a plan, off to the shop with you to pick one.
+      %p
+        %a{href: '/shop/recurring/plans'}
+          %button#js-list-space-button.animated.btn.btn-large.btn-special.btn-primary
+            Add a plan
 .row.text-center.row-space-top-2
   .col-xs-12.col-sm-6.col-md-6
     %a{href:beta_dayhome_spots_path()}

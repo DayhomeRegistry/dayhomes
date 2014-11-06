@@ -10,10 +10,10 @@ class RegistrationsController < Devise::RegistrationsController
         set_flash_message :notice, :signed_up if is_flashing_format?
         sign_up(resource_name, resource)
         authenticate_scope!
-        if params["user_profile_info"]["receive_promotional_email"]=="1"
-          # Make a call to mailchimp
-          # TODO
-        end
+        # if params["user_profile_info"]["receive_promotional_email"]=="1"
+        #   # Make a call to mailchimp
+        #   # TODO
+        # end
         if request.format.symbol.to_s=="js"
           return render :json => {:success => true}
         else

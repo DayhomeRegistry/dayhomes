@@ -63,6 +63,19 @@ GIT
       spree_core (= 2.3.5.beta)
 
 GIT
+  remote: https://github.com/spree/spree_auth_devise.git
+  revision: 77e167f209d08a7da65b9e98b3cc1df269e0b084
+  branch: 2-3-stable
+  specs:
+    spree_auth_devise (2.2.0)
+      cancan (~> 1.6.10)
+      devise (~> 3.2.3)
+      devise-encryptable (= 0.1.2)
+      json
+      multi_json
+      spree_core (~> 2.3.0)
+
+GIT
   remote: https://github.com/spree/spree_gateway.git
   revision: 63df5cfc6c5768bf8ef0ebd71f0db0febaf5bf18
   branch: 2-3-stable
@@ -130,6 +143,7 @@ GEM
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
+    cancan (1.6.10)
     cancancan (1.9.2)
     canonical-rails (0.0.7)
       rails (>= 3.1, < 5.0)
@@ -192,6 +206,8 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-encryptable (0.1.2)
+      devise (>= 2.1.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
@@ -397,10 +413,6 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    rb-kqueue (0.2.0)
-      ffi (>= 0.5.0)
-    rdoc (3.12.2)
-      json (~> 1.4)
     redcarpet (2.2.2)
     ref (1.0.5)
     rest-client (1.7.2)
@@ -456,6 +468,9 @@ GEM
       json (~> 1.8.1)
       mime-types (>= 1.25, < 3.0)
       rest-client (~> 1.4)
+    stripe_event (1.4.0)
+      activesupport (>= 3.1)
+      stripe (~> 1.6)
     subexec (0.2.3)
     sushi (0.0.4)
     therubyracer (0.12.1)
@@ -548,8 +563,10 @@ DEPENDENCIES
   simple_form (~> 3)
   spork (~> 1.0rc)
   spree!
+  spree_auth_devise!
   spree_gateway!
   stripe
+  stripe_event
   therubyracer
   thin (~> 1.5)
   uglifier

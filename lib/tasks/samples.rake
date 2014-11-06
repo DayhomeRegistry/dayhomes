@@ -237,6 +237,7 @@ namespace :db do
 
     #   # Create Default Admin User
     #   admin_user = User.create!({:email => 'dayadmin@dayhomeregistry.com', :password => 'day4admin', :password_confirmation => 'day4admin', :first_name => 'DayHome', :last_name => 'Admin', :admin => true})
+    #   admin_user.spree_roles << Spree::Role.find_or_create_by(name: "admin")
     #   user0 = User.create!({:email => 'test0@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Marty', :last_name => 'Bristow', :admin => false})
     #   user1 = User.create!({:email => 'test1@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Lestor', :last_name => 'Hart', :admin => false})
     #   user2 = User.create!({:email => 'test2@test.com', :password => 'pass@word1', :password_confirmation => 'pass@word1', :first_name => 'Betty', :last_name => 'Williams', :admin => false})

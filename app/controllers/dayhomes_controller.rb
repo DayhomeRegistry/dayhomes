@@ -212,6 +212,10 @@ class DayhomesController < ApplicationController
     dayhome.province = address[:province]
     dayhome.postal_code = address[:postal_code]
     dayhome.save
+
+    # TODO
+    # Need to add a spree customer address!
+
     ajax_response("saving address",dayhome,request.format, {lat: dayhome.lat, lng:dayhome.lng})
   end
   def setCertifications
