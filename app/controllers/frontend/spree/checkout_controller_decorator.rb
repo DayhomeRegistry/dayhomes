@@ -16,6 +16,26 @@ Spree::CheckoutController.class_eval do
       render 'registration'
     end
   end
+  # Override to set the address
+  def before_address
+    #byebug
+    # if the user has a default address, a callback takes care of setting
+    # that; but if he doesn't, we need to build an empty one here
+    if(@order.bill_address.nil?)
+      address = Spree::Address.build_default
+      if(current_user)
+        address.first_name = current_user.first_name
+        address.last_name = current_user.last_name
+
+        if(current_user.location)
+          org = current_user.location.organization
+          address.address1=org.street1
+        end
+      end
+      @order.bill_address ||= address
+      @order.ship_address ||= address if @order.checkout_steps.include?('delivery') 
+    end
+  end
 
   private
     def order_params
@@ -39,7 +59,8 @@ Spree::CheckoutController.class_eval do
       #return unless Spree::Auth::Config[:registration_step]
       return if current_user or current_order.email
       store_location
-      redirect_to main_app.new_user_registration_path()#spree.checkout_registration_path
+      store_order
+      redirect_to spree_signup_path#spree.checkout_registration_path
     end
 
     # Overrides the equivalent method defined in Spree::Core.  This variation of the method will ensure that users
@@ -47,5 +68,11 @@ Spree::CheckoutController.class_eval do
     def completion_route
       return order_path(@order) if spree_current_user
       spree.token_order_path(@order, @order.guest_token)
+    end
+
+    def store_order
+      if(current_order)
+        session['spree_guest_order_number'] = current_order.number
+      end
     end
 end

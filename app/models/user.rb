@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Spree::UserAddress
+  include Spree::UserPaymentSource
 
   devise :database_authenticatable, :registerable, :recoverable,:rememberable, :trackable, :validatable, 
          :confirmable, :lockable, :timeoutable, :omniauthable, :omniauth_providers => [:facebook]
@@ -35,6 +37,12 @@ class User < ActiveRecord::Base
 
   has_many :topics, :dependent => :destroy
   has_many :posts, :dependent => :destroy
+
+
+  # Spree
+  has_many :orders, foreign_key: "user_id", class_name: "Spree::Order"
+  before_destroy :check_completed_orders
+
 
 
   
@@ -117,6 +125,17 @@ class User < ActiveRecord::Base
     end
   end
 
+  # This is an override for Spree
+  def bill_address 
+    address = Spree::Address.new
+    address.first_name = self.first_name
+    address.last_name = self.last_name
+    if(self.location)
+      org = current_user.location.organization
+      address.street1 = org.street1
+    end
+    return address
+  end
 
   protected
 
@@ -127,5 +146,9 @@ class User < ActiveRecord::Base
   private
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid)
+    end
+
+    def check_completed_orders
+      raise Spree::Core::DestroyWithOrdersError if orders.complete.present?
     end
 end

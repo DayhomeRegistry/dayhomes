@@ -1,7 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
-    byebug
     build_resource(sign_up_params)
 
     if resource.save
@@ -17,7 +16,18 @@ class RegistrationsController < Devise::RegistrationsController
         if request.format.symbol.to_s=="js"
           return render :json => {:success => true}
         else
-          return respond_with resource, location: after_sign_up_path_for(resource)
+          if(session["spree_user_return_to"])
+            spree_user_return_to = session["spree_user_return_to"]
+            session["spree_user_return_to"] = nil
+
+            order = Spree::Order.incomplete.find_by(number: session["spree_guest_order_number"])
+            order.associate_user!(current_user) if order.user.blank? || order.email.blank?
+            session["spree_guest_order_number"] = nil
+
+            return redirect_to(spree_user_return_to)
+          else
+            return respond_with resource, location: after_sign_up_path_for(resource)
+          end
         end      
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
@@ -37,6 +47,14 @@ class RegistrationsController < Devise::RegistrationsController
         return respond_with resource
       end
     end
+  end
+
+  private
+
+  def redirect_back_or_default(default)
+    byebug
+    redirect_to(session["spree_user_return_to"] || default)
+    session["spree_user_return_to"] = nil
   end
   
 end
