@@ -24,7 +24,10 @@
     %div
       Operated by:
     %div
-      =image_tag(dayhome.organization.logo.photo_url(:thumb))
+      -if dayhome.organization.logo
+        =image_tag(dayhome.organization.logo.photo_url(:thumb))
+      -else
+        =dayhome.organization.name
     .markdown
       -if !dayhome.organization.blurb.blank?
         = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true).render(dayhome.organization.blurb).html_safe
