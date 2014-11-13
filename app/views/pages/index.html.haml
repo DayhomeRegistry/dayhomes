@@ -31,7 +31,7 @@
           Parent Newsletter
         %p
           Get recipes, tips for kids and info on our newest dayhomes.
-        = form_tag('http://dayhomeregistry.us7.list-manage.com/subscribe/post?u=cde938b38d19f459bce32538b&amp;id=31701e2e10',:method=>:post,:target=>:_blank) do
+        = form_tag('https://dayhomeregistry.us7.list-manage.com/subscribe/post?u=cde938b38d19f459bce32538b&amp;id=31701e2e10',:method=>:post,:target=>:_blank) do
           = email_field_tag 'EMAIL','',:id=>'mail'
           = submit_tag "Subscribe", :id=>"subscribe",:class=>"btn slim"
       .span4
