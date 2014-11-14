@@ -1,5 +1,5 @@
 module Dayhomes
   class Application
-  	VERSION="3.6.10"
+  	VERSION="3.6.11"
   end
 end
