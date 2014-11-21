@@ -1,0 +1,42 @@
+%fieldset#payment{"data-hook" => ""}
+  %legend{:align => "center"}= Spree.t(:subscription_information)
+  %div{"data-hook" => "checkout_payment_step"}
+    - if @payment_sources.present?
+      .card_options
+        = radio_button_tag 'use_existing_card', 'yes', true
+        %label{:for => "use_existing_card_yes"} Use an existing card on file
+        %br/
+        = radio_button_tag 'use_existing_card', 'no'
+        %label{:for => "use_existing_card_no"} Use a new card / payment method
+      #existing_cards
+        %p.field{"data-hook" => "existing_cards"}
+        %table.existing-credit-card-list
+          %tbody
+            - @payment_sources.each do |card|
+              %tr{:class => cycle('even', 'odd'), :id => dom_id(card,'spree')}
+                %td= card.name
+                %td= card.display_number
+                %td= card.month
+                %td= card.year
+                %td
+                  = radio_button_tag "order[existing_card]", card.id, (card == @payment_sources.first), { class: "existing-cc-radio" }
+    #payment-method-fields{"data-hook" => ""}
+      - @order.available_payment_methods.each do |method|
+        %p
+          %label
+            = radio_button_tag "order[payments_attributes][][payment_method_id]", method.id, method == @order.available_payment_methods.first
+            = Spree.t(method.name, :scope => :payment_methods, :default => method.name)
+    %ul#payment-methods{"data-hook" => ""}
+      - @order.available_payment_methods.each do |method|
+        %li{:class => ('last' if method == @order.available_payment_methods.last), "data-hook" => "", :id => "payment_method_#{method.id}"}
+          %fieldset= render :partial => "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method }
+    %br{:style => "clear:both;"}/
+    %p.field{"data-hook" => "coupon_code"}
+      = form.label :coupon_code
+      %br/
+      = form.text_field :coupon_code
+%br.space/
+.form-buttons{"data-hook" => "buttons"}
+  = submit_tag Spree.t(:save_and_continue), :class => 'continue button primary'
+  :javascript
+    Spree.disableSaveOnClick();

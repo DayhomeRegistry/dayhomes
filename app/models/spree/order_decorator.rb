@@ -1,53 +1,3 @@
-Spree::Gateway::PayPalExpress.class_eval do
-	def subscribe(amount, express_checkout, gateway_options={})
-	  pp_details_request = provider.build_get_express_checkout_details({
-        :Token => express_checkout.token
-      })
-      pp_details_response = provider.get_express_checkout_details(pp_details_request)
-
-      pp_request = provider.build_create_recurring_payments_profile({
-	  	:CreateRecurringPaymentsProfileRequestDetails => {
-	  		:Token => express_checkout.token,
-          	:PayerID => express_checkout.payer_id,
-          	#:PaymentDetails => pp_details_response.get_express_checkout_details_response_details.PaymentDetails
-          	:RecurringPaymentsProfileDetails => {
-				:BillingStartDate => (Date.today + 1.year).to_json 
-			},
-			:ScheduleDetails => {
-				:Description => "Dayhome Registry Annual Subscription",
-				:PaymentPeriod => {
-					:BillingPeriod => "Year",
-					:BillingFrequency => 1,
-					:Amount => {
-						:currencyID => "CAD",
-          				:value => "50" 
-          			} 
-          		} 
-          	} 
-	    } 
-	  })
-
-      pp_response = provider.create_recurring_payments_profile(pp_request)
-      if pp_response.success?
-        # We need to store the transaction id for the future.
-        # This is mainly so we can use it later on to refund the payment if the user wishes.
-        transaction_id = pp_response.do_express_checkout_payment_response_details.payment_info.first.transaction_id
-        express_checkout.update_column(:transaction_id, transaction_id)
-        # This is rather hackish, required for payment/processing handle_response code.
-        Class.new do
-          def success?; true; end
-          def authorization; nil; end
-        end.new
-      else
-        class << pp_response
-          def to_s
-            errors.map(&:long_message).join(" ")
-          end
-        end
-        pp_response
-      end
-	end
-end
 
 Spree::Order.class_eval do
 	def add_subscription
@@ -66,8 +16,61 @@ Spree::Order.class_eval do
 
 		end
 	end
-	remove_checkout_step :delivery
-	state_machine.after_transition :to => :complete, :do => :add_subscription
+	# remove_checkout_step :delivery
+	# insert_checkout_step :subscriptions, :before => :payment
+	checkout_flow do
+		go_to_state :address
+		go_to_state :subscriptions, if: ->(order) { order.has_subscription? }
+		go_to_state :payment, if: ->(order) { order.payment_required? }
+		go_to_state :confirm, if: ->(order) { order.confirmation_required? }
+		go_to_state :complete
+	end
+	
+	state_machine.before_transition to: :complete do |order|
+      if order.has_subscription? && order.payments.valid.empty?
+        order.errors.add(:base, Spree.t(:no_payment_found))
+        false
+      elsif order.has_subscription?
+        order.process_subscriptions!
+      end
+    end
+    
+    def process_subscriptions!
+    	byebug
+    	unprocessed_payments = payments.select { |payment| payment.checkout? }
+
+        # Don't run if there is nothing to pay.
+		return if payment_total >= total
+		# Prevent orders from transitioning to complete without a successfully processed payment.
+		raise Spree::Core::GatewayError.new(Spree.t(:no_payment_found)) if unprocessed_payments.empty?
+
+		unprocessed_payments.each do |payment|
+			byebug
+			break if payment_total >= total
+
+			payment.public_send(:subscribe!)
+
+			if payment.completed?
+			  self.payment_total += payment.amount
+			end
+		end
+    rescue Spree::Core::GatewayError => e
+      result = !!Spree::Config[:allow_checkout_on_gateway_error]
+      errors.add(:base, e.message) and return result
+	end
+
+	# Is this a free order in which case the payment step should be skipped
+    def payment_required?
+    	!self.has_subscription? # && super
+    end
+
+	def has_subscription?
+		has_subscription = false
+		self.line_items.each do |line_item|
+			has_subscription ||= line_item.variant.is_subscription?
+		end
+		has_subscription
+	end
  #  	checkout_flow do
 	#   # 	if(->(order){order.bill_address.nil?})
 	#   # 		go_to_state :address

@@ -5,3 +5,10 @@ en:
   errors:
     messages:
       email_format: "is not formatted properly"
+  spree:
+    subscribe: "Subscribe"
+    subscription_information: Subscription Information
+    order_state:
+      subscriptions: "Subscription"
+    order_populator:
+      subscriptions_must_be_purchsed_separately: ! 'Subscriptions must be purchased separately.'

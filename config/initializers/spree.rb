@@ -6,13 +6,12 @@
 # In order to initialize a setting do:
 # config.setting_name = 'new value'
 Spree.config do |config|
-  # Example:
-  # Uncomment to stop tracking inventory levels in the application
-  # config.track_inventory_levels = false
+
+  #config.always_include_confirm_step=true
 end
 
 Spree.user_class = "User"
 
 Rails.application.config.to_prepare do
-require_dependency 'spree/authentication_helpers'
+	require_dependency 'spree/authentication_helpers'
 end
