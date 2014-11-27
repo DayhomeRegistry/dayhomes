@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
-  before_filter :require_user
-  before_filter :require_user_to_be_organization_admin
+  before_filter :require_user, :except=>'show'
+  before_filter :require_user_to_be_organization_admin, :except=>'show'
   helper_method :sort_column, :sort_direction
   
   def show
