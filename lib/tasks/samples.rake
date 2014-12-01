@@ -29,12 +29,12 @@ namespace :db do
       edmonton = Community.find_by_name("Edmonton")
       edmonton = Community.create!({:name=>"Edmonton"}) unless !edmonton.nil?
       calgary = Community.find_by_name("Calgary")
-      calgary =  Community.create!({:name=>"Calgary"})
+      calgary =  Community.create!({:name=>"Calgary"}) unless !calgary.nil?
       fortmac = Community.find_by_name("Fort McMurray")
-      fortmac =  Community.create!({:name=>"Fort McMurray"})
+      fortmac =  Community.create!({:name=>"Fort McMurray"}) unless !fortmac.nil?
 
       # Vonn sample
-      org = Organization.create!({:name=>"Von Kids",:postal_code => 'T3G 1L4', :phone_number=>'866-280-6176',:street1 => '159 Ranch Estates Rd NW',:city=>'Calgary',:province=>'Alberta',:plan=>'papa'})
+      org = Organization.create!({:name=>"Von Creative Childcare Network",:postal_code => 'T3G 1L4', :phone_number=>'866-280-6176',:street1 => '159 Ranch Estates Rd NW',:city=>'Calgary',:province=>'Alberta',:plan=>'papa'})
       org.blurb = "[Von Creative](http://www.vonchildcarenetwork.com) is a unique, premium daytime experience offering:\n\n1. Full day curriculum\n1. No unexpected closures\n1. No screen time\n1. First aid / CPR qualified director\n1. Nutritious whole food only menu\n1. Daily outdoor time"
       agencyUser1 =User.find_by_email('peter@voncreative.com')
       if(agencyUser1.nil?)
@@ -74,12 +74,12 @@ namespace :db do
 
       fulltime_addresses = [
           #Splish Splash
-          {:postal_code => 'T2L 2G1', :street1 => 'Brisebois Drive NW and Northmount Drive NW-Preschool'},
-          {:postal_code => 'T3A 2G8', :street1 => 'Crowchild NW and 53rd NW'},
-          {:postal_code => 'T3A 2G8', :street1 => 'Crowchild NW and 53rd NW'},
-          {:postal_code => 'T3A 1A3', :street1 => 'Shaganappi Traile NW and varsity Drive NW'},
-          {:postal_code => 'T3L 2T2', :street1 => 'Tuscany Ravine Road NW and Tuscany Meadows Drive NW'},
-          {:postal_code => 'T3L 2T2', :street1 => 'Tuscany Ravine Road NW and Tuscany Meadows Drive NW'},
+          {:postal_code => 'T2L 1S9', :street1 => 'Bulyea Rd NW and Batchelor Crescent NW'},
+          {:postal_code => 'T3A 0P4', :street1 => 'Verona Drive NW and Vegas Way NW'},
+          {:postal_code => 'T3A 0M8', :street1 => 'Vance Place NW and 39th St NW'},
+          {:postal_code => 'T3A 0K4', :street1 => '44th avenue NW and 49th Avenue NW'},
+          {:postal_code => 'T3L 2X2', :street1 => 'Tuscany Ravine Crescent NW and Tuscany Ravine Rd NW'},
+          {:postal_code => 'T3L 2X4', :street1 => 'Tuscany Ravine Close NW and Tuscany Ravine Rd NW'},
 
           #Blossom
           {:postal_code => 'T3G 5W2', :street1 => 'Country Hills Blvd and Rocky Ridge Blvd'},
@@ -114,7 +114,33 @@ namespace :db do
           {:postal_code => 'T2M 0W1', :street1 => '10th Street and 18th Avenue NW'},
 
           #Neha
-          {:postal_code => 'T3L 3C2', :street1 => 'Tuscany Blvd and Tuscany Dr'}
+          {:postal_code => 'T3L 3C2', :street1 => 'Tuscany Blvd and Tuscany Dr'},
+
+          #Flower Pot Dayhomes
+          {:postal_code => 'T3H 0H6', :street1 => 'Aspen Hills Close SW and Aspen Hills Green SW'},
+          {:postal_code => 'T3H 0G6', :street1 => 'Aspen Hills Drive SW and Aspen Hills Manor SW'},
+          {:postal_code => 'T3H 5G6', :street1 => 'West Springs Close SW and West Springs SW'},
+
+          #Treehouse Academy
+          {:postal_code => 'T3B 0T6', :street1 => '44st street NW and 20th Ave NW'},
+          {:postal_code => 'T3B 1T2', :street1 => '71st street NW and 35th Ave NW'},
+          {:postal_code => 'T3G 3V2', :street1 => 'Citadel Gate NW and Citadel Drive NW'},
+
+          #Safari Dayhomes
+          {:postal_code => 'T3G 4W6', :street1 => 'Citadel Vista Close NW and Citadel Way NW'},
+
+          #AuroKids
+          {:postal_code => 'T3L 2G3', :street1 => 'Tuscany Springs Blvd NW and Tuscarora Crescent NW'},
+
+          #Regal Childcare
+          {:postal_code => 'T3H 0A3', :street1 => 'Cougartown Circle SW and Cougar Plateau Way SW'},
+          {:postal_code => 'T3H 5L3', :street1 => 'Cougar Ridge Circle SW and Cougar Ridge Ave SW'},
+          {:postal_code => 'T3H 4Z7', :street1 => 'Cougar Ridge Drive SW and Cougarstone Way SW'},
+          {:postal_code => 'T3H 5J3', :street1 => 'Cougar Ridge Drive SW and Cougarstone Close SW'},
+
+          #Little Paws Dayhomes
+          {:postal_code => 'T3H 4P3', :street1 => 'Wentworth Drive SW and Wentworth Cove SW'},
+          {:postal_code => 'T3H 4P2', :street1 => 'Wentworth Circle SW and Wentworth Link SW'},
       ]
 
       full_time_names = [
@@ -159,8 +185,23 @@ namespace :db do
           'Von #2',
 
           #Neha
-          'Von #3'
+          'Von #3',
 
+
+          'Tuplip Dayhome',
+          'Holly Dayhome',
+          'Marigold Dayhome',
+          'Acorn Dayhome (Montgomery)',
+          'Poplar Dayhome (Bowness)',
+          'Bamboo Dayhome (Citadel)',
+          'Safari Dayhome (Citadel)', 
+          'Creative Dayhome',
+          'Willow Dayhome (Cougar Ridge)',
+          'Treetops Dayhome (Cougar Ridge)', 
+          'Adventure Dayhome (Cougar Ridge)', 
+          'Abacus Dayhome (Cougar Ridge)',
+          'Little Paws Dayhome (Wentworth)', 
+          'Big Paws Dayhome (Wentworth)' 
       ]
       photos = [
           { :caption => "Tasty snacks.", :photo => "cereal.jpg"},
@@ -179,8 +220,8 @@ namespace :db do
                              :email => "peter@voncreative.com",
                              #:featured => true,
                              #:phone_number => '780-555-5555',
-                             :highlight => full_time_names[index]+ " is a member of the Von Premium Childcare Network, an academic, premium dayhome experience.",
-                             :blurb => "Von offers:\n\n1. Full day curriculum (toddler to preschool)\n2. No unexpected closures\n3. No screen time policy\n4. Nutritious whole food only menu\n5. Daily outdoor routine\n6. Professional First Aid / CPR qualified director\n7. Pro-active parent communications"
+                             :highlight => full_time_names[index]+ " is a member of the Von Premium Childcare Network. All Von Premium Childcare Network programs offer a premium academic and kinesthetic dayhome experience for children.",
+                             :blurb => "All Von Premium Childcare Network programs offer:\n\n1. Full day curriculum (toddler-preschool)\n2. No unexpected closures\n3. No screen time policy\n4. Nutritious whole food\n5. Daily outdoor routine\n6. Professional First Aid / CPR qualified director\n7. Pro-active parent communications"
                             }.merge(street_and_postal))
 
 
