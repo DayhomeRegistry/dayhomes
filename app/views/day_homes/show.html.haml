@@ -72,11 +72,9 @@
                       %p
                         = dh_photo.caption
     %div
-      :markdown
-        #{@day_home.highlight}
+      =Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true).render(@day_home.highlight).html_safe
     %div
-      :markdown
-        #{@day_home.blurb}                          
+      =Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true).render(@day_home.blurb).html_safe
 
 .row
   %br
@@ -107,9 +105,8 @@
     - if @day_home.organization.day_homes.count>1
       %div
         This dayhome is proudly managed through 
-        %span.external
-          #{@day_home.organization.name}
-        , click here for
+        = succeed ', click here for' do
+          %span.external #{@day_home.organization.name}
         = link_to(" other locations near this one.",searches_path('search[organization]'=>@day_home.organization.id,'search[address]'=>@day_home.address))   
     - else
       %div
