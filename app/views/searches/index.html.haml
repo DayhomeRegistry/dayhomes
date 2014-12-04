@@ -17,6 +17,13 @@
           :options => { |
             :do_clustering => true, |
             :clusterer_maxZoom => 6}})
+    .legend
+      = image_tag("dayhome-vonn.png", :alt => "Premium Private", :title => "Premium Private")
+      Premium Private
+      = image_tag("dayhome-private.png", :alt => "Private", :title => "Private")
+      Private
+      = image_tag("dayhome.png", :alt => "Private", :title => "Private")
+      Accredited
     %h3
       Results
     <ul id="markers_list">  </ul>
