@@ -8,7 +8,7 @@ GIT
       nestful
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     actionmailer (4.1.6)
       actionpack (= 4.1.6)
