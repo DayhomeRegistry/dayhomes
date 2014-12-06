@@ -10,4 +10,3 @@
 
 //= require_tree .
 //= require spree/backend/spree_paypal_express
-//= require spree/backend/spree_account_recurring

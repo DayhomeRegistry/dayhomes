@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121234838) do
+ActiveRecord::Schema.define(version: 20141107224048) do
 
   create_table "agencies", force: true do |t|
     t.string   "name"
@@ -632,26 +632,6 @@ ActiveRecord::Schema.define(version: 20141121234838) do
 
   add_index "spree_paypal_express_checkouts", ["transaction_id"], name: "index_spree_paypal_express_checkouts_on_transaction_id", using: :btree
 
-  create_table "spree_plans", force: true do |t|
-    t.string   "api_plan_id"
-    t.decimal  "amount",            precision: 8, scale: 2
-    t.string   "interval"
-    t.integer  "interval_count",                            default: 1
-    t.string   "name"
-    t.string   "currency"
-    t.integer  "recurring_id"
-    t.integer  "trial_period_days",                         default: 0
-    t.boolean  "active",                                    default: false
-    t.datetime "deleted_at"
-    t.boolean  "default",                                   default: false
-  end
-
-  add_index "spree_plans", ["default"], name: "index_spree_plans_on_default", using: :btree
-  add_index "spree_plans", ["deleted_at", "active"], name: "index_spree_plans_on_deleted_at_and_active", using: :btree
-  add_index "spree_plans", ["deleted_at", "recurring_id", "active"], name: "index_spree_plans_on_deleted_at_and_recurring_id_and_active", using: :btree
-  add_index "spree_plans", ["deleted_at", "recurring_id"], name: "index_spree_plans_on_deleted_at_and_recurring_id", using: :btree
-  add_index "spree_plans", ["deleted_at"], name: "index_spree_plans_on_deleted_at", using: :btree
-
   create_table "spree_preferences", force: true do |t|
     t.text     "value"
     t.string   "key"
@@ -828,17 +808,6 @@ ActiveRecord::Schema.define(version: 20141121234838) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "spree_recurrings", force: true do |t|
-    t.string   "name"
-    t.string   "type"
-    t.text     "description"
-    t.boolean  "active"
-    t.datetime "deleted_at"
-    t.text     "preferences"
-  end
-
-  add_index "spree_recurrings", ["deleted_at"], name: "index_spree_recurrings_on_deleted_at", using: :btree
 
   create_table "spree_refund_reasons", force: true do |t|
     t.string   "name"
@@ -1136,31 +1105,6 @@ ActiveRecord::Schema.define(version: 20141121234838) do
   add_index "spree_stores", ["code"], name: "index_spree_stores_on_code", using: :btree
   add_index "spree_stores", ["default"], name: "index_spree_stores_on_default", using: :btree
   add_index "spree_stores", ["url"], name: "index_spree_stores_on_url", using: :btree
-
-  create_table "spree_subscription_events", force: true do |t|
-    t.string   "event_id"
-    t.integer  "subscription_id"
-    t.string   "request_type"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.text     "response"
-  end
-
-  add_index "spree_subscription_events", ["event_id"], name: "index_spree_subscription_events_on_event_id", using: :btree
-  add_index "spree_subscription_events", ["subscription_id"], name: "index_spree_subscription_events_on_subscription_id", using: :btree
-
-  create_table "spree_subscriptions", force: true do |t|
-    t.integer  "plan_id"
-    t.string   "email"
-    t.integer  "user_id"
-    t.string   "card_customer_token"
-    t.datetime "subscribed_at"
-    t.datetime "unsubscribed_at"
-  end
-
-  add_index "spree_subscriptions", ["plan_id"], name: "index_spree_subscriptions_on_plan_id", using: :btree
-  add_index "spree_subscriptions", ["subscribed_at"], name: "index_spree_subscriptions_on_subscribed_at", using: :btree
-  add_index "spree_subscriptions", ["unsubscribed_at"], name: "index_spree_subscriptions_on_unsubscribed_at", using: :btree
 
   create_table "spree_tax_categories", force: true do |t|
     t.string   "name"

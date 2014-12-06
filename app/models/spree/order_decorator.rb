@@ -1,5 +1,7 @@
 
 Spree::Order.class_eval do
+	# has_many :subscriptions, class_name: "Spree::Subscription"
+	
 	def add_subscription
 		# this is where we do cool stuff
 		byebug
@@ -70,6 +72,9 @@ Spree::Order.class_eval do
 			has_subscription ||= line_item.variant.is_subscription?
 		end
 		has_subscription
+	end
+	def subscription
+		
 	end
  #  	checkout_flow do
 	#   # 	if(->(order){order.bill_address.nil?})
