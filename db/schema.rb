@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107224048) do
+ActiveRecord::Schema.define(version: 20141228200517) do
 
   create_table "agencies", force: true do |t|
     t.string   "name"
@@ -632,6 +632,17 @@ ActiveRecord::Schema.define(version: 20141107224048) do
 
   add_index "spree_paypal_express_checkouts", ["transaction_id"], name: "index_spree_paypal_express_checkouts_on_transaction_id", using: :btree
 
+  create_table "spree_plans", force: true do |t|
+    t.integer  "variant_id"
+    t.integer  "payment_method_id"
+    t.string   "name"
+    t.string   "api_plan_id"
+    t.datetime "deleted_at"
+    t.string   "description"
+  end
+
+  add_index "spree_plans", ["variant_id", "payment_method_id"], name: "index_spree_plans_on_variant_id_and_payment_method_id", using: :btree
+
   create_table "spree_preferences", force: true do |t|
     t.text     "value"
     t.string   "key"
@@ -859,6 +870,26 @@ ActiveRecord::Schema.define(version: 20141107224048) do
 
   add_index "spree_reimbursements", ["customer_return_id"], name: "index_spree_reimbursements_on_customer_return_id", using: :btree
   add_index "spree_reimbursements", ["order_id"], name: "index_spree_reimbursements_on_order_id", using: :btree
+
+  create_table "spree_relation_types", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "applies_to"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "spree_relations", force: true do |t|
+    t.integer  "relation_type_id"
+    t.integer  "relatable_id"
+    t.string   "relatable_type"
+    t.integer  "related_to_id"
+    t.string   "related_to_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "discount_amount",  precision: 8, scale: 2, default: 0.0
+    t.integer  "position"
+  end
 
   create_table "spree_return_authorization_reasons", force: true do |t|
     t.string   "name"
@@ -1105,6 +1136,18 @@ ActiveRecord::Schema.define(version: 20141107224048) do
   add_index "spree_stores", ["code"], name: "index_spree_stores_on_code", using: :btree
   add_index "spree_stores", ["default"], name: "index_spree_stores_on_default", using: :btree
   add_index "spree_stores", ["url"], name: "index_spree_stores_on_url", using: :btree
+
+  create_table "spree_subscriptions", force: true do |t|
+    t.integer  "plan_id"
+    t.integer  "user_id"
+    t.string   "api_sub_id"
+    t.datetime "subscribed_at"
+    t.datetime "unsubscribed_at"
+  end
+
+  add_index "spree_subscriptions", ["plan_id"], name: "index_spree_subscriptions_on_plan_id", using: :btree
+  add_index "spree_subscriptions", ["subscribed_at"], name: "index_spree_subscriptions_on_subscribed_at", using: :btree
+  add_index "spree_subscriptions", ["unsubscribed_at"], name: "index_spree_subscriptions_on_unsubscribed_at", using: :btree
 
   create_table "spree_tax_categories", force: true do |t|
     t.string   "name"

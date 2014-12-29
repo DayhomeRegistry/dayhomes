@@ -73,6 +73,9 @@ gem 'spree', :git => 'https://github.com/spree/spree', branch: '2-4-stable'
 gem 'spree_gateway', :git => 'https://github.com/spree/spree_gateway.git', :branch => 'master' #use master to get fix for missing customer
 gem 'spree_paypal_express', github: 'spree-contrib/better_spree_paypal_express'
 #gem 'spree_account_recurring', path: '/Users/jon/Projects/spree-account-recurring'
+gem 'spree_subscriptions', path: '/Users/jon/Projects/spree_subscriptions'
+gem 'spree_related_products', '>=3.2', :git => 'git@github.com:spree-contrib/spree_related_products.git'
+
 
 platforms :mswin, :mingw do
   #gem 'eventmachine', '1.0.0.beta.4.1'
@@ -103,6 +106,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'thin', '~> 1.5'
   gem 'rack-mini-profiler'
+  gem 'diffy'
 end
 
 group :production do

@@ -6,7 +6,7 @@
 # In order to initialize a setting do:
 # config.setting_name = 'new value'
 Spree.config do |config|
-
+  
   #config.always_include_confirm_step=true
 end
 

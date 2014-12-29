@@ -4,7 +4,7 @@ end
 Dayhomes::Application.routes.draw do
 
   devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", sessions: 'sessions', registrations: 'registrations' }
-  mount Spree::Core::Engine, :at => '/shop'
+  mount Spree::Core::Engine, at: '/shop'
 
   Spree::Core::Engine.add_routes do
       post '/paypal/express_subscription', :to=>"paypal#express_subscription", :as=> :paypal_subscription

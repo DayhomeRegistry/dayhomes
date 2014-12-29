@@ -16,6 +16,13 @@ GIT
       spree_core (~> 2.4.0.beta)
 
 GIT
+  remote: git@github.com:spree-contrib/spree_related_products.git
+  revision: f8bf0b095e1f814af172f53df1369e5a4e06c6e7
+  specs:
+    spree_related_products (3.2)
+      spree_backend (~> 2.4.0.beta)
+
+GIT
   remote: https://github.com/spree/spree
   revision: 20f653ec0a23fbfdfa3c04425d744cd34bc8abb5
   branch: 2-4-stable
@@ -79,6 +86,12 @@ GIT
   specs:
     spree_gateway (2.3.0.beta)
       spree_core (~> 2.4.0.beta)
+
+PATH
+  remote: /Users/jon/Projects/spree_subscriptions
+  specs:
+    spree_subscriptions (0.1.1)
+      spree_core (> 2.3)
 
 GEM
   remote: http://rubygems.org/
@@ -201,6 +214,7 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    diffy (3.0.7)
     erubis (2.7.0)
     eventmachine (1.0.3)
     excon (0.40.0)
@@ -532,6 +546,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails
   devise (~> 3.2)
+  diffy
   exception_notification!
   execjs
   factory_girl_rails
@@ -567,6 +582,8 @@ DEPENDENCIES
   spree!
   spree_gateway!
   spree_paypal_express!
+  spree_related_products (>= 3.2)!
+  spree_subscriptions!
   stripe
   stripe_event
   therubyracer

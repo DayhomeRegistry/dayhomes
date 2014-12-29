@@ -72,6 +72,9 @@ module Dayhomes
 
     #Configure rack middleware for affiliate (i.e. ?ref= ) tracking
     config.middleware.use Rack::Affiliates
+
+    #Timezone
+    config.active_record.default_timezone = :local
     
   end
 end
