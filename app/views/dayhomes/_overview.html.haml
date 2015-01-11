@@ -10,6 +10,10 @@
       #js-count-title.row-space-top-1.h6.text-right
         %span #{35-@dayhome.name.length}
         characters left
+    -if @dayhome.organization.individual?
+      #tooltip-help-phone.form-group
+        %label.label-large Phone
+        %input.input-large.form-control{:name => "phone",id: "phone", :placeholder => "Your phone number", :type => "text", :value => "#{@dayhome.organization.phone_number}", "data-url"=>"/setPhone"}/
     #tooltip-help-summary.form-group
       %label.label-large Summary
       %textarea.input-large.form-control.countable{:maxlength => "200", :name => "summary", id:"summary", :placeholder => "Write a summary in 200 characters or less", :rows => "6", "data-url"=>"/setSummary"}
@@ -38,7 +42,7 @@
         %span.glyphicon.glyphicon-arrow-right
 
 -content_for :tooltips do
-  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-summary", :style => "display: none; top: 180px;left:75%; opacity: 1; position:absolute; margin:15px;"}
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-summary", :style => "display: none; top: 220px;left:75%; opacity: 1; position:absolute; margin:15px;"}
     .media
       %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
       .media-body.text-lead.text-muted.help-tooltip-body
@@ -46,7 +50,13 @@
         %p A great summary is rich and exciting! It should cover the major features of your dayhome and neighbourhood in 250 characters or less.
         %p
           %strong> Example:
-          My awesome dayhome has peanuts.  
+          My awesome dayhome has peanuts.
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-phone", :style => "display: none; top: 150px;left:75%; opacity: 1; position:absolute; margin:15px;"}
+    .media
+      %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
+      .media-body.text-lead.text-muted.help-tooltip-body
+        %strong The best number to reach you
+        %p Some parents still like to go old-school and talk to their child care providers.  This is the number that will be shared with parents.    
   .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-name", :style => "display: none; top: 60px; left:75%; opacity: 1; position:absolute; margin:15px;"}
     .media
       %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
@@ -60,7 +70,7 @@
           %li Bundles of Joy
           %li Danielle's Tiny Tots
           %li Cindy's Dayhome
-  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-description", :style => "display: none; top: 280px;left:75%; opacity: 1; position:absolute; margin:15px;"}
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#tooltip-help-description", :style => "display: none; top: 400px;left:75%; opacity: 1; position:absolute; margin:15px;"}
     .media
       %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
       .media-body.text-lead.text-muted.help-tooltip-body

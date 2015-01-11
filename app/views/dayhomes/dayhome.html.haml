@@ -23,7 +23,7 @@
             Description
           %ul.nav.nav-sidebar
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'overview') ? 'active' : ''}"}
-              %span.glyphicon.glyphicon-ok.pull-right.dayhome-step
+              %span.glyphicon.pull-right.dayhome-step{:class=>"#{!@dayhome.name.blank? ? 'glyphicon-ok' : 'glyphicon-remove'}"}
               %a{:href => beta_dayhome_overview_path()} Overview
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'photos') ? 'active' : ''}"}
               %span.glyphicon.pull-right.dayhome-step{:class=>"#{@dayhome.photos.count>0 ? 'glyphicon-ok' : 'glyphicon-remove'}"}
@@ -40,12 +40,13 @@
             %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'spots') ? 'active' : ''}"}
               %span.glyphicon.glyphicon-remove.pull-right.dayhome-step
               %a{:href => beta_dayhome_spots_path()} Spots
-          .h6.section-header.row-space-1.pre-listed
-            Plan and Payment
-          %ul.nav.nav-sidebar
-            %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'plan') ? 'active' : ''}"}
-              %span.glyphicon.pull-right.dayhome-step{:class=>"#{@dayhome.location.organization.plan != 'baby' ? 'glyphicon-ok' : 'glyphicon-remove'}"} 
-              %a{:href => beta_dayhome_plan_path()} Plans
+          -if @dayhome.organization.individual?
+            .h6.section-header.row-space-1.pre-listed
+              Plan and Payment
+            %ul.nav.nav-sidebar
+              %li{:class=>"#{current_page?(controller: 'dayhomes', action: 'plan') ? 'active' : ''}"}
+                %span.glyphicon.pull-right.dayhome-step{:class=>"#{@dayhome.location.organization.plan != 'baby' ? 'glyphicon-ok' : 'glyphicon-remove'}"} 
+                %a{:href => beta_dayhome_plan_path()} Plans
     .publish-actions.text-center.publish-actions-overflow
       #user-suspended
       #availability-dropdown
@@ -62,6 +63,8 @@
     .js-saving-progress.saving-status.saving-progress
       %h5{:style => "display:none;"} Saving... 
     #main 
+      -if current_page?(controller: 'dayhomes', action: 'profile')
+        =render partial: "overview"
       -if current_page?(controller: 'dayhomes', action: 'overview')
         =render partial: "overview"
       -if current_page?(controller: 'dayhomes', action: 'photos')

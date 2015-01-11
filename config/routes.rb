@@ -24,11 +24,14 @@ Dayhomes::Application.routes.draw do
   # New Beta Routes
   #get  '/beta/list',      to: "beta#list" #Replaces New
   get  '/beta/dashboard', to: "beta#dashboard"
+  get  '/beta/plan', to: "beta#plan"
+  get  '/beta/profile', to: "beta#profile"
   resource :beta, except: [:new] do 
     get 'dayhomes/parents', :to=>"dayhomes#parents"
     get 'dayhomes/new', to: "beta#list"
     resources :dayhomes, except: [:new, :edit] do
 
+        get 'profile'
         get 'overview'
         get 'photos'
         get 'location'
@@ -48,6 +51,8 @@ Dayhomes::Application.routes.draw do
         post 'setAddress'
         post 'setCertifications'
     end
+    post '/setCompanyProfile/:organization_id', to: 'beta#update_profile', as: "setCompanyProfile"
+
     # default route
     get ':province/:community/:dayhome_id', to:"dayhomes#show", as:"dayhome_by_location"
   end

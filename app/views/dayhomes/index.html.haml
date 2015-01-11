@@ -1,5 +1,13 @@
 -content_for :title do
   %title Dayhomes - Dayhome Registry
+-if current_user.organization.plan.empty?
+  %p
+    You don't have a plan, off to the shop with you to pick one.
+  %p
+    %a{href: '/shop/recurring/plans'}
+      %button#js-list-space-button.animated.btn.btn-large.btn-special.btn-primary
+        Add a plan
+-else
 .row.background
   .page-container.row-space-top-4
     .row
@@ -14,7 +22,12 @@
           .panel-header
             .row
               .col-md-6
-                %input
+                =form_tag({:controller => "dayhomes", :action => "index"}, :id => :searchForm, :method=>"get") do 
+                  %div.input-prepend
+                    %span.add-on
+                      %i.icon.icon-search
+                    = text_field_tag :query, nil, :placeholder => "Search dayhomes", :value=> @query
+                    = link_to 'Go','#',:id => 'adminSearchBtn',:class => :btn
               .col-md-6.text-right
                 %a{href:"dayhomes/new"}
                   %button.btn.btn-primary.large.btn-large.padded-btn-block{type:"button"}

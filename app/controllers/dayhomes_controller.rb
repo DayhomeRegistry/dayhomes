@@ -3,10 +3,58 @@ class DayhomesController < ApplicationController
   before_filter :authenticate_user!
   helper_method :sort_column, :sort_direction
 
+  # before_filter :check_for_plan
+
+  def check_for_plan
+    if current_user && current_user.organization && current_user.organization.plan.empty?
+      byebug
+      redirect_to({ controller: 'beta', action: 'plan' })
+    end
+  end
   # Views
   def index
-    byebug
-  	@dayhomes = current_user.organization.day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 5)
+    @dayhomes
+    if(current_user.admin?)
+      @dayhomes= DayHome.all
+    else
+      if(current_user.organization_admin?)
+        @dayhomes = current_user.organization.day_homes
+      else
+        @dayhomes = current_user.day_homes
+      end
+    end
+    if (!params[:query].nil?)
+      clause = params[:query]      
+      result = clause.scan(/(\bfeatured:\b[^\s]*)/)            
+      feature = result.length==0 ? "" : result[0][0]
+      result = clause.scan(/(\bapproved:\b[^\s]*)/)
+      approve = result.length==0 ? "" : result[0][0] 
+      result = clause.scan(/(\blocation:\b[^\s]*)/)
+      location = result.length==0 ? "" : result[0][0]   
+      clause = clause.gsub(feature,"")
+      clause = clause.gsub(approve,"")            
+      clause = clause.gsub(location,"")  
+      location = location.gsub("location:","")
+
+      if (!clause.empty?)
+        @dayhomes = @dayhomes.where("day_homes.name like ?", "%#{clause.strip}%")
+      end
+      
+      if(!location.empty?)
+        @dayhomes = @dayhomes.where("locations.name like '%#{location}%'")
+      end
+
+      if(!feature.empty?)            
+        @dayhomes = @dayhomes.where(:featured=> feature=="featured:yes")
+      end
+
+      if(!approve.empty?)
+        @dayhomes = @dayhomes.where(:approved=> approve=="approved:yes")
+      end
+
+      @query = params[:query]
+    end
+    @dayhomes = @dayhomes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 5)
   end
   
   def create
@@ -98,8 +146,11 @@ class DayhomesController < ApplicationController
     render "dayhome"
   end
   def location
+    byebug
     @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
-
+    if(@dayhome.nil?)
+      @dayhome = DayHome.all.first
+    end
     render "dayhome"
   end
   def certifications

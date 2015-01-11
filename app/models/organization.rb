@@ -35,6 +35,10 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def individual?
+    false
+  end
+
   def address
     lstreet = "#{street1}#{street2}".blank? ? "" : "#{street1}#{street2},"
   	lcity = "#{city}".blank? ? "" : " #{city},"
@@ -43,10 +47,12 @@ class Organization < ActiveRecord::Base
     #{}"#{street1}#{street2}, #{city}, #{province}, #{postal_code}"
   end
   def max_dayhomes
-    Plan.find_by_plan(self.plan).day_homes
+    plan = Plan.find_by_plan(self.plan)
+    plan ? plan.day_homes : 0
   end
   def max_users
-    Plan.find_by_plan(self.plan).staff
+    plan = Plan.find_by_plan(self.plan)
+    plan ? plan.staff : 0
   end
   def plan_name
     plan = Plan.find_by_plan(self.plan)

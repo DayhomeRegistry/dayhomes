@@ -1,0 +1,10 @@
+-content_for :title do
+  %title Plan - Dayhome Registry
+.row.background
+  .page-container.row-space-top-4
+    .row    
+      .col-md-12
+        -if(@organization.plan.blank?)
+          Before you can setup your dayhome(s) you need to pick a plan.
+        -else
+          You are signed up for...

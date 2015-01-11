@@ -1,0 +1,37 @@
+-content_for :title do
+  %title Company Profile - Dayhome Registry
+.row.background
+  .page-container.row-space-top-4
+    .row.js-section
+      .col-xs-12.col-md-4
+        %h3 Company Profile
+        %p.text-muted
+          A few details about you as a business.
+      .col-xs-12.col-md-8
+        .js-saving-progress.saving-status.saving-progress
+          %h5{:style => "display:none;"} Saving... 
+        = simple_form_for(@org, :url => setCompanyProfile_beta_path(@org), :html => { :method => :post , :class=>"form-horizontal"}) do |f| 
+          .js-submit-group#organization-form{data:{url:"/setCompanyProfile"}}
+            .form-group
+              =f.label :name,'Name', :class=>"control-label"         
+              = f.text_field :name, :class=>"form-control" , :placeholder=>"Enter your business name" 
+            .form-group
+              =f.label :billing_email,'Billing Email', :class=>"control-label"         
+              = f.text_field :billing_email, :class=>"form-control" , :placeholder=>"Enter the email address where you would like to receive billing information" 
+            .form-group
+              =f.label :street1,'Street Address', :class=>"control-label"         
+              = f.text_field :street1, :class=>"form-control" , :placeholder=>"Enter your street address as it appears in google" 
+            .form-group
+              =f.label :city,'City', :class=>"control-label"         
+              = f.text_field :city, :class=>"form-control input-medium"            
+            .form-group
+              =f.label :province,'Province', :class=>"control-label"         
+              = f.subregion_select :province,'CA', {}, :class=>'form-control'
+            .form-group
+              =f.label :province,'Postal Code', :class=>"control-label"   
+              = f.text_field :postal_code, :class=>"form-control input-small"          
+            .form-group
+              =f.label :province,'Phone', :class=>"control-label"   
+              = f.text_field :phone_number, :class=>"form-control"   
+            %button.btn.btn-primary.btn-lg{:type=>"submit"}
+              Save  

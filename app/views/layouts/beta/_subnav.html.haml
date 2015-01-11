@@ -9,9 +9,15 @@
           %a.subnav-item{"aria-selected" => "#{current_page?(controller: 'beta', action: 'dashboard')}", :href => "dashboard"} Dashboard
         %li
           %a.subnav-item{"aria-selected" => "false", :href => "#"} Inbox
-        %li
-          %a.subnav-item{"aria-selected" => "#{current_page?(controller: 'dayhomes')}", :href => "dayhomes"} Your Dayhomes
-        %li
-          %a.subnav-item{"aria-selected" => "false", :href => edit_user_path(current_user)} Account
-        %li
-          %a.subnav-item{"aria-selected" => "false", :href => "#"} Customer Info
+        -if (current_user.organization && !current_user.organization.individual? && !current_user.organization.plan.blank?)
+          %li
+            %a.subnav-item{"aria-selected" => "#{current_page?(controller: 'dayhomes')}", :href => "dayhomes"} Your Dayhomes
+        -if (current_user.organization && !current_user.organization.individual?)
+          %li
+            %a.subnav-item{"aria-selected" => "#{current_page?(controller: 'beta', action: 'profile')}", :href => "profile"}  Company Profile
+          %li
+            %a.subnav-item{"aria-selected" => "#{current_page?(controller: 'beta', action: 'plan')}", :href => "plan"}  Your Plan
+        -else
+          %li
+            %a.subnav-item{:href => beta_dayhome_profile_path(current_user.organization.day_homes.first)}  Your Dayhome
+        
