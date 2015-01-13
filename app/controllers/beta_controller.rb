@@ -27,8 +27,19 @@ class BetaController < ApplicationController
 
   end
   def plan
-  	byebug
-  	@organization = current_user.organization
+  	
+    @day_home_signup_request = DayHomeSignupRequest.new
+    @existing = Plan.find_by_plan("baby50")
+    @packages = {}
+    @communities = Community.all
+    
+    @organization = current_user.organization
+
+    Plan.where("inactive is null").where(@organization.individual? ? "org_type = 'individual'" : "org_type = 'group'").order(:monthly_price).each do |p|
+      @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+    end
+    
+
   end
 
 	def new

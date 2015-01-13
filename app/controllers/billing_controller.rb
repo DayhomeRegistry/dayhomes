@@ -203,7 +203,7 @@ class BillingController < ApplicationController
   def options
     @organization = current_user.organization
     @upgrade = Upgrade.new()
-    @existing = Plan.find_by_plan(@organization.plan)
+    @existing = Plan.find_by_plan('papa')#@organization.plan)
     @packages = {"#{@existing.id}" => @existing}
     Plan.where("inactive is null").where(subscription: "yr").order( price: :asc).each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing

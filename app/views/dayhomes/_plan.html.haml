@@ -1,19 +1,56 @@
-.row.js-section
-  .col-xs-12.col-md-4
-    %h3 Plan
-    %p.text-muted
-      Start with our basic <i>Baby Bear</i> plan, and upgrade for more features.
-  .col-xs-12.col-md-8
-    -if @dayhome.organization.plan
-      A plan: 
-      =@dayhome.organization.plan
-    -else 
-        %p
-          You don't have a plan, off to the shop with you to pick one.
-        %p
-          %a{href: '/shop/recurring/plans'}
-            %button#js-list-space-button.animated.btn.btn-large.btn-special.btn-primary
-              Add a plan
+.row.background
+  .row-space-top-4
+    .row.js-section
+      .col-xs-12.col-md-3
+        %h3 Payment Plan
+        %p.text-muted
+          ="Before you can setup your " + 'dayhome'.pluralize(@organization.individual? ? 1 : 0)+ " you need to pick a plan."
+      .col-xs-12.col-md-9
+        .primary-content
+          .closing-content
+            %ul.package-table
+              - @packages.each_with_index do |package,index|
+                %li.package.col-md-4{:class => "#{package[1].org_type_default ? 'complete' : '' }"}
+                  %h3
+                    =package[1].name
+                    %span.dollar-sign $
+                    - price = (package[1].annual_price/12.00)
+                    - parts = price.to_s.split(".")
+                    - monthly = (("."+parts[1]).to_d.round(2)*100).to_i
+                    %span> #{price.floor}
+                    %span.cents> #{monthly>0 ? monthly.to_s : "00"}
+                    %span.per> /mth*
+                  %ul
+                    -if !@organization.individual?
+                      %li Basic page for each dayhome
+                      %li An inbox to safely communicate with parents
+                      %li An organization page to highlight your program, staff or whatever you want
+                      -if index==1
+                        %li <strong>Five</strong> dayhomes featured per month absolutely free (a $25 value)
+                      -if index>0
+                        %li A custom icon in the search map
+                        %li Available direct email support
+                      -if index>1
+                        %li <strong>Eight</strong> dayhomes featured per month absolutely free (a $40 value)
+                        %li Waiting list and pre-qualification process
+                        %li Sign-in / Sign-out process for your parents 
+                    -else
+                      %li Basic page for your dayhome
+                      %li An inbox to safely communicate with parents
+                      -if index==1
+                        %li Feature your dayhome once a year (a $5 value)
+                      -if index>0
+                        %li A custom icon in the search map
+                        %li Available direct email support
+                      -if index>1
+                        %li Feature your dayhome five times a year (a $25 value)
+                        %li Waiting list and pre-qualification process
+                        %li Sign-in / Sign-out process for your parents 
+                  .bottom
+                    %a.pricing-button{:href => Spree::Core::Engine.routes.url_helpers.product_path(package[1].product)} Buy 
+                    .subtext
+                      * based on annual contract,
+                      %span.monthtomonth $#{package[1].monthly_price} month-to-month
 .row.text-center.row-space-top-2
   .col-xs-12.col-sm-6.col-md-6
     %a{href:beta_dayhome_spots_path()}
@@ -24,7 +61,7 @@
     
 
 -content_for :tooltips do
-  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#js-photo-grid", :style =>"display:block; top: 60px;left:75%; opacity: 1; position:absolute; margin:15px;"}
+  .tooltip.help-tooltip{"data-event" => "none", "data-trigger" => "#js-photo-grid", :style =>"top: 60px;left:75%; opacity: 1; position:absolute; margin:15px;"}
     .media
       %i.pull-left.icon.icon-light-bulb.icon-blue.icon-beach.icon-size-2
       .media-body.text-lead.text-muted.help-tooltip-body

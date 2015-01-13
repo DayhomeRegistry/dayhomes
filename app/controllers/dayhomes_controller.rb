@@ -165,7 +165,12 @@ class DayhomesController < ApplicationController
   end
   def plan
     @dayhome = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:dayhome_id])
-
+    @organization = current_user.organization
+    @packages = {}
+    @communities = Community.all
+    Plan.where("inactive is null").where(@organization.individual? ? "org_type = 'individual'" : "org_type = 'group'").order(:monthly_price).each do |p|
+      @packages.merge!({"#{p.id}" => p}) #unless p===@existing
+    end
     render "dayhome"
   end
   # AJAX posts

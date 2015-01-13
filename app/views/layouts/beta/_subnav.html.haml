@@ -19,5 +19,6 @@
             %a.subnav-item{"aria-selected" => "#{current_page?(controller: 'beta', action: 'plan')}", :href => "plan"}  Your Plan
         -else
           %li
-            %a.subnav-item{:href => beta_dayhome_profile_path(current_user.organization.day_homes.first)}  Your Dayhome
-        
+            %a.subnav-item{:href => beta_dayhome_overview_path(current_user.organization.day_homes.first)}  Your Dayhome
+        %li
+          %a.subnav-item{"aria-selected" => "false", :href => "/shop"} Shop

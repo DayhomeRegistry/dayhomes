@@ -3,11 +3,11 @@
 .row.background
   .page-container.row-space-top-4
     .row.js-section
-      .col-xs-12.col-md-4
+      .col-xs-12.col-md-3
         %h3 Company Profile
         %p.text-muted
           A few details about you as a business.
-      .col-xs-12.col-md-8
+      .col-xs-12.col-md-9
         .js-saving-progress.saving-status.saving-progress
           %h5{:style => "display:none;"} Saving... 
         = simple_form_for(@org, :url => setCompanyProfile_beta_path(@org), :html => { :method => :post , :class=>"form-horizontal"}) do |f| 

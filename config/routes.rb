@@ -11,6 +11,7 @@ Dayhomes::Application.routes.draw do
       get '/paypal/subscribe', :to => "paypal#subscribe", :as => :subscribe_paypal
       get '/paypal/confirm', :to => "paypal#confirm", :as => :paypal_confirm
   end
+  resources :spree_products, :only => [:show]
   
   as :user do
     get "/login" => "devise/sessions#new"

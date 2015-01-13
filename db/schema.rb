@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141228200517) do
+ActiveRecord::Schema.define(version: 20150112181640) do
 
   create_table "agencies", force: true do |t|
     t.string   "name"
@@ -264,6 +264,11 @@ ActiveRecord::Schema.define(version: 20141228200517) do
     t.integer  "free_features",                                default: 0
     t.string   "subscription",                                 default: "mth"
     t.integer  "events",                                       default: 0
+    t.boolean  "org_type_default",                             default: false
+    t.string   "org_type"
+    t.integer  "product_id"
+    t.decimal  "monthly_price",       precision: 10, scale: 0, default: 0
+    t.decimal  "annual_price",        precision: 10, scale: 0, default: 0
   end
 
   create_table "posts", force: true do |t|

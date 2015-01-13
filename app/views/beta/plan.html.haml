@@ -2,9 +2,69 @@
   %title Plan - Dayhome Registry
 .row.background
   .page-container.row-space-top-4
-    .row    
-      .col-md-12
-        -if(@organization.plan.blank?)
-          Before you can setup your dayhome(s) you need to pick a plan.
-        -else
-          You are signed up for...
+    .row.js-section
+      .col-xs-12.col-md-3
+        %h3 Payment Plan
+        %p.text-muted
+          ="Before you can setup your " + 'dayhome'.pluralize(@organization.individual? ? 1 : 0)+ " you need to pick a plan."
+      .col-xs-12.col-md-9
+        .primary-content
+          .closing-content
+            %ul.package-table
+              - @packages.each_with_index do |package,index|
+                %li.package.col-md-4{:class => "#{package[1].org_type_default ? 'complete' : '' }"}
+                  %h2
+                    =package[1].name
+                    %span.dollar-sign $
+                    - price = (package[1].annual_price/12.00)
+                    - parts = price.to_s.split(".")
+                    - monthly = (("."+parts[1]).to_d.round(2)*100).to_i
+                    %span> #{price.floor}
+                    %span.cents> #{monthly>0 ? monthly.to_s : "00"}
+                    %span.per> /mth*
+                  %ul
+                    -if !@organization.individual?
+                      %li Basic page for each dayhome (#{package[1].day_homes>0 ? "" :"No "}max #{package[1].day_homes>0 ? package[1].day_homes.to_s : ""})
+                      %li An inbox to safely communicate with parents
+                      %li An organization page to highlight your program, staff or whatever you want
+                      -if index==1
+                        %li <strong>Five</strong> dayhomes featured per month absolutely free (a $25 value)
+                      -if index>0
+                        %li A custom icon in the search map
+                        %li Available direct email support
+                      -if index>1
+                        %li <strong>Eight</strong> dayhomes featured per month absolutely free (a $40 value)
+                        %li Waiting list and pre-qualification process
+                        %li Sign-in / Sign-out process for your parents 
+                    -else
+                      %li Basic page for your dayhome
+                      %li An inbox to safely communicate with parents
+                      -if index==1
+                        %li Feature your dayhome once a year (a $5 value)
+                      -if index>0
+                        %li A custom icon in the search map
+                        %li Available direct email support
+                      -if index>1
+                        %li Feature your dayhome five times a year (a $25 value)
+                        %li Waiting list and pre-qualification process
+                        %li Sign-in / Sign-out process for your parents 
+                  .bottom
+                    -if @organization.plan.blank?
+                      %a.pricing-button{:href => Spree::Core::Engine.routes.url_helpers.product_path(package[1].product)} Buy now 
+                      .subtext
+                        * based on annual contract,
+                        %span.monthtomonth $#{package[1].monthly_price} month-to-month
+                    -else
+                      -if @organization.plan==package[1].plan
+                        %a.active-plan Your plan
+                      -else
+                        %a.pricing-button{:href => Spree::Core::Engine.routes.url_helpers.product_path(package[1].product)} Upgrade 
+                        .subtext
+                          * based on annual contract,
+                          %span.monthtomonth $#{package[1].monthly_price} month-to-month
+
+  .row
+    .page-container.row-space-top-4
+      .row.js-section
+        .col-xs-12.col-md-3
+
