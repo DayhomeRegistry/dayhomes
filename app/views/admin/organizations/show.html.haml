@@ -77,7 +77,7 @@
     .control-label
       Feature credits
     .controls
-      .span-11.append-bottom-1
+      .span-11.col-lg-11.col-md-11.col-sm-11.append-bottom-1
         =@organization.feature_count
       
   .control-group.section-start
@@ -88,7 +88,7 @@
         Some info about your organization     
   .control-group
     .controls.fs_22
-      .span-7
+      .span-7.col-lg-7.col-md-7.col-sm-7
         -if !@organization.logo.nil?
           %img{:src=>"#{@organization.logo.photo_url(:thumb)}"}
   .control-group
@@ -105,15 +105,15 @@
         .example.first
           Street
       .append-bottom-1
-        .span-7
+        .span-7.col-lg-7.col-md-7.col-sm-7
           = @organization.city
           .example
             City
-        .span-10
+        .span-10.col-lg-10.col-md-10.col-sm-10
           = @organization.province
           .example
             Province
-        .span-6
+        .span-6.col-lg-6.col-md-6.col-sm-6
           = @organization.postal_code
           .example
             Postal Code
@@ -130,13 +130,13 @@
       .controls
         .append-bottom-1.first            
           =label_tag :existing_card_number, "**** **** **** "+@organization.credit_card[:last4], :style=>"width:150px;"
-          .span-7
+          .span-7.col-lg-7.col-md-7.col-sm-7
             =label_tag :existing_card_exp, "Exp:"+@organization.credit_card[:month].to_s+"/"+@organization.credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"
           .clear
     -else
       .controls
         .append-bottom-1.first   
-          .span-7
+          .span-7.col-lg-7.col-md-7.col-sm-7
             .error.alert-error
               Please update your credit card information!
   .control-group
@@ -153,10 +153,10 @@
             -if @organization.upgrades.count>0
               -upgrade = @organization.upgrades.order("effective_date desc").first
               -plan = Plan.find(upgrade.new_plan_id)
-              %td.span-14
+              %td.span-14.col-lg-14.col-md-14.col-sm-14
                 =upgrade.effective_date.strftime("%a %b %d, %Y")
                 ="[#{(plan.day_homes==-1 ? 'Unlimited' : plan.day_homes.to_s)}, #{(plan.staff==-1 ? 'Unlimited' : plan.staff.to_s)}, #{(plan.locales==-1 ? 'Unlimited' : plan.locales.to_s)}]"
-              %td.span-11
+              %td.span-11.col-lg-11.col-md-11.col-sm-11
                 ="$#{plan.price}"
                 per month
             -else
@@ -170,10 +170,10 @@
         %tbody
           -@organization.payments.each_with_index do |p, index|
             %tr{:style=> (index > 4?'display:none;':'')}
-              %td.span-14
+              %td.span-14.col-lg-14.col-md-14.col-sm-14
                 :javascript
                   document.write(convert_stripe_date(#{p.date}));
-              %td.span-11
+              %td.span-11.col-lg-11.col-md-11.col-sm-11
                 :javascript
                   document.write('$'+formatCurrency(#{p.total/100.0}))
   -if @organization.payments.count > 0

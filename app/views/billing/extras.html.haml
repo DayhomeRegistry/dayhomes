@@ -116,12 +116,12 @@
     .content.clearfix
       .prepend-1.append-1.prepend-top-1.clearfix
         %h4.white Feature your dayhome to all of our parents with a click of a button
-        .span-18
+        .span-18.col-lg-18.col-md-18.col-sm-18
           %p.light-blue-text Dayhomes featured on our homepage get more attention.  When you have an available space or are looking to get your name out, ensuring you show up on our homepage is as simple as a click of a button.  A month on the featured list costs a single feature credit, and you can pre-purchase those at any time, or set it up as a recurring fee if you'd like to stay featured.
         = image_tag("feature.png", :alt => "Feature window", :title => "Feature window", :style => "float:left;padding-left: 50px;", :width => "150px")  
 %div
   %div
-    .span-12.credit-container
+    .span-12.col-lg-12.col-md-12.col-sm-12.credit-container
       You can currently feature 
       -if !@organization.unlimted_features?
         %span.feature-count>
@@ -132,27 +132,27 @@
           %span.fraction
             1/3 *
       dayhomes for a month.
-    .span-12
+    .span-12.col-lg-12.col-md-12.col-sm-12
       %strong= link_to 'Buy a credit', '#', :id=>"create-user",:class => 'add_multiples_link', 'data-group' => 'feature', 'data-attribute-key' => 'feature_attributes'
     -if @organization.unlimted_features?
-      .span-12.parenthesis
+      .span-12.col-lg-12.col-md-12.col-sm-12.parenthesis
         * well, it's actually unlimited, but we had to write something
     .clear
   %h3
     Featured dayhomes
-  .span-12
+  .span-12.col-lg-12.col-md-12.col-sm-12
     You can feature a dayhome on the 
     =link_to 'dayhomes page', day_homes_path()
   .clear
     %br
-  .span-12
+  .span-12.col-lg-12.col-md-12.col-sm-12
     - if (@features.count ==0)
       None
     - @features.each do |feature|                    
       .row
-        .span-4
+        .span-4.col-lg-4.col-md-4.col-sm-4
           =link_to feature.day_home.name,day_home_path(feature.day_home)
-        .span-12
+        .span-12.col-lg-12.col-md-12.col-sm-12
           Featured from
           = feature.start
           to
@@ -162,19 +162,19 @@
 #dialog-form{:title => "Buy credits"}
   %p.validateTips 
   =form_for(Feature.new, :url=>billing_add_path(), :method=>:put, :remote=>true) do |f|
-    .span-12.append-2
+    .span-12.col-lg-12.col-md-12.col-sm-12.append-2
       Add
       %input#number.span1.text.ui-widget-content.ui-corner-all{:maxlength => "4",:name => "number", :type => "text"}/
       %span#credit-or-cedits credits
       to my account
-    .span-6.ta_right
+    .span-6.col-lg-6.col-md-6.col-sm-6.ta_right
       %strong Subtotal:
       $
       %span#buy-credits-total 0.00
       %br/
       %span.light-blue-text.fs_11 Taxes may apply
     .clear
-    .span-18
+    .span-18.col-lg-18.col-md-18.col-sm-18
       %h5 Bulk Discount Pricing
       %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
         %tbody

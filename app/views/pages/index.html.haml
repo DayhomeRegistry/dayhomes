@@ -26,7 +26,7 @@
             %span
               Fort McMurray                 
       =link_to "Browse all locations",searches_path,:style=>""
-      .span4.newsletter
+      .span4.col-lg-4.col-md-4.col-sm-4.newsletter
         %h3
           Parent Newsletter
         %p
@@ -34,7 +34,7 @@
         = form_tag('https://dayhomeregistry.us7.list-manage.com/subscribe/post?u=cde938b38d19f459bce32538b&amp;id=31701e2e10',:method=>:post,:target=>:_blank) do
           = email_field_tag 'EMAIL','',:id=>'mail'
           = submit_tag "Subscribe", :id=>"subscribe",:class=>"btn slim"
-      .span4
+      .span4.col-lg-4.col-md-4.col-sm-4
         :plain
           <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
           <!-- 234x60 -->

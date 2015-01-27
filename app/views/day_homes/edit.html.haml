@@ -204,9 +204,9 @@
 #dialog-form{:title=>"Feature #{@day_home.name}"}
   %p.validateTips 
   =form_for(@day_home, :url=>billing_activate_path(), :method=>:put, :remote=>true) do |f|
-    .span-12.append-2
+    .span.col-lg-.col-md-.col-sm--12.append-2
       Feature me for 
-      %input#months.span1.text.ui-widget-content.ui-corner-all{:maxlength => "4",:name => "months", :type => "text"}/
+      %input#months.span1.col-lg-1.col-md-1.col-sm-1.text.ui-widget-content.ui-corner-all{:maxlength => "4",:name => "months", :type => "text"}/
       %span#month-or-months months
       = hidden_field_tag :day_home_id, @day_home.id
     

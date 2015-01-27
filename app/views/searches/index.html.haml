@@ -1,8 +1,23 @@
+/ %div{:style=>"position:absolute;top:0;left:0;width:100%;height:100%;"}
+/   =gmaps( |
+/     :map_options => { |
+/       :center_latitude => @search.center_latitude, |
+/       :center_longitude => @search.center_longitude, |
+/       :zoom => @search.zoom, |
+/       :auto_adjust =>  @search.auto_adjust, |
+/       :auto_zoom => false, |
+/       :provider_key => gmaps_api_key, |
+/       :list_container => "markers_list" }, |
+/       :markers => { |
+/         :data => gmap_prepare_dayhomes(@day_homes), |
+/         :options => { |
+/           :do_clustering => true, |
+/           :clusterer_maxZoom => 6}})
 .row
-  .span8
+  .span8.col-lg-8.col-md-8.col-sm-8
     =render 'form'
 .row
-  .span8    
+  .span8.col-lg-8.col-md-8.col-sm-8    
     =gmaps( |
       :map_options => { |
         :center_latitude => @search.center_latitude, |

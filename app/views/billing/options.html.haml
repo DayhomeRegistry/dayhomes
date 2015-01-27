@@ -102,7 +102,7 @@
     #add-on-section{:style=>""}
       %h3#addon-header.section-header
         What you get...
-      .span-22.append-bottom-1
+      .span-22.col-lg-22.col-md-22.col-sm-22.append-bottom-1
         .blurbs
           %div
             Over 600 parents looking for dayhomes every week.
@@ -130,7 +130,7 @@
               %a#A1{:href => "buy.htm"}
                 %span one-time use extras
             "Featuring your dayhome" credits.
-      .span-13.append-bottom-2
+      .span-13.col-lg-13.col-md-13.col-sm-13.append-bottom-2
         #total_box.bg_orange.hide{:style => "display: block;"}
           %h4.sidebar_header_orange
             %span Pricing Details
@@ -189,11 +189,11 @@
             .controls  
               .append-bottom-1.first            
                 =label_tag :existing_card_number, "**** **** **** "+@credit_card[:last4], :style=>"width:150px;"
-                .span-7
+                .span-7.col-lg-7.col-md-7.col-sm-7
                   =label_tag :existing_card_exp, "Exp:"+@credit_card[:month].to_s+"/"+@credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"        
                 .clear
               .append-bottom-1
-                .span-7
+                .span-7.col-lg-7.col-md-7.col-sm-7
                   = link_to 'Enter a new credit card','#', :id=>'change_credit_card_link'   
       #newCard{:style=>"display:#{(@credit_card.nil? && 'block') || 'none'};"}      
         .append-bottom-1
@@ -207,11 +207,11 @@
             .control-group          
               =label_tag :card_number, "Card Number", :class=>"control-label"            
               .controls  
-                .span-11
+                .span-11.col-lg-11.col-md-11.col-sm-11
                   =text_field_tag :card_number, '', :name=>nil, :class=>"input-large",:onkeypress => "return numbersonly2(this, event)"
                   .example
                     Number
-                .span-4
+                .span-4.col-lg-4.col-md-4.col-sm-4
                   =text_field_tag :card_code, nil, name:nil, :class=>"input-mini"
                   .example
                     CVV
@@ -219,20 +219,20 @@
             .control-group
               =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
               .controls
-                .span-6.append-bottom-1
+                .span-6.col-lg-6.col-md-6.col-sm-6.append-bottom-1
                   =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month"}
                   .example
                     Month
-                .span-6.append-bottom-1
+                .span-6.col-lg-6.col-md-6.col-sm-6.append-bottom-1
                   =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
                   .example.first
                     Year  
             - if !@credit_card.nil?
               .control-group
                 .controls
-                  .span-7
+                  .span-7.col-lg-7.col-md-7.col-sm-7
                     = link_to 'Keep card on record', '#', :id=>'cancel_credit_card_link'
-          .span-12
+          .span-12.col-lg-12.col-md-12.col-sm-12
             %strong Need Help? Call us!
             %br
               .gray50.fs_11

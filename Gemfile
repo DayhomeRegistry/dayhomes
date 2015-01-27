@@ -24,7 +24,7 @@ gem 'koala'
 gem 'exception_notification', :git => 'git://github.com/DayhomeRegistry/exception_notification.git'
 gem 'maruku'
 gem 'simple_form'
-gem 'client_side_validations' , '~> 3.2', :git => 'https://github.com/bcardarella/client_side_validations.git'
+#gem 'client_side_validations' , '~> 3.2', :git => 'https://github.com/bcardarella/client_side_validations.git'
 gem 'actionmailer-instyle', :require => 'action_mailer/in_style'
 gem 'stripe'
 gem 'thin', '~>1.5'
@@ -47,8 +47,9 @@ platforms :mswin, :mingw do
 end
 
 group :assets do
-  gem 'sass-rails', '~> 3.1'
-  gem 'bootstrap-sass', '~> 2.0.2'
+  gem 'bootstrap-sass', '~> 3' 
+  gem 'sass-rails', '>= 3.2'
+  gem 'autoprefixer-rails'
 
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'

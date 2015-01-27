@@ -69,15 +69,15 @@
         .controls  
           .append-bottom-1.first            
             =label_tag :existing_card_number, "**** **** **** "+@organization.credit_card[:last4], :style=>"width:150px;"
-            .span-7
+            .span.col-lg-.col-md-.col-sm--7
               =label_tag :existing_card_exp, "Exp:"+@organization.credit_card[:month].to_s+"/"+@organization.credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"
             .clear
           .append-bottom-1
-            .span-7
+            .span.col-lg-.col-md-.col-sm--7
               = link_to 'Enter a new credit card','#', :id=>'change_credit_card_link'   
   #newCard{:style=>"display:#{(@organization.credit_card.nil? && 'block') || 'none'};"}      
     .append-bottom-1
-      .span-25
+      .span.col-lg-.col-md-.col-sm--25
         /
           .control-group
             %label.control-label{:for => "BILL_NAME"}
@@ -87,11 +87,11 @@
         .control-group          
           =label_tag :card_number, "Card Number", :class=>"control-label"            
           .controls  
-            .span-11
+            .span.col-lg-.col-md-.col-sm--11
               =text_field_tag :card_number, '', :name=>nil, :class=>"input-large",:onkeypress => "return numbersonly2(this, event)"
               .example
                 Number
-            .span-4
+            .span.col-lg-.col-md-.col-sm--4
               =text_field_tag :card_code, nil, name:nil, :class=>"input-mini"
               .example
                 CVV
@@ -99,18 +99,18 @@
         .control-group
           =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
           .controls
-            .span-6.append-bottom-1
+            .span.col-lg-.col-md-.col-sm--6.append-bottom-1
               =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month"}
               .example
                 Month
-            .span-6.append-bottom-1
+            .span.col-lg-.col-md-.col-sm--6.append-bottom-1
               =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
               .example.first
             Year        
         - if !@organization.credit_card.nil?
           .control-group
             .controls
-              .span-7
+              .span.col-lg-.col-md-.col-sm--7
                 = link_to 'Keep card on record', '#', :id=>'cancel_credit_card_link'
   .clear  
   .form-actions

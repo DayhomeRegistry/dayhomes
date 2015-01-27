@@ -7,7 +7,7 @@
       %h3 Dayhome search
     .control-group
       .row
-        .span3
+        .span3.col-lg-3.col-md-3.col-sm-3
           .controls
             = f.hidden_field(:advanced_search, :value => true)
             -if !@agency.nil?
@@ -19,7 +19,7 @@
                 -else
                   = 'Dayhomes near'
               = f.text_field :address, :style => 'width: 175px', :placeholder => "Address or Neighbourhood"
-        .span2
+        .span2.col-lg-2.col-md-2.col-sm-2
           .search_section
             %h5
               ='Full-time Availability'
@@ -28,7 +28,7 @@
                 %label.checkbox
                   = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
                   = avail_type.kind
-        .span2
+        .span2.col-lg-2.col-md-2.col-sm-2
           .search_section
             %h5
               ='Part-time Availability'
@@ -38,7 +38,7 @@
                   = check_box_tag "search[availability_types][kind][]", avail_type.id, checked = avail_type.checked, :class => 'checkbox'
                   = avail_type.kind
       .row
-        .span3
+        .span3.col-lg-3.col-md-3.col-sm-3
           .search_section
             %h5
               = 'Certification'
@@ -46,14 +46,14 @@
               %label.checkbox
                 = check_box_tag "search[certification_types][kind][]", cert_type.id, checked = cert_type.checked, :class => 'checkbox'
                 = cert_type.kind
-        .span2
+        .span2.col-lg-2.col-md-2.col-sm-2
           .search_section
             %h5
               = 'Dietary Accomodations'
             %label.checkbox
               = f.check_box :dietary_accommodations, :class => 'checkbox'
               = 'Accommodates for Food Allergies'
-        .span2
+        .span2.col-lg-2.col-md-2.col-sm-2
           .search_section
             %h5
               = 'Accredited / Private'

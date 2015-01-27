@@ -54,7 +54,8 @@ class Search
   def dayhome_filter(params)
     
     search_addy_pin = nil
-    dayhome_query = DayHome.scoped
+    dayhome_query = DayHome.all
+    
 	
   	# don't display any dayhomes that are not approved
   	dayhome_query = dayhome_query.where( :approved => true )

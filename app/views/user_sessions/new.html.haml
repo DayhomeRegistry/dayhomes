@@ -1,5 +1,5 @@
 .row.registrationStyle
-  .span4.well.form-horizontal
+  .span4.col-lg-4.col-md-4.col-sm-4.well.form-horizontal
     %h2
       Your Account
 
@@ -15,7 +15,7 @@
       = f.submit 'Login', :class => 'btn'
       |
       = link_to 'Forgot password?', reset_password_path
-  .span1{:style=>"margin-top:100px"}
+  .span1.col-lg-1.col-md-1.col-sm-1{:style=>"margin-top:100px"}
     OR
-  .span4{:style=>"margin-top:100px"}
+  .span4.col-lg-4.col-md-4.col-sm-4{:style=>"margin-top:100px"}
     = fb_connect_button
