@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   layout 'application'
+  layout "landingpage", only: [:index]
 
   def index 
     edmonton = Community.where("name like 'Edmonton%'");
