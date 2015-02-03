@@ -4,53 +4,51 @@
 
 = simple_form_for [:admin, @organization], :html => {:multipart => true} do |f|
   .form-inputs 
-    .control-group
-      .control-label
+    .form-group
+      .col-sm-2
         Contact Information
-      .controls
-        .append-bottom-1.first    
-          = f.input :name 
-          = f.input :phone_number
-    .control-group
-      .control-label
+      .col-sm-10  
+        = f.input :name 
+        = f.input :phone_number
+    .form-group
+      .col-sm-2
         Address
-      .controls
-        .append-bottom-1.first    
-          = f.input :street1 
-          = f.input :street2
-          = f.input :city
-          = f.input :province
-          = f.input :postal_code
-    .control-group
-      .control-label
+      .col-sm-10 
+        = f.input :street1 
+        = f.input :street2
+        = f.input :city
+        = f.input :province
+        = f.input :postal_code
+    .form-group
+      .col-sm-2
         Description
-      .controls
-        .append-bottom-1.first  
-          .control-group
-            =label_tag "Logo", nil,:class=>"control-label"
-            .controls
-              .logo
-                -if !@organization.logo.nil?
-                  %img{:src=>"#{@organization.logo.photo_url(:thumb)}"}
-              .input
-                =file_field_tag 'organization[logo_attributes][photo]' 
-          .control-group
-            =label_tag "Pin", nil,:class=>"control-label"
-            .controls
-              .logo
-                -if !@organization.pin.nil?
-                  %img{:src=>"#{@organization.pin.photo_url()}"}
-              .input
-                =file_field_tag 'organization[pin_attributes][photo]'       
-          .control-group
-            = f.input :blurb , as: :text, input_html:{maxlength:"250", rows:"12"} 
-            .controls
-              %span.small
-                max 250 characters
+      .col-sm-10
+        .form-group
+          =label_tag "Logo", nil,:class=>"control-label"
+          .controls
+            .logo
+              -if !@organization.logo.nil?
+                %img{:src=>"#{@organization.logo.photo_url(:thumb)}"}
+            .input
+              =file_field_tag 'organization[logo_attributes][photo]' 
+        .form-group
+          =label_tag "Pin", nil,:class=>"control-label"
+          .controls
+            .logo
+              -if !@organization.pin.nil?
+                %img{:src=>"#{@organization.pin.photo_url()}"}
+            .input
+              =file_field_tag 'organization[pin_attributes][photo]'       
+        .form-group
+          = f.input :blurb , as: :text, input_html:{maxlength:"250", rows:"12"} 
+          %label.text.optional.control-label
+            
+          %span.small
+            max 250 characters
   = f.hidden_field :stripe_card_token
   -if !@organization.credit_card.nil?
     #existingCard
-      .control-group                
+      .form-group                
         .control-label
           Credit Card
         .controls  
@@ -63,9 +61,10 @@
             .span-7.col-lg-7.col-md-7.col-sm-7
               = link_to 'Enter a new credit card','#', :id=>'change_credit_card_link'   
   #newCard{:style=>"display:#{(@organization.credit_card.nil? && 'block') || 'none'};"}      
-    .control-group          
-      =label_tag :card_number, "Card Number", :class=>"control-label"            
-      .controls  
+    .form-group 
+      .col-sm-2
+        =label_tag :card_number, "Card Number", :class=>"control-label"            
+      .col-sm-10  
         .span-11.col-lg-11.col-md-11.col-sm-11
           =text_field_tag :card_number, '', :name=>nil, :class=>"input-large",:onkeypress => "return numbersonly2(this, event)"
           .example
@@ -75,25 +74,20 @@
           .example
             CVV
             <i class="icon-info-sign" data-title="What's a CVV?" data-content='The CVV Number ("Card Verification Value") on your credit card or debit card is a 3 digit number on VISA®, MasterCard® and Discover® branded credit and debit cards. On your American Express® branded credit or debit card it is a 4 digit numeric code.'></i>      
-    .control-group
-      =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
-      .controls
-        .span-4.col-lg-4.col-md-4.col-sm-4
-          =select_month nil, {add_month_numbers: true},{:name=>nil,:id=>"card_month",:style=>"width:100px;"}
-          .example.first
-            Month
-        .span-4.col-lg-4.col-md-4.col-sm-4
-          =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year",:style=>"width:100px;"}
-          .example
-            Year        
+    .form-group
+      .col-sm-2
+        =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
+      .col-sm-2
+        =select_month nil, {add_month_numbers: true},{:name=>nil,:id=>"card_month",:style=>"width:100px;"}
+        .example.first
+          Month
+        =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year",:style=>"width:100px;"}
+        .example
+          Year        
         - if !@organization.credit_card.nil?
-          .control-group
+          .form-group
             .controls
-              .span-7.col-lg-7.col-md-7.col-sm-7
-                = link_to 'Keep card on record', '#', :id=>'cancel_credit_card_link'
-  
-
-        
+              = link_to 'Keep card on record', '#', :id=>'cancel_credit_card_link'
   .clear  
   .form-actions
     %span.button.large.green.single

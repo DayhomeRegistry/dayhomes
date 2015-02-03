@@ -1,6 +1,6 @@
 
 %p
-  = link_to 'Create User', [:new, :admin, :user], :class => :btn
+  = link_to 'Create User', [:new, :admin, :user], :class => "btn btn-default"
 =form_tag({:controller => "users", :action => "index"},{ :method=>"get", :id => :searchForm}) do 
   %div.input-prepend.pull-right
     %span.add-on
@@ -50,4 +50,4 @@
             = link_to 'Delete', [:admin, user], :method => :delete, :confirm => "Are you sure you want to remove #{user.full_name}?"
             
             
-  = paginate @users
+  = paginate @users, :window => 1,:left => 3,:right => 3,:theme => 'twitter-bootstrap-3'

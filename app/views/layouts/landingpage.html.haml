@@ -20,7 +20,7 @@
             %span.icon-bar.bar1
             %span.icon-bar.bar2
             %span.icon-bar.bar3
-          %a{:href => "http://www.creative-tim.com"}
+          %a{:href => "http://www.dayhomeregistry.com"}
             .logo-container
               .logo
                 =image_tag 'landingpage/new_logo.jpg', :alt=>"Dayhome Registry"
@@ -29,18 +29,11 @@
         / Collect the nav links, forms, and other content for toggling
         #example.collapse.navbar-collapse
           %ul.nav.navbar-nav.navbar-right
+            
             %li
-              %a{:href => "#"}
-                %i.fa.fa-facebook-square
-                Like
-            %li
-              %a{:href => "#"}
-                %i.fa.fa-twitter
-                Tweet
-            %li
-              %a{:href => "#"}
-                %i.fa.fa-pinterest
-                Pin
+              %a{:href => "#{login_url}"}
+                %i.fa.fa-sign-in
+                Login
             %li
               %a.call-to-action{:href => "#{billing_signup_path}"} List your dayhome
         / /.navbar-collapse

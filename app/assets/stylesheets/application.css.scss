@@ -303,24 +303,14 @@ margin-bottom: 0;
 .floatr {
   float:right;
 }
-.pagination a {
-  padding: 0 5px;
-  border: none;
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+  background-color: $green;
+  border-color: $green;
+}
+.pagination > li > a, .pagination > li > span {
+  color: $green;
 }
 
-.pagination .page.active a{
-  color: red;
-}
-.pagination span.first {
-  line-height: 34px;
-  color: #999;
-}
-.pagination li span {
-  float:left;
-  padding: 0 5px;
-}
-.pagination li {
-}
 .wellSize {
   min-height: 340px;
 }
