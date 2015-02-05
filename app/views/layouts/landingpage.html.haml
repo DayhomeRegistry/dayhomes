@@ -11,7 +11,7 @@
     %link{:href => "http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}/
     %link{:href => "http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300", :rel => "stylesheet", :type => "text/css"}/
   %body.landing-page
-    %nav.navbar.navbar-transparent.navbar-top{:role => "navigation"}
+    %nav.navbar.navbar-transparent.navbar-top{:role => "navigation",:style=>""}
       .container
         / Brand and toggle get grouped for better mobile display
         .navbar-header
@@ -20,15 +20,29 @@
             %span.icon-bar.bar1
             %span.icon-bar.bar2
             %span.icon-bar.bar3
-          %a{:href => "http://www.dayhomeregistry.com"}
+          %a{:href => "http://dayhomeregistry.com"}
             .logo-container
               .logo
-                =image_tag 'landingpage/new_logo.jpg', :alt=>"Dayhome Registry"
+                =image_tag "landingpage/new_logo.jpg",:alt => "Dayhome Registry"
               .brand
                 Dayhome Registry
+        
         / Collect the nav links, forms, and other content for toggling
         #example.collapse.navbar-collapse
-          %ul.nav.navbar-nav.navbar-right
+
+          %ul.nav.navbar-nav.navbar-left{:style=>"margin-top:120px"}
+            %li
+              %a{:href => "http://blog.dayhomeregistry.com"}
+                %i.fa.fa-wordpress
+                Blog
+            %li
+              %a{:href => "http://shop.dayhomeregistry.com"}
+                %i.fa.fa-shopping-cart
+                Shop   
+          .logo{:style=>"position:absolute;left:50%;margin-left:-102.5px"}
+            %a{:href => "http://www.dayhomeregistry.com"}
+              =image_tag 'logo.png'
+          %ul.nav.navbar-nav.navbar-right{:style=>"margin-top:120px"}
             -if current_user.nil?
               %li
                 %a{:href => "#{login_url}"}

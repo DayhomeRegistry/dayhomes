@@ -51,7 +51,7 @@ body {
 }
 
 a {
-  color: #2ca8ff;
+  color: #29D433;
 }
 a:hover, a:focus {
   color: #109cff;
@@ -451,6 +451,14 @@ a:focus, a:active {
 .navbar .call-to-action {
   background-color: #29D433;
   border-radius: 5px;
+  color: white;
+}
+.navbar-transparent .navbar-nav > li > a.call-to-action{
+  color:white;
+}
+.navbar-transparent .navbar-nav > li > a:hover.call-to-action{
+  color:white;
+  background-color: #55F55F;
 }
 
 .navbar-transparent .navbar-brand, [class*="navbar-ct"] .navbar-brand {
@@ -464,7 +472,7 @@ a:focus, a:active {
   filter: alpha(opacity=100);
 }
 .navbar-transparent .navbar-nav > li > a, [class*="navbar-ct"] .navbar-nav > li > a {
-  color: white;
+  color: #29D433;
   border-color: white;
   opacity: 0.8;
   filter: alpha(opacity=80);
@@ -478,9 +486,9 @@ a:focus, a:active {
 [class*="navbar-ct"] .navbar-nav > .active > a:focus,
 [class*="navbar-ct"] .navbar-nav > li > a:hover,
 [class*="navbar-ct"] .navbar-nav > li > a:focus {
-  background-color: #55F55F;
-  border-radius: 3px;
-  color: white;
+  background-color: white;
+  /*border-radius: 3px;*/
+  color: #55F55F;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -1293,8 +1301,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de8e0009', e
     .landing-page #goodhands{
         margin-top: 218px;
     }
+    .navbar {
+      background-color: white;
+    }
+    .logo-container {
+      display:none;
+    }
 }
 @media (max-width:768px){
+    .logo-container {
+      display:block;
+    }
     .landing-page #goodhands{
         margin-top: 80px;
     }
