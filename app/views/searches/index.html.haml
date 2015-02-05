@@ -80,7 +80,11 @@
               currentInfo = railsmarker;
               try {
                 railsmarker['infowindow'].open(Gmaps.map.map,railsmarker.serviceObject);
-                railsmarker.serviceObject.setIcon("/assets/dayhome-red.png");
+                if(railsmarker.picture.indexOf("-featured")>0){
+                  railsmarker.serviceObject.setIcon("/assets/dayhome-red-featured.png");
+                }else {
+                  railsmarker.serviceObject.setIcon("/assets/dayhome-red.png");
+                }
               } catch (err) {
                  //wish I knew how to tell someone
               }

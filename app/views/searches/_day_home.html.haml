@@ -1,6 +1,9 @@
 %div.dayhome_listing  
   .name
-    %h4= link_to day_home.name, day_home_path(day_home)
+    %h4
+      = link_to day_home.name, day_home_path(day_home)
+      -if day_home.featured?
+        =image_tag "star.png"
     =link_to "Show on map","#",:class=>"markerCallout",:id=>day_home.slug    
   .row
     .span2.col-lg-2.col-md-2.col-sm-2
