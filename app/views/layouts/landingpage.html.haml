@@ -29,11 +29,16 @@
         / Collect the nav links, forms, and other content for toggling
         #example.collapse.navbar-collapse
           %ul.nav.navbar-nav.navbar-right
-            
-            %li
-              %a{:href => "#{login_url}"}
-                %i.fa.fa-sign-in
-                Login
+            -if current_user.nil?
+              %li
+                %a{:href => "#{login_url}"}
+                  %i.fa.fa-sign-in
+                  Login
+            -else
+              %li
+                %a{:href => "#{logout_url}"}
+                  %i.fa.fa-sign-out
+                  Logout
             %li
               %a.call-to-action{:href => "#{billing_signup_path}"} List your dayhome
         / /.navbar-collapse
@@ -41,7 +46,7 @@
       .parallax.filter-gradient.green
         .parallax-background
           =image_tag 'landingpage/bg.jpg', :alt=>"Background"
-        .col-sm-12.col-center{:style => " z-index: 2; text-align: center; margin-top: -418px; color: white; "}
+        .col-sm-12.col-center#goodhands{:style => " z-index: 2; text-align: center; color: white; "}
           %h1#tagline.uppercase.text-jumbo.text-contrast.row-space-1 Your kids are in good hands!
           #subtitle.h4.text-contrast.row-space-4
             Find safe and nurturing in-home care for your kids across Canada.
@@ -63,10 +68,15 @@
                     %option{:value => "3"} Part time
                     %option{:value => "4"} Before/After School
               %button#submit_location.search-button.form-inline.btn.btn-primary.btn-large{:type => "submit"} Search
-        %a.btn.hide-sm.btn-contrast.btn-large.btn-semi-transparent.how-it-works{:href => "#"}
-          How It Works
-        %a.mobile-discovery-arrow.hide-md.hide-lg{:href => "#discovery-container"}
-          %i.icon.icon-chevron-down.icon-white.icon-size-2
+        .goodhandsspacer
+    .section.section-clients
+      .container.text-center
+        %h4.header-text Our Partners
+        .logos
+          %ul.list-unstyled
+            %li
+              =image_tag("landingpage/born2create.jpg", width: "232", alt: "Born2Create") 
+              
     .section.section-gray.section-testimonial
       .container
         %h4.header-text.text-center What people think
@@ -113,11 +123,7 @@
           .col-md-6
             #description-carousel.carousel.fade{"data-ride" => "carousel"}
               .carousel-inner
-                .item
-                  =image_tag "landingpage/home_1.png"
                 .item.active
-                  =image_tag "landingpage/home_1.png"
-                .item
                   =image_tag "landingpage/home_1.png"
               %ol.carousel-indicators.carousel-indicators-green
                 %li{"data-slide-to" => "0", "data-target" => "#description-carousel"}
