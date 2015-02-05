@@ -39,6 +39,10 @@
       Private
       = image_tag("dayhome.png", :alt => "Private", :title => "Private")
       Accredited
+    - if !@featured.empty?
+      %h3
+        Featured
+      =render :partial => 'day_home', :collection => @featured 
     %h3
       Results
     <ul id="markers_list">  </ul>

@@ -22,6 +22,9 @@
  *= require searches
  
 */
+@import 'jquery.ui.core';
+@import 'jquery.ui.datepicker';
+
 $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 $iconLogoPath: asset-url("mini-logo.jpg", image) !default;
 @import "bootstrap";

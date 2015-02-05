@@ -1,6 +1,7 @@
 class SearchesController < ApplicationController
   def index
     if params[:search].blank?
+      @featured = DayHome.featured.all.reject{|x|!x.approved?}
       @day_homes = DayHome.with_availability_uniq(Search::DEFAULT_AVAILABILITY_TYPES).all.reject{|x| !x.approved?}
     else
       #raise params.to_json
@@ -14,6 +15,7 @@ class SearchesController < ApplicationController
       end
 
       # set the pins for gmaps
+      @featured = DayHome.featured.all.reject{|x|!x.approved?}
       @day_homes = @search.day_homes
     end
 

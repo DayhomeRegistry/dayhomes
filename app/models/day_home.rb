@@ -112,7 +112,8 @@ class DayHome < ActiveRecord::Base
     !self.features.where("end > ?",Time.now()).empty?
   end
   def feature_end_date
-    self.features.where("end > ?",Time.now()).order("end desc").first.end
+    date = self.features.where("end > ?",Time.now()).order("end desc").first
+    return date.end unless date.nil?
   end
   def admin_featured=(value)
     if value
@@ -201,6 +202,16 @@ class DayHome < ActiveRecord::Base
     self.organization.users.where("location_id = ?",self.location_id)
   end
 
+  def activate_admin_until(endDate)
+    feature = Feature.new();
+    feature.day_home=self
+    feature.start = Time.now()
+    feature.end = endDate
+    feature.organization=self.organization
+    feature.freebee = false;
+    save = feature.save
+    return save && self.organization.save
+  end
   def activate_admin
     feature = Feature.new();
     feature.day_home=self
@@ -208,7 +219,6 @@ class DayHome < ActiveRecord::Base
     feature.end = Time.now().advance(:months=>1)
     feature.organization=self.organization
     feature.freebee = false;
-    @organization.features << feature
     save = feature.save
     return save && self.organization.save
   end
