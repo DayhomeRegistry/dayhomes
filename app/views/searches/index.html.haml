@@ -14,16 +14,16 @@
 /           :do_clustering => true, |
 /           :clusterer_maxZoom => 6}})
 .row
-  .span8.col-lg-8.col-md-8.col-sm-8
+  .col-sm-12
     =render 'form'
 .row
-  .span8.col-lg-8.col-md-8.col-sm-8    
+  .col-sm-12    
     =gmaps( |
       :map_options => { |
         :center_latitude => @search.center_latitude, |
         :center_longitude => @search.center_longitude, |
         :zoom => @search.zoom, |
-        :auto_adjust =>  @search.auto_adjust, |
+        :auto_adjust =>  false, |
         :auto_zoom => false, |
         :provider_key => gmaps_api_key, |
         :list_container => "markers_list" }, |
@@ -39,13 +39,24 @@
       Private
       = image_tag("dayhome.png", :alt => "Private", :title => "Private")
       Accredited
+  .col-sm-12
     - if !@featured.empty?
+      .featured_listing
+        .col-sm-8
+          %h3
+            Featured
+          .featured{:style=>"margin:10px -10px -10px -10px;padding: 0 10px 10px 10px;"}
+            =render :partial => 'day_home', :collection => @featured 
+        .col-sm-4{:style=>"float:right;"}
+          %h3
+            Sponsors
+          .list
+            =image_tag("landingpage/born2create.jpg", width: "232", alt: "Born2Create")
+  .col-sm-12
+    .col-sm-8
       %h3
-        Featured
-      =render :partial => 'day_home', :collection => @featured 
-    %h3
-      Results
-    <ul id="markers_list">  </ul>
+        In your area
+      <ul id="markers_list">  </ul>
     /
       - if !@day_homes.empty?
         =render :partial => 'day_home', :collection => @day_homes 

@@ -6,11 +6,12 @@ class Search
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
                 :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
-                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group, :organization
+                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group, :organization, :location
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => ['Full Days', 'After School','Before School','Morning','Afternoon']}
-  EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
-  CALGARY_GEO = {:lat => 51.0453246, :lng => -114.0581012 }
+
+  EDMONTON_GEO = {:lat => 53.543235, :lng => -113.490737 }
+  CALGARY_GEO = {:lat => 51.047448, :lng => -114.062912 }
 
   def initialize(attributes = {})
     #debugger
@@ -84,6 +85,10 @@ class Search
     # create search dayhome pin
     if params.has_key?(:address) && !params[:address].blank?
       search_addy_pin = geocode(setup_address(params[:address]))
+    elsif params.has_key?(:location) && params[:location]["lng"] != 0
+      #Try geocoding the IP
+      search_addy_pin = params[:location]
+    #ELSE, we'll default to edmonton later on
     end
 
     # return the gmaps pins variable
@@ -267,7 +272,6 @@ class Search
       end
 
     end
-    debugger
     dayhome_query
   end
 
