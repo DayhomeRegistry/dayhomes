@@ -218,8 +218,7 @@ class Admin::DayHomesController < Admin::ApplicationController
     end
     
     @day_home = DayHome.find(params[:id]) 
-    featured = true
-    debugger    
+    featured = true   
     if params[:day_home][:featured].nil? || params[:day_home][:featured]=="0"
       #the checkbox is not checked
       if @day_home.featured?

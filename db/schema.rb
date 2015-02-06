@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141028184108) do
+ActiveRecord::Schema.define(:version => 20150206012003) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20141028184108) do
     t.boolean  "default_photo", :default => false
   end
 
+  add_index "day_home_photos", ["day_home_id", "default_photo"], :name => "index_day_home_photos_on_day_home_id_and_default_photo"
   add_index "day_home_photos", ["day_home_id"], :name => "index_day_home_photos_on_day_home_id"
 
   create_table "day_home_signup_requests", :force => true do |t|
@@ -161,6 +162,8 @@ ActiveRecord::Schema.define(:version => 20141028184108) do
     t.datetime "deleted_on"
   end
 
+  add_index "day_homes", ["location_id"], :name => "index_day_homes_on_location_id"
+
   create_table "events", :force => true do |t|
     t.string   "title"
     t.datetime "starts_at"
@@ -184,6 +187,9 @@ ActiveRecord::Schema.define(:version => 20141028184108) do
     t.boolean  "freebee",         :default => false
   end
 
+  add_index "features", ["day_home_id", "end"], :name => "index_features_on_day_home_id_and_end"
+  add_index "features", ["day_home_id"], :name => "index_features_on_day_home_id"
+
   create_table "forums", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -205,6 +211,8 @@ ActiveRecord::Schema.define(:version => 20141028184108) do
     t.integer  "community_id"
     t.string   "phone_number"
   end
+
+  add_index "locations", ["organization_id"], :name => "index_locations_on_organization_id"
 
   create_table "organization_photos", :force => true do |t|
     t.integer  "logo_id"

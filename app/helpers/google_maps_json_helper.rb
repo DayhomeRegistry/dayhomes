@@ -27,6 +27,9 @@ module GoogleMapsJsonHelper
   
   def gmap_prepare_dayhomes(day_homes)
     day_homes.to_gmaps4rails do |dayhome, marker|
+      @is_featured = dayhome.featured?
+      @featured_photo = dayhome.featured_photo
+      @organization = dayhome.organization
       marker.infowindow render(:partial => "/searches/pin", :locals => { :dayhome => dayhome})
       marker.title dayhome.name
       if dayhome.featured?
@@ -36,7 +39,7 @@ module GoogleMapsJsonHelper
       else
         picture = "/assets/dayhome-private.png"
         picture = "/assets/dayhome.png" unless !dayhome.licensed
-        picture = dayhome.organization.pin.photo_url(:pin) unless dayhome.organization.pin.nil?
+        picture = @organization.pin.photo_url(:pin) unless @organization.pin.nil?
       end
       marker.picture({ :picture => picture,
                        :width => 41,

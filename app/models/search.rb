@@ -13,7 +13,7 @@ class Search
   CALGARY_GEO = {:lat => 51.0453246, :lng => -114.0581012 }
 
   def initialize(attributes = {})
-
+    #debugger
     # set each of the attributes
     attributes.each do |name, value|
       send("#{name}=", value)
@@ -250,6 +250,7 @@ class Search
   end
 
   def apply_type_filter(type, dayhome_query)
+
     unless self.send(type).blank?
       # tack on any of the checkboxes to the where clause
       id_array = []
@@ -266,6 +267,7 @@ class Search
       end
 
     end
+    debugger
     dayhome_query
   end
 
