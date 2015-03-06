@@ -6,6 +6,7 @@ class DayHome < ActiveRecord::Base
   default_scope where("deleted < 1")
   after_save :clear_cache
 
+  reverse_geocoded_by :lat, :lng
   acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
                     :check_process => :prevent_geocoding, :address => :geo_address,
                     :msg => 'Cannot find a location matching that query.' 

@@ -16,7 +16,7 @@ class DayHomePhotoUploader < CarrierWave::Uploader::Base
 
   #Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url
-    "/thumb_toys.JPG"
+    "/thumb_toys.png"
   end
 
   # Process files as they are uploaded:

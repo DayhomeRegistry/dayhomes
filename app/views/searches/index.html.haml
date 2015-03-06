@@ -39,21 +39,22 @@
       Private
       = image_tag("dayhome.png", :alt => "Private", :title => "Private")
       Accredited
-  .col-sm-12
-    - if !@featured.empty?
+  .col-sm-4{:style=>"float:right;"}
+    %h3
+      Sponsors
+    .list
+      =image_tag("landingpage/born2create.jpg", width: "232", alt: "Born2Create")    
+  - if !@featured.empty?
+    .col-sm-8
       .featured_listing
-        .col-sm-8
+        .col-sm-12
           %h3
             Featured
           .featured{:style=>"margin:10px -10px -10px -10px;padding: 0 10px 10px 10px;"}
             =render :partial => 'day_home', :collection => @featured 
-        .col-sm-4{:style=>"float:right;"}
-          %h3
-            Sponsors
-          .list
-            =image_tag("landingpage/born2create.jpg", width: "232", alt: "Born2Create")
-  .col-sm-12
-    .col-sm-8
+
+  .col-sm-8
+    .col-sm-12
       %h3
         In your area
       <ul id="markers_list">  </ul>
@@ -83,7 +84,7 @@
             //  position: new google.maps.LatLng(railsmarker.lat,railsmarker.lng),
             // map: Gmaps.map.map              
             //});
-            if (railsmarker.sidebar.toString().indexOf("/"+slug)>0) {              
+            if (railsmarker.sidebar && railsmarker.sidebar.toString().indexOf("/"+slug)>0) {              
               if(currentInfo != null){
                 currentInfo.serviceObject.setIcon("/assets/dayhome.png");
                 currentInfo['infowindow'].close();
@@ -117,8 +118,9 @@
               $("#markers_list").append(Gmaps.map.markers[i].sidebar);
               j++;
             }
+
             if(lasti!=i && lastj!=j && j>0 && j%5==0){
-             $("#markers_list").append("<div class='dayhome_listing'><ins class='adsbygoogle' style='display:inline-block;width:468px;height:60px' data-ad-client='ca-pub-6835867491393885' data-ad-slot='6878500053'></ins></div"); 
+             $("#markers_list").append("<div class='dayhome_listing'><ins class='adsbygoogle' style='display:inline-block;width:234px;height:60px' data-ad-client='ca-pub-6835867491393885' data-ad-slot='3925033656'></ins></div"); 
              lasti=i;
              lastj=j;
             }

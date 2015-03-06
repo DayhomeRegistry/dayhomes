@@ -53,7 +53,7 @@ class Search
   end
 
   def dayhome_filter(params)
-    
+
     search_addy_pin = nil
     dayhome_query = DayHome.scoped
   
@@ -226,6 +226,7 @@ class Search
   end
 
   def determine_joins(dayhome_query)
+
     # check if their are related entities (by looking for what's been checked), if so, join to that table
     has_avail_types = check_for_checks(:availability_types)
     has_cert_types = check_for_checks(:certification_types)
@@ -279,6 +280,14 @@ class Search
     # get all of the dayhomes from the system
     self.day_homes = dayhome_query.uniq.all
 
+    self.day_homes = self.day_homes.reject {|obj|
+        d=1000;
+        if obj.geocoded?
+          d = obj.distance_from([search_addy_pin["lat"],search_addy_pin["lng"]])
+        end
+        d>100
+    }
+
     # record the number of pins
     self.pin_count = self.day_homes.count
 
@@ -296,7 +305,7 @@ class Search
   end
 
   def geocode(address)
-    debugger
+
     begin
       # get the json representation of an address
       search_pin = convert_address(address)

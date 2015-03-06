@@ -36,6 +36,7 @@ class SearchesController < ApplicationController
     #@featured = DayHome.featured
     @day_homes = @search.day_homes
     @featured = @day_homes.reject {|dayhome| !dayhome.featured?}
+    
 
     # make sure the search object keeps its persistance
     @advanced_search = params.has_key?(:search) ? @search : Search.new

@@ -206,7 +206,7 @@ class Admin::DayHomesController < Admin::ApplicationController
   end
 
   def update
-
+   
     community = Community.find(params[:location][:community_id]) 
 
     #raise community.to_json
@@ -226,7 +226,7 @@ class Admin::DayHomesController < Admin::ApplicationController
       end
       featured = false
     end
-    if(featured)
+    if(featured && !@day_home.featured?)
       untilDate = Date.strptime(params[:day_home][:feature_end_date], "%m/%d/%Y") #Date.parse(params[:day_home][:feature_end_date])
       #months = [(untilDate.year * 12 + untilDate.month) - (Date.today.year * 12 + Date.today.month-1),1].max
       @day_home.activate_admin_until(untilDate)

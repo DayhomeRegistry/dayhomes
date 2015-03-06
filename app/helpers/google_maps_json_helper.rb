@@ -3,7 +3,6 @@ module GoogleMapsJsonHelper
   def convert_address(address)
     # check to make sure address is valid
     #Gmaps4rails.geocode(address)
-    debugger
     # grab the geolocation for where they searched
     search_address = Gmaps4rails.geocode(address)
 
