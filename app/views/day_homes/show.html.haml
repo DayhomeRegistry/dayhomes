@@ -1,17 +1,16 @@
-- content_for :header_scripts
-  = tag :meta, :property=>"og:image", :content => image_url(@day_home.featured_photo.photo_url())
-  <meta property="og:image" content="your_image_here" />
-  :javascript
-  $('[rel=tooltip]').tooltip({placement:'right'});
+:javascript
   var dialog;
   $(document).ready(function(){
-      
-      $(".slides-sm").cycle({
-        fx:     "fade",
-        speed:    600,
-        timeout:  5000
-      });
+    $('[rel=tooltip]').tooltip({placement:'right'});
+    $(".slides-sm").cycle({
+      fx:     "fade",
+      speed:    600,
+      timeout:  5000
     });
+  });
+- content_for :ogimage do
+  =tag :meta, :property=>"og:image", :content => @day_home.featured_photo.photo_url()
+
 -@content_for_title="#{@day_home.name} - Dayhome Registry"
 .row
   .span12.col-lg-12.col-md-12.col-sm-12

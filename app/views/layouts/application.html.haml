@@ -19,7 +19,7 @@
     = tag :meta, :property=>"og:type", :content => "website"
     = tag :meta, :property=>"og:site_name", :content => "Dayhome Registry"
     = tag :meta, :property=>"og:description", :content => "The center of the Dayhome provider communitiy where Parents can find a dayhome for their children, Dayhome Providers can find resources to help them deliver a better experience, and Agencies can coordinate their online presence."
-    = tag :meta, :property=>"og:image", :content => URI.join(root_url, image_path("logo.png"))
+    
     = tag :meta, :property=>"fb:app_id",:content => "371277729589519"
 
     :javascript
@@ -34,6 +34,10 @@
 
     / yield
     = content_for :header_scripts
+    -if content_for? :ogimage
+      = content_for :ogimage
+    -else
+      = tag :meta, :property=>"og:image", :content => URI.join(root_url, image_path("logo.png"))
     / /yield
     %link{:href => "/assets/icons/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}
     /[if gte IE 9]

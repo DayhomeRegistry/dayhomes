@@ -146,6 +146,7 @@ GEM
       thor (>= 0.13.6)
     formatador (0.2.5)
     forum_monster (1.0.4)
+    geocoder (1.2.7)
     geokit (1.9.0)
       multi_json (>= 1.3.2)
     geokit-rails (2.0.1)
@@ -377,6 +378,7 @@ DEPENDENCIES
   foreigner
   foreman (= 0.47.0)
   forum_monster
+  geocoder
   geokit
   geokit-rails
   gmaps4rails (= 1.4.8)

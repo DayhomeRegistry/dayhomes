@@ -164,15 +164,16 @@
   .span-12.col-lg-12.col-md-12.col-sm-12
     - if (@features.count ==0)
       None
-    - @features.each do |feature|                    
-      .row
-        .span-4.col-lg-4.col-md-4.col-sm-4
-          =link_to feature.day_home.name,day_home_path(feature.day_home)
-        .span-12.col-lg-12.col-md-12.col-sm-12
-          Featured from
-          = feature.start
-          to
-          = feature.end
+    - @features.each do |feature|  
+      -if feature.day_home                  
+        .row
+          .span-4.col-lg-4.col-md-4.col-sm-4
+            =link_to feature.day_home.name,day_home_path(feature.day_home)
+          .span-12.col-lg-12.col-md-12.col-sm-12
+            Featured from
+            = feature.start
+            to
+            = feature.end
     .clear
 .modal.fade#dialog-form{"aria-hidden" => "true", "aria-labelledby" => "myLargeModalLabel", :role => "dialog", :tabindex => "-1"}
   .modal-dialog.modal-lg
