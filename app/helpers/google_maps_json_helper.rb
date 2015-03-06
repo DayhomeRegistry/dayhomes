@@ -6,7 +6,6 @@ module GoogleMapsJsonHelper
     debugger
     # grab the geolocation for where they searched
     search_address = Gmaps4rails.geocode(address)
-    result = request.location
 
     # convert JSON into hash
     search_pin = {:lat => search_address[0][:lat], :lng => search_address[0][:lng], :width => '41', :height => '45'}.to_json

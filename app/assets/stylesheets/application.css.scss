@@ -306,6 +306,12 @@ margin-bottom: 0;
 .floatr {
   float:right;
 }
+.topright {
+  position:absolute;
+  top:0;
+  right:0;
+  margin: 1% 1%;
+}
 .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
   background-color: $green;
   border-color: $green;
@@ -313,7 +319,9 @@ margin-bottom: 0;
 .pagination > li > a, .pagination > li > span {
   color: $green;
 }
-
+.well {
+  position:relative;
+}
 .wellSize {
   min-height: 340px;
 }
@@ -542,4 +550,8 @@ div.callout {
 span.small {
   font-size: 13px;
   margin-left:20px;
+}
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
 }

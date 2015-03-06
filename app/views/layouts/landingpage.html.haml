@@ -1,11 +1,18 @@
 !!!
-%html{:lang => "en"}
+%html{:lang => "en", :xmlns=>"http://www.w3.org/1999/xhtml", 'xmlns:fb'=>"http://ogp.me/ns/fb#"}
   %head
     %meta{:charset => "utf-8"}/
     %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
     %title Dayhome Registry
     %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0", :name => "viewport"}/
     %meta{:content => "width=device-width", :name => "viewport"}/
+    = tag :meta, :property=>"og:type", :content => "website"
+    = tag :meta, :property=>"og:title", :content => "Dayhome Registry"
+    = tag :meta, :property=>"og:site_name", :content => "Dayhome Registry"
+    = tag :meta, :property=>"og:description", :content => "The center of the Dayhome provider communitiy where Parents can find a dayhome for their children, Dayhome Providers can find resources to help them deliver a better experience, and Agencies can coordinate their online presence."
+    = tag :meta, :property=>"og:image", :content => URI.join(root_url, image_path("logo.png"))
+    = tag :meta, :property=>"fb:app_id",:content => "371277729589519"
+
     = stylesheet_link_tag :landingpage, :media => :all
     / Fonts and icons
     %link{:href => "http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}/
@@ -41,7 +48,7 @@
                 Shop   
           .logo{:style=>"position:absolute;left:50%;margin-left:-102.5px"}
             %a{:href => "http://www.dayhomeregistry.com"}
-              =image_tag 'logo.png'
+              =image_tag 'logo.png',:alt => "Dayhome Registry", :style=>"max-width:175px;"
           %ul.nav.navbar-nav.navbar-right{:style=>"margin-top:120px"}
             -if current_user.nil?
               %li
@@ -115,10 +122,17 @@
               .carousel-testimonial-caption
                 %p Child Development Dayhomes
                 %h3 "We registered our agency with dayhomeregistry.com in March and in 6 months have generated an additional 80 leads. We love the map feature and often use it to help parents locate a dayhome in their specific neighbourhood."
+            .item
+              .mask
+                =image_tag "landingpage/faces/coconuttree.png"
+              .carousel-testimonial-caption
+                %p Kristy K - Coconut Tree Dayhome
+                %h3 I registered with the Dayhome Registry in January and within weeks I had several serious inquiries. Even with my somewhat restrictive schedule (closed summers) I was able to fill my spots within a few months, before I even opened my doors. My dayhome is currently full and I still receive inquiries almost weekly.
           %ol.carousel-indicators.carousel-indicators-green
             %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
             %li{"data-slide-to" => "1", "data-target" => "#carousel-example-generic"}
             %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
+            %li{"data-slide-to" => "3", "data-target" => "#carousel-example-generic"}
     .section.section-presentation
       .container
         .row

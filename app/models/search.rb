@@ -296,6 +296,7 @@ class Search
   end
 
   def geocode(address)
+    debugger
     begin
       # get the json representation of an address
       search_pin = convert_address(address)

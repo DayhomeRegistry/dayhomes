@@ -30,7 +30,7 @@
       .featured-button.featured
         .ui-button-text
           Featured
-          %span.fs_11
+          .fs_11
             until #{@day_home.feature_end_date}
 = form_for [:admin, @day_home], :html => {:multipart => true,:class=>"form-horizontal"} do |f|
   =hidden_field(:page, params["page"])
@@ -63,7 +63,7 @@
     .col-sm-10
       .input-group
         .input-group-addon
-          http://dayhomeregistry.com/
+          https://dayhomeregistry.com/
         = f.text_field :slug
   
   .form-group

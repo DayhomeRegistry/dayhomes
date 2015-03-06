@@ -38,7 +38,7 @@ gem 'redcarpet'
 
 gem 'geokit'
 gem 'geokit-rails'
-gem 'geocoder'
+#gem 'geocoder'
 
 gem 'newrelic_rpm', '~> 3.8.0'
 

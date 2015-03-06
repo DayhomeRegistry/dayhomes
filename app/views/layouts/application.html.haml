@@ -3,21 +3,21 @@
 /[if IE 7] <html lang="en-us" class="lt-ie9 lt-ie8">
 /[if IE 8] <html lang="en-us" class="lt-ie9">
 / [if gt IE 8] <!
-%html{:lang => "en-us"}
+%html{:lang => "en-us", :xmlns=>"http://www.w3.org/1999/xhtml", 'xmlns:fb'=>"http://ogp.me/ns/fb#"}
   / <![endif]
   %head
     -if !@content_for_title.nil?
       %title #{@content_for_title}
+      = tag :meta, :property=>"og:title", :content => @content_for_title
     -else
       %title Dayhome Registry
+      = tag :meta, :property=>"og:title", :content => "Dayhome Registry"
     = stylesheet_link_tag :application, :media => :all
     = javascript_include_tag "https://js.stripe.com/v1/",:application
     = csrf_meta_tags
     = tag :meta, :name=>"stripe-key", :content => STRIPE_PUBLIC_KEY
-
-    = tag :meta, :property=>"og:title", :content => "Connecting parents and dayhome providers."
-    = tag :meta, :property=>"og:site_name", :content => "Dayhome Registry."
-    = tag :meta, :property=>"og:url", :content => "http://www.dayhomeregistry.com"
+    = tag :meta, :property=>"og:type", :content => "website"
+    = tag :meta, :property=>"og:site_name", :content => "Dayhome Registry"
     = tag :meta, :property=>"og:description", :content => "The center of the Dayhome provider communitiy where Parents can find a dayhome for their children, Dayhome Providers can find resources to help them deliver a better experience, and Agencies can coordinate their online presence."
     = tag :meta, :property=>"og:image", :content => URI.join(root_url, image_path("logo.png"))
     = tag :meta, :property=>"fb:app_id",:content => "371277729589519"
@@ -33,7 +33,7 @@
       ga('send', 'pageview');
 
     / yield
-    = yield :header_scripts
+    = content_for :header_scripts
     / /yield
     %link{:href => "/assets/icons/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}
     /[if gte IE 9]
@@ -57,7 +57,7 @@
       = yield
       .clear
     = render 'layouts/footer'
-    = yield :footer_scripts
+    = content_for :footer_scripts
     :plain
       <!-- Facebook Conversion Code for Dayhome Registry -->
       <script>(function() {

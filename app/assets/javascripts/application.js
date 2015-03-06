@@ -14,10 +14,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.browser
+//= require jquery.ui.all
 //= require bootstrap
 //= require fullcalendar
 //= require_tree ./gmaps4rails
-//= require jquery.ui.all
 //= require jquery.add_more
 //= require jquery.colorbox
 //= require jquery.modal
@@ -29,6 +29,7 @@
 //= require externals/modernizr
 //= require externals/html5support/jquery.html5support
 //= require class
+
 
 function isPrintableKey(e){if(e.altKey||e.ctrlKey||e.metaKey)return!1;var t=e.which;return t<32||t==144?!1:!0}
 function integersonly(e,t){

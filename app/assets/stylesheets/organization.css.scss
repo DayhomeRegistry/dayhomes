@@ -26,6 +26,8 @@
 	float: left;
 	margin-right: 10px;
 	border: 1px solid #abadb3;
+	margin-top:7px;
+	text-align: left;
 }
 .progress-bar.pg-neutral .fill {
 	background: asset-url("sprites2.png", image) left -195px repeat-x;
@@ -35,6 +37,9 @@
 	border-right: solid 1px #77c51a;
 	border-bottom: solid 1px #61af05;
 	border-left: solid 1px #a3e456;
+}
+.progress-bar-add-on {
+	padding-top:7px;
 }
 .span-11 {
 	width: 220px;
