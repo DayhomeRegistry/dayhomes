@@ -29,7 +29,7 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     
     if @category.update_attributes(params[:category])
-      flash[:notice] = "Category was updated successfully."
+      flash[:success] = "Category was updated successfully."
       redirect_to forums_url
     end
   end
@@ -38,7 +38,7 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     
     if @category.destroy
-      flash[:notice] = "Category was deleted."
+      flash[:success] = "Category was deleted."
       redirect_to forums_url
     end
   end

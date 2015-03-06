@@ -11,7 +11,7 @@ class PasswordResetsController < ApplicationController
   def admin_reset
     @user = User.find(params[:id])
     if @user && @user.deliver_password_reset_instructions!
-      flash[:notice] = "Instructions to reset their password have been emailed to #{@user.email}."
+      flash[:success] = "Instructions to reset their password have been emailed to #{@user.email}."
     else
       flash[:error] = "Oops, we couldn't find an email for that user."
     end
@@ -25,7 +25,7 @@ class PasswordResetsController < ApplicationController
     @user = User.find_by_email(params[:email])
     
     if @user && @user.deliver_password_reset_instructions!
-      flash[:notice] = "Instructions for a password reset have been emailed to #{@user.email}."
+      flash[:success] = "Instructions for a password reset have been emailed to #{@user.email}."
       redirect_to login_path
     else
       flash.now[:error] = "No user was found for #{params[:email]}"
@@ -64,7 +64,7 @@ class PasswordResetsController < ApplicationController
     @user = User.find_by_single_access_token(params[:id])
     
     unless @user
-      flash[:notice] = "We were unable to locate your account. If you're having issues try " +
+      flash[:warning] = "We were unable to locate your account. If you're having issues try " +
       "copying and pasting the URL from your email into your browser or requesting your password again."
       redirect_to root_path
     end

@@ -39,7 +39,7 @@ class UsersController < ApplicationController
         redirect_to users_path
       else
         redirect_to root_path
-        flash[:notice] = "Thanks for signing up #{@user.full_name}!"
+        flash[:success] = "Thanks for signing up #{@user.full_name}!"
       end
     else
       render :action => :new
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
     @user.assign_attributes(params[:user]) 
 
     if @user.save
-      redirect_to user_path(@user)
+      redirect_to users_path()
     else
       return render :action => :edit
     end
@@ -77,7 +77,7 @@ class UsersController < ApplicationController
     unless @user.destroy
       flash[:error] = "Unable to remove #{@user.full_name}"
     else
-      flash[:notice] = "#{@user.full_name} has been removed."
+      flash[:success] = "#{@user.full_name} has been removed."
     end
 
     redirect_to users_path

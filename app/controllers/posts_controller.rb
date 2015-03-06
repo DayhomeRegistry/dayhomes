@@ -20,7 +20,7 @@ class PostsController < ApplicationController
     @post.user = current_user
     
     if @post.save
-      flash[:notice] = "Post was successfully created."
+      flash[:success] = "Post was successfully created."
       redirect_to topic_path(@post.topic)
     else
       render :action => 'new'
@@ -36,7 +36,7 @@ class PostsController < ApplicationController
 
     if @post.user_id == current_user.id
       if @post.update_attributes(params[:post])
-        flash[:notice] = "Post was successfully updated."
+        flash[:success] = "Post was successfully updated."
         redirect_to topic_path(@post.topic)
       end
     end
@@ -47,12 +47,12 @@ class PostsController < ApplicationController
     
     if @post.topic.posts_count > 1
       if @post.destroy
-        flash[:notice] = "Post was successfully destroyed."
+        flash[:success] = "Post was successfully destroyed."
         redirect_to topic_path(@post.topic)
       end
     else
       if @post.topic.destroy
-        flash[:notice] = "Topic was successfully deleted."
+        flash[:success] = "Topic was successfully deleted."
         redirect_to forum_path(@post.forum)
       end
     end
