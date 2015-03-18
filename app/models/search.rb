@@ -93,7 +93,6 @@ class Search
       search_addy_pin = params[:location]
     else
       #default to edmonton
-      debugger
       edmonton = Geocoder.coordinates("Edmonton, Alberta, Canada")
 
       search_addy_pin= {:lat=>edmonton[0],:lng=>edmonton[1]}
@@ -136,7 +135,6 @@ class Search
       self.auto_adjust = true
     end
 
-    debugger
     # check where to position the map
     if self.search_pin.nil?
       # if the search pin isn't found send it to the center of edmonton
