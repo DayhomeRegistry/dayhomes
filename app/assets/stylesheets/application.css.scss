@@ -25,8 +25,8 @@
 @import 'jquery.ui.core';
 @import 'jquery.ui.datepicker';
 
-$iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
-$iconLogoPath: asset-url("mini-logo.jpg", image) !default;
+$iconSpritePath: image-url("glyphicons-halflings.png") !default;
+$iconLogoPath: image-url("mini-logo.jpg") !default;
 
 @import "bootstrap";
  
@@ -78,7 +78,7 @@ h1 {
   font-size: 25.888px;
 }
 header {
-  background: #ffffff  asset-url("banner-sm.png", image) no-repeat right top;
+  background: #ffffff  image-url("banner-sm.png") no-repeat right top;
   
   width: 80%;
   margin: auto;
@@ -577,4 +577,8 @@ span.small {
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
+}
+
+.alert-notice {
+  @include alert-variant($alert-success-bg, $alert-success-border, $alert-success-text);
 }

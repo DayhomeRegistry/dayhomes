@@ -1,31 +1,28 @@
+
 .span9.well.signin-form
+  %h2
+    Your Account
   = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
     .row.registrationStyle
-      .span5
-        %h2
-          Your Account
-
-          .control-group                
-            .control-label
-              = f.label :email
-            .controls  
-              = f.email_field :email
-          .control-group   
-            .control-label
-              = f.label :password
-            .controls  
-              = f.password_field :password
-          .control-group
-            .controls
-              = f.input :remember_me, :as => :boolean if devise_mapping.rememberable? 
-          %br
-      .span1{:style=>"margin-top:100px"}
+      .span5.col-sm-4
+        .form-group                
+          = f.label :email
+          .input-group  
+            = f.email_field :email, :class=>"form-control"
+        .form-group   
+          = f.label :password
+          .input-group  
+            = f.password_field :password, :class=>"form-control"
+        .form-group
+          .input-group
+            = f.input :remember_me, :as => :boolean if devise_mapping.rememberable? 
+      .span1.col-sm-1
         OR
-      .span3{:style=>"margin-top:100px"}
+      .span3.col-sm-7
         = fb_connect_button
       .clear 
     .row
-      .span9 
+      .span9.col-sm-9
         .form-actions
           %span.button.large.green.single
             %input#submit-button{:name => "submitButton", :type => "submit", :value => "Sign in"}

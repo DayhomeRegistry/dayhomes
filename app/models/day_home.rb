@@ -1,10 +1,10 @@
 
 class DayHome < ActiveRecord::Base
 
-  default_scope includes(:photos)
-  default_scope includes(:availability_types)
-  default_scope includes(:features)
-  default_scope where("deleted < 1")
+  default_scope {includes(:photos)}
+  default_scope {includes(:availability_types)}
+  default_scope {includes(:features)}
+  default_scope {where("deleted < 1")}
   after_save :clear_cache
 
   reverse_geocoded_by :lat, :lng

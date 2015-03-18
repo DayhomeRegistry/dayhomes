@@ -1,8 +1,40 @@
 class ConversionUser < ActiveRecord::Base
-    set_table_name "users_backup"
+    self.table_name = "users_backup"
 end
 class ConvertFromAuthlogic < ActiveRecord::Migration
   def up
+  	#populate the backup table
+  	ConversionUser.delete_all
+	User.all.each do |user|
+		newUser = ConversionUser.new()
+		newUser.email=user.email
+	    newUser.first_name=user.first_name
+	    newUser.last_name=user.last_name
+	    newUser.admin=user.admin
+	    newUser.crypted_password=user.crypted_password
+	    newUser.password_salt=user.password_salt
+	    newUser.persistence_token=user.persistence_token
+	    newUser.single_access_token=user.single_access_token
+	    newUser.perishable_token=user.perishable_token
+	    newUser.login_count=user.login_count
+	    newUser.failed_login_count=user.failed_login_count
+	    newUser.last_request_at=user.last_request_at
+	    newUser.current_login_at=user.current_login_at
+	    newUser.last_login_at=user.last_login_at
+	    newUser.current_login_ip=user.current_login_ip
+	    newUser.last_login_ip=user.last_login_ip
+	    newUser.created_at=user.created_at
+	    newUser.updated_at=user.updated_at
+	    newUser.topics_count=user.topics_count
+	    newUser.posts_count=user.posts_count
+	    newUser.facebook_access_token=user.facebook_access_token
+	    newUser.facebook_access_token_expires_in=user.facebook_access_token_expires_in
+	    newUser.privacy_effective_date=user.privacy_effective_date
+	    newUser.organization_id=user.organization_id
+	    newUser.location_id=user.location_id
+		newUser.save
+	end
+
   	## Database authenticatable
   	rename_column :users, :crypted_password, :encrypted_password
 

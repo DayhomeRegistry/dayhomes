@@ -80,4 +80,12 @@ class ApplicationController < ActionController::Base
       "AIzaSyB03go-dPecYfIzMYc1c9WFkK53QTiDwTA"
     end
   end
+  def after_sign_in_path_for(resource)
+    debugger
+    if current_user && current_user.admin?
+      admin_day_homes_path()
+    else 
+      day_homes_path()
+    end
+  end
 end

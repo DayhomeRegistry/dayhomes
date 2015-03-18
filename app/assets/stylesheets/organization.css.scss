@@ -20,7 +20,7 @@
 	padding-top:0;
 }
 .progress-bar {
-	background: asset-url("sprites2.png", image) left -175px repeat-x;
+	background: image-url("sprites2.png") left -175px repeat-x;
 	width: 210px;
 	height: 18px;
 	float: left;
@@ -30,7 +30,7 @@
 	text-align: left;
 }
 .progress-bar.pg-neutral .fill {
-	background: asset-url("sprites2.png", image) left -195px repeat-x;
+	background: image-url("sprites2.png") left -195px repeat-x;
 	display: inline-block;
 	height: 16px;
 	border-top: solid 1px #cefa9a;

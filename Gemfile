@@ -13,7 +13,7 @@ gem 'omniauth-facebook'
 
 #Jquery assets
 gem 'jquery-rails', '~>3'
-#gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '~>3'
 
 #Image processing
 gem 'carrierwave'
@@ -65,7 +65,6 @@ gem 'newrelic_rpm', '~> 3.8.0'
 #gem 'forum_monster'
 #gem 'bb-ruby'
 gem 'premailer-rails'
-gem 'simple_form'
 
 
 
@@ -76,8 +75,8 @@ platforms :mswin, :mingw do
 end
 
 group :assets do
-  gem 'bootstrap-sass', '~> 3'
-  gem 'sass-rails', '>= 3.2'
+  gem 'bootstrap-sass'#, '~> 3'
+  gem 'sass-rails'#, '>= 3.2'
   gem 'autoprefixer-rails'
 
   gem 'coffee-rails'
