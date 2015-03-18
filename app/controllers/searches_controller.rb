@@ -5,6 +5,7 @@ class SearchesController < ApplicationController
     attributes["location"]=getHash(request.location)
     #attributes["location"]=Geocoder.search("Calgary").first.data["geometry"]["location"]
 
+    #debugger
     if(!params["spots"].nil? && params["spots"].to_i>1)
       type = params["spots"].to_i
       # "availability_types":{"kind":["1","2","3","4","5","6","7","8"]}
@@ -13,16 +14,37 @@ class SearchesController < ApplicationController
       # <option value="3">Part time</option> 4,5,6,7,8
       # <option value="4">Before/After School</option> 2,3,7,8
 
-      kinds = Hash.new
+      #{}"availability_types"=>{"kind"=>["4", "5", "6", "7", "8"]}
+      kinds = {}#AvailabilityType.all
+      # kinds["kind"] 
       if(type==2)
-        kinds["kind"] = [1,2,3]
+        # kinds.each do |type|
+        #   if([1,2,3].include?(type.id))
+        #     type.checked = true
+        #   end
+        # end
+        kinds["kind"]=["1","2","3"]
+        attributes["availability_types"] = kinds
       elsif(type==3)
-        kinds["kind"] = [4,5,6,7,8]
+        # kinds.each do |type|
+        #   if([4,5,6,7,8].include?(type.id))
+        #     type.checked = true
+        #   end
+        # end
+        kinds["kind"]=["4","5","6","7","8"]
+        attributes["availability_types"] = kinds
       else
-        kinds["kind"] = [2,3,7,8]
+        # kinds.each do |type|
+        #   if([2,3,7,8].include?(type.id))
+        #     type.checked = true
+        #   end
+        # end
+        kinds["kind"]=["2","3","7","8"]
+        attributes["availability_types"] = kinds
       end
-      attributes["availability_types"] = kinds
+      # attributes["availability_types"] = kinds
     end
+    #debugger
     @search = Search.new(attributes)
 
     # If any errors, show an error message

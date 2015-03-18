@@ -13,6 +13,25 @@
     = tag :meta, :property=>"og:image", :content => URI.join(root_url, image_path("logo.png"))
     = tag :meta, :property=>"fb:app_id",:content => "371277729589519"
 
+    :plain
+      <script>
+        //This is the audience token for the Dayhome Registry Facebook page.
+        (function() {
+          var _fbq = window._fbq || (window._fbq = []);
+          if (!_fbq.loaded) {
+            var fbds = document.createElement('script');
+            fbds.async = true;
+            fbds.src = '//connect.facebook.net/en_US/fbds.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(fbds, s);
+            _fbq.loaded = true;
+          }
+          _fbq.push(['addPixelId', '780389685408561']);
+        })();
+        window._fbq = window._fbq || [];
+        window._fbq.push(['track', 'PixelInitialized', {}]);
+      </script>
+      <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=780389685408561&amp;ev=PixelInitialized" /></noscript>
     = stylesheet_link_tag :landingpage, :media => :all
     / Fonts and icons
     %link{:href => "http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}/
@@ -90,14 +109,22 @@
                     %option{:value => "4"} Before/After School
               %button#submit_location.search-button.form-inline.btn.btn-primary.btn-large{:type => "submit"} Search
         .goodhandsspacer
-    .section.section-clients
+    .section.section-gray.section-clients
       .container.text-center
         %h4.header-text Our Partners
         .logos
           %ul.list-unstyled
             %li
               =image_tag("landingpage/born2create.jpg", width: "232", alt: "Born2Create") 
-              
+    .section.section-newsletter
+      .container.text-center
+        %h4.header-text 
+          Our Newsletter For Parents
+        %p
+          Get recipes, tips for kids and info on our newest dayhomes.
+        = form_tag('https://dayhomeregistry.us7.list-manage.com/subscribe/post?u=cde938b38d19f459bce32538b&amp;id=31701e2e10',:method=>:post,:target=>:_blank) do
+          = email_field_tag 'EMAIL','', :placeholder=>"Your email", :id=>'mail', :style=>"width:80%;display:inline-block;"
+          = submit_tag "Subscribe", :id=>"subscribe",:class=>"btn slim"
     .section.section-gray.section-testimonial
       .container
         %h4.header-text.text-center What people think
@@ -197,20 +224,19 @@
         %nav.pull-left
           %ul
             %li
-              %a{:href => "#"}
-                Home
-            %li
-              %a{:href => "#"}
-                Company
-            %li
-              %a{:href => "#"}
+              %a{:href => "http://blog.dayhomeregistry.com"}
+                %i.fa.fa-wordpress
                 Blog
+            %li
+              %a{:href => "http://shop.dayhomeregistry.com"}
+                %i.fa.fa-shopping-cart
+                Shop   
         .social-area.pull-right
-          %a.btn.btn-social.btn-facebook.btn-simple
+          %a{:href=>"http://www.facebook.com/dayhomeregistry", :class=>"btn btn-social btn-facebook btn-simple"}
             %i.fa.fa-facebook-square
-          %a.btn.btn-social.btn-twitter.btn-simple
+          %a{:href=>"http://www.twitter.com/dayhomeregistry", :class=>"btn btn-social btn-twitter btn-simple"}
             %i.fa.fa-twitter
-          %a.btn.btn-social.btn-pinterest.btn-simple
+          %a{:href=>"http://www.pinterest.com/dayhomeregistry", :class=>"btn btn-social btn-pinterest btn-simple"}
             %i.fa.fa-pinterest
         .copyright
           © 2015

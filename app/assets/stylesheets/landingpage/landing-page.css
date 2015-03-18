@@ -1169,7 +1169,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de8e0009', e
   .landing-page .section-testimonial{
      position: relative;
      width: 100%;
-     min-height: 650px;
+     min-height: 755px;
   }
   .landing-page .section-testimonial .carousel{
     margin-top: 50px;
