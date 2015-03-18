@@ -1,0 +1,268 @@
+!!!
+%html{:lang => "en", :xmlns=>"http://www.w3.org/1999/xhtml", 'xmlns:fb'=>"http://ogp.me/ns/fb#"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+    %title Dayhome Registry
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0", :name => "viewport"}/
+    %meta{:content => "width=device-width", :name => "viewport"}/
+    = tag :meta, :property=>"og:type", :content => "website"
+    = tag :meta, :property=>"og:title", :content => "Dayhome Registry"
+    = tag :meta, :property=>"og:site_name", :content => "Dayhome Registry"
+    = tag :meta, :property=>"og:description", :content => "The center of the Dayhome provider communitiy where Parents can find a dayhome for their children, Dayhome Providers can find resources to help them deliver a better experience, and Agencies can coordinate their online presence."
+    = tag :meta, :property=>"og:image", :content => URI.join(root_url, image_path("logo.png"))
+    = tag :meta, :property=>"fb:app_id",:content => "371277729589519"
+
+    :plain
+      <script>
+        //This is the audience token for the Dayhome Registry Facebook page.
+        (function() {
+          var _fbq = window._fbq || (window._fbq = []);
+          if (!_fbq.loaded) {
+            var fbds = document.createElement('script');
+            fbds.async = true;
+            fbds.src = '//connect.facebook.net/en_US/fbds.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(fbds, s);
+            _fbq.loaded = true;
+          }
+          _fbq.push(['addPixelId', '780389685408561']);
+        })();
+        window._fbq = window._fbq || [];
+        window._fbq.push(['track', 'PixelInitialized', {}]);
+      </script>
+      <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=780389685408561&amp;ev=PixelInitialized" /></noscript>
+    = stylesheet_link_tag :landingpage, :media => :all
+    / Fonts and icons
+    %link{:href => "http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+    %link{:href => "http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300", :rel => "stylesheet", :type => "text/css"}/
+  %body.landing-page
+    %nav.navbar.navbar-transparent.navbar-top{:role => "navigation",:style=>""}
+      .container
+        / Brand and toggle get grouped for better mobile display
+        .navbar-header
+          %button#menu-toggle.navbar-toggle{"data-target" => "#example", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar.bar1
+            %span.icon-bar.bar2
+            %span.icon-bar.bar3
+          %a{:href => "http://dayhomeregistry.com"}
+            .logo-container
+              .logo
+                =image_tag "landingpage/new_logo.jpg",:alt => "Dayhome Registry"
+              .brand
+                Dayhome Registry
+        
+        / Collect the nav links, forms, and other content for toggling
+        #example.collapse.navbar-collapse
+
+          %ul.nav.navbar-nav.navbar-left{:style=>"margin-top:120px"}
+            %li
+              %a{:href => "http://blog.dayhomeregistry.com"}
+                %i.fa.fa-wordpress
+                Blog
+            %li
+              %a{:href => "http://shop.dayhomeregistry.com"}
+                %i.fa.fa-shopping-cart
+                Shop   
+          .logo{:style=>"position:absolute;left:50%;margin-left:-102.5px"}
+            %a{:href => "http://www.dayhomeregistry.com"}
+              =image_tag 'logo.png',:alt => "Dayhome Registry", :style=>"max-width:175px;"
+          %ul.nav.navbar-nav.navbar-right{:style=>"margin-top:120px"}
+            -if current_user.nil?
+              %li
+                %a{:href => "#{login_url}"}
+                  %i.fa.fa-sign-in
+                  Login
+            -else
+              %li
+                %a{:href => "#{logout_url}"}
+                  %i.fa.fa-sign-out
+                  Logout
+            %li
+              %a.call-to-action{:href => "#{billing_signup_path}"} List your dayhome
+        / /.navbar-collapse
+    .wrapper
+      .parallax.filter-gradient.green
+        .parallax-background
+          =image_tag 'landingpage/bg.jpg', :alt=>"Background"
+        .col-sm-12.col-center#goodhands{:style => " z-index: 2; text-align: center; color: white; "}
+          %h1#tagline.uppercase.text-jumbo.text-contrast.row-space-1 Your kids are in good hands!
+          #subtitle.h4.text-contrast.row-space-4
+            Find safe and nurturing in-home care for your kids across Canada.
+          .col-8.hide.show-sm
+            #sm-search-field.input-addon
+              %span.input-stem.input-large.fake-search-field
+                Got a Dayhome?
+              %i.input-suffix.btn.btn-primary.icon.icon-full.icon-search
+          .col-12
+            = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f| 
+              .search-form-input-wrapper
+                .location-wrapper
+                  %span.input-placeholder-group
+                    %input#searchQuery.form-inline.location.input-large.input-contrast{:autocomplete => "off", :name => "search[address]", :placeholder => "Tell us your neighborhood...", :type => "text"}/
+                .select.select-large
+                  %select#guests{:name => "spots"}
+                    %option{:value => "1"} All spots
+                    %option{:value => "2"} Full time
+                    %option{:value => "3"} Part time
+                    %option{:value => "4"} Before/After School
+              %button#submit_location.search-button.form-inline.btn.btn-primary.btn-large{:type => "submit"} Search
+        .goodhandsspacer
+    .section.section-gray.section-clients
+      .container.text-center
+        %h4.header-text Our Partners
+        .logos
+          %ul.list-unstyled
+            %li
+              =image_tag("landingpage/born2create.jpg", width: "232", alt: "Born2Create") 
+    .section.section-newsletter
+      .container.text-center
+        %h4.header-text 
+          Our Newsletter For Parents
+        %p
+          Get recipes, tips for kids and info on our newest dayhomes.
+        = form_tag('https://dayhomeregistry.us7.list-manage.com/subscribe/post?u=cde938b38d19f459bce32538b&amp;id=31701e2e10',:method=>:post,:target=>:_blank) do
+          = email_field_tag 'EMAIL','', :placeholder=>"Your email", :id=>'mail', :style=>"width:80%;display:inline-block;"
+          = submit_tag "Subscribe", :id=>"subscribe",:class=>"btn slim"
+    .section.section-gray.section-testimonial
+      .container
+        %h4.header-text.text-center What people think
+        #carousel-example-generic.carousel.slide{"data-ride" => "carousel"}
+          / Wrapper for slides
+          .carousel-inner{:role => "listbox"}
+            .item
+              .mask
+                =image_tag "landingpage/faces/face-4.png"
+              .carousel-testimonial-caption
+                %p Danielle R., Calgary
+                %h3 "Dayhomeregistry has been an invaluable asset for my business. Not a week goes by that I don't receive an enquiry about childcare via this site. In fact, I receive far more requests from here than anywhere else. If you have spaces to fill, I would recommend advertising here immediately!"
+            .item.active
+              .mask
+                =image_tag "landingpage/faces/face-3.png"
+              .carousel-testimonial-caption
+                %p Anna G, Edmonton
+                %h3 "As a first-time mom, finding the right dayhome was an overwhelming task and I didn’t know where or how to start looking. I was thrilled when I came across Dayhome Registry – their search engine was ideal for locating dayhomes in my neighborhood and allowing me to search specific criteria that was important to me. Thanks Dayhome Registry for providing a much needed service and reducing my stress to find the perfect dayhome for my daughter!"
+            .item
+              .mask
+                =image_tag "landingpage/faces/face-2.jpg"
+              .carousel-testimonial-caption
+                %p Child Development Dayhomes
+                %h3 "We registered our agency with dayhomeregistry.com in March and in 6 months have generated an additional 80 leads. We love the map feature and often use it to help parents locate a dayhome in their specific neighbourhood."
+            .item
+              .mask
+                =image_tag "landingpage/faces/coconuttree.png"
+              .carousel-testimonial-caption
+                %p Kristy K - Coconut Tree Dayhome
+                %h3 I registered with the Dayhome Registry in January and within weeks I had several serious inquiries. Even with my somewhat restrictive schedule (closed summers) I was able to fill my spots within a few months, before I even opened my doors. My dayhome is currently full and I still receive inquiries almost weekly.
+          %ol.carousel-indicators.carousel-indicators-green
+            %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
+            %li{"data-slide-to" => "1", "data-target" => "#carousel-example-generic"}
+            %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
+            %li{"data-slide-to" => "3", "data-target" => "#carousel-example-generic"}
+    .section.section-presentation
+      .container
+        .row
+          .col-md-6
+            .description
+              %h4.header-text It's simple
+              %p It's our goal at Dayhome Registry to make the search for childcare as painless as possible.  We've lived with that pit in your stomach that comes with leaving your child in a place you don't entirely like or trust.
+              %p
+              %p Our tool starts with your neighbourhood and helps you find home based child care that is first and foremost close.  Sometimes the best for you is close to home. Sometimes it's close to work.  Sometimes it's somewhere in between.  Just tell us a neighbourhood, an address or just a city and we'll take it from there.
+              %p We currate both privately run and government acredited programs, because different needs take us all on our own journey.
+          .col-md-5.col-md-offset-1.hidden-xs
+            =image_tag "landingpage/mac.png"
+    .section.section-demo
+      .container
+        .row
+          .col-md-6
+            #description-carousel.carousel.fade{"data-ride" => "carousel"}
+              .carousel-inner
+                .item.active
+                  =image_tag "landingpage/home_1.png"
+              %ol.carousel-indicators.carousel-indicators-green
+                %li{"data-slide-to" => "0", "data-target" => "#description-carousel"}
+                %li.active{"data-slide-to" => "1", "data-target" => "#description-carousel"}
+                %li{"data-slide-to" => "2", "data-target" => "#description-carousel"}
+          .col-md-5.col-md-offset-1
+            %h4.header-text Easy to navigate
+            %p
+              Finding a dayhome near you couldn't be easier with our simple navigation!
+              All you need to do is enter the neighbourhood or address where you want to
+              start your search, and use the handy map to zero in on the perfect locale.
+    .section.section-features
+      .container.border-top
+        %h4.header-text.text-center Features
+        .row
+          .col-md-4
+            .card.card-green
+              .icon.purple
+                %i.pe-7s-map
+              .text
+                %h4 Simple Map Navigation
+                %p All Dayhomes are displayed on a map for easy visual navigation
+          .col-md-4
+            .card.card-green
+              .icon.purple
+                %i.pe-7s-mail-open-file
+              %h4 Secure communication
+              %p Secure online communication to easily manage your communication with dayhomes.
+          .col-md-4
+            .card.card-green
+              .icon.purple
+                %i.pe-7s-search
+              %h4 Detailed search criteria
+              %p Filter your searches with criteria that are important to you.
+    .section.section-no-padding
+      .full-background.filter-gradient.green{:style => "background-image:url('assets/landingpage/bg.jpg')"}
+        .info
+          %h1 Are you an exceptional Dayhome provider?
+          %p Do you want to provide the best care for kids that you can?  Join our community today.
+          %a.btn.btn-neutral.btn-lg{:href => "#{billing_signup_path}"} List your dayhome
+    %footer.footer
+      .container
+        %nav.pull-left
+          %ul
+            %li
+              %a{:href => "http://blog.dayhomeregistry.com"}
+                %i.fa.fa-wordpress
+                Blog
+            %li
+              %a{:href => "http://shop.dayhomeregistry.com"}
+                %i.fa.fa-shopping-cart
+                Shop   
+        .social-area.pull-right
+          %a{:href=>"http://www.facebook.com/dayhomeregistry", :class=>"btn btn-social btn-facebook btn-simple"}
+            %i.fa.fa-facebook-square
+          %a{:href=>"http://www.twitter.com/dayhomeregistry", :class=>"btn btn-social btn-twitter btn-simple"}
+            %i.fa.fa-twitter
+          %a{:href=>"http://www.pinterest.com/dayhomeregistry", :class=>"btn btn-social btn-pinterest btn-simple"}
+            %i.fa.fa-pinterest
+        .copyright
+          © 2015
+          %a{:href => "http://www.dayhomeregistry.com"} Dayhome Registry
+
+  = javascript_include_tag :landingpage
+  :javascript
+    var big_image;
+            $().ready(function(){
+                responsive = $(window).width();
+                
+                // $(window).on('scroll', gsdk.checkScrollForTransparentNavbar);
+                
+                if (responsive >= 768){
+                    big_image = $('.parallax-background').find('img');
+                    console.log(big_image);
+                    $(window).on('scroll',function(){           
+                        parallax();
+                    });
+                }
+                
+            });
+            
+           var parallax = function() {
+                var current_scroll = $(this).scrollTop();
+                
+                oVal = ($(window).scrollTop() / 3); 
+                big_image.css('top',oVal);
+            };

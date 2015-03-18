@@ -206,6 +206,7 @@ class Admin::DayHomesController < Admin::ApplicationController
   end
 
   def update
+   
     community = Community.find(params[:location][:community_id]) 
 
     #raise community.to_json
@@ -217,14 +218,21 @@ class Admin::DayHomesController < Admin::ApplicationController
     end
     
     @day_home = DayHome.find(params[:id]) 
-    feature = true
-    
-    if params[:featured?].nil?
+    featured = true   
+    if params[:day_home][:featured].nil? || params[:day_home][:featured]=="0"
       #the checkbox is not checked
-      feature = false
+      if @day_home.featured?
+        @day_home.featured=false
+      end
+      featured = false
     end
-    @day_home.admin_featured=feature
-    if @day_home.update_attributes(params[:day_home])  
+    if(featured && !@day_home.featured?)
+      untilDate = Date.strptime(params[:day_home][:feature_end_date], "%m/%d/%Y") #Date.parse(params[:day_home][:feature_end_date])
+      #months = [(untilDate.year * 12 + untilDate.month) - (Date.today.year * 12 + Date.today.month-1),1].max
+      @day_home.activate_admin_until(untilDate)
+    end
+    #@day_home.admin_featured=feature
+    if @day_home.update_attributes(params[:day_home].except(:feature_end_date))
       @day_home.location.community_id=community.id
       @day_home.location.save
       redirect_to admin_day_homes_path(:page=>(params["page"].kind_of?(Array) ? 1 : params["page"].keys[0]))

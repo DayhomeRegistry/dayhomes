@@ -1,7 +1,13 @@
 
 class DayHome < ActiveRecord::Base
-  default_scope {where("deleted < 1")}
 
+  default_scope includes(:photos)
+  default_scope includes(:availability_types)
+  default_scope includes(:features)
+  default_scope where("deleted < 1")
+  after_save :clear_cache
+
+  reverse_geocoded_by :lat, :lng
   acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
                     :check_process => :prevent_geocoding, :address => :geo_address,
                     :msg => 'Cannot find a location matching that query.' 
@@ -14,7 +20,7 @@ class DayHome < ActiveRecord::Base
   }
   scope :featured, lambda {|*args|
     #where(:featured => true)
-    joins(:features).where("end > ?",Time.now()).uniq
+    joins(:features).where("approved=1").where("end > ?",Time.now()).uniq
   }
   def self.deleted
     DayHome.unscoped.where("deleted = 1")
@@ -102,21 +108,25 @@ class DayHome < ActiveRecord::Base
   end
   
   def featured_photo
+    #debugger
     defaults = photos.where("default_photo=1")
     if (!defaults.empty?)
-      defaults.first
-    elsif !photos.empty?
-      photos.first
+      @featured_photo ||= defaults.first
     else
-      photos.build
+      if !photos.empty?
+        @featured_photo ||= photos.first
+      else
+        @featured_photo ||= photos.build
+      end
     end
   end
 
   def featured?
-    !self.features.where("end > ?",Time.now()).empty?
+    @featured ||= !self.features.where("end > ?",Time.now()).empty?
   end
   def feature_end_date
-    self.features.where("end > ?",Time.now()).order("end desc").first.end
+    date = self.features.where("end > ?",Time.now()).order("end desc").first
+    return date.end unless date.nil?
   end
   def admin_featured=(value)
     if value
@@ -205,6 +215,16 @@ class DayHome < ActiveRecord::Base
     self.organization.users.where("location_id = ?",self.location_id)
   end
 
+  def activate_admin_until(endDate)
+    feature = Feature.new();
+    feature.day_home=self
+    feature.start = Time.now()
+    feature.end = endDate
+    feature.organization=self.organization
+    feature.freebee = false;
+    save = feature.save
+    return save && self.organization.save
+  end
   def activate_admin
     feature = Feature.new();
     feature.day_home=self
@@ -212,7 +232,6 @@ class DayHome < ActiveRecord::Base
     feature.end = Time.now().advance(:months=>1)
     feature.organization=self.organization
     feature.freebee = false;
-    @organization.features << feature
     save = feature.save
     return save && self.organization.save
   end
@@ -249,4 +268,9 @@ class DayHome < ActiveRecord::Base
     end
   end
 
+  private
+    def clear_cache
+      @featured = nil
+      @featured_photo = nil
+    end
 end

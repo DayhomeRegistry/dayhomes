@@ -10,7 +10,7 @@ class LocationsController < ApplicationController
 		@location = Location.find(params[:id])
     	@location.assign_attributes(params[:location]) 
 		if @location.save
-    		flash[:notice] = "Locale successfully updated!"
+    		flash[:success] = "Locale successfully updated!"
     	redirect_to organization_path(@organization)
     else
     	render :action => :edit
@@ -36,7 +36,7 @@ class LocationsController < ApplicationController
 
 				#now kill the beast
 		    if @location.destroy
-		    	flash[:notice] = "#{@location.name} successfully removed."
+		    	flash[:success] = "#{@location.name} successfully removed."
 		    else    	
 		      	flash[:error] = "Unable to remove #{@location.name}"
 		    end

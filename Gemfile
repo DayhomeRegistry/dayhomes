@@ -32,15 +32,13 @@ gem 'exception_notification', :git => 'git://github.com/DayhomeRegistry/exceptio
 
 #Pagination
 gem 'kaminari'
+gem 'bootstrap-kaminari-views'
 
 #You got it...stars
 gem 'jquery-star-rating-rails'
 
 #Markdown interpreter
 gem 'maruku'
-
-#gem 'actionmailer-instyle', :require => 'action_mailer/in_style'
-gem 'premailer-rails'
 
 #Strip API for CCs
 gem 'stripe'
@@ -58,6 +56,7 @@ gem 'redcarpet'
 #Geocoding
 gem 'geokit'
 gem 'geokit-rails'
+gem 'geocoder'
 
 #Performance monitoring
 gem 'newrelic_rpm', '~> 3.8.0'
@@ -65,6 +64,9 @@ gem 'newrelic_rpm', '~> 3.8.0'
 #Not sure what these were for
 #gem 'forum_monster'
 #gem 'bb-ruby'
+gem 'premailer-rails'
+gem 'simple_form'
+
 
 
 platforms :mswin, :mingw do
@@ -74,7 +76,7 @@ platforms :mswin, :mingw do
 end
 
 group :assets do
-  gem 'bootstrap-sass', '~> 2.0.4' #boostrap 3 screws with all the formatting
+  gem 'bootstrap-sass', '~> 3'
   gem 'sass-rails', '>= 3.2'
   gem 'autoprefixer-rails'
 

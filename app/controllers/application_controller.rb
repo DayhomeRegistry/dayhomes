@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
       
         if(!request.fullpath.match(/^\/pages\/acknowledge/))
           #raise request.fullpath
-          flash[:notice]=render_to_string :partial=>"application/acknowledgement"
+          flash[:success]=render_to_string :partial=>"application/acknowledgement"
         end
         
       end

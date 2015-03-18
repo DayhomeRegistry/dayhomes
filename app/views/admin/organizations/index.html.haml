@@ -8,9 +8,9 @@
     });
   });
 %p
-  = link_to 'Create organization', [:new, :admin, :organization], :class => :btn
-  = link_to 'Approve','#',:id => 'approveBtn',:class => :btn
-  = link_to 'Feature','#',:id => 'featureBtn',:class => :btn
+  = link_to 'Create organization', [:new, :admin, :organization], :class => "btn btn-default"
+  = link_to 'Approve','#',:id => 'approveBtn',:class => "btn btn-default"
+  = link_to 'Feature','#',:id => 'featureBtn',:class => "btn btn-default"
 =form_tag({:controller => "organizations", :action => "index"}, :method=>"get", :id => :searchForm) do 
   %div.input-prepend.pull-right
     %span.add-on
@@ -57,6 +57,6 @@
             = link_to 'Overview', [:admin, organization]
             = link_to 'Edit', [:edit, :admin, organization]
             = link_to 'Delete', [:admin, organization], :method => :delete, :confirm => "Are you sure?"    
-  = paginate @organizations, :window => 1,:left => 3,:right => 3
+  = paginate @organizations, :window => 1,:left => 3,:right => 3,:theme => 'twitter-bootstrap-3'
 :plain
   </form>    

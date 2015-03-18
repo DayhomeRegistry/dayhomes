@@ -1,12 +1,15 @@
 %div.dayhome_listing  
   .name
-    %h4= link_to day_home.name, day_home_path(day_home)
+    %h4
+      = link_to day_home.name, day_home_path(day_home)
+      -if day_home.featured?
+        =image_tag "star.png"
     =link_to "Show on map","#",:class=>"markerCallout",:id=>day_home.slug    
   .row
-    .span2
+    .col-sm-3
       .bubble_pic
-        =link_to(day_home.photos.empty? ? '' : image_tag(day_home.photos.first.photo_url(:thumb)), day_home_slug_path(day_home.slug))
-    .span5
+        =link_to(day_home.photos.empty? ? '' : image_tag(@featured_photo.photo_url(:thumb)), day_home_slug_path(day_home.slug))
+    .col-sm-9
       %div
         =day_home.highlight
       %div

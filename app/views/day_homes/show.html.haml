@@ -1,34 +1,19 @@
 :javascript
-  $('[rel=tooltip]').tooltip({placement:'right'});
   var dialog;
   $(document).ready(function(){
-    dialog = $( "#contact-form" ).dialog({
-      autoOpen: false,
-      height: 890,
-      width: 825,
-      modal: true,
-      close: function() {
-        allFields.val( "" ).removeClass( "ui-state-error" );
-      }
-    });
-
-    $('#linkToContactForm').on('click',function(event){
-      dialog.dialog( "open" );
-    });
-    /*
-    $('#new_day_home_contact').bind('submit', function (event) {
-        self.handleForm( self, event );
-    });
-    */
+    $('[rel=tooltip]').tooltip({placement:'right'});
     $(".slides-sm").cycle({
       fx:     "fade",
       speed:    600,
       timeout:  5000
     });
   });
+- content_for :ogimage do
+  =tag :meta, :property=>"og:image", :content => @day_home.featured_photo.photo_url()
+
 -@content_for_title="#{@day_home.name} - Dayhome Registry"
 .row
-  .span12
+  .span12.col-lg-12.col-md-12.col-sm-12
     %h2
       = @day_home.name
     -if @day_home_contact.errors.any? 
@@ -79,7 +64,7 @@
 .row
   %br
 .row
-  .span3
+  .span3.col-lg-3.col-md-3.col-sm-3
     %h3.singleViewH3
       Availability
     %div.availability
@@ -98,7 +83,7 @@
       - @day_home.availability_types.each do |av|
         = "#{av.availability} -  #{av.kind}"
         %br
-  .span3
+  .span3.col-lg-3.col-md-3.col-sm-3
     %h3.singleViewH3
       Contact Information
     .contact_info
@@ -124,53 +109,60 @@
     
 
 
-    
-    #contact-form
-      %p.validateTips 
-      %h3
-        Contact #{@day_home.name}
-      = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home),:validate=>true do |cf|            
-        .span4.well
-          = cf.input :name, :label=>"Your name"
-          = cf.input :email, :label=>"Your email"
-          = cf.input :phone, :label=>"Your phone"          
+  .modal.fade#contact-form{:tabindex=>'-1',:role=>'dialog',"aria-hidden"=>'true'}
+    .modal-dialog
+      .modal-content
+        %p.validateTips 
+        .modal-header
+          %h3
+            Contact #{@day_home.name}
+        = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home),:validate=>true do |cf|   
+          .container  
+            .row       
+              .span4.col-md-4.col-sm-12.well
+                = cf.input :name, :label=>"Your name"
+                = cf.input :email, :label=>"Your email"
+                = cf.input :phone, :label=>"Your phone"          
 
-        .span4.well
-      
-          = cf.input :home_address, :label=>false do             
-            =cf.label :home_address, :style => 'display:inline;'
-            %i.icon-info-sign{:rel=>"tooltip", :title=> "If you are contacting an accredited dayhome, this helps the agency find other options if this one won't work." }
-            =cf.text_field :home_address
-    
-          = cf.input :child_start_date, :label=>"Desired Start Date"
-                
-        .span9.well
-          = cf.input :child_name, :label =>"Child's name"
-          = cf.input :child_birth_date, :discard_day => true, :start_year => Date.today.year - 18, :end_year => Date.today.year                       
-          %hr
-          = cf.input :child_name2, :label =>"Child's name (optional)"
-          = cf.input :child_birth_date2, :discard_day => true, :start_year => Date.today.year - 18, :end_year => Date.today.year                       
+              .span4.col-md-4.col-sm-12.well
             
-        .span9.remember
-          = cf.input :subject,:label=>"Regarding" 
-          = cf.error :subject, :id => 'subject_error'
+                = cf.input :home_address, :label=>false do             
+                  =cf.label :home_address, :style => 'display:inline;'
+                  %i.icon-info-sign{:rel=>"tooltip", :title=> "If you are contacting an accredited dayhome, this helps the agency find other options if this one won't work." }
+                  =cf.text_field :home_address
+          
+                = cf.input :child_start_date, :label=>"Desired Start Date"
+            .row   
+              .span9.col-lg-9.col-md-9.col-sm-9.well
+                = cf.input :child_name, :label =>"Child's name"
+                = cf.input :child_birth_date, :discard_day => true, :start_year => Date.today.year - 18, :end_year => Date.today.year                       
+                %hr
+                = cf.input :child_name2, :label =>"Child's name (optional)"
+                = cf.input :child_birth_date2, :discard_day => true, :start_year => Date.today.year - 18, :end_year => Date.today.year                       
+            .row      
+              .span9.col-lg-9.col-md-9.col-sm-9.remember
+                = cf.input :subject,:label=>"Regarding" 
+                = cf.error :subject, :id => 'subject_error'
 
-          = cf.input :message, :label=>false do
-            =cf.label :message, :label=>"Message", :style => 'display:inline;'
-            %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
-            = cf.text_area :message, :style => 'height: 150px !important;'
-            
-        = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
-        = raw (get_captcha(:ssl=>true))
-        .submit
-          = cf.button :submit,  "Contact", :class => 'btn btn-primary span3'
-  .span3
-    = link_to 'Contact Dayhome', '#contact-form', :class => "callToActionButton gradient", :id=>"linkToContactForm"
+                = cf.input :message, :label=>false do
+                  =cf.label :message, :label=>"Message", :style => 'display:inline;'
+                  %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
+                  = cf.text_area :message, :style => 'height: 150px !important;'
+            .row
+              = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
+              = raw (get_captcha(:ssl=>true))
+            .row
+              .submit
+                = cf.button :submit,  "Contact", :class => 'btn btn-primary span3'
+  %button.btn.btn-primary.btn-lg.callToActionButton.gradient{:type=>"button","data-toggle"=>"modal","data-target"=>"#contact-form"}
+    Contact Dayhome
+  /.span3.col-lg-3.col-md-3.col-sm-3
+  /  = link_to 'Contact Dayhome', '#contact-form', :class => "callToActionButton gradient", :id=>"linkToContactForm"
 .row
   %br
 
 .row
-  .mediaAlign.span6
+  .mediaAlign.span6.col-lg-6.col-md-6.col-sm-6
     %h3.singleViewH3
       Location
     = gmaps(:map_options => { :center_latitude => @day_home.lat,
@@ -179,7 +171,7 @@
                                  :auto_zoom => false,
                                  :provider_key => gmaps_api_key},
                :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
-  .span3
+  .span3.col-lg-3.col-md-3.col-sm-3
     %h3.singleViewH3
       Other Information
     %h4
@@ -205,7 +197,7 @@
 
 
 .row
-  .span12
+  .span12.col-lg-12.col-md-12.col-sm-12
     .list_reviews
       %h3      
         Reviews

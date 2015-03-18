@@ -20,6 +20,7 @@
       $('#day_home_slug').empty().val(parsed_subdomain);
     });
 
+    $( ".datetimepicker" ).datepicker();
     
   });
   
@@ -29,107 +30,147 @@
       .featured-button.featured
         .ui-button-text
           Featured
-          %span.fs_11
+          .fs_11
             until #{@day_home.feature_end_date}
-= form_for [:admin, @day_home], :html => {:multipart => true} do |f|
+= form_for [:admin, @day_home], :html => {:multipart => true,:class=>"form-horizontal"} do |f|
   =hidden_field(:page, params["page"])
-  =# link_to 'You can edit contact phone in the organization.', [:edit, :admin, @day_home.organization]
-  = f.label :approved, :class => 'checkbox' do
-    = f.check_box :approved
-    Approved to display in searches?
-  = f.label :featured?, :class => 'checkbox' do
-    = f.check_box :featured?
-    Featured?
+  = link_to 'You can edit contact phone in the organization.', [:edit, :admin, @day_home.organization]
+  .form-group
+    = f.label :name, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :name
 
+  .form-group
+    = f.label 'Status', :class => 'control-label'
+    .col-sm-10
+      .checkbox
+        %label
+          = f.check_box :approved
+          Approved
+      .checkbox
+        %label
+          = f.check_box :featured?
+          Featured until
+        = f.text_field "feature_end_date", :class => 'form-control datetimepicker'
   
-  = f.label :community
-  - @location = @day_home.location
-  = collection_select(:location, :community_id, @communities, :id, :name)
+  .form-group
+    = f.label :community, :class => 'col-sm-2 control-label'
+    .col-sm-2
+      - @location = @day_home.location
+      = collection_select(:location, :community_id, @communities, :id, :name)
+  .form-group  
+    = f.label :slug, 'Dayhome Slug', :class => 'col-sm-2 control-label'
+    .col-sm-10
+      .input-group
+        .input-group-addon
+          https://dayhomeregistry.com/
+        = f.text_field :slug
+  
+  .form-group
+    = f.label :phone_number, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :phone_number
 
-  = f.label :name
-  = f.text_field :name
+  .form-group
+    = f.label :email, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :email
   
-  = f.label :slug, 'Dayhome Slug'
-  .input-prepend
-    %span.add-on
-      http://dayhomeregistry.com/
-    = f.text_field :slug
+  .form-group
+    = f.label :highlight, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_area :highlight
   
-  
-  = f.label :phone_number
-  = f.text_field :phone_number
-
-  = f.label :email
-  = f.text_field :email
-  
-  = f.label :highlight
-  = f.text_area :highlight
-  
-  = f.label :blurb
-  = f.text_area :blurb
+  .form-group
+    = f.label :blurb, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_area :blurb
 
 
-  = f.label :street1, 'Street 1'
-  = f.text_field :street1
+  .form-group
+    = f.label :street1, 'Street 1', :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :street1
 
-  = f.label :street2, 'Street 2'
-  = f.text_field :street2
+  .form-group
+    = f.label :street2, 'Street 2', :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :street2
   
-  = f.label :postal_code, 'Postal Code'
-  = f.text_field :postal_code
+  .form-group
+    = f.label :postal_code, 'Postal Code', :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :postal_code
+    
+  .form-group
+    = f.label :city, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :city
   
-  = f.label :city
-  = f.text_field :city
-  
-  = f.label :province
-  = f.subregion_select :province,'CA'
-  
-  = f.fields_for :photos do |p|
-    .add_multiples.clear{'data-group' => 'photos'}
-      = p.label :caption, 'Caption & Photo'
-      - if p.object.photo?
-        .remove_contents
-          = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'
-      = p.text_field :caption
-      = p.check_box :default_photo        
-      = 'Set as default'
-      = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
-      %br
-      = p.file_field :photo
-      = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
-  .clear
-  %strong= link_to 'Add Another Photo', '#', :class => 'add_multiples_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
+  .form-group
+    = f.label :province, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.subregion_select :province,'CA'
+  .form-group
+    = label_tag 'Caption & Photo', nil,:class=>'col-sm-2 control-label'
+    .col-sm-10
+      = f.fields_for :photos do |p|
+        .add_multiples.clear{'data-group' => 'photos'}
+          - if p.object.photo?
+            .remove_contents
+              = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'
+          = p.text_field :caption
+          = p.check_box :default_photo        
+          = 'Set as default'
+          = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
+          %br
+          = p.file_field :photo
+          = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
+        %br
+      .clear
+      %strong= link_to 'Add Another Photo', '#', :class => 'add_multiples_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
   %br
   %br
-  = f.label :availability_types, 'Full-time Availability', :style => 'font-weight: bold'
+  .form-group
+    = f.label :availability_types, 'Full-time Availability', :class=>'col-sm-2 control-label',:style => 'font-weight: bold'
+    .col-sm-10
+      - AvailabilityType.full_time.each do |availability|
+        .checkbox
+          = f.label availability.kind, :class => :checkbox do 
+            = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
+            = availability.kind
   
-  - AvailabilityType.full_time.each do |availability|
-    = f.label availability.kind, :class => :checkbox do 
-      = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
-      = availability.kind
-  
-  = f.label :availability_types, 'Part-time Availability', :style => 'font-weight: bold'
-  - AvailabilityType.part_time.each do |availability|
-    = f.label availability.kind, :class => :checkbox do 
-      = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
-      = availability.kind
-  
-  = f.label :certification_types, 'Certification', :style => 'font-weight: bold'
-  - CertificationType.all.each do |certification|
-    = f.label certification.kind, :class => :checkbox do 
-      = check_box_tag 'day_home[assign_certification_type_ids][]', certification.id, @day_home.certification_type_ids.include?(certification.id)
-      = certification.kind
-  
-  
-  = f.label :dietary_accommodations, 'Dietary Accommodations', :style => 'font-weight: bold'
-  = f.label :dietary_accommodations, 'Dietary Accommodations', :class => :checkbox do
-    = f.check_box :dietary_accommodations
-    Accommodates for Food Allergies
-
-  = f.label :licensed, 'Accredited', :style => 'font-weight: bold'
-  = f.label :licensed, 'Accredited', :class => :checkbox do
-    = f.check_box :licensed
-    Accredited
+  .form-group
+    = f.label :availability_types, 'Part-time Availability', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
+    .col-sm-10
+      - AvailabilityType.part_time.each do |availability|
+        .checkbox
+          = f.label availability.kind, :class => :checkbox do 
+            = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
+            = availability.kind
+  .form-group
+    = f.label :certification_types, 'Certification', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
+    .col-sm-10
+      - CertificationType.all.each do |certification|
+        .checkbox
+          = f.label certification.kind, :class => :checkbox do 
+            = check_box_tag 'day_home[assign_certification_type_ids][]', certification.id, @day_home.certification_type_ids.include?(certification.id)
+            = certification.kind
+      
+  .form-group
+    = f.label :dietary_accommodations, 'Dietary Accommodations', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
+    .col-sm-10
+      .checkbox
+        = f.label :dietary_accommodations, 'Dietary Accommodations', :class => :checkbox do
+          = f.check_box :dietary_accommodations
+          Accommodates for Food Allergies
+  .form-group
+    = f.label :licensed, 'Accredited', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
+    .col-sm-10
+      .checkbox
+        = f.label :licensed, 'Accredited', :class => :checkbox do
+          = f.check_box :licensed
+          Accredited
   
 
         

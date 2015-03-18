@@ -4,7 +4,7 @@ class OrganizationsController < ApplicationController
   helper_method :sort_column, :sort_direction
   
   def show
-    debugger
+    #debugger
     @organization = Organization.find(params[:id])
     @plan = Plan.where(:plan=>@organization.plan).first
     @payments = {}

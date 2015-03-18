@@ -11,7 +11,6 @@
  *= require normalize
  *= require_self
  *= require jquery-star-rating
- *= require jquery.modal
  *= require searches
  *= require pricing
  *= require billing
@@ -23,6 +22,9 @@
  *= require searches
  
 */
+@import 'jquery.ui.core';
+@import 'jquery.ui.datepicker';
+
 $iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
 $iconLogoPath: asset-url("mini-logo.jpg", image) !default;
 
@@ -327,23 +329,21 @@ margin-bottom: 0;
 .floatr {
   float:right;
 }
-.pagination a {
-  padding: 0 5px;
-  border: none;
+.topright {
+  position:absolute;
+  top:0;
+  right:0;
+  margin: 1% 1%;
 }
-
-.pagination .page.active a{
-  color: red;
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+  background-color: $green;
+  border-color: $green;
 }
-.pagination span.first {
-  line-height: 34px;
-  color: #999;
+.pagination > li > a, .pagination > li > span {
+  color: $green;
 }
-.pagination li span {
-  float:left;
-  padding: 0 5px;
-}
-.pagination li {
+.well {
+  position:relative;
 }
 .wellSize {
   min-height: 340px;
@@ -573,4 +573,8 @@ div.callout {
 span.small {
   font-size: 13px;
   margin-left:20px;
+}
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
 }

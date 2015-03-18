@@ -19,34 +19,39 @@
 
 - @user.user_day_homes.build if @user.user_day_homes.blank? 
 = form_for [:admin, @user] do |f|
-  = f.label :first_name
-  = f.text_field :first_name
+  .form-group
+    = f.label :first_name
+    = f.text_field :first_name, :class=>"form-control"
+  .form-group
+    = f.label :last_name
+    = f.text_field :last_name, :class=>"form-control"
+  
+  .form-group
+    = f.label :email
+    = f.email_field :email, :class=>"form-control"
+  
+  .form-group
+    = f.label :password
+    = f.password_field :password, :class=>"form-control"
+  
+  .form-group
+    = f.label :password_confirmation, 'Confirm Password'
+    = f.password_field :password_confirmation, :class=>"form-control"
 
-  = f.label :last_name
-  = f.text_field :last_name
-  
-  = f.label :email
-  = f.email_field :email
-  
-  = f.label :password
-  = f.password_field :password
-  
-  = f.label :password_confirmation, 'Confirm Password'
-  = f.password_field :password_confirmation
-
-  = f.label :admin, :class => :checkbox do
+  .form-group  
     = f.check_box :admin
     Has admin access?
     
-  = f.label :assign_day_home_ids, "Assigned dayhomes"
+  .form-group
+    = f.label :assign_day_home_ids, "Assigned dayhomes"
   
-  - f.object.user_day_homes.each do |user_day_home|
-    .add_multiples.clear{'data-group' => 'assign_day_home_ids'}
-      = select_tag 'user[assign_day_home_ids][]', options_for_select([['None', nil]] + DayHome.all_for_select, user_day_home.day_home_id)
-      = link_to 'Remove', '#', :class => 'remove_fieldset_link'
-      %br
-  = link_to 'Assign another dayhome', '#', :class => 'add_multiples_link', 'data-group' => 'assign_day_home_ids', 'data-attribute-key' => 'assign_day_home_ids_attributes'
-  
+    - f.object.user_day_homes.each do |user_day_home|
+      .add_multiples.clear.form-control{'data-group' => 'assign_day_home_ids'}
+        = select_tag 'user[assign_day_home_ids][]', options_for_select([['None', nil]] + DayHome.all_for_select, user_day_home.day_home_id)
+        = link_to 'Remove', '#', :class => 'remove_fieldset_link'
+        %br
+    = link_to 'Assign another dayhome', '#', :class => 'add_multiples_link', 'data-group' => 'assign_day_home_ids', 'data-attribute-key' => 'assign_day_home_ids_attributes'
+    
   %br
   = f.submit 'Save', :class => 'btn'
   |

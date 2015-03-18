@@ -1,21 +1,19 @@
 .row.registrationStyle
-  .span4.well.form-horizontal
+  .span4.col-lg-4.col-md-4.col-sm-4.well.form-horizontal
     %h2
       Your Account
 
     = form_for @user_session do |f|
-      = f.label :email
-      = f.email_field :email
-
-      = f.label :password
-      = f.password_field :password
-
-      %br
-      %br
+      .form-group
+        = f.label :email, :for=>"email"
+        = f.email_field :email, :class=>"form-control"
+      .form-group
+        = f.label :password, :for=>"email"
+        = f.password_field :password, :class=>"form-control"
       = f.submit 'Login', :class => 'btn'
       |
       = link_to 'Forgot password?', reset_password_path
-  .span1{:style=>"margin-top:100px"}
+  .span1.col-lg-1.col-md-1.col-sm-1{:style=>"margin-top:100px"}
     OR
-  .span4{:style=>"margin-top:100px"}
+  .span4.col-lg-4.col-md-4.col-sm-4{:style=>"margin-top:100px"}
     = fb_connect_button

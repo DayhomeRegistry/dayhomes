@@ -13,8 +13,7 @@
     #{current_user.organization.name} dayhomes
   -else
     My dayhomes
-%p
-  = link_to 'Create dayhome', [:new, :day_home], :class => :btn    
+   
 =form_tag({:controller => "day_homes", :action => "index"},:method=>"get", :id => :searchForm) do 
   %div.input-prepend.pull-right
     %span.add-on
@@ -61,7 +60,8 @@
           %td
             = link_to 'Reactivate', day_home_reactivate_path(day_home,:params=>params), :method=>:put
             
-= paginate @day_homes, :outer_window => 10, :window => 10
-= link_to 'active',day_homes_path()
-| 
-deleted
+= paginate @day_homes, :outer_window => 10, :window => 10,:theme => 'twitter-bootstrap-3'   
+%div
+  = link_to 'active',day_homes_path()
+  | 
+  deleted

@@ -26,9 +26,9 @@
   });
 
 %p
-  = link_to 'Create dayhome', [:new, :admin, :day_home], :class => :btn
-  = link_to 'Approve','#',:id => 'approveBtn',:class => :btn
-  = link_to 'Feature','#',:id => 'featureBtn',:class => :btn
+  = link_to 'Create dayhome', [:new, :admin, :day_home], :class => "btn  btn-default"
+  = link_to 'Approve','#',:id => 'approveBtn',:class => "btn  btn-default"
+  = link_to 'Feature','#',:id => 'featureBtn',:class => "btn  btn-default"
 =form_tag({:controller => "day_homes", :action => "index", :method=>"get"}, :id => :searchForm) do 
   %div.input-prepend.pull-right
     %span.add-on
@@ -86,10 +86,12 @@
             /= link_to   'Edit', [:edit, :admin, day_home], :page=>params["page"]
             = link_to 'Edit', edit_admin_day_home_path(day_home,:page=>params["page"])
             |
-            = link_to 'Delete', [:admin, day_home], :method => :delete, :confirm => "Are you sure?"    
-  = paginate @day_homes, :window => 1,:left => 3,:right => 3
-  active 
-  | 
-  = link_to 'deleted',admin_deleted_day_homes_path()
+            = link_to 'Delete', [:admin, day_home], :method => :delete, :confirm => "Are you sure?" 
+  .filters   
+    = paginate @day_homes, :window => 1,:left => 3,:right => 3,:theme => 'twitter-bootstrap-3'
+    %div
+      active 
+      | 
+      = link_to 'deleted',admin_deleted_day_homes_path()
 :plain
   </form>    

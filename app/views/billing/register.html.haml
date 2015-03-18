@@ -117,7 +117,7 @@
     %br
     %h3#addon-header.section-header.section-header-first
       Choose Any Extras You May Need
-    .span-22.append-bottom-1
+    .span-22.col-lg-22.col-md-22.col-sm-22.append-bottom-1
       #addon_staff{:style => "display: none;"}
         .control-group
           %label.control-label{:for => "staff"}
@@ -145,7 +145,7 @@
             %a#A1{:href => "buy.htm"}
               %span one-time use extras
           Featuring your dayhome or adding a waiting list later.
-    .span-13.append-bottom-2
+    .span-13.col-lg-13.col-md-13.col-sm-13.append-bottom-2
       #total_box.bg_orange.hide{:style => "display: block;"}
         %h4.sidebar_header_orange
           %span Upgrade Details
@@ -237,15 +237,15 @@
           .example.first
             Street
         .append-bottom-1
-          .span-7
+          .span-7.col-lg-7.col-md-7.col-sm-7
             = f.text_field :day_home_city, :class=>"input-medium"            
             .example
               City
-          .span-10
+          .span-10.col-lg-10.col-md-10.col-sm-10
             = f.subregion_select :day_home_province,'CA'
             .example
               Province
-          .span-6
+          .span-6.col-lg-6.col-md-6.col-sm-6
             = f.text_field :day_home_postal_code, :class=>"input-mini"
             .example
               Postal/Zip Code
@@ -264,7 +264,7 @@
           %noscript
             Javascript is not enabled and is required for this form.  First enable it in your web browser settings.                
       .append-bottom-1
-        .span-25
+        .span-25.col-lg-25.col-md-25.col-sm-25
           /
             .control-group
               %label.control-label{:for => "BILL_NAME"}
@@ -274,11 +274,11 @@
           .control-group          
             =label_tag :card_number, "Card Number", :class=>"control-label"            
             .controls  
-              .span-11
+              .span-11.col-lg-11.col-md-11.col-sm-11
                 =text_field_tag :card_number, nil, name:nil, :class=>"input-large",:onkeypress => "return numbersonly2(this, event)"
                 .example
                   Number
-              .span-4
+              .span-4.col-lg-4.col-md-4.col-sm-4
                 =text_field_tag :card_code, nil, name:nil, :class=>"input-mini"
                 .example
                   CCV
@@ -286,15 +286,15 @@
           .control-group
             =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
             .controls
-              .span-6.append-bottom-1
+              .span-6.col-lg-6.col-md-6.col-sm-6.append-bottom-1
                 =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month"}
                 .example
                   Month
-              .span-6.append-bottom-1
+              .span-6.col-lg-6.col-md-6.col-sm-6.append-bottom-1
                 =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
                 .example.first
                   Year   
-        .span-12
+        .span-12.col-lg-12.col-md-12.col-sm-12
           %strong Need Help? Call us!
           %br
             .gray50.fs_11
