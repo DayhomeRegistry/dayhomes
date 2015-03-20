@@ -57,7 +57,10 @@ class SearchesController < ApplicationController
     # set the pins for gmaps
     #@featured = DayHome.featured
     @day_homes = @search.day_homes
-    @featured = @day_homes.reject {|dayhome| !dayhome.featured?}
+    #debugger
+
+    #@featured = @day_homes.reject {|dayhome| !dayhome.featured?}
+    @featured = @search.featured
     
 
     # make sure the search object keeps its persistance

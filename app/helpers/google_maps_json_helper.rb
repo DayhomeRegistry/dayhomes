@@ -24,14 +24,17 @@ module GoogleMapsJsonHelper
     collection_array.to_json
   end
   
-  def gmap_prepare_dayhomes(day_homes)
+  def gmap_prepare_dayhomes(day_homes, featured_day_homes)
+    #debugger
+    @agencies = Organization.joins(:day_homes).group('organization_id').having('count(day_homes.id)>1')
     day_homes.to_gmaps4rails do |dayhome, marker|
-      @is_featured = dayhome.featured?
+      @is_featured = featured_day_homes.include?(dayhome)
       @featured_photo = dayhome.featured_photo
       @organization = dayhome.organization
+      #debugger
       marker.infowindow render(:partial => "/searches/pin", :locals => { :dayhome => dayhome})
       marker.title dayhome.name
-      if dayhome.featured?
+      if @is_featured
         picture = "/assets/dayhome-private-featured.png"
         picture = "/assets/dayhome-featured.png" unless !dayhome.licensed
         picture = "/assets/dayhome-premium-featured.png" unless dayhome.organization.pin.nil?

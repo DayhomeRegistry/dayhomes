@@ -29,7 +29,7 @@
   = link_to 'Create dayhome', [:new, :admin, :day_home], :class => "btn  btn-default"
   = link_to 'Approve','#',:id => 'approveBtn',:class => "btn  btn-default"
   = link_to 'Feature','#',:id => 'featureBtn',:class => "btn  btn-default"
-=form_tag({:controller => "day_homes", :action => "index", :method=>"get"}, :id => :searchForm) do 
+=form_tag(admin_day_homes_path(),{:method=>"get", :id => :searchForm}) do 
   %div.input-prepend.pull-right
     %span.add-on
       %i.icon-search
