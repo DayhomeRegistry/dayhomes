@@ -296,7 +296,7 @@ class Search
         end
         d>100
     }
-    #debugger
+
     self.featured = dayhome_query.joins(:features).where("approved=1").where("end > ?",Time.now()).uniq
 
     # record the number of pins

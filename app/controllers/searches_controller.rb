@@ -5,7 +5,6 @@ class SearchesController < ApplicationController
     attributes["location"]=getHash(request.location)
     #attributes["location"]=Geocoder.search("Calgary").first.data["geometry"]["location"]
 
-    #debugger
     if(!params["spots"].nil? && params["spots"].to_i>1)
       type = params["spots"].to_i
       # "availability_types":{"kind":["1","2","3","4","5","6","7","8"]}
@@ -44,7 +43,6 @@ class SearchesController < ApplicationController
       end
       # attributes["availability_types"] = kinds
     end
-    #debugger
     @search = Search.new(attributes)
 
     # If any errors, show an error message
@@ -57,7 +55,6 @@ class SearchesController < ApplicationController
     # set the pins for gmaps
     #@featured = DayHome.featured
     @day_homes = @search.day_homes
-    #debugger
 
     #@featured = @day_homes.reject {|dayhome| !dayhome.featured?}
     @featured = @search.featured

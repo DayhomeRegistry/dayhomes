@@ -112,7 +112,6 @@ class DayHome < ActiveRecord::Base
   end
   
   def featured_photo
-    #debugger
     defaults = photos.reject{|x| x.default_photo=false}
     #defaults = photos.where("default_photo=1")
     if (!defaults.empty?)

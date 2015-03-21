@@ -51,7 +51,6 @@ class BillingController < ApplicationController
     @error_msg = []
     
     begin
-      debugger
       user = User.find_by_email(@day_home_signup_request.contact_email)    
       DayHomeSignupRequest.transaction do
       #Check for a coupon
@@ -185,7 +184,6 @@ class BillingController < ApplicationController
       sign_in user
 
     rescue => e    
-      debugger
       if(!e.message.nil?)
         flash.now['page-error'] = e.message
         logger.error e.message
@@ -443,7 +441,6 @@ class BillingController < ApplicationController
     raise @error_msg.join("<br/>").html_safe
   end
   def handle_dayhome_error
-    debugger
     @day_home.errors.messages.each do |err|
       @error_msg << err[1][0]+" (dayhome)"
     end

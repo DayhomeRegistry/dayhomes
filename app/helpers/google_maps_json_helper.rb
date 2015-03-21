@@ -25,13 +25,12 @@ module GoogleMapsJsonHelper
   end
   
   def gmap_prepare_dayhomes(day_homes, featured_day_homes)
-    #debugger
     @agencies = Organization.joins(:day_homes).group('organization_id').having('count(day_homes.id)>1')
     day_homes.to_gmaps4rails do |dayhome, marker|
       @is_featured = featured_day_homes.include?(dayhome)
       @featured_photo = dayhome.featured_photo
       @organization = dayhome.organization
-      #debugger
+
       marker.infowindow render(:partial => "/searches/pin", :locals => { :dayhome => dayhome})
       marker.title dayhome.name
       if @is_featured
