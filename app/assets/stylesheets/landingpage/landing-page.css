@@ -1060,6 +1060,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de8e0009', e
    }
 
    .landing-page .full-background {
+    background-image:image-url('landingpage/bg.jpg');
     background-position: 20%;
     background-repeat: no-repeat;
     background-attachment: fixed;
