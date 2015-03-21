@@ -7,5 +7,5 @@
 
 /* Configure and import bootstrap */
 /* Set the proper asset path for loading icon images. */
-$iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
+$iconSpritePath: image-url("glyphicons-halflings.png") !default;
 @import "bootstrap";
