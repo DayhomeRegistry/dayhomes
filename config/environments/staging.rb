@@ -73,6 +73,7 @@ Dayhomes::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :log
+  config.active_record.raise_in_transactional_callbacks = true
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
