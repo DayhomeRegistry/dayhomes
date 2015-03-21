@@ -53,7 +53,7 @@ h1 {
   font-size: 25.888px;
 }
 header {
-  background: #ffffff  asset-url("banner-sm.png", image) no-repeat right top;
+  background: #ffffff  image-url("banner-sm.png") no-repeat right top;
   
   width: 80%;
   margin: auto;
