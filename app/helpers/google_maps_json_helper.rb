@@ -7,8 +7,9 @@ module GoogleMapsJsonHelper
     search_address = Gmaps4rails.geocode(address)
 
     # convert JSON into hash
-    search_pin = {:lat => search_address[0][:lat], :lng => search_address[0][:lng], :width => '41', :height => '45'}.to_json
-    ActiveSupport::JSON.decode(search_pin)
+    #search_pin = {:lat => search_address[0][:lat], :lng => search_address[0][:lng], :width => '41', :height => '45'}.to_json
+    search_pin = {:lat => search_address[0][:lat], :lng => search_address[0][:lng], :width => '41', :height => '45'} #.to_json
+    #ActiveSupport::JSON.decode(search_pin)
   end
 
   # combines a collection of gmappable AR models and a hash

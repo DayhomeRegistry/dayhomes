@@ -242,8 +242,11 @@
           %a{:href=>"http://www.pinterest.com/dayhomeregistry", :class=>"btn btn-social btn-pinterest btn-simple"}
             %i.fa.fa-pinterest
         .copyright
-          © 2015
-          %a{:href => "http://www.dayhomeregistry.com"} Dayhome Registry
+          &copy;
+          = link_to "Dayhome Registry #{Date.today.year}", root_path
+          = "(#{Dayhomes::Application::VERSION})"
+          | Read our
+          = link_to 'Privacy Policy', [:privacy, :pages]
 
   = javascript_include_tag :landingpage
   :javascript
