@@ -45,10 +45,10 @@ class SearchesController < ApplicationController
     end
     #byebug
     #{"address"=>"", "location"=>{"lat"=>43.643, "lng"=>-79.388}}
-    logger.info "*********************************************"
-    logger.info request.remote_ip
-    logger.info attributes
-    logger.info "*********************************************"
+    # logger.info "*********************************************"
+    # logger.info request.remote_ip
+    # logger.info attributes
+    # logger.info "*********************************************"
     @search = Search.new(attributes)
 
     # If any errors, show an error message

@@ -1,7 +1,5 @@
-module Gmaps4rails
-  class ViewHelper
-    def gmaps4rails_pipeline_enabled?
-      true
-    end
+module Gmaps4railsHelper
+  def gmaps4rails_pipeline_enabled?
+    true
   end
 end
