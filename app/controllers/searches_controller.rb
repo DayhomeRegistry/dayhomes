@@ -43,6 +43,9 @@ class SearchesController < ApplicationController
       end
       # attributes["availability_types"] = kinds
     end
+    logger.info "*********************************************"
+    logger.info attributes
+    logger.info "*********************************************"
     @search = Search.new(attributes)
 
     # If any errors, show an error message
