@@ -43,7 +43,7 @@ class SearchesController < ApplicationController
       end
       # attributes["availability_types"] = kinds
     end
-    byebug
+    #byebug
     #{"address"=>"", "location"=>{"lat"=>43.643, "lng"=>-79.388}}
     logger.info "*********************************************"
     logger.info request.report_ip
