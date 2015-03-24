@@ -2,7 +2,7 @@ class SearchesController < ApplicationController
   def index
 
     attributes = params[:search]
-    attributes["location"]=getHash(request.location)
+    attributes[:location]=getHash(request.location)
     #attributes["location"]=Geocoder.search("Calgary").first.data["geometry"]["location"]
 
     if(!params["spots"].nil? && params["spots"].to_i>1)
@@ -43,7 +43,10 @@ class SearchesController < ApplicationController
       end
       # attributes["availability_types"] = kinds
     end
+    byebug
+    #{"address"=>"", "location"=>{"lat"=>43.643, "lng"=>-79.388}}
     logger.info "*********************************************"
+    logger.info request.report_ip
     logger.info attributes
     logger.info "*********************************************"
     @search = Search.new(attributes)
@@ -69,7 +72,9 @@ class SearchesController < ApplicationController
   
   private
     def getHash(location) 
-      hash = {:lat => location.latitude, :lng=>location.longitude}
+      hash = {}
+      hash[:lat]= location.latitude
+      hash[:lng]=location.longitude
       hash
     end
 end
