@@ -86,7 +86,6 @@
           Choose Your Plan
         - @packages.each_with_index do |(key,value),index|
           %th.enabled{ :width=>"135" ,:class=>"package_#{key} column_#{@packages.count-index}"}
-            -byebug
             =value.name
             .price
               %strong                
