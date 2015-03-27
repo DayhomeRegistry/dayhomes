@@ -12,10 +12,10 @@
 //
 
 //= require jquery
-//= require jquery_ujs
-//= require jquery.browser
 //= require jquery.ui.all
-//= require jquery-ui/autocomplete
+//= require jquery_ujs
+//= require gmaps-auto-complete
+//= require jquery.browser
 //= require bootstrap
 //= require fullcalendar
 //= require_tree ./gmaps4rails
