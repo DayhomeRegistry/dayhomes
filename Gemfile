@@ -14,6 +14,7 @@ gem 'omniauth-facebook'
 #Jquery assets
 gem 'jquery-rails', '~>3'
 gem 'jquery-ui-rails', '~>3'
+gem 'gmaps-autocomplete-rails'
 
 #Image processing
 gem 'carrierwave'
