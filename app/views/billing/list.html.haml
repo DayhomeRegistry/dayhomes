@@ -1,7 +1,7 @@
 -content_for :title do
   %title List your dayhome - Dayhome Registry
 = stylesheet_link_tag params[:controller]
-= javascript_include_tag params[:controller]
+= javascript_include_tag "beta" #params[:controller]
 
 =form_tag(billing_signup_path(), {id:"create_form", method: "post"}) do
   =hidden_field_tag('dayhome[care_type_id]', value = nil, options = {id:"care_type_id"})
