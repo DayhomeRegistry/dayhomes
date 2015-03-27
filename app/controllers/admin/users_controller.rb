@@ -14,7 +14,7 @@ class Admin::UsersController < Admin::ApplicationController
       if (!clause.empty?)
         @users = User.where("concat(first_name,' ',last_name) like ?", "%#{clause.strip}%")
       else
-        @users = User.scoped
+        @users = User.all
       end
       #return render :text=> clause.strip+"|"+feature+"|"+approve
       
