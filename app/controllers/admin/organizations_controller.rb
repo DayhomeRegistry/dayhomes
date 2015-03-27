@@ -10,7 +10,7 @@ class Admin::OrganizationsController < Admin::ApplicationController
       if (!clause.empty?)
         @organizations = Organization.where("name like ?", "%#{clause.strip}%")
       else
-        @organizations = Organization.scoped
+        @organizations = Organization.all
       end
       
       @organizations = @organizations.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)

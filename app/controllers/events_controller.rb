@@ -5,7 +5,7 @@ class EventsController < ApplicationController
 
 
   def index
-    @events = Event.scoped
+    @events = Event.all
     @events.find_by_day_home_id(params[:day_home_id])
 
     respond_to do |format|
