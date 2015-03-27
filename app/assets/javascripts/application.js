@@ -15,6 +15,7 @@
 //= require jquery_ujs
 //= require jquery.browser
 //= require jquery.ui.all
+//= require jquery-ui/autocomplete
 //= require bootstrap
 //= require fullcalendar
 //= require_tree ./gmaps4rails
