@@ -1,19 +1,34 @@
+/ %div{:style=>"position:absolute;top:0;left:0;width:100%;height:100%;"}
+/   =gmaps( |
+/     :map_options => { |
+/       :center_latitude => @search.center_latitude, |
+/       :center_longitude => @search.center_longitude, |
+/       :zoom => @search.zoom, |
+/       :auto_adjust =>  @search.auto_adjust, |
+/       :auto_zoom => false, |
+/       :provider_key => gmaps_api_key, |
+/       :list_container => "markers_list" }, |
+/       :markers => { |
+/         :data => gmap_prepare_dayhomes(@day_homes), |
+/         :options => { |
+/           :do_clustering => true, |
+/           :clusterer_maxZoom => 6}})
 .row
-  .span8
+  .col-sm-12
     =render 'form'
 .row
-  .span8    
+  .col-sm-12    
     =gmaps( |
       :map_options => { |
         :center_latitude => @search.center_latitude, |
         :center_longitude => @search.center_longitude, |
         :zoom => @search.zoom, |
-        :auto_adjust =>  @search.auto_adjust, |
+        :auto_adjust =>  false, |
         :auto_zoom => false, |
         :provider_key => gmaps_api_key, |
         :list_container => "markers_list" }, |
         :markers => { |
-          :data => gmap_prepare_dayhomes(@day_homes), |
+          :data => gmap_prepare_dayhomes(@day_homes, @featured.to_a()), |
           :options => { |
             :do_clustering => true, |
             :clusterer_maxZoom => 6}})
@@ -24,9 +39,27 @@
       Private
       = image_tag("dayhome.png", :alt => "Private", :title => "Private")
       Accredited
+  .col-sm-4{:style=>"float:right;"}
+    %a{:href => "https://my.leadpages.net/leadbox/146cf0d73f72a2%3A1513729dbb46dc/5656058538229760/", :style => "color: rgb(255, 255, 255); text-decoration: none; font-family: Helvetica, Arial, sans-serif; font-weight: bold; font-size: 16px; line-height: 20px; padding: 10px; display: inline-block; max-width: 300px; border-radius: 5px; text-shadow: rgba(0, 0, 0, 0.247059) 0px -1px 1px; box-shadow: rgba(255, 255, 255, 0.498039) 0px 1px 3px inset, rgba(0, 0, 0, 0.498039) 0px 1px 3px; background: rgb(255, 206, 10);", :target => "_blank"} Get our Free Childcare Search Checklist!
+    %script{"data-config" => "%7B%7D", "data-leadbox" => "146cf0d73f72a2:1513729dbb46dc", "data-url" => "https://my.leadpages.net/leadbox/146cf0d73f72a2%3A1513729dbb46dc/5656058538229760/", :src => "//my.leadpages.net/leadbox-901.js", :type => "text/javascript"}
     %h3
-      Results
-    <ul id="markers_list">  </ul>
+      Sponsors
+    .list
+      =image_tag("landingpage/born2create.jpg", width: "232", alt: "Born2Create")    
+  - if !@featured.empty?
+    .col-sm-8
+      .featured_listing
+        .col-sm-12
+          %h3
+            Featured
+          .featured{:style=>"margin:10px -10px -10px -10px;padding: 0 10px 10px 10px;"}
+            =render :partial => 'day_home', :collection => @featured 
+
+  .col-sm-8
+    .col-sm-12
+      %h3
+        In your area
+      <ul id="markers_list">  </ul>
     /
       - if !@day_homes.empty?
         =render :partial => 'day_home', :collection => @day_homes 
@@ -53,7 +86,7 @@
             //  position: new google.maps.LatLng(railsmarker.lat,railsmarker.lng),
             // map: Gmaps.map.map              
             //});
-            if (railsmarker.sidebar.toString().indexOf("/"+slug)>0) {              
+            if (railsmarker.sidebar && railsmarker.sidebar.toString().indexOf("/"+slug)>0) {              
               if(currentInfo != null){
                 currentInfo.serviceObject.setIcon("/assets/dayhome.png");
                 currentInfo['infowindow'].close();
@@ -61,7 +94,11 @@
               currentInfo = railsmarker;
               try {
                 railsmarker['infowindow'].open(Gmaps.map.map,railsmarker.serviceObject);
-                railsmarker.serviceObject.setIcon("/assets/dayhome-red.png");
+                if(railsmarker.picture.indexOf("-featured")>0){
+                  railsmarker.serviceObject.setIcon("/assets/dayhome-red-featured.png");
+                }else {
+                  railsmarker.serviceObject.setIcon("/assets/dayhome-red.png");
+                }
               } catch (err) {
                  //wish I knew how to tell someone
               }
@@ -83,8 +120,9 @@
               $("#markers_list").append(Gmaps.map.markers[i].sidebar);
               j++;
             }
+
             if(lasti!=i && lastj!=j && j>0 && j%5==0){
-             $("#markers_list").append("<div class='dayhome_listing'><ins class='adsbygoogle' style='display:inline-block;width:468px;height:60px' data-ad-client='ca-pub-6835867491393885' data-ad-slot='6878500053'></ins></div"); 
+             $("#markers_list").append("<div class='dayhome_listing'><ins class='adsbygoogle' style='display:inline-block;width:234px;height:60px' data-ad-client='ca-pub-6835867491393885' data-ad-slot='3925033656'></ins></div"); 
              lasti=i;
              lastj=j;
             }

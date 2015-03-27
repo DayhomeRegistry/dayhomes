@@ -1,25 +1,30 @@
 = form_for @user || current_user do |f|
-  = f.label :first_name
-  = f.text_field :first_name
+  .form-group
+    = f.label :first_name
+    = f.text_field :first_name, :class=>"form-control"
+  .form-group
+    = f.label :last_name
+    = f.text_field :last_name, :class=>"form-control"
+  
+  .form-group
+    = f.label :email
+    = f.email_field :email, :class=>"form-control"
+  
+  .form-group
+    = f.label :password
+    = f.password_field :password, :class=>"form-control"
+  
+  .form-group
+    = f.label :password_confirmation, 'Confirm Password'
+    = f.password_field :password_confirmation, :class=>"form-control"
 
-  = f.label :last_name
-  = f.text_field :last_name
-
-  = f.label :email
-  = f.email_field :email
-
-  = f.label :password
-  = f.password_field :password
-
-  = f.label :password_confirmation, 'Confirm Password'
-  = f.password_field :password_confirmation
-
-  -if (!current_user.nil? && !current_user.organization.nil?)
-    = f.label :location
-    = collection_select(:user, :location_id, Location.where("organization_id = "+ current_user.organization.id.to_s), :id, :name,:include_blank=>true)
+  .form-group
+    -if (!current_user.nil? && !current_user.organization.nil?)
+      = f.label :location
+      = collection_select(:user, :location_id, Location.where("organization_id = "+ current_user.organization.id.to_s), :id, :name,{:include_blank=>true}, {:class=>"form-control"})
 
   %br
   %br
   = f.submit 'Update Account', :class => :btn
   |
-  = link_to 'Cancel', root_path
+  = link_to 'Cancel', users_url()

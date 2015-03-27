@@ -18,7 +18,7 @@ class TopicsController < ApplicationController
     @topic.user = current_user
     
     if @topic.save
-      flash[:notice] = "Topic was successfully created."
+      flash[:success] = "Topic was successfully created."
       redirect_to topic_url(@topic)
     else
       render :action => 'new'
@@ -33,7 +33,7 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
     
     if @topic.update_attributes(params[:topic])
-      flash[:notice] = "Topic was updated successfully."
+      flash[:success] = "Topic was updated successfully."
       redirect_to topic_url(@topic)
     end
   end
@@ -42,7 +42,7 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
     
     if @topic.destroy
-      flash[:notice] = "Topic was deleted successfully."
+      flash[:success] = "Topic was deleted successfully."
       redirect_to forum_url(@topic.forum)
     end
   end

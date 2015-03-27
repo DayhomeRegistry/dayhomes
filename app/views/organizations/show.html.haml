@@ -21,66 +21,65 @@
   .form-header
     %h2 Billing Information
     Here you'll find your current package, account limits, and payment history.
-  .control-group
-    .control-label.fs_22
-      Current Fee
-    .controls.fs_22
-      .float_left
-        %strong
-          =number_to_currency(@plan.price)
-          ="/#{@plan.subscription}"
-      .float_left.prepend-1
-        %a.button.medium.green{:href => billing_options_path()}
-          %span Upgrade Account
-  .control-group
-    .control-label
-      Dayhomes
-    .controls
-      .progress-bar.pg-neutral
-        - percentFill = number_to_percentage([(@organization.day_homes.count*100.0/@plan.day_homes),100.0].min)
-        -if @plan.day_homes <=0
-          - percentFill = number_to_percentage([(@organization.day_homes.count % 50),100.0].min)
-        .fill{:style => "width: #{percentFill};"}
-      =@organization.day_homes.count 
-      of
-      =@plan.day_homes>0 ? @plan.day_homes.to_s : "Unlimited"
-  .control-group
-    .control-label
-      Extra Staff
-    .controls
-      .progress-bar.pg-neutral.no-fill
-        - percentFill = number_to_percentage(100)
-        - if (@plan.staff>0) 
-          - percentFill = number_to_percentage([((@organization.users.count-1)*100.0/@plan.staff),100.0].min)          
-        .fill{:style => "width: #{percentFill}"}
-      =@organization.users.count-1
-      of 
-      =@plan.staff
-  .control-group
-    .control-label
-      Locales
-    .controls
-      .progress-bar.pg-neutral
-        - percentFill = number_to_percentage([(@organization.locations.count*100.0/@plan.locales),100.0].min)
-        .fill{:style => "width: #{percentFill}"}
-      =@organization.locations.count 
-      of 
-      =@plan.locales
-  .control-group
-    .control-label
-      Feature credits
-    .controls
-      .span-11.append-bottom-1
-        =@organization.feature_count
-      .span-14.append-bottom-1
+  .form-group
+    =label_tag 'Current Fee', nil,:class=>"col-sm-2"
+    .col-sm-10
+      %p.form-control-static
+        =number_to_currency(@plan.price)
+        ="/#{@plan.subscription}"
+  .form-group
+    =label_tag 'Dayhomes', nil,:class=>"col-sm-2"
+    .col-sm-10
+      .controls
+        .progress-bar.pg-neutral
+          - percentFill = number_to_percentage([(@organization.day_homes.count*100.0/@plan.day_homes),100.0].min)
+          -if @plan.day_homes <=0
+            - percentFill = number_to_percentage([(@organization.day_homes.count % 50),100.0].min)
+          .fill{:style => "width: #{percentFill};"}
+        .progress-bar-add-on
+          =@organization.day_homes.count 
+          of
+          =@plan.day_homes>0 ? @plan.day_homes.to_s : "Unlimited"
+  .form-group
+    =label_tag 'Extra Staff', nil,:class=>"col-sm-2"
+    .col-sm-10
+      .controls
+        .progress-bar.pg-neutral.no-fill
+          - percentFill = number_to_percentage(100)
+          - if (@plan.staff>0) 
+            - percentFill = number_to_percentage([((@organization.users.count-1)*100.0/@plan.staff),100.0].min)          
+          .fill{:style => "width: #{percentFill}"}
+        .progress-bar-add-on
+          =@organization.users.count-1
+          of 
+          =@plan.staff
+  .form-group
+    =label_tag 'Locales', nil,:class=>"col-sm-2"
+    .col-sm-10
+      .controls
+        .progress-bar.pg-neutral
+          - percentFill = number_to_percentage([(@organization.locations.count*100.0/@plan.locales),100.0].min)
+          .fill{:style => "width: #{percentFill}"}
+        .progress-bar-add-on
+          =@organization.locations.count 
+          of 
+          =@plan.locales
+  .form-group
+    =label_tag 'Feature credits', nil,:class=>"col-sm-2"
+    .col-sm-10
+      .controls
+        %p.form-control-static.append-bottom-1
+          =@organization.feature_count
+      .span.col-lg-.col-md-.col-sm--14.append-bottom-1
         %a{:href => billing_extras_path()} Buy credits
-  .control-group.section-start
+
+  .form-group.section-start
     .control-label.fs_22
       Mentorees
     .controls.fs_22
       .float_left
         Other dayhomes you've referred to Dayhome Registry      
-  .control-group
+  .form-group
     .control-label      
     .controls
       -if (@organization.mentorees.count>= 1)
@@ -100,7 +99,7 @@
       %div{:style=>"padding-left:120px;"}
         %strong
           One free year of membership to Dayhome Registry
-  .control-group
+  .form-group
     .control-label
       Name
     .controls
@@ -109,125 +108,138 @@
           %div{:class=>"#{index>0?'span-7' : ''}"}
             =mentoree.name
             = link_to 'View', mentoree.day_homes.first
-  .control-group
+  .form-group
     .control-label      
     .controls
       Rock at running your dayhome?  Want to get free stuff?  Share this link with other dayhomes to start them down their own journey to success:
       - link = URI::join(root_url,billing_signup_path,"?ref="+@organization.affiliate_tag).to_s
-      =link_to link,link            
-  .control-group.section-start
-    .control-label.fs_22
-      Organization
-    .controls.fs_22
-      .float_left
-        Some info about your organization   
-  .control-group
-    .controls.fs_22
-      .span-7
-        %img{:src=>"#{@organization.logo.photo_url(:thumb)}"}
-  .control-group
-    .control-label
-      Name
-    .controls
-      =@organization.name
-  .control-group
-    .control-label
-      Street Address
-    .controls
-      .append-bottom-1.first
-        = @organization.street1
-        .example.first
-          Street
-      .append-bottom-1
-        .span-7
-          = @organization.city
-          .example
-            City
-        .span-10
-          = @organization.province
-          .example
-            Province
-        .span-6
-          = @organization.postal_code
-          .example
-            Postal Code
-  .control-group
-    .control-label
-      Phone
-    .controls
-      .append-bottom-1.first
-        = @organization.phone_number.nil? ? "None":@organization.phone_number
-  .control-group
-    .control-label
-      Credit Card
-    -if !@organization.credit_card.nil?  
-      .controls
-        .append-bottom-1.first            
-          =label_tag :existing_card_number, "**** **** **** "+@organization.credit_card[:last4], :style=>"width:150px;"
-          .span-7
-            =label_tag :existing_card_exp, "Exp:"+@organization.credit_card[:month].to_s+"/"+@organization.credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"
-          .clear
-    -else
-      .controls
-        .append-bottom-1.first   
-          .span-7
-            .error.alert-error
+      =link_to link,link        
+
+  .form-group.section-start
+    .col-sm-2
+      .control-label.fs_22
+        Organization
+    .col-sm-10
+      .controls.fs_22
+        .float_left
+          Some info about your organization  
+          = link_to 'Edit', edit_admin_organization_path(@organization) 
+  .col-sm-offset-2   
+    .form-group
+      .col-sm-12
+        -if !@organization.logo.nil?
+          %img{:src=>"#{@organization.logo.photo_url(:thumb)}"}
+  .col-sm-offset-2
+    .form-group
+      =label_tag 'Name', nil,:class=>"col-sm-2"
+      .col-sm-10
+        .controls
+          =@organization.name
+    .form-group
+      =label_tag 'Street Address', nil,:class=>"col-sm-2"
+      .col-sm-10
+        .controls
+          .append-bottom-1
+            = @organization.street1
+            .example
+              Street
+      .col-sm-offset-2.col-sm-10
+        .controls
+          .append-bottom-1
+            .col-sm-3.nopadding
+              = @organization.city
+              = raw '&nbsp;'
+              .example
+                City
+            .col-sm-3
+              = @organization.province
+              = raw '&nbsp;'
+              .example
+                Province
+            .col-sm-3
+              = @organization.postal_code
+              = raw '&nbsp;'
+              .example
+                Postal Code
+    .form-group
+      =label_tag 'Phone', nil,:class=>"col-sm-2"
+      .col-sm-10
+        .controls
+          .append-bottom-1.first
+            = @organization.phone_number.nil? ? "None":@organization.phone_number
+    .form-group
+      =label_tag 'Credit Card', nil,:class=>"col-sm-2"
+      .col-sm-10
+        -if !@organization.credit_card.nil?  
+          .controls
+            .append-bottom-1  
+              .col-sm-3.nopadding      
+                %p.form-control-static{:style=>"width:150px;"}
+                  ="**** **** **** "+@organization.credit_card[:last4]
+              .col-sm-3
+                %p.form-control-static{:style=>""}
+                  ="Exp:"+@organization.credit_card[:month].to_s+"/"+@organization.credit_card[:year].to_s
+              .clear
+        -else
+          .bg-danger
+            %p.form-control-static
               Please update your credit card information!
-  .control-group
-    .control-label
-      Description
-    .controls
-      .append-bottom-1.first
-        = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true).render(@organization.blurb).html_safe
-  .control-group
-    .controls
-      .example.first
-        = link_to 'Edit', edit_organization_path(@organization) 
-  .control-group.section-start
-    .control-label
-      Upgrades
-    .controls
-      %table#upgrades
-        %tbody
-          %tr
-            -if @organization.upgrades.count>0
-              -upgrade = @organization.upgrades.order("effective_date desc").first
-              -plan = Plan.find(upgrade.new_plan_id)
-              %td.span-14
-                =upgrade.effective_date.strftime("%a %b %d, %Y")
-                /="[#{(plan.day_homes==-1 ? 'Unlimited' : plan.day_homes.to_s)}, #{(plan.staff==-1 ? 'Unlimited' : plan.staff.to_s)}, #{(plan.locales==-1 ? 'Unlimited' : plan.locales.to_s)}]"
-              %td.span-11
-                ="$#{plan.price}"
-                ="per #{plan.subscription}"
-            -else
-              None
-  .control-group
-    .control-label
-      Payments 
-    .controls
-      /=@payments.to_json
-      %table#payments
-        %tbody
-          -@payments.each_with_index do |p, index|
-            %tr{:style=> (index > 4?'display:none;':'')}
-              %td.span-14
-                :javascript
-                  document.write(convert_stripe_date(#{p.date}));
-              %td.span-11
-                :javascript
-                  document.write('$'+formatCurrency(#{p.total/100.0}))
-  -if @payments.count > 0
-    .control-group.append-bottom-1
-      .controls
-        .example.first       
-          = link_to 'Show last 100 payments', '#', :id=>'show_payments_link'     
-  .control-group.section-start
+    .form-group
+      =label_tag 'Description', nil,:class=>"col-sm-2"
+      .col-sm-10
+        .controls
+          %p.form-control-static
+            -if @organization.blurb && !@organization.blurb.empty?
+              = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true).render(@organization.blurb).html_safe
+
+  .form-group.section-start
+    .row
+      .col-sm-2
+        .control-label.fs_22
+          Upgrades
+      .col-sm-10
+        %table#upgrades
+          %tbody
+            %tr
+              -if @organization.upgrades.count>0
+                -upgrade = @organization.upgrades.order("effective_date desc").first
+                -plan = Plan.find(upgrade.new_plan_id)
+                %td.span-14.col-lg-14.col-md-14.col-sm-14
+                  =upgrade.effective_date.strftime("%a %b %d, %Y")
+                  ="[#{(plan.day_homes==-1 ? 'Unlimited' : plan.day_homes.to_s)}, #{(plan.staff==-1 ? 'Unlimited' : plan.staff.to_s)}, #{(plan.locales==-1 ? 'Unlimited' : plan.locales.to_s)}]"
+                %td.span-11.col-lg-11.col-md-11.col-sm-11
+                  ="$#{plan.price}"
+                  ="per #{plan.subscription}"
+              -else
+                None
+    .row
+      .col-sm-2
+        .control-label.fs_22
+          Payments
+      .col-sm-10     
+        .controls
+          /=@organization.payments.to_json
+          %table#payments
+            %tbody
+              -@organization.payments.each_with_index do |p, index|
+                %tr{:style=> (index > 4?'display:none;':'')}
+                  %td.span-14.col-lg-14.col-md-14.col-sm-14
+                    :javascript
+                      document.write(convert_stripe_date(#{p.date}));
+                  %td.span-11.col-lg-11.col-md-11.col-sm-11
+                    :javascript
+                      document.write('$'+formatCurrency(#{p.total/100.0}))
+        -if @organization.payments.count > 0
+          .example.first       
+            = link_to 'Show last 100 payments', '#', :id=>'show_payments_link'         
+  
+  .form-group.section-start
     .control-label.fs_22
       Locales
     .controls.fs_22
       .float_left
         The places you do business    
-  .control-group
+  .form-group
     .control-label
       Name
     .controls
@@ -239,11 +251,12 @@
             -if (@organization.locations.count > 1)
               =link_to "Remove", organization_location_path(@organization,locale), confirm: 'Are you sure?',:method=>:delete
             =link_to "Edit", edit_organization_location_path(@organization,locale)  
-  .control-group
+  .form-group
     .controls
       .example.first
         = link_to 'Add Locales', new_organization_location_path(@organization) 
-  .control-group.section-start
+        
+  .form-group.section-start
     .control-label.fs_22
       Dayhomes
     .controls.fs_22
@@ -289,6 +302,6 @@
             = link_to 'Edit', [:edit, day_home]
             |
             = link_to 'Delete', [day_home], :method => :delete, :confirm => "Are you sure?"    
-  = paginate @day_homes, :window => 1,:left => 3,:right => 3        
+  = paginate @day_homes, :window => 1,:left => 3,:right => 3, :theme => 'twitter-bootstrap-3'
 
 = link_to "Cancel Account", organization_confirm_cancel_path(@organization)

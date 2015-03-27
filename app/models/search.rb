@@ -5,26 +5,26 @@ class Search
   include GoogleMapsJsonHelper
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
-                :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
-                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group, :organization
+                :advanced_search, :pin_count, :day_homes, :featured, :search_pin, :auto_adjust, :center_latitude,
+                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group, :organization, :location
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => ['Full Days', 'After School','Before School','Morning','Afternoon']}
-  EDMONTON_GEO = {:lat => 53.543564, :lng => -113.507074 }
-  CALGARY_GEO = {:lat => 51.0453246, :lng => -114.0581012 }
+
+  EDMONTON_GEO = {:lat=>53.544389, :lng=>-113.4909267}#{:lat => 53.543235, :lng => -113.490737 }
+  CALGARY_GEO = {:lat => 51.047448, :lng => -114.062912 }
 
   def initialize(attributes = {})
-
     # set each of the attributes
     attributes.each do |name, value|
       send("#{name}=", value)
     end
-
     # override the models that were set with the attributes send loop
-    self.availability_types = AvailabilityType.order('id asc').all
-    self.certification_types = CertificationType.order('id asc').all
+    self.availability_types = AvailabilityType.order('id asc').all #if(self.availability_types.nil?)
+    self.certification_types = CertificationType.order('id asc').all #if(self.certification_types.nil?)
 
-    # only do the availability type processing if you've submitted the advanced search form
-    if self.advanced_search == 'true'
+    # # only do the availability type processing if you've submitted the advanced search form
+    # if self.advanced_search == 'true'
+
       # update search vars based on checkboxes
       begin
         update_check_boxes(attributes)
@@ -32,14 +32,15 @@ class Search
         self.errors.add(:base, "We had some trouble with your search and so some criteria may have been removed. If you've bookmarked this search, you may want to update your bookmark." )
         set_defaults
       end
+      #self.both_license_types = true
       # update the search vars based on the license radio button group
       unless self.license_group.blank?
         self.send("#{self.license_group}=", true)
       end
-    else
-      # set search defaults (either /searches or a simple search(header))
-      set_defaults
-    end
+    # else
+    #   # set search defaults (either /searches or a simple search(header))
+    #   set_defaults
+    # end
 
     # no search params entered
     unless attributes.blank?
@@ -52,12 +53,12 @@ class Search
   end
 
   def dayhome_filter(params)
-    
+
     search_addy_pin = nil
-    dayhome_query = DayHome.scoped
-	
-  	# don't display any dayhomes that are not approved
-  	dayhome_query = dayhome_query.where( :approved => true )
+    dayhome_query = DayHome.eager_load(:organization)#.eager_load(:photos)#.eager_load(:day_home_availability_types).eager_load(:availability_types).all
+  
+    # don't display any dayhomes that are not approved
+    dayhome_query = dayhome_query.where( :approved => true )
 
     # set the joins based on what the user has
     dayhome_query = determine_joins(dayhome_query)
@@ -66,13 +67,16 @@ class Search
     if(params.has_key?(:organization))
       #raise params[:agency].to_s
       dayhome_query = apply_agency_filter(params[:organization],dayhome_query)
-  	end
+    end
+
+    if params.has_key?(:availability_types)
+      dayhome_query = apply_type_filter(:availability_types, dayhome_query)
+    end
 
     # if the user uses the advanced search, we use the values from the search screen
     # otherwise we use the defaults (defined in set_defaults)
     if params.has_key?(:advanced_search) && params[:advanced_search] == 'true'
       # apply where clauses
-      dayhome_query = apply_type_filter(:availability_types, dayhome_query)
       dayhome_query = apply_type_filter(:certification_types, dayhome_query)
       dayhome_query = apply_boolean_filter(:dietary_accommodations, dayhome_query)
       dayhome_query = apply_licensed_filter(dayhome_query)
@@ -84,6 +88,15 @@ class Search
     # create search dayhome pin
     if params.has_key?(:address) && !params[:address].blank?
       search_addy_pin = geocode(setup_address(params[:address]))
+    elsif params.has_key?(:location) && params[:location]["lng"] != 0
+      #Try geocoding the IP
+      search_addy_pin = params[:location]
+    else
+      #default to edmonton
+      edmonton = Geocoder.coordinates("Edmonton, Alberta, Canada")
+
+      search_addy_pin= {:lat=>edmonton[0],:lng=>edmonton[1]}
+
     end
 
     # return the gmaps pins variable
@@ -130,8 +143,8 @@ class Search
       self.zoom = 11
     else
       # send them to the lat long of where they searched
-      self.center_latitude = self.search_pin["lat"]
-      self.center_longitude = self.search_pin["lng"]
+      self.center_latitude = self.search_pin[:lat]
+      self.center_longitude = self.search_pin[:lng]
       self.zoom = 12
     end
   end
@@ -211,7 +224,8 @@ class Search
 
   # set the defaults (no search params entered))
   def set_defaults
-    self.availability_types.each do |default_avail_types|
+    kind_list = self.availability_types
+    kind_list.each do |default_avail_types|
       if DEFAULT_AVAILABILITY_TYPES[:kind].include?(default_avail_types.kind)
         default_avail_types.checked = true
       end
@@ -221,6 +235,7 @@ class Search
   end
 
   def determine_joins(dayhome_query)
+
     # check if their are related entities (by looking for what's been checked), if so, join to that table
     has_avail_types = check_for_checks(:availability_types)
     has_cert_types = check_for_checks(:certification_types)
@@ -250,6 +265,7 @@ class Search
   end
 
   def apply_type_filter(type, dayhome_query)
+
     unless self.send(type).blank?
       # tack on any of the checkboxes to the where clause
       id_array = []
@@ -273,6 +289,16 @@ class Search
     # get all of the dayhomes from the system
     self.day_homes = dayhome_query.uniq.all
 
+    self.day_homes = self.day_homes.reject {|obj|
+        d=1000;
+        if obj.geocoded?
+          d = obj.distance_from([search_addy_pin["lat"],search_addy_pin["lng"]])
+        end
+        d>100
+    }
+
+    self.featured = dayhome_query.joins(:features).where("approved=1").where("end > ?",Time.now()).uniq
+
     # record the number of pins
     self.pin_count = self.day_homes.count
 
@@ -290,6 +316,7 @@ class Search
   end
 
   def geocode(address)
+
     begin
       # get the json representation of an address
       search_pin = convert_address(address)

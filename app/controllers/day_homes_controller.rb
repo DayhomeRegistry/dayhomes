@@ -118,7 +118,9 @@ class DayHomesController < ApplicationController
       @reviews = @day_home.reviews.page(params[:page]).per(5)
 
       # simple email protection from spammers
-      @day_home_contact = DayHomeContact.new({:day_home_email => Base64::encode64(@day_home.email)})
+      @day_home_contact = DayHomeContact.new()
+      @day_home_contact.day_home_email = Base64::encode64(@day_home.email)
+      
     end
   end
 

@@ -126,11 +126,13 @@ class Organization < ActiveRecord::Base
           self.stripe_customer_token = customer.id
         else
           customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-          if(customer.subscription.plan.id != self.plan)
-            customer.update_subscription(:plan => self.plan, :card=>stripe_card_token, :prorate=>true, coupon: stripe_coupon_code)
-          else
-            customer.card = stripe_card_token
-            customer.save
+          customer.subscriptions.each do |subscription|
+            if(subscription.plan.id != self.plan)
+              customer.update_subscription(:plan => self.plan, :card=>stripe_card_token, :prorate=>true, coupon: stripe_coupon_code)
+            else
+              customer.card = stripe_card_token
+              customer.save
+            end
           end
         end
       else

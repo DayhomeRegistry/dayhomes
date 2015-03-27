@@ -20,21 +20,26 @@
 	padding-top:0;
 }
 .progress-bar {
-	background: asset-url("sprites2.png", image) left -175px repeat-x;
+	background: image-url("sprites2.png") left -175px repeat-x;
 	width: 210px;
 	height: 18px;
 	float: left;
 	margin-right: 10px;
 	border: 1px solid #abadb3;
+	margin-top:7px;
+	text-align: left;
 }
 .progress-bar.pg-neutral .fill {
-	background: asset-url("sprites2.png", image) left -195px repeat-x;
+	background: image-url("sprites2.png") left -195px repeat-x;
 	display: inline-block;
 	height: 16px;
 	border-top: solid 1px #cefa9a;
 	border-right: solid 1px #77c51a;
 	border-bottom: solid 1px #61af05;
 	border-left: solid 1px #a3e456;
+}
+.progress-bar-add-on {
+	padding-top:7px;
 }
 .span-11 {
 	width: 220px;

@@ -11,8 +11,6 @@
  *= require normalize
  *= require_self
  *= require jquery-star-rating
- *= require jquery.ui.all
- *= require jquery.modal
  *= require searches
  *= require pricing
  *= require billing
@@ -24,8 +22,12 @@
  *= require searches
  
 */
-$iconSpritePath: asset-url("glyphicons-halflings.png", image) !default;
-$iconLogoPath: asset-url("mini-logo.jpg", image) !default;
+@import 'jquery.ui.core';
+@import 'jquery.ui.datepicker';
+
+$iconSpritePath: image-url("glyphicons-halflings.png") !default;
+$iconLogoPath: image-url("mini-logo.jpg") !default;
+
 @import "bootstrap";
  
 $green: #52BE60;
@@ -48,6 +50,7 @@ $dark-grey: #798e94;
   clear: both;
 }
 
+/* 2520 */
 body,
 input {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
@@ -75,7 +78,7 @@ h1 {
   font-size: 25.888px;
 }
 header {
-  background: #ffffff  asset-url("banner-sm.png", image) no-repeat right top;
+  background: #ffffff  image-url("banner-sm.png") no-repeat right top;
   
   width: 80%;
   margin: auto;
@@ -209,22 +212,22 @@ header {
 .social-home-twitter {
   width: 20%;
   float: left;
-  margin: 15px 15px 0 0;
+  margin: 15px 10px 0 0;
 }
 .social-home-facebook {
   width: 20%;
   float: left;
-  margin: 15px 15px 0 0;
+  margin: 15px 10px 0 0;
 }
 .social-home-pinterest {
   width: 20%;
   float: left;
-  margin: 15px 15px 0 0;
+  margin: 15px 10px 0 0;
 }
 .social-home-google {
   width: 20%;
   float: left;
-  margin: 15px 15px 0 0;
+  margin: 15px 10px 0 0;
 }
 footer {
   clear: both;
@@ -233,7 +236,7 @@ footer {
   margin: 2.68em auto;
 }
 footer > div {
-  width: 28%;
+  width: 32%;
   float: left;
   padding: 1em;
 }
@@ -278,6 +281,27 @@ div.span-7.first {
   text-align: right;
   width: 160px;
 }
+.signin-form .control-group::before, .form-horizontal .control-group::after {
+  display: table;
+  content: "";
+}
+.signin-form .control-group::after {
+  clear: both;
+}
+.signin-form .control-group::before, .form-horizontal .control-group::after {
+  display: table;
+  content: "";
+}
+.signin-form .control-label {
+  float: left;
+  font-weight: 700;
+  line-height: 18px;
+  padding-right: 20px;
+  width: 100px;
+}
+.signin-form .controls .checkbox input {
+  margin-left:0;
+}
 /*
 .form-horizontal input[type=text],.form-horizontal input[type=password],.form-horizontal textarea,.form-horizontal select,.form-stacked input[type=text],.form-stacked input[type=password],.form-stacked textarea,.form-stacked select
 {
@@ -305,23 +329,21 @@ margin-bottom: 0;
 .floatr {
   float:right;
 }
-.pagination a {
-  padding: 0 5px;
-  border: none;
+.topright {
+  position:absolute;
+  top:0;
+  right:0;
+  margin: 1% 1%;
 }
-
-.pagination .page.active a{
-  color: red;
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+  background-color: $green;
+  border-color: $green;
 }
-.pagination span.first {
-  line-height: 34px;
-  color: #999;
+.pagination > li > a, .pagination > li > span {
+  color: $green;
 }
-.pagination li span {
-  float:left;
-  padding: 0 5px;
-}
-.pagination li {
+.well {
+  position:relative;
 }
 .wellSize {
   min-height: 340px;
@@ -551,4 +573,15 @@ div.callout {
 span.small {
   font-size: 13px;
   margin-left:20px;
+}
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.alert-notice {
+  @include alert-variant($alert-success-bg, $alert-success-border, $alert-success-text);
+}
+.alert-alert {
+  @include alert-variant($alert-warning-bg, $alert-warning-border, $alert-warning-text);
 }

@@ -139,7 +139,7 @@ color: #217515;
 
 .price_table .row_style_1 span, .price_table .row_style_2 span{position:relative;font-size:14px;}
 .price_table .row_style_1 span:before, .price_table .row_style_2 span:before{
-  background: asset-url("icon-yes.gif", image) no-repeat 0 0;
+  background: image-url("icon-yes.gif") no-repeat 0 0;
 	width: 24px;
     height: 24px;
 	left: -30px;
@@ -148,7 +148,7 @@ color: #217515;
 	content: "";
     }
 .price_table .no-option span:before{
-background: asset-url("icon-no.gif", image) no-repeat 0 0;
+background: image-url("icon-no.gif") no-repeat 0 0;
 	width: 24px;
     height: 24px;
 	left: -30px;

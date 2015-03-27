@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include ReCaptcha::AppHelper
   
   before_filter :create_search
-  before_filter :validate_acknowledgement
+  #before_filter :validate_acknowledgement
   protect_from_forgery
 
   def create_search
@@ -16,29 +16,29 @@ class ApplicationController < ActionController::Base
       
         if(!request.fullpath.match(/^\/pages\/acknowledge/))
           #raise request.fullpath
-          flash[:notice]=render_to_string :partial=>"application/acknowledgement"
+          flash[:success]=render_to_string :partial=>"application/acknowledgement"
         end
         
       end
     end
   end
   
-  helper_method :current_user_session, :current_user, :gmaps_api_key
+  helper_method :gmaps_api_key #:current_user_session, :current_user, 
   # ===============================
   # = User Authentication Related =
   # ===============================
 
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-  end
+  # def current_user_session
+  #   return @current_user_session if defined?(@current_user_session)
+  #   @current_user_session = UserSession.find
+  # end
 
-  def current_user    
-    #return @current_user if defined?(@current_user)
+  # def current_user    
+  #   #return @current_user if defined?(@current_user)
     
-    #@current_user = current_user_session && current_user_session.user
-    return current_user_session && current_user_session.user
-  end
+  #   #@current_user = current_user_session && current_user_session.user
+  #   return current_user_session && current_user_session.user
+  # end
   
   def require_user
     unless current_user
@@ -78,6 +78,13 @@ class ApplicationController < ActionController::Base
     else
       # return test/dev key
       "AIzaSyB03go-dPecYfIzMYc1c9WFkK53QTiDwTA"
+    end
+  end
+  def after_sign_in_path_for(resource)
+    if current_user && current_user.admin?
+      admin_day_homes_path()
+    else 
+      day_homes_path()
     end
   end
 end

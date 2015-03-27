@@ -1,7 +1,9 @@
 class BillingController < ApplicationController
+  before_filter :authenticate_user!, :except=>[:signup, :register, :get_coupon]
   before_filter :require_user, :except=>[:signup, :register, :get_coupon]
   before_filter :require_user_to_be_organization_admin, :except=>[:signup, :register, :get_coupon]
-  
+  # before_filter :configure_permitted_parameters, if: :devise_controller?
+
   def signup
     if(current_user)
       redirect_to :action=>:options
@@ -49,7 +51,7 @@ class BillingController < ApplicationController
     @error_msg = []
     
     begin
-      
+      user = User.find_by_email(@day_home_signup_request.contact_email)    
       DayHomeSignupRequest.transaction do
       #Check for a coupon
         @coupon = nil
@@ -65,13 +67,14 @@ class BillingController < ApplicationController
 
      
       #Create the user
-        user = User.find_by_email(@day_home_signup_request.contact_email)      
         if(!user.nil?)
           flash.now['page-error'] = "Looks as though you've already registered.  Do you want to try <a href='"+login_path()+"'>logging in</a> instead?"
           return render :action => :signup
         end
         #no one here, create a new one
         user = User.new_from_signup_request(@day_home_signup_request)
+        user.password = @day_home_signup_request.password
+        user.password_confirmation = @day_home_signup_request.password_confirmation
         # Need to set the ack date
         user.privacy_effective_date = Time.now()
         if(!user.save)
@@ -170,15 +173,17 @@ class BillingController < ApplicationController
         end
 
       #Now that we're all done, email them their password set instructions
-        UserMailer.new_user_password_instructions(user).deliver  
+        #UserMailer.new_user_password_instructions(user).deliver  
+        user.send_confirmation_instructions
         if(createdCommunity)
           DayHomeMailer.new_community(org,community).deliver
         end
       #end transaction
       end
 
+      sign_in user
+
     rescue => e    
-      debugger
       if(!e.message.nil?)
         flash.now['page-error'] = e.message
         logger.error e.message
@@ -404,6 +409,12 @@ class BillingController < ApplicationController
       end
   end
 
+  protected
+
+  # def configure_permitted_parameters
+  #   devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name) }
+  # end
+
   private
   def handle_user_error(user)
     user.errors.full_messages.each do |err|
@@ -430,7 +441,6 @@ class BillingController < ApplicationController
     raise @error_msg.join("<br/>").html_safe
   end
   def handle_dayhome_error
-    debugger
     @day_home.errors.messages.each do |err|
       @error_msg << err[1][0]+" (dayhome)"
     end

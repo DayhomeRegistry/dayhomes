@@ -1,7 +1,17 @@
 
 class DayHome < ActiveRecord::Base
-  default_scope :conditions => "deleted < 1"
 
+  default_scope {includes(:photos)}
+  default_scope {includes(:availability_types)}
+  default_scope {includes(:features)}
+  default_scope {where("deleted < 1")}
+  after_save :clear_cache
+
+  attr_accessible :name, :approved, :featured, :slug, :phone_number, :email, :highlight, :blurb, 
+                  :street1, :street2, :postal_code, :city, :province, :photos_attributes, :assign_availability_type_ids, 
+                  :assign_certification_type_ids, :dietary_accommodations, :licensed
+
+  reverse_geocoded_by :lat, :lng
   acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
                     :check_process => :prevent_geocoding, :address => :geo_address,
                     :msg => 'Cannot find a location matching that query.' 
@@ -14,7 +24,7 @@ class DayHome < ActiveRecord::Base
   }
   scope :featured, lambda {|*args|
     #where(:featured => true)
-    joins(:features).where("end > ?",Time.now()).uniq
+    joins(:features).where("approved=1").where("end > ?",Time.now()).uniq
   }
   def self.deleted
     DayHome.unscoped.where("deleted = 1")
@@ -52,7 +62,7 @@ class DayHome < ActiveRecord::Base
   #validates_associated :photos
   validates_uniqueness_of :slug, message: "That web address has already been chosen."
   validates_format_of :slug, :with => /[a-z0-9]+/
-  validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
   accepts_nested_attributes_for :photos, :allow_destroy => true #,:reject_if => :all_blank
   
@@ -67,7 +77,11 @@ class DayHome < ActiveRecord::Base
     if (!self.id_changed?)
       if (self.approved_changed? && self.approved == true)
         DayHomeMailer.day_home_approval_confirmation(self).deliver
-        self.users.each do |user|        
+        self.users.each do |user|     
+          @user = user
+          raw, enc = Devise.token_generator.generate(user.class, :reset_password_token)
+          user.save(:validate => false)   
+          @token=raw
           if (!user.last_login_ip?)  
             UserMailer.new_user_password_reminder(user).deliver
           end
@@ -88,31 +102,35 @@ class DayHome < ActiveRecord::Base
 
   # return a unique string array of availability
   def availability
-    avail_type = []
+    avail_type = availability_types.to_a
 
-    availability_types.each do |avt|
-      avail_type << avt.availability
-    end
+    # availability_types.each do |avt|
+    #   avail_type << avt.availability
+    # end
 
     avail_type.uniq
   end
   
   def featured_photo
-    defaults = photos.where("default_photo=1")
+    defaults = photos.reject{|x| x.default_photo=false}
+    #defaults = photos.where("default_photo=1")
     if (!defaults.empty?)
-      defaults.first
-    elsif !photos.empty?
-      photos.first
+      @featured_photo ||= defaults.first
     else
-      photos.build
+      if !photos.empty?
+        @featured_photo ||= photos.first
+      else
+        @featured_photo ||= photos.build
+      end
     end
   end
 
   def featured?
-    !self.features.where("end > ?",Time.now()).empty?
+    @featured ||= !self.features.where("end > ?",Time.now()).empty?
   end
   def feature_end_date
-    self.features.where("end > ?",Time.now()).order("end desc").first.end
+    date = self.features.where("end > ?",Time.now()).order("end desc").first
+    return date.end unless date.nil?
   end
   def admin_featured=(value)
     if value
@@ -160,12 +178,12 @@ class DayHome < ActiveRecord::Base
   
   def assign_availability_type_ids=(availability_type_id_attrs=[])
     self.day_home_availability_types = []
-    self.availability_types = AvailabilityType.find_all_by_id(availability_type_id_attrs)
+    self.availability_types = AvailabilityType.where(id:availability_type_id_attrs)
   end
   
   def assign_certification_type_ids=(certification_type_id_attrs=[])
     self.day_home_certification_types = []
-    self.certification_types = CertificationType.find_all_by_id(certification_type_id_attrs)
+    self.certification_types = CertificationType.where(id:certification_type_id_attrs)
   end
   
   def self.all_for_select
@@ -201,6 +219,16 @@ class DayHome < ActiveRecord::Base
     self.organization.users.where("location_id = ?",self.location_id)
   end
 
+  def activate_admin_until(endDate)
+    feature = Feature.new();
+    feature.day_home=self
+    feature.start = Time.now()
+    feature.end = endDate
+    feature.organization=self.organization
+    feature.freebee = false;
+    save = feature.save
+    return save && self.organization.save
+  end
   def activate_admin
     feature = Feature.new();
     feature.day_home=self
@@ -208,7 +236,6 @@ class DayHome < ActiveRecord::Base
     feature.end = Time.now().advance(:months=>1)
     feature.organization=self.organization
     feature.freebee = false;
-    @organization.features << feature
     save = feature.save
     return save && self.organization.save
   end
@@ -245,4 +272,9 @@ class DayHome < ActiveRecord::Base
     end
   end
 
+  private
+    def clear_cache
+      @featured = nil
+      @featured_photo = nil
+    end
 end

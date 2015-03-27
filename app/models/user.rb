@@ -1,5 +1,25 @@
 class User < ActiveRecord::Base
-  acts_as_authentic
+
+  devise :database_authenticatable, :registerable, :recoverable,:rememberable, :trackable, :validatable, 
+         :confirmable, :lockable, :timeoutable, :omniauthable, :omniauth_providers => [:facebook]
+
+  alias :devise_valid_password? :valid_password?
+
+  def valid_password?(password)
+    begin
+      super(password)
+    rescue BCrypt::Errors::InvalidHash
+      digest=password+self.password_salt
+      20.times{digest=Digest::SHA512.hexdigest(digest)}
+      return false unless  digest == encrypted_password
+      logger.info "User #{email} is using the old password hashing method, updating attribute."
+      self.password = password
+      true
+    end
+  end
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid
+  #acts_as_authentic
   #validates_presence_of :first_name, :last_name
 
   has_many :reviews
@@ -55,20 +75,7 @@ class User < ActiveRecord::Base
       raise "A user can't have an agency and a dayhome"
     end
     self.agencies<<(agency)
-  end  
-  def self.new_from_fb_user(fb_user, fb_access_token, fb_expires_in)
-    random_password = SecureRandom.hex(12)
-    new({
-      :first_name => fb_user['first_name'],
-      :last_name => fb_user['last_name'],
-      :email => fb_user['email'],
-      :password => random_password,
-      :password_confirmation => random_password,
-      :facebook_access_token => fb_access_token,
-      :facebook_access_token_expires_in => fb_expires_in
-    })
-  end
-  
+  end    
   def self.new_from_signup_request(signup_request)
     random_password = SecureRandom.hex(12)
     new({
@@ -79,4 +86,41 @@ class User < ActiveRecord::Base
       :password_confirmation => random_password
     })
   end
+
+  #Omniauth stuff
+  def self.from_omniauth(auth)
+    user = where(provider: auth.provider, uid: auth.uid).first_or_create
+    if(!user.persisted?)
+      by_email = where(email: auth.info.email).first
+      if(!by_email.nil?)
+        user = by_email
+    
+        #we need to update the tokens
+        user.provider="facebook"
+        user.uid=auth.uid
+        user.save(:validate => false)   
+      else  
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0,20]
+        user.first_name = auth.info.first_name   # assuming the user model has a name
+        user.last_name = auth.info.last_name # assuming the user model has an image
+      end
+    end
+    return user
+  end
+
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+        user.email = data["email"] if user.email.blank?
+      end
+    end
+  end
+
+
+  protected
+
+    def confirmation_required?
+        false
+    end
 end
