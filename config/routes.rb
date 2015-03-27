@@ -19,6 +19,7 @@ Dayhomes::Application.routes.draw do
   get "billing/get_coupon"
   put "billing/add"
   put "billing/activate"
+  get "billing/list"
 
   resources :organizations do
     resources :locations

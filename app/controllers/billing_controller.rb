@@ -1,7 +1,7 @@
 class BillingController < ApplicationController
-  before_filter :authenticate_user!, :except=>[:signup, :register, :get_coupon]
-  before_filter :require_user, :except=>[:signup, :register, :get_coupon]
-  before_filter :require_user_to_be_organization_admin, :except=>[:signup, :register, :get_coupon]
+  before_filter :authenticate_user!, :except=>[:signup, :register, :get_coupon, :list]
+  before_filter :require_user, :except=>[:signup, :register, :get_coupon,:list]
+  before_filter :require_user_to_be_organization_admin, :except=>[:signup, :register, :get_coupon,:list]
   # before_filter :configure_permitted_parameters, if: :devise_controller?
 
   def signup
@@ -16,6 +16,8 @@ class BillingController < ApplicationController
     Plan.where("inactive is null").order(:price).order("subscription DESC").each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
+  end
+  def list
   end
   def register
 
