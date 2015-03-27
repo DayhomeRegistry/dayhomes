@@ -16,7 +16,7 @@ class Admin::DayHomesController < Admin::ApplicationController
       if (!clause.empty?)
         @day_homes = DayHome.includes(:photos).where("name like ?", "%#{clause.strip}%")
       else
-        @day_homes = DayHome.includes(:photos).scoped
+        @day_homes = DayHome.includes(:photos).all
       end
       #return render :text=> clause.strip+"|"+feature+"|"+approve
       
