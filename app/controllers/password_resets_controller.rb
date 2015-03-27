@@ -4,7 +4,6 @@ class PasswordResetsController < ApplicationController
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
   
   def new
-    #debugger
     url = session[:return_to]
   end
   
@@ -20,7 +19,6 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    #debugger
 
     @user = User.find_by_email(params[:email])
     
@@ -34,7 +32,6 @@ class PasswordResetsController < ApplicationController
   end
   
   def edit
-    #debugger
     url = session[:return_to]
   end
 

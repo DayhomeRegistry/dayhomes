@@ -81,7 +81,6 @@ class ApplicationController < ActionController::Base
     end
   end
   def after_sign_in_path_for(resource)
-    debugger
     if current_user && current_user.admin?
       admin_day_homes_path()
     else 

@@ -170,7 +170,7 @@
                                  :zoom => 16,
                                  :auto_zoom => false,
                                  :provider_key => gmaps_api_key},
-               :markers     => { :data => gmap_prepare_dayhomes([@day_home]) })
+               :markers     => { :data => gmap_prepare_dayhomes([@day_home],(@day_home.featured? ? [@day_home] : [])) })
   .span3.col-lg-3.col-md-3.col-sm-3
     %h3.singleViewH3
       Other Information

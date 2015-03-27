@@ -5,7 +5,7 @@ class Search
   include GoogleMapsJsonHelper
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
-                :advanced_search, :pin_count, :day_homes, :search_pin, :auto_adjust, :center_latitude,
+                :advanced_search, :pin_count, :day_homes, :featured, :search_pin, :auto_adjust, :center_latitude,
                 :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group, :organization, :location
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => ['Full Days', 'After School','Before School','Morning','Afternoon']}
@@ -55,7 +55,7 @@ class Search
   def dayhome_filter(params)
 
     search_addy_pin = nil
-    dayhome_query = DayHome.all
+    dayhome_query = DayHome.eager_load(:organization)#.eager_load(:photos)#.eager_load(:day_home_availability_types).eager_load(:availability_types).all
   
     # don't display any dayhomes that are not approved
     dayhome_query = dayhome_query.where( :approved => true )
@@ -296,6 +296,8 @@ class Search
         end
         d>100
     }
+
+    self.featured = dayhome_query.joins(:features).where("approved=1").where("end > ?",Time.now()).uniq
 
     # record the number of pins
     self.pin_count = self.day_homes.count

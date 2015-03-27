@@ -28,7 +28,7 @@
         :provider_key => gmaps_api_key, |
         :list_container => "markers_list" }, |
         :markers => { |
-          :data => gmap_prepare_dayhomes(@day_homes), |
+          :data => gmap_prepare_dayhomes(@day_homes, @featured.to_a()), |
           :options => { |
             :do_clustering => true, |
             :clusterer_maxZoom => 6}})
@@ -40,6 +40,8 @@
       = image_tag("dayhome.png", :alt => "Private", :title => "Private")
       Accredited
   .col-sm-4{:style=>"float:right;"}
+    %a{:href => "https://my.leadpages.net/leadbox/146cf0d73f72a2%3A1513729dbb46dc/5656058538229760/", :style => "color: rgb(255, 255, 255); text-decoration: none; font-family: Helvetica, Arial, sans-serif; font-weight: bold; font-size: 16px; line-height: 20px; padding: 10px; display: inline-block; max-width: 300px; border-radius: 5px; text-shadow: rgba(0, 0, 0, 0.247059) 0px -1px 1px; box-shadow: rgba(255, 255, 255, 0.498039) 0px 1px 3px inset, rgba(0, 0, 0, 0.498039) 0px 1px 3px; background: rgb(255, 206, 10);", :target => "_blank"} Get our Free Childcare Search Checklist!
+    %script{"data-config" => "%7B%7D", "data-leadbox" => "146cf0d73f72a2:1513729dbb46dc", "data-url" => "https://my.leadpages.net/leadbox/146cf0d73f72a2%3A1513729dbb46dc/5656058538229760/", :src => "//my.leadpages.net/leadbox-901.js", :type => "text/javascript"}
     %h3
       Sponsors
     .list

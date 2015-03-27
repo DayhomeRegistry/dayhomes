@@ -7,6 +7,10 @@ class DayHome < ActiveRecord::Base
   default_scope {where("deleted < 1")}
   after_save :clear_cache
 
+  attr_accessible :name, :approved, :featured, :slug, :phone_number, :email, :highlight, :blurb, 
+                  :street1, :street2, :postal_code, :city, :province, :photos_attributes, :assign_availability_type_ids, 
+                  :assign_certification_type_ids, :dietary_accommodations, :licensed
+
   reverse_geocoded_by :lat, :lng
   acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
                     :check_process => :prevent_geocoding, :address => :geo_address,
@@ -98,18 +102,18 @@ class DayHome < ActiveRecord::Base
 
   # return a unique string array of availability
   def availability
-    avail_type = []
+    avail_type = availability_types.to_a
 
-    availability_types.each do |avt|
-      avail_type << avt.availability
-    end
+    # availability_types.each do |avt|
+    #   avail_type << avt.availability
+    # end
 
     avail_type.uniq
   end
   
   def featured_photo
-    #debugger
-    defaults = photos.where("default_photo=1")
+    defaults = photos.reject{|x| x.default_photo=false}
+    #defaults = photos.where("default_photo=1")
     if (!defaults.empty?)
       @featured_photo ||= defaults.first
     else
@@ -174,12 +178,12 @@ class DayHome < ActiveRecord::Base
   
   def assign_availability_type_ids=(availability_type_id_attrs=[])
     self.day_home_availability_types = []
-    self.availability_types = AvailabilityType.find_all_by_id(availability_type_id_attrs)
+    self.availability_types = AvailabilityType.where(id:availability_type_id_attrs)
   end
   
   def assign_certification_type_ids=(certification_type_id_attrs=[])
     self.day_home_certification_types = []
-    self.certification_types = CertificationType.find_all_by_id(certification_type_id_attrs)
+    self.certification_types = CertificationType.where(id:certification_type_id_attrs)
   end
   
   def self.all_for_select

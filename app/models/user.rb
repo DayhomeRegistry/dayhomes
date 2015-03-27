@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
     begin
       super(password)
     rescue BCrypt::Errors::InvalidHash
-      debugger
       digest=password+self.password_salt
       20.times{digest=Digest::SHA512.hexdigest(digest)}
       return false unless  digest == encrypted_password

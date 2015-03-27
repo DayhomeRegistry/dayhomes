@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/DayhomeRegistry/exception_notification.git
-  revision: f46e57f091df4b8e01f7ca0d1df8af15bc8fab61
+  revision: a92f358f28730bb501ff61e6dfb372462c0294e5
   specs:
     exception_notification (3.0.1)
       actionmailer (>= 3.0.4)
