@@ -1,7 +1,7 @@
 class SearchesController < ApplicationController
   def index
 
-    attributes = params[:search]
+    attributes = params[:search] || Hash.new
     attributes[:location]=getHash(request.location)
     #attributes["location"]=Geocoder.search("Calgary").first.data["geometry"]["location"]
 
