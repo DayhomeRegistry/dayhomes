@@ -136,7 +136,7 @@ class Search
     end
 
     # check where to position the map
-    if self.search_pin.nil?
+    if self.search_pin.nil? || self.search_pin[:lng]==0
       # if the search pin isn't found send it to the center of edmonton
       self.center_latitude = Search::EDMONTON_GEO[:lat]
       self.center_longitude = Search::EDMONTON_GEO[:lng]

@@ -1,3 +1,37 @@
+# module Devise
+#   module Models
+#     # Default strategy for signing in a user, based on their email and password in the database.
+#     module DatabaseAuthenticatable
+#       # Verifies whether an password (ie from sign in) is the user password.
+#       def valid_password?(password)
+#         begin
+#           byebug
+#           #super(password)
+#           return false if encrypted_password.blank?
+#           bcrypt   = ::BCrypt::Password.new(encrypted_password)
+#           password = ::BCrypt::Engine.hash_secret("#{password}#{self.class.pepper}", bcrypt.salt)
+#           if !Devise.secure_compare(password, encrypted_password)
+#             digest=password+self.password_salt
+#             20.times{digest=Digest::SHA512.hexdigest(digest)}
+#             return false unless  digest == encrypted_password
+#             logger.info "User #{email} is using the old password hashing method, updating attribute."
+#             self.password = password
+#             true
+#           end
+#           true
+#         rescue BCrypt::Errors::InvalidHash
+#           digest=password+self.password_salt
+#           20.times{digest=Digest::SHA512.hexdigest(digest)}
+#           return false unless  digest == encrypted_password
+#           logger.info "User #{email} is using the old password hashing method, updating attribute."
+#           self.password = password
+#           true
+#         end
+#       end
+#     end
+#   end
+# end
+
 class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable, :recoverable,:rememberable, :trackable, :validatable, 
@@ -7,18 +41,26 @@ class User < ActiveRecord::Base
 
   def valid_password?(password)
     begin
-      super(password)
+      devise_valid_password?(password)
     rescue BCrypt::Errors::InvalidHash
-      digest=password+self.password_salt
-      20.times{digest=Digest::SHA512.hexdigest(digest)}
-      return false unless  digest == encrypted_password
-      logger.info "User #{email} is using the old password hashing method, updating attribute."
-      self.password = password
-      true
+
+      byebug
+      # digest=password+self.password_salt
+      # 20.times{digest=Digest::SHA512.hexdigest(digest)}
+      # return false unless  '400$8$'+digest == encrypted_password
+      if !self.password_salt.nil?
+        logger.info "User #{email} is using the old password hashing method, updating attribute."
+        self.password = password
+        self.password_salt = nil
+        self.save
+        return true
+      end
+      false
     end
   end
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid, :admin, 
+                  :assign_day_home_ids, :location_id
   #acts_as_authentic
   #validates_presence_of :first_name, :last_name
 
@@ -56,7 +98,7 @@ class User < ActiveRecord::Base
   
   def assign_day_home_ids=(day_home_id_attrs=[])
     self.user_day_homes = []
-    self.day_homes = DayHome.find_all_by_id(day_home_id_attrs)
+    self.day_homes = DayHome.where(id: day_home_id_attrs)
   end
   def self.all_for_select
     all.collect {|user| [ user.full_name, user.id ] }
