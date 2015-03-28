@@ -31,16 +31,16 @@ module GoogleMapsJsonHelper
       @is_featured = featured_day_homes.include?(dayhome)
       @featured_photo = dayhome.featured_photo
       @organization = dayhome.organization
-
+byebug
       marker.infowindow render(:partial => "/searches/pin", :locals => { :dayhome => dayhome})
       marker.title dayhome.name
       if @is_featured
-        picture = "/assets/dayhome-private-featured.png"
-        picture = "/assets/dayhome-featured.png" unless !dayhome.licensed
-        picture = "/assets/dayhome-premium-featured.png" unless dayhome.organization.pin.nil?
+        picture = ActionController::Base.helpers.asset_path("dayhome-private-featured.png")
+        picture = ActionController::Base.helpers.asset_path("dayhome-featured.png") unless !dayhome.licensed
+        picture = ActionController::Base.helpers.asset_path("dayhome-premium-featured.png") unless dayhome.organization.pin.nil?
       else
-        picture = "/assets/dayhome-private.png"
-        picture = "/assets/dayhome.png" unless !dayhome.licensed
+        picture = ActionController::Base.helpers.asset_path("dayhome-private.png")
+        picture = ActionController::Base.helpers.asset_path("dayhome.png") unless !dayhome.licensed
         picture = @organization.pin.photo_url(:pin) unless @organization.pin.nil?
       end
       marker.picture({ :picture => picture,
