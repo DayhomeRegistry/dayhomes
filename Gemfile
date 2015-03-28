@@ -12,8 +12,9 @@ gem 'devise', '>=3.4'
 gem 'omniauth-facebook'
 
 #Jquery assets
-gem 'jquery-rails', '~>3'
-gem 'jquery-ui-rails', '~>3'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'gmaps-autocomplete-rails'
 
 #Image processing
 gem 'carrierwave'

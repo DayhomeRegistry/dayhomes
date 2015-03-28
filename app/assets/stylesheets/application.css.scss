@@ -24,6 +24,67 @@
 */
 @import 'jquery.ui.core';
 @import 'jquery.ui.datepicker';
+@import 'jquery.ui.menu';
+.ui-autocomplete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: default;
+}
+
+.ui-menu {
+  list-style: none;
+  padding: 2px;
+  margin: 0;
+  display: block;
+  outline: none;
+}
+.ui-widget {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 1.1em;
+}
+.ui-widget-content {
+  border: 1px solid #AAA;
+  background: #FFF url(/assets/jquery-ui/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+  color: #222;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+  -khtml-border-top-left-radius: 4px;
+  border-top-left-radius: 4px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+  -khtml-border-top-right-radius: 4px;
+  border-top-right-radius: 4px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+  -khtml-border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+  -khtml-border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.ui-menu .ui-menu-item {
+  margin: 0;
+  padding: 0;
+  zoom: 1;
+  width: 100%;
+}
+.ui-widget-content a {
+  color: #222;
+}
+.ui-menu .ui-menu-item a {
+  text-decoration: none;
+  display: block;
+  padding: 2px .4em;
+  line-height: 1.5;
+  zoom: 1;
+  font-weight: normal;
+}
+
+
+/* workarounds */
+* html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
 
 $iconSpritePath: image-url("glyphicons-halflings.png") !default;
 $iconLogoPath: image-url("mini-logo.jpg") !default;
@@ -53,7 +114,7 @@ $dark-grey: #798e94;
 /* 2520 */
 body,
 input {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  font-family: "Helvetica Neue","Open Sans",Arial,sans-serif;
 }
 
 body {

@@ -20,6 +20,7 @@ class Organization < ActiveRecord::Base
   belongs_to :mentor,  :foreign_key => 'affiliate_id', :class_name => "Organization"
 
   attr_accessor :stripe_card_token, :stripe_coupon_code
+  attr_accessible :name, :phone_number, :street1, :street2, :city, :province, :postal_code, :blurb, :stripe_card_token
   
   before_save :check_and_update_affiliate_tag
   before_destroy :destroy_customer

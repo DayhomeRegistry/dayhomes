@@ -219,6 +219,8 @@ GEM
       rails (>= 3.0)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
+    gmaps-autocomplete-rails (0.1.4)
+      rails (>= 3.1.0)
     gmaps4rails (1.4.8)
       json
     guard (2.12.5)
@@ -475,12 +477,13 @@ DEPENDENCIES
   geocoder
   geokit
   geokit-rails
+  gmaps-autocomplete-rails
   gmaps4rails (= 1.4.8)
   guard-rspec
   haml
-  jquery-rails (~> 3)
+  jquery-rails
   jquery-star-rating-rails
-  jquery-ui-rails (~> 3)
+  jquery-ui-rails
   kaminari
   maruku
   mini_magick
