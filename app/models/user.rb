@@ -43,8 +43,6 @@ class User < ActiveRecord::Base
     begin
       devise_valid_password?(password)
     rescue BCrypt::Errors::InvalidHash
-
-      byebug
       # digest=password+self.password_salt
       # 20.times{digest=Digest::SHA512.hexdigest(digest)}
       # return false unless  '400$8$'+digest == encrypted_password
