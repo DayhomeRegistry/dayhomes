@@ -14,7 +14,6 @@
 //= require jquery
 //= require jquery.ui.all
 //= require jquery_ujs
-//= require gmaps-auto-complete
 //= require jquery.browser
 //= require bootstrap
 //= require fullcalendar
