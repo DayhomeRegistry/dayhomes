@@ -31,7 +31,7 @@ module GoogleMapsJsonHelper
       @is_featured = featured_day_homes.include?(dayhome)
       @featured_photo = dayhome.featured_photo
       @organization = dayhome.organization
-byebug
+
       marker.infowindow render(:partial => "/searches/pin", :locals => { :dayhome => dayhome})
       marker.title dayhome.name
       if @is_featured
