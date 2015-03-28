@@ -481,9 +481,9 @@ DEPENDENCIES
   gmaps4rails (= 1.4.8)
   guard-rspec
   haml
-  jquery-rails (~> 3)
+  jquery-rails
   jquery-star-rating-rails
-  jquery-ui-rails (~> 3)
+  jquery-ui-rails
   kaminari
   maruku
   mini_magick

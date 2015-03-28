@@ -5,14 +5,30 @@ class BillingController < ApplicationController
   # before_filter :configure_permitted_parameters, if: :devise_controller?
 
   def signup
+    #byebug
     if(current_user)
       redirect_to :action=>:options
     end
+    #"dayhome"=>{"care_type_id"=>"0", "capacity"=>"", "title"=>"Temp", "city"=>"Edmonton, AB"}
+
+    # @type = params["dayhome"]["care_type_id"]
     @day_home_signup_request = DayHomeSignupRequest.new
+    # @day_home_signup_request.day_home_name = params["dayhome"]["title"]
+    # @day_home_signup_request.day_home_slug = @day_home_signup_request.day_home_name.gsub(/[^A-Za-z0-9]/,'').downcase;
+    # city = params["dayhome"]["city"]
+    # split = city.split(",")
+
+    # if(split.size>0)
+    #   @day_home_signup_request.day_home_city = split[0]
+    #   if(split.size>1)
+    #     @day_home_signup_request.day_home_province = city.split(",")[1] #Geocoder.search(city)[0].address_components[2]["long_name"]
+    #   end
+    # end
     @existing = Plan.find_by_plan("baby50")
-    @packages = {}
     @communities = Community.all
+    #@closest_community = Community.near(Geocoder.coordinates(city))
     
+    @packages = {}
     Plan.where("inactive is null").order(:price).order("subscription DESC").each do |p|
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
@@ -112,13 +128,17 @@ class BillingController < ApplicationController
       #Create the dayhome
         @day_home = DayHome.create_from_signup(@day_home_signup_request)
         @day_home.update_attributes(params[:day_home])
+
         @day_home.email = @day_home_signup_request.contact_email
         
         @day_home.location = loc
   
+        #byebug
         #add default availability
-        full_time_full_days = AvailabilityType.where({:availability => 'Full-time', :kind => 'Full Days'}).first
-        @day_home.availability_types << full_time_full_days
+        #full_time_full_days = AvailabilityType.where(:availability => 'Full-time', :kind => 'Full Days')
+        #@day_home.availability_types << full_time_full_days
+        #@day_home.availability_types << AvailabilityType.where(id:availability_type_id_attrs)
+        #@day_home.assign_availability_type_ids=[full_time_full_days.id]
 
         if(!@day_home.save)
           handle_dayhome_error
@@ -443,8 +463,8 @@ class BillingController < ApplicationController
     raise @error_msg.join("<br/>").html_safe
   end
   def handle_dayhome_error
-    @day_home.errors.messages.each do |err|
-      @error_msg << err[1][0]+" (dayhome)"
+    @day_home.errors.full_messages.each do |err|
+      @error_msg << err+" (dayhome)"
     end
     raise @error_msg.join("<br/>").html_safe
   end

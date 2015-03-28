@@ -9,7 +9,8 @@ class DayHome < ActiveRecord::Base
 
   attr_accessible :name, :approved, :featured, :slug, :phone_number, :email, :highlight, :blurb, 
                   :street1, :street2, :postal_code, :city, :province, :photos_attributes, :assign_availability_type_ids, 
-                  :assign_certification_type_ids, :dietary_accommodations, :licensed
+                  :assign_certification_type_ids, :dietary_accommodations, :licensed, :location_id,
+                  :caption, :default_photo, :photo
 
   reverse_geocoded_by :lat, :lng
   acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
@@ -65,7 +66,15 @@ class DayHome < ActiveRecord::Base
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
   accepts_nested_attributes_for :photos, :allow_destroy => true #,:reject_if => :all_blank
-  
+
+  before_save :ensure_default_availability
+  def ensure_default_availability
+    if self.availability_types.empty?
+      self.day_home_availability_types = []
+      self.availability_types << AvailabilityType.all
+    end
+  end
+    
   #before_save :break
   def break
     raise "This is intentionally broken."
@@ -178,12 +187,12 @@ class DayHome < ActiveRecord::Base
   
   def assign_availability_type_ids=(availability_type_id_attrs=[])
     self.day_home_availability_types = []
-    self.availability_types = AvailabilityType.where(id:availability_type_id_attrs)
+    self.availability_types << AvailabilityType.where(id:availability_type_id_attrs)
   end
   
   def assign_certification_type_ids=(certification_type_id_attrs=[])
     self.day_home_certification_types = []
-    self.certification_types = CertificationType.where(id:certification_type_id_attrs)
+    self.certification_types << CertificationType.where(id:certification_type_id_attrs)
   end
   
   def self.all_for_select

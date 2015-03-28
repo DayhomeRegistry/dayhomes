@@ -4,7 +4,7 @@ class DayHomePhoto < ActiveRecord::Base
   belongs_to :day_home
   validates_presence_of :photo
   
-
+  attr_accessible :caption, :default_photo, :photo
 
   # Override to silently ignore trying to remove missing
   # previous photo when destroying a User.

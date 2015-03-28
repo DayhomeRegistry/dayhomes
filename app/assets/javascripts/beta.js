@@ -99,13 +99,14 @@ $(document).ready(function(){
 	});
 	$('#js-submit-button button').on("click",function(){
 		
-		$.when($.signedIn()).done(function(val) {
-			//update the form token...apparently it changes when you login (new session?)
-			$('input[name="authenticity_toke"]').val(val);
-			$('meta[name="csrf-token"]').attr('content',val);
-			//Submit the form
-			goNext();
-		});
+		// $.when($.signedIn()).done(function(val) {
+		// 	//update the form token...apparently it changes when you login (new session?)
+		// 	$('input[name="authenticity_toke"]').val(val);
+		// 	$('meta[name="csrf-token"]').attr('content',val);
+		// 	//Submit the form
+		// 	goNext();
+		// });
+		$('#create_form').submit();
 	});
 	var completer = new GmapsCompleter({
 		inputField: '#location_input',

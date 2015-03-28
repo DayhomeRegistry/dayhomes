@@ -1,9 +1,10 @@
 -content_for :title do
   %title List your dayhome - Dayhome Registry
 = stylesheet_link_tag params[:controller]
+
 = javascript_include_tag "beta" #params[:controller]
 
-=form_tag(billing_signup_path(), {id:"create_form", method: "post"}) do
+=form_tag(billing_signup_path(), {id:"create_form", method: "get"}) do
   =hidden_field_tag('dayhome[care_type_id]', value = nil, options = {id:"care_type_id"})
   =hidden_field_tag('dayhome[capacity]', value = nil, options = {id:"capacity"})
   =hidden_field_tag('dayhome[title]', value = nil, options = {id:"title"})
@@ -77,25 +78,19 @@
         .row.row-space-3.row-space-top-3.row-table
           .col-xs-12.col-md-3.col-middle.label-header
             .h4.text-light
-              Title
+              Name
           .col-xs-12.col-md-9.fieldset.fieldset_person_capacity.col-middle                          
-            .row
-              .col-xs-12.col-md-12
-                .panel.location
-                  .panel-body.panel-light.panel-border.location-panel-body.ui-widget
-                    %i.icon.icon.icon-kazan.h4.pull-left
-                    %input#title_input{:name=>"title_input", :type=>"text", :autocomplete=>"off"}
+            .location-panel-body.ui-widget{:style=>"margin:10px 0;"}
+              %i.icon.icon.icon-kazan.h4.pull-left
+              %input#title_input{:name=>"title_input", :type=>"text", :autocomplete=>"off"}
         .row.row-space-3.row-space-top-3.row-table
           .col-xs-12.col-md-3.col-middle.label-header
             .h4.text-light
               City
           .col-xs-12.col-md-9.fieldset.fieldset_person_capacity.col-middle                          
-            .row
-              .col-xs-12.col-md-12
-                .panel.location
-                  .panel-body.panel-light.panel-border.location-panel-body.ui-widget
-                    %i.icon.icon.icon-map-marker.icon-kazan.h4.pull-left
-                    %input#location_input{:name=>"location_input",:placeholder=>"Where are you today...", :type=>"text", :class=>"geocomplete", :autocomplete=>"off"}
+            .location-panel-body.ui-widget{:style=>"margin:10px 0;"}
+              %i.icon.icon.icon-map-marker.icon-kazan.h4.pull-left
+              %input#location_input{:name=>"location_input",:placeholder=>"Where are you today...", :type=>"text", :class=>"geocomplete", :autocomplete=>"off"}
                           
         .row
           .col-xs-12.col-md-9.col-md-offset-3.text-center#js-submit-button
