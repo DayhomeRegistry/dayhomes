@@ -64,7 +64,28 @@ class SearchesController < ApplicationController
 
     #@featured = @day_homes.reject {|dayhome| !dayhome.featured?}
     @featured = @search.featured
-    
+    @agencies = Organization.joins(:day_homes).group('organization_id').having('count(day_homes.id)>1')
+    #gmaps hash
+    @hash = Gmaps4rails.build_markers(@day_homes) do |day_home, marker|
+      marker.lat day_home.lat
+      marker.lng day_home.lng
+      marker.infowindow day_home.blurb
+      if @featured.include?(day_home)
+        picture = ActionController::Base.helpers.asset_path("dayhome-private-featured.png")
+        picture = ActionController::Base.helpers.asset_path("dayhome-featured.png") unless !day_home.licensed
+        picture = ActionController::Base.helpers.asset_path("dayhome-premium-featured.png") unless day_home.organization.pin.nil?
+      else
+        picture = ActionController::Base.helpers.asset_path("dayhome-private.png")
+        picture = ActionController::Base.helpers.asset_path("dayhome.png") unless !day_home.licensed
+        picture = day_home.organization.pin.photo_url(:pin) unless day_home.organization.pin.nil?
+      end
+      marker.picture({ :url => picture,
+                       :width => 41,
+                       :height => 45
+                     })
+      marker.infowindow render_to_string(:partial => "/searches/pin", :locals => { :dayhome => day_home})
+      marker.title render_to_string(:partial => "/searches/day_home", :locals => { :day_home => day_home})
+    end
 
     # make sure the search object keeps its persistance
     @advanced_search = params.has_key?(:search) ? @search : Search.new

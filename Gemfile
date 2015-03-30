@@ -21,8 +21,8 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog' 
 
-#This needs a hefty upgrade
-gem 'gmaps4rails','1.4.8'
+#Mapping
+gem 'gmaps4rails'
 
 # This is used for the country/province select
 gem 'carmen'

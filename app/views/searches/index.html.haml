@@ -1,37 +1,12 @@
-/ %div{:style=>"position:absolute;top:0;left:0;width:100%;height:100%;"}
-/   =gmaps( |
-/     :map_options => { |
-/       :center_latitude => @search.center_latitude, |
-/       :center_longitude => @search.center_longitude, |
-/       :zoom => @search.zoom, |
-/       :auto_adjust =>  @search.auto_adjust, |
-/       :auto_zoom => false, |
-/       :provider_key => gmaps_api_key, |
-/       :list_container => "markers_list" }, |
-/       :markers => { |
-/         :data => gmap_prepare_dayhomes(@day_homes), |
-/         :options => { |
-/           :do_clustering => true, |
-/           :clusterer_maxZoom => 6}})
+%script{:src => "//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js", :type => "text/javascript"}
+%script{:src => "//google-maps-utility-library-v3.googlecode.com/svn/trunk/richmarker/src/richmarker-compiled.js", :type => "text/javascript"}
+%script{:src => "//google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.9/src/infobox_packed.js", :type => "text/javascript"}
 .row
   .col-sm-12
     =render 'form'
 .row
   .col-sm-12    
-    =gmaps( |
-      :map_options => { |
-        :center_latitude => @search.center_latitude, |
-        :center_longitude => @search.center_longitude, |
-        :zoom => @search.zoom, |
-        :auto_adjust =>  false, |
-        :auto_zoom => false, |
-        :provider_key => gmaps_api_key, |
-        :list_container => "markers_list" }, |
-        :markers => { |
-          :data => gmap_prepare_dayhomes(@day_homes, @featured.to_a()), |
-          :options => { |
-            :do_clustering => true, |
-            :clusterer_maxZoom => 6}})
+    #map{:style => "width: 800px; height: 400px;"}
     .legend
       = image_tag("dayhome-vonn.png", :alt => "Premium Private", :title => "Premium Private")
       Premium Private
@@ -64,6 +39,11 @@
       - if !@day_homes.empty?
         =render :partial => 'day_home', :collection => @day_homes 
 - content_for :scripts do
+  = javascript_include_tag params[:controller]
+  :javascript
+    window.handler = {};
+    window.markers = {};
+    buildMap(#{raw @hash.to_json});
   :javascript
     var isMapDragging = false;
     var idleSkipped = false;
@@ -80,20 +60,20 @@
       //Add the center of the search?
       $(document).on('click',".markerCallout",function(){          
           var slug = $(this).attr('id');
-          for(i=0;i<Gmaps.map.markers.length;i++){          
-            var railsmarker = Gmaps.map.markers[i];
+          for(i=0;i<markers.length;i++){          
+            var railsmarker = markers[i];
             //var marker = new google.maps.Marker({
             //  position: new google.maps.LatLng(railsmarker.lat,railsmarker.lng),
             // map: Gmaps.map.map              
             //});
-            if (railsmarker.sidebar && railsmarker.sidebar.toString().indexOf("/"+slug)>0) {              
+            if (railsmarker.getServiceObject().title && railsmarker.getServiceObject().title.toString().indexOf(slug)>0) {              
               if(currentInfo != null){
                 currentInfo.serviceObject.setIcon("/assets/dayhome.png");
                 currentInfo['infowindow'].close();
               }
               currentInfo = railsmarker;
               try {
-                railsmarker['infowindow'].open(Gmaps.map.map,railsmarker.serviceObject);
+                railsmarker['infowindow'].open(handler.map,railsmarker.serviceObject);
                 if(railsmarker.picture.indexOf("-featured")>0){
                   railsmarker.serviceObject.setIcon("/assets/dayhome-red-featured.png");
                 }else {
@@ -102,9 +82,11 @@
               } catch (err) {
                  //wish I knew how to tell someone
               }
+              window.handler.getMap().setZoom(7);
+              window.handler.getMap().setCenter(railsmarker.serviceObject.position);
             }
           };
-          $.scrollTo($('.map_container').position().top - ($(window).height() / 2),
+          $.scrollTo($('#map').position().top - ($(window).height() / 2),
             { speed: 'slow'}
           );
           return false;
@@ -115,9 +97,14 @@
         var j=0;
         var lasti=-1;
         var lastj=-1;
-        for(i=0;i<Gmaps.map.markers.length;i++){
-            if(Gmaps.map.map.getBounds().contains(new google.maps.LatLng(Gmaps.map.markers[i].lat,Gmaps.map.markers[i].lng))){
-              $("#markers_list").append(Gmaps.map.markers[i].sidebar);
+        for(i=0;i<window.markers.length;i++){
+            if(window.handler.getMap().getBounds().contains(new google.maps.LatLng(window.markers[i].serviceObject.position.lat(),window.markers[i].serviceObject.position.lng()))){
+              var m = $(window.markers[i].serviceObject.title);
+              m.click(function(){
+                window.handler.getMap().setZoom(4);
+                window.handler.getMap().setCenter(window.markers[i].getPosition());
+              });
+              $("#markers_list").append(m);
               j++;
             }
 
@@ -128,34 +115,5 @@
             }
         }
     }
-    Gmaps.map.callback = function() {
-      Gmaps.map.markers.push(Gmaps.map.createMarker({
-        Lat: #{@search.center_latitude},
-        Lng: #{@search.center_longitude},
-        marker_picture: "",
-        rich_marker: null
-      }));
-      google.maps.event.addListener(Gmaps.map.map,'idle', function(){ 
-        if (isMapDragging) {
-          idleSkipped=true;
-          return;
-        }
-        idleSkipped = false;
-        _respondToMapChange();
-      });
-      google.maps.event.addListener(Gmaps.map.map,'dragstart', function(){ 
-        this.isMapDragging = true;
-      });
-      google.maps.event.addListener(Gmaps.map.map,'dragend', function(){ 
-        isMapDragging = false;
-        if (idleSkipped==true) {
-          _respondToMapChange();
-          idleSkipped = false;
-        }
-      });
-      google.maps.event.addListener(Gmaps.map.map,'bounds_changed', function(){ 
-        idleSkipped = false;
-      });
-    }    
     
-   
+    

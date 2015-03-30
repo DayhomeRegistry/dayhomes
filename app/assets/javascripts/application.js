@@ -17,7 +17,8 @@
 //= require jquery.browser
 //= require bootstrap
 //= require fullcalendar
-//= require_tree ./gmaps4rails
+//= require underscore
+//= require gmaps/google
 //= require jquery.add_more
 //= require jquery.colorbox
 //= require jquery.modal
