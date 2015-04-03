@@ -349,6 +349,6 @@ class Admin::DayHomesController < Admin::ApplicationController
                   :licensed, :location_id, :caption, :default_photo, :photo, :featured_end_date, 
                   availability_type_ids: [], 
                   certification_type_ids: [], 
-                  photos_attributes: [:caption, :default_photo, :photo])
+                  photos_attributes: [:caption, :default_photo, :photo, "_destroy", :id])
   end
 end
