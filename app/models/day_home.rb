@@ -41,7 +41,9 @@ class DayHome < ActiveRecord::Base
   has_many :certification_types, :through => :day_home_certification_types
   accepts_nested_attributes_for :certification_types
 
-  has_many :photos, :class_name => 'DayHomePhoto', :dependent => :destroy
+  has_many :photos, :class_name => 'DayHomePhoto', :dependent => :destroy, :inverse_of => :day_home
+  accepts_nested_attributes_for :photos, :allow_destroy => true #,:reject_if => :all_blank
+
   has_many :reviews
   has_many :events
 
@@ -67,7 +69,6 @@ class DayHome < ActiveRecord::Base
   validates_format_of :slug, :with => /[a-z0-9]+/
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
-  accepts_nested_attributes_for :photos, :allow_destroy => true #,:reject_if => :all_blank
 
   before_save :ensure_default_availability
   def ensure_default_availability
@@ -123,6 +124,7 @@ class DayHome < ActiveRecord::Base
   end
   
   def featured_photo
+    #byebug
     defaults = photos.reject{|x| x.default_photo=false}
     #defaults = photos.where("default_photo=1")
     if (!defaults.empty?)

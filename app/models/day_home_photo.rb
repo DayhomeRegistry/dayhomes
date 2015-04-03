@@ -1,7 +1,7 @@
 class DayHomePhoto < ActiveRecord::Base
   mount_uploader :photo, DayHomePhotoUploader
   
-  belongs_to :day_home
+  belongs_to :day_home, :inverse_of => :photos
   validates_presence_of :photo
   
   #attr_accessible :caption, :default_photo, :photo
