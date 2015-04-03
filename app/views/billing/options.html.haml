@@ -131,7 +131,7 @@
                 %span one-time use extras
             "Featuring your dayhome" credits.
       .span-13.col-lg-13.col-md-13.col-sm-13.append-bottom-2
-        #total_box.bg_orange.hide{:style => "display: block;"}
+        #total_box.bg_orange{:style => "display: block;"}
           %h4.sidebar_header_orange
             %span Pricing Details
           %table.fs_11{:cellpadding => "2", :cellspacing => "0", :width => "100%"}
@@ -183,55 +183,41 @@
             Javascript is not enabled and is required for this form.  First enable it in your web browser settings.   
       -if !@credit_card.nil?
         #existingCard
-          .control-group                
-            .control-label
-              Current Card
-            .controls  
-              .append-bottom-1.first            
-                =label_tag :existing_card_number, "**** **** **** "+@credit_card[:last4], :style=>"width:150px;"
-                .span-7.col-lg-7.col-md-7.col-sm-7
-                  =label_tag :existing_card_exp, "Exp:"+@credit_card[:month].to_s+"/"+@credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"        
-                .clear
-              .append-bottom-1
-                .span-7.col-lg-7.col-md-7.col-sm-7
-                  = link_to 'Enter a new credit card','#', :id=>'change_credit_card_link'   
+          .form-group                
+            =label_tag :existing_card_number, "Card Number", :class=>"col-sm-3" 
+            .col-sm-9             
+              =label_tag :existing_card_number, "**** **** **** "+@credit_card[:last4], :style=>"width:150px;"
+              %p.help-block
+                =label_tag :existing_card_exp, "Exp:"+@credit_card[:month].to_s+"/"+@credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"        
+              .clear
+          .form-group
+            .col-sm-12
+              = link_to 'Enter a new credit card','#', :id=>'change_credit_card_link'  
       #newCard{:style=>"display:#{(@credit_card.nil? && 'block') || 'none'};"}      
-        .append-bottom-1
-          .span-25
-            /
-              .control-group
-                %label.control-label{:for => "BILL_NAME"}
-                  Name on Card
-                .controls
-                  %input#BILL_NAME.input-large{:name => "BILL_NAME", :type => "text", :value => ""}
-            .control-group          
-              =label_tag :card_number, "Card Number", :class=>"control-label"            
-              .controls  
-                .span-11.col-lg-11.col-md-11.col-sm-11
-                  =text_field_tag :card_number, '', :name=>nil, :class=>"input-large",:onkeypress => "return numbersonly2(this, event)"
-                  .example
-                    Number
-                .span-4.col-lg-4.col-md-4.col-sm-4
-                  =text_field_tag :card_code, nil, name:nil, :class=>"input-mini"
-                  .example
-                    CVV
-                    <i class="glyphicon glyphicon-info-sign" data-title="What's a CVV?" data-content="The CVV Number ("Card Verification Value") on your credit card or debit card is a 3 digit number on VISA®, MasterCard® and Discover® branded credit and debit cards. On your American Express® branded credit or debit card it is a 4 digit numeric code."></i>      
-            .control-group
-              =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
-              .controls
-                .span-6.col-lg-6.col-md-6.col-sm-6.append-bottom-1
-                  =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month"}
-                  .example
-                    Month
-                .span-6.col-lg-6.col-md-6.col-sm-6.append-bottom-1
-                  =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
-                  .example.first
-                    Year  
-            - if !@credit_card.nil?
-              .control-group
-                .controls
-                  .span-7.col-lg-7.col-md-7.col-sm-7
-                    = link_to 'Keep card on record', '#', :id=>'cancel_credit_card_link'
+        .form-group
+          =label_tag :card_number, "Card Number", :class=>"col-sm-3"            
+          .col-sm-9  
+            =text_field_tag :card_number, '', :name=>nil, :class=>"form-control",:onkeypress => "return numbersonly2(this, event)"
+            %p.help-block
+              Number
+            =text_field_tag :card_code, nil, name:nil, :class=>"form-control", :style=>'width: 8.333%;'
+            %p.help-block
+              CVV
+              %i.glyphicon.glyphicon-info-sign{data: {title: "What\'s a CVV?", trigger: "hover", toggle:"popover",placement:"right",content:'The CVV Number ("Card Verification Value") on your credit card or debit card is a 3 digit number on VISA®, MasterCard® and Discover® branded credit and debit cards. On your American Express® branded credit or debit card it is a 4 digit numeric code. '}}    
+        .form-group
+          =label_tag :card_expiry, "Expiry date", :class=>"col-sm-3"  
+          .col-sm-9
+            =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month", :class=>"form-control", :style=>"width:25%"}
+            %p.help-block
+              Month
+            =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year", :class=>"form-control", :style=>"width:16.666%"}
+            %p.help-block
+              Year  
+        - if !@credit_card.nil?
+          .form-group
+            .col-sm-12
+              = link_to 'Keep card on record', '#', :id=>'cancel_credit_card_link'
+
           .span-12.col-lg-12.col-md-12.col-sm-12
             %strong Need Help? Call us!
             %br

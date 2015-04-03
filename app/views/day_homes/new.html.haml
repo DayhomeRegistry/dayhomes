@@ -8,9 +8,8 @@
       - @day_home.errors.full_messages.each do |msg|
         %li
           = msg
-.row.registrationStyle
-  .span7.col-lg-7.col-md-7.col-sm-7.well.form-horizontal
-    %h2
-      New dayhome
+.well.form-horizontal
+  %h2
+    New dayhome
 
-    = render 'form'
+  = render 'form'

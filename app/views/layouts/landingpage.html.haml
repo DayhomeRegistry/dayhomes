@@ -89,6 +89,22 @@
                 %a{:href => "#{logout_url}"}
                   %i.fa.fa-sign-out
                   Logout
+            - if !current_user.nil?
+              - if current_user.admin?
+                %li
+                  %a{:href => "#{admin_day_homes_path}"}
+                    %i.fa.fa-home
+                    Day Homes
+              - elsif current_user.organization_admin?
+                %li
+                  %a{:href => "#{day_homes_path}"}
+                    %i.fa.fa-home
+                    Day Homes            
+              - else
+                %li
+                  %a{:href => "#{edit_day_home_path(current_user.organization.day_homes.first)}"}
+                    %i.fa.fa-home
+                    My Dayhomes
             %li
               %a.call-to-action{:href => "#{billing_signup_path}"} List your dayhome
         / /.navbar-collapse

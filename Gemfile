@@ -7,7 +7,7 @@ gem 'haml'
 
 #This here is for authentication
 gem 'simple_form', '~>3'
-gem 'protected_attributes'
+#gem 'protected_attributes'
 gem 'devise', '>=3.4'
 gem 'omniauth-facebook'
 
@@ -98,6 +98,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'thin', '~> 1.5'
   gem 'rack-mini-profiler'
+  gem 'whiny_validation'
 end
 
 group :production do

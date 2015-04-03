@@ -2,13 +2,13 @@
   .span7.col-lg-7.col-md-7.col-sm-7.well.form-horizontal
     %h2
       Edit Your Account
-    -if current_user.errors.any?  
+    -if @user.errors.any?  
       .errorExplanation
         %h2
-          = pluralize(current_user.errors.count, "error")
+          = pluralize(@user.errors.count, "error")
           prohibited this user from being saved:
         %ul  
-          - current_user.errors.full_messages.each do |msg|
+          - @user.errors.full_messages.each do |msg|
             %li
               = msg
     = render 'form'
