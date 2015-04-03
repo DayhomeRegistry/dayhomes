@@ -57,8 +57,9 @@ class User < ActiveRecord::Base
     end
   end
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid, :admin, 
-                  :assign_day_home_ids, :location_id
+  #attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid, :admin, 
+  #                :assign_day_home_ids, :location_id
+  
   #acts_as_authentic
   #validates_presence_of :first_name, :last_name
 

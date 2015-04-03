@@ -90,108 +90,118 @@ class Admin::DayHomesController < Admin::ApplicationController
 
     @communities = Community.all
 
-    day_home_request=params[:day_home]
-    @day_home = DayHome.new(day_home_request)
-    @day_home.update_attributes(day_home_request)
-      
-    #raise @day_home.to_json
-    #Create the user
-      user = User.find_by_email(@day_home.email)      
-      if(!user.nil?)
-        flash.now['page-error'] = "Looks as though this person (#{@day_home.email} is already registered."
-        return render :action => :new
-      end
-      #no one here, create a new one
-      user = User.new_from_signup_request(OpenStruct.new({:first_name=>"",:last_name=>"",:contact_email=>@day_home.email}))
-
-      if(!user.save)
-        user.errors.full_messages.each do |err|
-          @error_msg << err+" (user)"
+    DayHome.transaction do
+      @day_home = DayHome.new(day_home_params)
+        
+      #raise @day_home.to_json
+      #Create the user
+        user = User.find_by_email(@day_home.email)      
+        if(!user.nil?)
+          flash.now['page-danger'] = "Looks as though this person (#{@day_home.email}) is already registered."
+          raise 'User already present'
+          #return render :action => :new
         end
-        flash.now['page-error'] = @error_msg.join("<br/>").html_safe
-        return render :action => :new 
-      end
+        #no one here, create a new one
+        user = User.new_from_signup_request(OpenStruct.new({:first_name=>"",:last_name=>"",:contact_email=>@day_home.email}))
 
-
-
-    #Create the org    
-      org = Organization.new()
-      #org.stripe_coupon_code = @coupon.nil? ? nil : @coupon.id
-      org.name = @day_home.name
-      org.city = @day_home.city
-      org.province = @day_home.province
-      org.street1 = @day_home.street1
-      org.postal_code = @day_home.postal_code
-      org.billing_email = @day_home.email
-      #org.phone_number = @day_home.contact_phone_number
-      org.users << user
-
-      #if request.env['affiliate.tag'] && affiliate = Organization.find_by_affiliate_tag(request.env['affiliate.tag'])
-      #  org.mentor = affiliate
-      #end
-
-      #if(@day_home.plan!="baby") 
-      #  org.stripe_card_token = @day_home.stripe_card_token
-      #  org.plan = @day_home.plan
-      #  if !org.save_with_payment 
-      #    handle_org_error(org)
-      #  end
-      #else
-        if(!org.save)
-          org.errors.full_messages.each do |err|
-            @error_msg << err+" (org)"
+        if(!user.save)
+          user.errors.full_messages.each do |err|
+            @error_msg << err+" (user)"
           end
-          flash.now['page-error'] = @error_msg.join("<br/>").html_safe
-          return render :action => :new 
+          flash.now['page-danger'] = @error_msg.join("<br/>").html_safe
+          raise "User save error"
+          #return render :action => :new 
         end
-      #end
 
-    #Create the location
-      loc = Location.new()
-      loc.community_id=params[:location][:community_id]
-      loc.name = Community.find(loc.community_id) || @day_home.city || 'Edmonton'
-      loc.organization = org
 
-      if(!loc.save)
-        loc.errors.full_messages.each do |err|
-          @error_msg << err+" (location)"
+
+      #Create the org    
+        org = Organization.new()
+        #org.stripe_coupon_code = @coupon.nil? ? nil : @coupon.id
+        org.name = @day_home.name
+        org.city = @day_home.city
+        org.province = @day_home.province
+        org.street1 = @day_home.street1
+        org.postal_code = @day_home.postal_code
+        org.billing_email = @day_home.email
+        #org.phone_number = @day_home.contact_phone_number
+        org.users << user
+
+        #if request.env['affiliate.tag'] && affiliate = Organization.find_by_affiliate_tag(request.env['affiliate.tag'])
+        #  org.mentor = affiliate
+        #end
+
+        #if(@day_home.plan!="baby") 
+        #  org.stripe_card_token = @day_home.stripe_card_token
+        #  org.plan = @day_home.plan
+        #  if !org.save_with_payment 
+        #    handle_org_error(org)
+        #  end
+        #else
+          if(!org.save)
+            org.errors.full_messages.each do |err|
+              @error_msg << err+" (org)"
+            end
+            flash.now['page-danger'] = @error_msg.join("<br/>").html_safe
+            raise "Org save error"
+            #return render :action => :new 
+          end
+        #end
+
+      #Create the location
+        loc = Location.new()
+        loc.community_id=params[:location][:community_id]
+        loc.name = Community.find(loc.community_id) || @day_home.city || 'Edmonton'
+        loc.organization = org
+
+        if(!loc.save)
+          loc.errors.full_messages.each do |err|
+            @error_msg << err+" (location)"
+          end
+          flash.now['page-danger'] = @error_msg.join("<br/>").html_safe
+          raise "Loc save error"
+          #return render :action => :new 
         end
-        flash.now['page-error'] = @error_msg.join("<br/>").html_safe
-        return render :action => :new 
+        user.location = loc;
+        if(!user.save)
+          user.errors.full_messages.each do |err|
+            @error_msg << err+" (user)"
+          end
+          flash.now['page-danger'] = @error_msg.join("<br/>").html_safe
+          raise "User save error"
+          #return render :action => :new 
+        end           
+
+      #Create the dayhome
+        
+        @day_home.location = loc
+
+        #add default availability
+        # full_time_full_days = AvailabilityType.where({:availability => 'Full-time', :kind => 'Full Days'}).first
+        # @day_home.availability_types << full_time_full_days
+
+        if(!@day_home.save)
+          @day_home.errors.full_messages.each do |err|
+            @error_msg << err+" (dayhome)"
+          end
+          flash.now['page-danger'] = @error_msg.join("<br/>").html_safe
+          raise "Dayhome save error"
+          #return render :action => :new 
+        end
+
+
+      if @day_home.save
+        #email them their password set instructions
+        #UserMailer.new_user_password_instructions(user).deliver 
+        user.send_confirmation_instructions
+
+        redirect_to admin_day_homes_path
+      else
+        render :action => :new
       end
-      user.location = loc;
-      if(!user.save)
-        user.errors.full_messages.each do |err|
-          @error_msg << err+" (user)"
-        end
-        flash.now['page-error'] = @error_msg.join("<br/>").html_safe
-        return render :action => :new 
-      end           
-
-    #Create the dayhome
-      
-      @day_home.location = loc
-
-      #add default availability
-      full_time_full_days = AvailabilityType.where({:availability => 'Full-time', :kind => 'Full Days'}).first
-      @day_home.availability_types << full_time_full_days
-
-      if(!@day_home.save)
-        @day_home.errors.full_messages.each do |err|
-          @error_msg << err+" (dayhome)"
-        end
-        flash.now['page-error'] = @error_msg.join("<br/>").html_safe
-        return render :action => :new 
-      end
-
-    #email them their password set instructions
-      UserMailer.new_user_password_instructions(user).deliver 
-    
-    if @day_home.save
-      redirect_to admin_day_homes_path
-    else
-      render :action => :new
     end
+  rescue
+    render :action => :new
   end
 
 
@@ -227,12 +237,12 @@ class Admin::DayHomesController < Admin::ApplicationController
       featured = false
     end
     if(featured && !@day_home.featured?)
-      untilDate = Date.strptime(params[:day_home][:feature_end_date], "%m/%d/%Y") #Date.parse(params[:day_home][:feature_end_date])
+      untilDate = Date.strptime(params[:day_home][:featured_end_date], "%m/%d/%Y") #Date.parse(params[:day_home][:feature_end_date])
       #months = [(untilDate.year * 12 + untilDate.month) - (Date.today.year * 12 + Date.today.month-1),1].max
       @day_home.activate_admin_until(untilDate)
     end
-    #@day_home.admin_featured=feature
-    if @day_home.update_attributes(params[:day_home].except(:feature_end_date))
+
+    if @day_home.update_attributes(day_home_params.except(:featured_end_date))
       @day_home.location.community_id=community.id
       @day_home.location.save
       redirect_to admin_day_homes_path(:page=>(params["page"].kind_of?(Array) ? 1 : params["page"].keys[0]))
@@ -332,4 +342,13 @@ class Admin::DayHomesController < Admin::ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
   end  
+
+  def day_home_params
+    params.require(:day_home).permit(:name, :approved, :featured, :slug, :phone_number, :email, :highlight, :blurb, 
+                  :street1, :street2, :postal_code, :city, :province, :photos_attributes, :dietary_accommodations, 
+                  :licensed, :location_id, :caption, :default_photo, :photo, :featured_end_date, 
+                  availability_type_ids: [], 
+                  certification_type_ids: [], 
+                  photos_attributes: [:caption, :default_photo, :photo])
+  end
 end

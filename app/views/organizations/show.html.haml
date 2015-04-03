@@ -74,14 +74,15 @@
         %a{:href => billing_extras_path()} Buy credits
 
   .form-group.section-start
-    .control-label.fs_22
-      Mentorees
-    .controls.fs_22
-      .float_left
-        Other dayhomes you've referred to Dayhome Registry      
-  .form-group
-    .control-label      
-    .controls
+    .col-sm-2
+      .control-label.fs_22
+        Mentorees
+    .col-sm-10
+      .controls.fs_22
+        .float_left
+          Other dayhomes you've referred to Dayhome Registry      
+  .form-group      
+    .col-sm-10.col-sm-offset-2
       -if (@organization.mentorees.count>= 1)
         =image_tag "heart-icon-blue.png"
       -else
@@ -100,17 +101,17 @@
         %strong
           One free year of membership to Dayhome Registry
   .form-group
-    .control-label
-      Name
-    .controls
-      -@organization.mentorees.each_with_index do |mentoree, index|
-        .append-bottom-1
-          %div{:class=>"#{index>0?'span-7' : ''}"}
-            =mentoree.name
-            = link_to 'View', mentoree.day_homes.first
+    .col-sm-offset-2
+      =label_tag 'Name', nil,:class=>"col-sm-2"
+      .col-sm-10
+        .controls
+          -@organization.mentorees.each_with_index do |mentoree, index|
+            .append-bottom-1
+              %div{:class=>"#{index>0?'span-7' : ''}"}
+                =mentoree.name
+                = link_to 'View', mentoree.day_homes.first
   .form-group
-    .control-label      
-    .controls
+    .col-sm-12
       Rock at running your dayhome?  Want to get free stuff?  Share this link with other dayhomes to start them down their own journey to success:
       - link = URI::join(root_url,billing_signup_path,"?ref="+@organization.affiliate_tag).to_s
       =link_to link,link        
@@ -234,34 +235,39 @@
             = link_to 'Show last 100 payments', '#', :id=>'show_payments_link'         
   
   .form-group.section-start
-    .control-label.fs_22
-      Locales
-    .controls.fs_22
-      .float_left
-        The places you do business    
-  .form-group
-    .control-label
-      Name
-    .controls
-      -@organization.locations.each_with_index do |locale, index|
-        .append-bottom-1
-          %div{:class=>"#{index>0?'span-7' : ''}"}
-            =locale.name
-            ="(#{pluralize(locale.day_homes.count,'dayhome')})"
-            -if (@organization.locations.count > 1)
-              =link_to "Remove", organization_location_path(@organization,locale), confirm: 'Are you sure?',:method=>:delete
-            =link_to "Edit", edit_organization_location_path(@organization,locale)  
-  .form-group
-    .controls
-      .example.first
-        = link_to 'Add Locales', new_organization_location_path(@organization) 
+    .col-sm-2
+      .control-label.fs_22
+        Locales
+    .col-sm-10
+      .controls.fs_22
+        .float_left
+          The places you do business    
+  .col-sm-offset-2
+    .form-group
+      =label_tag 'Name', nil,:class=>"col-sm-2"
+      .col-sm-10
+        .controls
+          -@organization.locations.each_with_index do |locale, index|
+            .append-bottom-1
+              %div{:class=>"#{index>0?'span-7' : ''}"}
+                =locale.name
+                ="(#{pluralize(locale.day_homes.count,'dayhome')})"
+                -if (@organization.locations.count > 1)
+                  =link_to "Remove", organization_location_path(@organization,locale), confirm: 'Are you sure?',:method=>:delete
+                =link_to "Edit", edit_organization_location_path(@organization,locale)  
+    .form-group
+      .col-sm-12
+        .example.first
+          = link_to 'Add Locales', new_organization_location_path(@organization) 
         
   .form-group.section-start
-    .control-label.fs_22
-      Dayhomes
-    .controls.fs_22
-      .float_left
-        Your businesses      
+    .col-sm-2
+      .control-label.fs_22
+        Dayhomes
+    .col-sm-10
+      .controls.fs_22
+        .float_left
+          Your businesses      
   =hidden_field_tag 'id',@organization.id
   %table.table-striped.table{:cellpadding => '5'}
     %thead

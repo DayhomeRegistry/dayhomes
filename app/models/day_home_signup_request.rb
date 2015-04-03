@@ -14,7 +14,7 @@ class DayHomeSignupRequest < ActiveRecord::Base
   #before_save :add_dayhome
   
   attr_accessor :stripe_card_token, :password, :password_confirmation
-  attr_accessible :day_home_name, :day_home_slug, :day_home_highlight, :day_home_blurb, :day_home_street1, :day_home_city, :day_home_province, :day_home_postal_code, :first_name, :last_name, :contact_phone_number, :contact_email, :password, :password_confirmation, :referral_email, :coupon, :stripe_card_token
+  #attr_accessible :day_home_name, :day_home_slug, :day_home_highlight, :day_home_blurb, :day_home_street1, :day_home_city, :day_home_province, :day_home_postal_code, :first_name, :last_name, :contact_phone_number, :contact_email, :password, :password_confirmation, :referral_email, :coupon, :stripe_card_token
   
   after_create :send_request_to_dayhome_registry_team
   

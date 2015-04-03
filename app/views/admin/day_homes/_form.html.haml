@@ -34,14 +34,15 @@
             until #{@day_home.feature_end_date}
 = form_for [:admin, @day_home], :html => {:multipart => true,:class=>"form-horizontal"} do |f|
   =hidden_field(:page, params["page"])
-  = link_to 'You can edit contact phone in the organization.', [:edit, :admin, @day_home.organization]
+  -if !@day_home.organization.nil?
+    = link_to 'You can edit contact phone in the organization.', edit_admin_organization_path(@day_home.organization)
   .form-group
-    = f.label :name, :class => 'col-sm-2 control-label'
+    = f.label :name, :class => 'col-sm-2'
     .col-sm-10
       = f.text_field :name
 
   .form-group
-    = f.label 'Status', :class => 'control-label'
+    = f.label 'Status', :class => 'col-sm-2'
     .col-sm-10
       .checkbox
         %label
@@ -51,15 +52,15 @@
         %label
           = f.check_box :featured?
           Featured until
-        = f.text_field "feature_end_date", :class => 'form-control datetimepicker'
+        = f.text_field "featured_end_date", :class => 'form-control datetimepicker'
   
   .form-group
-    = f.label :community, :class => 'col-sm-2 control-label'
+    = f.label :community, :class => 'col-sm-2'
     .col-sm-2
       - @location = @day_home.location
       = collection_select(:location, :community_id, @communities, :id, :name)
   .form-group  
-    = f.label :slug, 'Dayhome Slug', :class => 'col-sm-2 control-label'
+    = f.label :slug, 'Dayhome Slug', :class => 'col-sm-2'
     .col-sm-10
       .input-group
         .input-group-addon
@@ -67,52 +68,52 @@
         = f.text_field :slug
   
   .form-group
-    = f.label :phone_number, :class => 'col-sm-2 control-label'
+    = f.label :phone_number, :class => 'col-sm-2'
     .col-sm-10
       = f.text_field :phone_number
 
   .form-group
-    = f.label :email, :class => 'col-sm-2 control-label'
+    = f.label :email, :class => 'col-sm-2'
     .col-sm-10
       = f.text_field :email
   
   .form-group
-    = f.label :highlight, :class => 'col-sm-2 control-label'
+    = f.label :highlight, :class => 'col-sm-2'
     .col-sm-10
       = f.text_area :highlight
   
   .form-group
-    = f.label :blurb, :class => 'col-sm-2 control-label'
+    = f.label :blurb, :class => 'col-sm-2'
     .col-sm-10
       = f.text_area :blurb
 
 
   .form-group
-    = f.label :street1, 'Street 1', :class => 'col-sm-2 control-label'
+    = f.label :street1, 'Street 1', :class => 'col-sm-2'
     .col-sm-10
       = f.text_field :street1
 
   .form-group
-    = f.label :street2, 'Street 2', :class => 'col-sm-2 control-label'
+    = f.label :street2, 'Street 2', :class => 'col-sm-2'
     .col-sm-10
       = f.text_field :street2
   
   .form-group
-    = f.label :postal_code, 'Postal Code', :class => 'col-sm-2 control-label'
+    = f.label :postal_code, 'Postal Code', :class => 'col-sm-2'
     .col-sm-10
       = f.text_field :postal_code
     
   .form-group
-    = f.label :city, :class => 'col-sm-2 control-label'
+    = f.label :city, :class => 'col-sm-2'
     .col-sm-10
       = f.text_field :city
   
   .form-group
-    = f.label :province, :class => 'col-sm-2 control-label'
+    = f.label :province, :class => 'col-sm-2'
     .col-sm-10
       = f.subregion_select :province,'CA'
   .form-group
-    = label_tag 'Caption & Photo', nil,:class=>'col-sm-2 control-label'
+    = label_tag 'Caption & Photo', nil,:class=>'col-sm-2'
     .col-sm-10
       = f.fields_for :photos do |p|
         .add_multiples.clear{'data-group' => 'photos'}
@@ -130,42 +131,40 @@
       .clear
       %strong= link_to 'Add Another Photo', '#', :class => 'add_multiples_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
   %br
-  %br
   .form-group
-    = f.label :availability_types, 'Full-time Availability', :class=>'col-sm-2 control-label',:style => 'font-weight: bold'
+    = f.label :availability_types, 'Full-time Availability', :class=>'col-sm-2',:style => 'font-weight: bold'
     .col-sm-10
-      - AvailabilityType.full_time.each do |availability|
+      =collection_check_boxes(:day_home, :availability_type_ids, AvailabilityType.full_time, :id, :kind) do |b|
         .checkbox
-          = f.label availability.kind, :class => :checkbox do 
-            = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
-            = availability.kind
-  
+          = b.label(class: "check_box") do
+            = b.check_box(class: "check_box")
+            = b.object.kind
   .form-group
-    = f.label :availability_types, 'Part-time Availability', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
+    = f.label :availability_types, 'Part-time Availability', :class=>'col-sm-2',:style => 'font-weight: bold'
     .col-sm-10
-      - AvailabilityType.part_time.each do |availability|
+      =collection_check_boxes(:day_home, :availability_type_ids, AvailabilityType.part_time, :id, :kind) do |b|
         .checkbox
-          = f.label availability.kind, :class => :checkbox do 
-            = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
-            = availability.kind
+          = b.label(class: "check_box") do
+            = b.check_box(class: "check_box")
+            = b.object.kind
   .form-group
-    = f.label :certification_types, 'Certification', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
+    = f.label :certification_types, 'Certifications', :class=>'col-sm-2',:style => 'font-weight: bold'
     .col-sm-10
-      - CertificationType.all.each do |certification|
+      =collection_check_boxes(:day_home, :certification_type_ids, CertificationType.all, :id, :kind) do |b|
         .checkbox
-          = f.label certification.kind, :class => :checkbox do 
-            = check_box_tag 'day_home[assign_certification_type_ids][]', certification.id, @day_home.certification_type_ids.include?(certification.id)
-            = certification.kind
+          = b.label(class: "check_box") do
+            = b.check_box(class: "check_box")
+            = b.object.kind
       
   .form-group
-    = f.label :dietary_accommodations, 'Dietary Accommodations', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
+    = f.label :dietary_accommodations, 'Dietary Accommodations', :class=>'col-sm-2', :style => 'font-weight: bold'
     .col-sm-10
       .checkbox
         = f.label :dietary_accommodations, 'Dietary Accommodations', :class => :checkbox do
           = f.check_box :dietary_accommodations
           Accommodates for Food Allergies
   .form-group
-    = f.label :licensed, 'Accredited', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
+    = f.label :licensed, 'Accredited', :class=>'col-sm-2', :style => 'font-weight: bold'
     .col-sm-10
       .checkbox
         = f.label :licensed, 'Accredited', :class => :checkbox do

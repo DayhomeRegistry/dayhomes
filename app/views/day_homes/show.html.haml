@@ -117,14 +117,14 @@
           %h3
             Contact #{@day_home.name}
         = simple_form_for @day_home_contact, :url => contact_day_home_path(@day_home),:validate=>true do |cf|   
-          .container  
+          %div{:style=>"margin:40px;"} 
             .row       
-              .span4.col-md-4.col-sm-12.well
+              .span4.col-md-5.col-sm-12.well
                 = cf.input :name, :label=>"Your name"
                 = cf.input :email, :label=>"Your email"
                 = cf.input :phone, :label=>"Your phone"          
 
-              .span4.col-md-4.col-sm-12.well
+              .span4.col-md-6.col-sm-12.well
             
                 = cf.input :home_address, :label=>false do             
                   =cf.label :home_address, :style => 'display:inline;'
@@ -149,8 +149,9 @@
                   %i.icon-info-sign{:rel=>"tooltip", :title=> "Make sure to include contact information in your message!" }
                   = cf.text_area :message, :style => 'height: 150px !important;'
             .row
-              = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
-              = raw (get_captcha(:ssl=>true))
+              .col-md-12.col-sm-12
+                = cf.hidden_field :day_home_email, :value => @day_home_contact.day_home_email
+                = raw (get_captcha(:ssl=>true))
             .row
               .submit
                 = cf.button :submit,  "Contact", :class => 'btn btn-primary span3'

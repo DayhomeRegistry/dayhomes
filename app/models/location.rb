@@ -5,5 +5,5 @@ class Location < ActiveRecord::Base
 	has_many :users
 	belongs_to :community
 
-	attr_accessible :name, :phone_number
+	#attr_accessible :name, :phone_number, :organization
 end

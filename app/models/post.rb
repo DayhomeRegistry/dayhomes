@@ -6,7 +6,7 @@ class Post < ActiveRecord::Base
   belongs_to :user, :class_name => "User", :counter_cache => true
   
   # Accessors
-  attr_accessible :body
+  #attr_accessible :body
   
   # Validations
   validates :body, :presence => true

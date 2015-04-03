@@ -86,9 +86,9 @@
 /* workarounds */
 * html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
 
-$iconSpritePath: image-url("glyphicons-halflings.png") !default;
 $iconLogoPath: image-url("mini-logo.jpg") !default;
 
+@import "bootstrap-sprockets";
 @import "bootstrap";
  
 $green: #52BE60;
@@ -334,14 +334,14 @@ div.span-7.first {
   display: table;
   content: "";
 }
-.form-horizontal .control-label {
+/*.form-horizontal .control-label {
   float: left;
   font-weight: 700;
   line-height: 18px;
   padding-right: 20px;
   text-align: right;
   width: 160px;
-}
+}*/
 .signin-form .control-group::before, .form-horizontal .control-group::after {
   display: table;
   content: "";

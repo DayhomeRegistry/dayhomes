@@ -1,5 +1,5 @@
 class Community < ActiveRecord::Base
-  attr_accessible :name
+  #attr_accessible :name
   has_many :locations
 
   geocoded_by :full_address   # can also be an IP address

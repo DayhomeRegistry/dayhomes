@@ -89,6 +89,8 @@
   %h2
     Edit
     = @day_home.name
+
+
   .topright
     -if @day_home.featured?
       %strong
@@ -100,130 +102,9 @@
     -else
       %strong
         %button.featured-button.feature-me{"data-target" => "#dialog-form", "data-toggle" => "modal", :type => "button"} Feature me!
-  = form_for @day_home, :html => {:multipart => true, :class=>"form-horizontal"} do |f|
-    .form-group
-      = f.label :name, :class => 'col-sm-2 control-label'
-      .col-sm-6
-        = f.text_field :name
+  = render 'form'
 
-    
-    .form-group  
-      = f.label :slug, 'Dayhome Slug', :class => 'col-sm-2 control-label'
-      .col-sm-10
-        .input-group
-          .input-group-addon
-            https://dayhomeregistry.com/
-          = f.text_field :slug
-    
-    
-    .form-group
-      = f.label :highlight, :class => 'col-sm-2 control-label'
-      .col-sm-10
-        = f.text_area :highlight, :size=>'70x5'
-    
-    .form-group
-      = f.label :blurb, :class => 'col-sm-2 control-label'
-      .col-sm-10
-        = f.text_area :blurb, :size=>'70x15'
 
-    .form-group
-      = f.label :street1, 'Street 1', :class => 'col-sm-2 control-label'
-      .col-sm-10
-        = f.text_field :street1
-
-    .form-group
-      = f.label :street2, 'Street 2', :class => 'col-sm-2 control-label'
-      .col-sm-10
-        = f.text_field :street2
-    
-    .form-group
-      = f.label :postal_code, 'Postal Code', :class => 'col-sm-2 control-label'
-      .col-sm-10
-        = f.text_field :postal_code
-      
-    .form-group
-      = f.label :city, :class => 'col-sm-2 control-label'
-      .col-sm-10
-        = f.text_field :city
-    
-    .form-group
-      = f.label :province, :class => 'col-sm-2 control-label'
-      .col-sm-10
-        = f.subregion_select :province,'CA'
-    .form-group
-      %label.col-sm-2.control-label
-        Locale
-      .col-sm-10
-        = collection_select(:day_home, :location_id, Location.where("organization_id = "+ @day_home.organization.id.to_s), :id, :name)
-    
-    %h3
-      Photos
-      
-    .form-group
-      = label_tag 'Caption & Photo', nil,:class=>'col-sm-2 control-label'
-      .col-sm-10
-        = f.fields_for :photos do |p|
-          .add_multiples.clear{'data-group' => 'photos'}
-            - if p.object.photo?
-              .remove_contents
-                = link_to image_tag(p.object.photo_url(:thumb), :style => 'max-height: 100px; margin: 0 5px 5px 0;', :class => :left), p.object.photo_url, :alt => p.object.caption, :class => 'photo_preview'
-            = p.text_field :caption
-            = p.check_box :default_photo        
-            = 'Set as default'
-            = p.check_box :_destroy, :style => 'display: none;' unless p.object.new_record?
-            %br
-            = p.file_field :photo
-            = link_to 'Remove Photo', '#', :class => 'remove_fieldset_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
-          %br
-        .clear
-        %strong= link_to 'Add Another Photo', '#', :class => 'add_multiples_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
-    %br
-    %br
-    .form-group
-      = f.label :availability_types, 'Full-time Availability', :class=>'col-sm-2 control-label',:style => 'font-weight: bold'
-      .col-sm-10
-        - AvailabilityType.full_time.each do |availability|
-          .checkbox
-            = f.label availability.kind, :class => :checkbox do 
-              = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
-              = availability.kind
-    
-    .form-group
-      = f.label :availability_types, 'Part-time Availability', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
-      .col-sm-10
-        - AvailabilityType.part_time.each do |availability|
-          .checkbox
-            = f.label availability.kind, :class => :checkbox do 
-              = check_box_tag 'day_home[assign_availability_type_ids][]', availability.id, @day_home.availability_type_ids.include?(availability.id)
-              = availability.kind
-    .form-group
-      = f.label :certification_types, 'Certification', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
-      .col-sm-10
-        - CertificationType.all.each do |certification|
-          .checkbox
-            = f.label certification.kind, :class => :checkbox do 
-              = check_box_tag 'day_home[assign_certification_type_ids][]', certification.id, @day_home.certification_type_ids.include?(certification.id)
-              = certification.kind
-        
-    .form-group
-      = f.label :dietary_accommodations, 'Dietary Accommodations', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
-      .col-sm-10
-        .checkbox
-          = f.label :dietary_accommodations, 'Dietary Accommodations', :class => :checkbox do
-            = f.check_box :dietary_accommodations
-            Accommodates for Food Allergies
-    .form-group
-      = f.label :licensed, 'Accredited', :class=>'col-sm-2 control-label', :style => 'font-weight: bold'
-      .col-sm-10
-        .checkbox
-          = f.label :licensed, 'Accredited', :class => :checkbox do
-            = f.check_box :licensed
-            Accredited
-
-    %br
-    = f.submit 'Save', :class => 'btn'
-    |
-    = link_to 'Cancel', :day_homes
 .modal.fade#dialog-form{"aria-hidden" => "true", "aria-labelledby" => "myLargeModalLabel", :role => "dialog", :tabindex => "-1"}
   .modal-dialog.modal-lg
     .modal-content
