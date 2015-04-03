@@ -8,7 +8,7 @@ class LocationsController < ApplicationController
 	def update
 		@organization = Organization.find(params["organization_id"])
 		@location = Location.find(params[:id])
-    	@location.assign_attributes(params[:location]) 
+    	@location.assign_attributes(location_params) 
 		if @location.save
     		flash[:success] = "Locale successfully updated!"
     	redirect_to organization_path(@organization)
@@ -67,7 +67,7 @@ class LocationsController < ApplicationController
 	end
 	def create
 		@organization = Organization.find(params["organization_id"])
-    	@location = Location.new(params[:location])
+    	@location = Location.new(location_params)
     	@location.organization=@organization
     
 	    if @location.save
@@ -77,6 +77,10 @@ class LocationsController < ApplicationController
 	    	render :action => :new
 	    end
 
+	end
+	private
+	def location_params
+		params.require(:location).permit(:name, :phone_number, :organization)
 	end
 
 end

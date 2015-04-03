@@ -3,115 +3,125 @@
   
 - @organization.users.build if @organization.users.blank? 
 - @organization.day_homes.build if @organization.day_homes.blank? 
-= simple_form_for @organization, html: {multipart: true}  do |f| 
+= form_for @organization, html: {multipart: true, :class=>"form-horizontal"}  do |f| 
   - if (@organization.errors.keys.include?(:users))
     .alert.alert-error
       = f.full_error(:users)
   - if (@organization.errors.keys.count>1)
     = f.error_notification 
 
-  
 
-  .form-inputs 
-    .control-group
-      .control-label
-        Contact Information
-      .controls
-        .append-bottom-1.first    
-          = f.input :name 
-          = f.input :phone_number
-    .control-group
-      .control-label
-        Address
-      .controls
-        .append-bottom-1.first    
-          = f.input :street1 
-          = f.input :street2
-          = f.input :city
-          = f.input :province
-          = f.input :postal_code
-    .control-group
-      .control-label
-        Description
-      .controls
-        .append-bottom-1.first  
-          .control-group
-            =label_tag "Logo", nil,:class=>"control-label"
-            .controls
-              .logo
-                -if !@organization.logo.nil?
-                  %img{:src=>"#{@organization.logo.photo_url(:thumb)}"}
-              .input
-                =file_field_tag 'organization[logo_attributes][photo]' 
-          .control-group
-            = f.input :blurb , as: :text, input_html:{maxlength:"250", rows:"12"} 
-            .controls
-              %span.small
-                max 250 characters
-          .control-group
-            =label_tag "Pin", nil,:class=>"control-label"
-            .controls
-              .logo
-                -if !@organization.pin.nil?
-                  %img{:src=>"#{@organization.pin.photo_url(:thumb)}"}
-              .input
-                =file_field_tag 'organization[pin_attributes][photo]' 
+  .form-inputs
+    %h3
+      Contact Information
+    .form-group
+      = f.label :name, :class => 'col-sm-3'
+      .col-sm-9
+        = f.text_field :name, :class=>'form-control'
+    .form-group
+      =f.label :phone_number, :class => 'col-sm-3'
+      .col-sm-9 
+        = f.text_field :phone_number, :class=>'form-control'
+    %h3
+      Address
+    .form-group
+      = f.label :street1, :class => 'col-sm-3'
+      .col-sm-9
+        = f.text_field :street1, :class=>'form-control'
+    .form-group
+      =f.label :street2, :class => 'col-sm-3'
+      .col-sm-9 
+        = f.text_field :street2, :class=>'form-control'
+    .form-group
+      = f.label :city, :class => 'col-sm-3'
+      .col-sm-9
+        = f.text_field :city, :class=>'form-control'
+    .form-group
+      =f.label :province, :class => 'col-sm-3'
+      .col-sm-9 
+        = f.text_field :province, :class=>'form-control'
+    .form-group
+      = f.label :city, :class => 'col-sm-3'
+      .col-sm-9
+        = f.text_field :city, :class=>'form-control'
+    .form-group
+      =f.label :province, :class => 'col-sm-3'
+      .col-sm-9 
+        = f.text_field :province, :class=>'form-control'
+    .form-group
+      =f.label :postal_code, :class => 'col-sm-3'
+      .col-sm-9 
+        = f.text_field :postal_code, :class=>'form-control'
+
+    %h3
+      Description
+    .form-group
+      .col-sm-12
+        = f.text_area :blurb, :size=>'70x5', :maxlength=>'250'
+        %p.help-block
+          max 250 characters
+          
+    .form-group
+      =label_tag "Logo", nil, :class=>"col-sm-3"
+      .col-sm-9
+        .logo
+          -if !@organization.logo.nil?
+            %img{:src=>"#{@organization.logo.photo_url(:thumb)}"}
+        .input
+          =file_field_tag 'organization[logo_attributes][photo]' 
+          
+    .form-group
+      =label_tag "Pin", nil,:class=>"col-sm-3"
+      .col-sm-9
+        .logo
+          -if !@organization.pin.nil?
+            %img{:src=>"#{@organization.pin.photo_url(:thumb)}"}
+        .input
+          =file_field_tag 'organization[pin_attributes][photo]' 
     = f.hidden_field :stripe_card_token   
   .append-bottom-1  
     #stripe_error
       %noscript
         Javascript is not enabled and is required for this form.  First enable it in your web browser settings. 
+  %h3
+    Credit card information
   -if !@organization.credit_card.nil?
     #existingCard
-      .control-group                
-        .control-label
-          Credit Card
-        .controls  
-          .append-bottom-1.first            
-            =label_tag :existing_card_number, "**** **** **** "+@organization.credit_card[:last4], :style=>"width:150px;"
-            .span.col-lg-.col-md-.col-sm--7
-              =label_tag :existing_card_exp, "Exp:"+@organization.credit_card[:month].to_s+"/"+@organization.credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"
+      .form-group                
+        =label_tag :existing_card_number, "Card Number", :class=>"col-sm-3" 
+        .col-sm-9  
+          =label_tag :existing_card_number, "**** **** **** "+@organization.credit_card[:last4], :style=>"width:150px;"
+          %p.help-block
+            =label_tag :existing_card_exp, "Exp:"+@organization.credit_card[:month].to_s+"/"+@organization.credit_card[:year].to_s, :style=>"display:inline;padding-right:5px;"
             .clear
-          .append-bottom-1
-            .span.col-lg-.col-md-.col-sm--7
-              = link_to 'Enter a new credit card','#', :id=>'change_credit_card_link'   
+      .form-group
+        .col-sm-12
+          = link_to 'Enter a new credit card','#', :id=>'change_credit_card_link'   
+
   #newCard{:style=>"display:#{(@organization.credit_card.nil? && 'block') || 'none'};"}      
-    .append-bottom-1
-      .span.col-lg-.col-md-.col-sm--25
-        /
-          .control-group
-            %label.control-label{:for => "BILL_NAME"}
-              Name on Card
-            .controls
-              %input#BILL_NAME.input-large{:name => "BILL_NAME", :type => "text", :value => ""}
-        .control-group          
-          =label_tag :card_number, "Card Number", :class=>"control-label"            
-          .controls  
-            .span.col-lg-.col-md-.col-sm--11
-              =text_field_tag :card_number, '', :name=>nil, :class=>"input-large",:onkeypress => "return numbersonly2(this, event)"
-              .example
-                Number
-            .span.col-lg-.col-md-.col-sm--4
-              =text_field_tag :card_code, nil, name:nil, :class=>"input-mini"
-              .example
-                CVV
-                <i class="icon-info-sign" data-title="What's a CVV?" data-content="The CVV Number ("Card Verification Value") on your credit card or debit card is a 3 digit number on VISA®, MasterCard® and Discover® branded credit and debit cards. On your American Express® branded credit or debit card it is a 4 digit numeric code."></i>      
-        .control-group
-          =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
-          .controls
-            .span.col-lg-.col-md-.col-sm--6.append-bottom-1
-              =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month"}
-              .example
-                Month
-            .span.col-lg-.col-md-.col-sm--6.append-bottom-1
-              =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
-              .example.first
-            Year        
-        - if !@organization.credit_card.nil?
-          .control-group
-            .controls
-              .span.col-lg-.col-md-.col-sm--7
-                = link_to 'Keep card on record', '#', :id=>'cancel_credit_card_link'
+    .form-group          
+      =label_tag :card_number, "Card Number", :class=>"col-sm-3"            
+      .col-sm-9  
+        =text_field_tag :card_number, '', :name=>nil, :class=>"form-control",:onkeypress => "return numbersonly2(this, event)"
+        %p.help-block
+          Number
+        =text_field_tag :card_code, nil, name:nil, :class=>"form-control", :style=>'width: 8.333%;'
+        %p.help-block
+          CVV
+          <i class="icon-info-sign" data-title="What's a CVV?" data-content="The CVV Number ("Card Verification Value") on your credit card or debit card is a 3 digit number on VISA®, MasterCard® and Discover® branded credit and debit cards. On your American Express® branded credit or debit card it is a 4 digit numeric code."></i>      
+    .form-group
+      =label_tag :card_expiry, "Expiry date", :class=>"col-sm-3"  
+      .col-sm-9
+        =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month", :class=>"form-control", :style=>"width:25%"}
+        %p.help-block
+          Month
+        =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year", :class=>"form-control", :style=>"width:16.666%"}
+        %p.help-block
+          Year        
+    - if !@organization.credit_card.nil?
+      .form-group
+        .col-sm-12
+          = link_to 'Keep card on record', '#', :id=>'cancel_credit_card_link'
   .clear  
   .form-actions
     %span.button.large.green.single

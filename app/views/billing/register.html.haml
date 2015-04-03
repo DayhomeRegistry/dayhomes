@@ -209,7 +209,7 @@
       = f.label :day_home_name, 'Dayhome Name', :class=>"control-label"
       .controls
         = f.text_field :day_home_name
-        <i class="glyphicon glyphicon-info-sign" data-title="What's in a name?" data-content="This is the name of your dayhome. Don't have one? Well, pick something that you'll want your parents to know you by...it's your first impression when attracting new families."></i>
+        %i.glyphicon.glyphicon-info-sign{data: {title: "What's in a name?", trigger: "hover", toggle:"popover",placement:"right",content:'This is the name of your dayhome. Don\'t have one? Well, pick something that you\'ll want your parents to know you by...it\'s your first impression when attracting new families.'}}  
     .control-group
       = f.label :day_home_slug, 'Dayhome Slug', :class=>"control-label"
       .controls
@@ -217,12 +217,12 @@
           %span.add-on
             https://dayhomeregistry.com/
           = f.text_field :day_home_slug, :class=>"span2"
-        <i class="glyphicon glyphicon-info-sign" data-title="What's a slug?" data-content="The slug is the name for the end of our web address that makes it easy for you and your customers to find your page.  The web address that you see to the left will be your home on our website."></i>             
+        %i.glyphicon.glyphicon-info-sign{data: {title: "What's a slug?", trigger: "hover", toggle:"popover",placement:"right",content:'The slug is the name for the end of our web address that makes it easy for you and your customers to find your page.  The web address that you see to the left will be your home on our website.'}}              
     .control-group
       = f.label :day_home_highlight, 'Front page highlight', :class=>"control-label"
       .controls
         = f.text_area :day_home_highlight, :rows => 8, :style=>"width:530px;"
-        <i class="glyphicon glyphicon-info-sign" data-title="What's a highlight?" data-content="On our homepage, when we feature a dayhome, the name of the dayhome and the text you put below are displayed over one of your images.  This highlight has to be 200 characters or less so we can still see how wonderful you are in your picture."></i>
+        %i.glyphicon.glyphicon-info-sign{data: {title: "What's a highlight?", trigger: "hover", toggle:"popover",placement:"right",content:'On our homepage, when we feature a dayhome, the name of the dayhome and the text you put below are displayed over one of your images.  This highlight has to be 200 characters or less so we can still see how wonderful you are in your picture.'}}  
     .control-group
       .controls
         = label_tag "ack", :class => :checkbox, :style=>"margin-left:20px;" do       
@@ -282,7 +282,7 @@
                 =text_field_tag :card_code, nil, name:nil, :class=>"input-mini"
                 .example
                   CCV
-                  <i class="glyphicon glyphicon-info-sign" data-title="What's a CCV?" data-content="The little code to verify the number...you know the one."></i>      
+                  %i.glyphicon.glyphicon-info-sign{data: {title: "What\'s a CVV?", trigger: "hover", toggle:"popover",placement:"right",content:'The CVV Number ("Card Verification Value") on your credit card or debit card is a 3 digit number on VISA®, MasterCard® and Discover® branded credit and debit cards. On your American Express® branded credit or debit card it is a 4 digit numeric code. '}}   
           .control-group
             =label_tag :card_expiry, "Expiry date", :class=>"control-label"  
             .controls
@@ -336,7 +336,7 @@
       %span.button.large.green.single
         %input#pay-now-button{:name => "paynow", :type => "submit", :value => "Pay Now"}
 :javascript
-  $('.glyphicon glyphicon-info-sign').popover() ;
+  ('[data-toggle="popover"]').popover();
   
   Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
 

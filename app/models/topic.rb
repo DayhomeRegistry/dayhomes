@@ -7,7 +7,7 @@ class Topic < ActiveRecord::Base
   
   # Accessors
   attr_accessor :body
-  attr_accessible :title, :body, :sticky, :locked
+  #attr_accessible :title, :body, :sticky, :locked
   
   # Validations
   validates :title,   :presence => true

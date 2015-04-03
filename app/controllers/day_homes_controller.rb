@@ -128,15 +128,17 @@ class DayHomesController < ApplicationController
   
     params[:day_home_contact][:day_home_email] = Base64::decode64(params[:day_home_contact][:day_home_email])
     @day_home = DayHome.find(params[:id])
-    @day_home_contact = DayHomeContact.new(params[:day_home_contact].merge(:day_home_id => @day_home.id))
-        
+    byebug
+
+    @day_home_contact = DayHomeContact.new(day_home_contact_params)
+    @day_home_contact.day_home_id = @day_home.id        
 
     if validate_recap(params, @day_home_contact.errors) && @day_home_contact.save
       #redirect_to day_home_slug_path(@day_home.slug), :notice => "#{@day_home.name} has been contacted!"
 
       redirect_to followup_day_home_path(@day_home)
     else
-      flash[:error]= "Something went wrong while sending your message - please try again: "+@day_home_contact.errors.full_messages.to_sentence
+      flash[:danger]= "Something went wrong while sending your message - please try again: "+@day_home_contact.errors.full_messages.to_sentence
       redirect_to day_home_slug_path(@day_home.slug)
     end
   end
@@ -175,6 +177,7 @@ class DayHomesController < ApplicationController
   end
   
   def update
+    byebug
     #the empty hash we "build" in edit breaks the validation
     if(!params[:day_home][:photos_attributes].nil?)
       params[:day_home][:photos_attributes].each do |k,v|
@@ -190,7 +193,7 @@ class DayHomesController < ApplicationController
       @day_home = current_user.day_homes.find(params[:id])
     end
     
-    if @day_home.update_attributes(params[:day_home])
+    if @day_home.update_attributes(day_home_params)
       redirect_to day_homes_path
     else
       render :action => :edit
@@ -211,12 +214,14 @@ class DayHomesController < ApplicationController
     end
 
     @day_home = DayHome.new
+    @day_home.organization=organization
+    @day_home.email = organization.billing_email
     @day_home.photos.build
   end
 
+
   def create
-    
-    @day_home = DayHome.new(params[:day_home])
+    @day_home = DayHome.new(day_home_params)
     @day_home.approved = true
     
     if @day_home.save
@@ -268,5 +273,17 @@ class DayHomesController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
   end 
+
+  def day_home_params
+    params.require(:day_home).permit(:name, :approved, :featured, :slug, :phone_number, :email, :highlight, :blurb, 
+                  :street1, :street2, :postal_code, :city, :province, :photos_attributes, :dietary_accommodations, 
+                  :licensed, :location_id, :caption, :default_photo, :photo, :featured_end_date, 
+                  availability_type_ids: [], 
+                  certification_type_ids: [], 
+                  photos_attributes: [:caption, :default_photo, :photo, "_destroy", :id])
+  end
+  def day_home_contact_params
+    params.require(:day_home_contact).permit(:name,:email,:phone,:home_address,:child_start_date,:child_name,:child_birth_date,:child_name2,:child_birth_date2,:subject,:message,:day_home_email,:day_home_id)
+  end
 end
 
