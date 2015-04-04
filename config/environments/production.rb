@@ -79,14 +79,17 @@ Dayhomes::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   
-    # Setup FogBugz error reporting
-    config.middleware.use ExceptionNotifier,
-      :bugzscout => {
-        :url => 'https://dayhomeregistry.fogbugz.com/scoutSubmit.asp',
-        :username => 'bugzscout',
-        :project => 'Inbox',
-        :area => 'Not Spam'
-      }
+  # Setup FogBugz error reporting
+  config.middleware.use ExceptionNotifier,
+    :bugzscout => {
+      :url => 'https://dayhomeregistry.fogbugz.com/scoutSubmit.asp',
+      :username => 'bugzscout',
+      :project => 'Inbox',
+      :area => 'Not Spam'
+    }
+
+  #For Rails5
+  config.log_level = :info
 
   #Preloader
   config.eager_load=true

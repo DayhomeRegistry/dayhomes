@@ -475,7 +475,7 @@ class BillingController < ApplicationController
       :password, :password_confirmation, :referral_email, :coupon, :stripe_card_token)
   end
   def day_home_params
-    byebug
+    #byebug
     params.require(:day_home).permit(:name, :approved, :featured, :slug, :phone_number, :email, :highlight, :blurb, 
                   :street1, :street2, :postal_code, :city, :province, :photos_attributes, :dietary_accommodations, 
                   :licensed, :location_id, :caption, :default_photo, :photo, :featured_end_date, 
