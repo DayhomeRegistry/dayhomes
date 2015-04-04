@@ -33,7 +33,7 @@ class OrganizationsController < ApplicationController
 
     @organization = Organization.find(params[:id])
     @organization.update_attributes(organization_params)
-    byebug
+
     respond_to do |format|
       if @organization.save_with_payment
         #raise @organization.errors.messages.inspect

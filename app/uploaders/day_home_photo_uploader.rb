@@ -44,7 +44,6 @@ class DayHomePhotoUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    byebug
     "dayhome_#{model.day_home.name.downcase.gsub(' ', '_')}.#{file.extension}" if original_filename
   end
 

@@ -128,7 +128,6 @@ class DayHomesController < ApplicationController
   
     params[:day_home_contact][:day_home_email] = Base64::decode64(params[:day_home_contact][:day_home_email])
     @day_home = DayHome.find(params[:id])
-    byebug
 
     @day_home_contact = DayHomeContact.new(day_home_contact_params)
     @day_home_contact.day_home_id = @day_home.id        
@@ -177,7 +176,6 @@ class DayHomesController < ApplicationController
   end
   
   def update
-    byebug
     #the empty hash we "build" in edit breaks the validation
     if(!params[:day_home][:photos_attributes].nil?)
       params[:day_home][:photos_attributes].each do |k,v|
