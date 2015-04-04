@@ -30,8 +30,9 @@ class OrganizationsController < ApplicationController
 
   def update
     #raise params.to_json
+
     @organization = Organization.find(params[:id])
-    @organization.update_attributes(params[:organization])
+    @organization.update_attributes(organization_params)
 
     respond_to do |format|
       if @organization.save_with_payment
@@ -124,4 +125,12 @@ class OrganizationsController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
   end  
+
+  def organization_params
+    params.require(:organization).permit(
+              :name, :phone_number, :street1, :street2, :city, 
+              :province, :postal_code, :blurb, :stripe_card_token,
+              logo_attributes:[:photo],
+              pin_attributes:[:photo])
+  end
 end

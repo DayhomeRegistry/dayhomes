@@ -94,8 +94,8 @@ class SearchesController < ApplicationController
   private
     def getHash(location) 
       hash = {}
-      hash[:lat]= location.latitude
-      hash[:lng]=location.longitude
+      hash[:lat]= !location.nil? ? location.latitude : 0
+      hash[:lng]= !location.nil? ? location.longitude : 0
       hash
     end
 end

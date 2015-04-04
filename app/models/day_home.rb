@@ -7,10 +7,10 @@ class DayHome < ActiveRecord::Base
   default_scope {where("deleted < 1")}
   after_save :clear_cache
 
-  attr_accessible :name, :approved, :featured, :slug, :phone_number, :email, :highlight, :blurb, 
-                  :street1, :street2, :postal_code, :city, :province, :photos_attributes, :assign_availability_type_ids, 
-                  :assign_certification_type_ids, :dietary_accommodations, :licensed, :location_id,
-                  :caption, :default_photo, :photo
+  attr_accessor :featured_end_date
+  # attr_accessible :name, :approved, :featured, :slug, :phone_number, :email, :highlight, :blurb, 
+  #                 :street1, :street2, :postal_code, :city, :province, :photos_attributes, :dietary_accommodations, 
+  #                 :licensed, :location_id, :caption, :default_photo, :photo, :assign_availability_type_ids, :assign_certification_type_ids
 
   geocoded_by :address, :latitude  => :lat, :longitude => :lng
   after_validation :geocode
@@ -36,12 +36,16 @@ class DayHome < ActiveRecord::Base
   # availability types
   has_many :day_home_availability_types, :dependent => :destroy
   has_many :availability_types, :through => :day_home_availability_types
+  accepts_nested_attributes_for :availability_types
 
   # certification types
   has_many :day_home_certification_types, :dependent => :destroy
   has_many :certification_types, :through => :day_home_certification_types
+  accepts_nested_attributes_for :certification_types
 
-  has_many :photos, :class_name => 'DayHomePhoto', :dependent => :destroy
+  has_many :photos, :class_name => 'DayHomePhoto', :dependent => :destroy, :inverse_of => :day_home
+  accepts_nested_attributes_for :photos, :allow_destroy => true #,:reject_if => :all_blank
+
   has_many :reviews
   has_many :events
 
@@ -67,7 +71,6 @@ class DayHome < ActiveRecord::Base
   validates_format_of :slug, :with => /[a-z0-9]+/
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
-  accepts_nested_attributes_for :photos, :allow_destroy => true #,:reject_if => :all_blank
 
   before_save :ensure_default_availability
   def ensure_default_availability
@@ -93,7 +96,7 @@ class DayHome < ActiveRecord::Base
           raw, enc = Devise.token_generator.generate(user.class, :reset_password_token)
           user.save(:validate => false)   
           @token=raw
-          if (!user.last_login_ip?)  
+          if (!user.last_sign_in_ip)  
             UserMailer.new_user_password_reminder(user).deliver
           end
         end
@@ -123,7 +126,7 @@ class DayHome < ActiveRecord::Base
   end
   
   def featured_photo
-    defaults = photos.reject{|x| x.default_photo=false}
+    defaults = photos.reject{|x| x.default_photo==false}
     #defaults = photos.where("default_photo=1")
     if (!defaults.empty?)
       @featured_photo ||= defaults.first
@@ -199,10 +202,11 @@ class DayHome < ActiveRecord::Base
     "#{id}-#{name.parameterize}"
   end
   
-  def assign_availability_type_ids=(availability_type_id_attrs=[])
-    self.day_home_availability_types = []
-    self.availability_types << AvailabilityType.where(id:availability_type_id_attrs)
-  end
+  # def assign_availability_type_ids=(availability_type_id_attrs=[])
+  #   byebug
+  #   self.day_home_availability_types = []
+  #   self.availability_types << AvailabilityType.where(id:availability_type_id_attrs)
+  # end
   
   def assign_certification_type_ids=(certification_type_id_attrs=[])
     self.day_home_certification_types = []

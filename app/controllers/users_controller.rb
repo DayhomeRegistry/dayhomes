@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     if(!current_user.nil?)
       organization = current_user.organization
       @user.organization = organization
@@ -55,16 +55,18 @@ class UsersController < ApplicationController
   end
 
   def update
-
     @user = User.find(params[:id])
-    @user.assign_attributes(params[:user]) 
-
+    params = user_params
+    if params[:password].blank? && params[:password_confirmation].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation)
+    end
+    @user.assign_attributes(params) 
     if @user.save
       redirect_to users_path()
     else
       return render :action => :edit
     end
-  
   end
 
   def index
@@ -83,6 +85,12 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
   
+  def send_reset_password_instructions
+    user = User.find(params[:user_id])
+    user.send_reset_password_instructions
+    flash[:notice] = "Reset password instructions have been sent to #{user.email}."
+    redirect_to users_path
+  end
     
   private
   def sort_column
@@ -94,7 +102,10 @@ class UsersController < ApplicationController
   end  
 
   def organization_user
-
     return !current_user.nil? && current_user.organization_admin?
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid, :admin, :assign_day_home_ids, :location_id)
   end
 end

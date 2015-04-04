@@ -1,28 +1,36 @@
 .fatbar{:style=>"background: #FDFDF9;width: 600px;margin-left: auto;margin-right: auto;padding-top: 20px;padding-bottom: 20px;"}
   .container{:style=>"margin-right: auto;margin-left: auto;height:210px;"}  
-    .about.span4.col-lg-4.col-md-4.col-sm-4{:style=>"float: left;margin-left: 20px;width: 180px;"}
+    .about.span4.col-lg-4.col-md-4.col-sm-4{:style=>"float: left;margin-left: 10px;width: 31%;"}
       %h2 About Us
       %p Dayhome Registry is your answer for all of your dayhome searching needs!
       %p 
         Being a parent is busy enough. The mission of the Dayhome Registry is to make being a parent a little easier.
         = link_to 'Read More...', about_pages_path
-    .contact.span4.col-lg-4.col-md-4.col-sm-4{:style=>"float: left;margin-left: 20px;width: 180px;"}
+    .contact.span4.col-lg-4.col-md-4.col-sm-4{:style=>"float: left;margin-left: 10px;width: 31%;"}
       %h2 Contact
       %p Have any questions or concerns about the Dayhome Registry? We'd love to hear from you.
       %p
         Email us at
         %a{:href => "mailto:contact@dayhomeregistry.com", :target => "_blank"} contact@dayhomeregistry.com
-    .social.span4.col-lg-4.col-md-4.col-sm-4{:style=>"float: left;margin-left: 20px;width: 180px;"}
+    .social.span4.col-lg-4.col-md-4.col-sm-4{:style=>"float: left;margin-left: 10px;width: 31%;"}
       %h2 We're Social
       %p Join the conversation and connect with other dayhomes and parents in your area.
-      %a{:href => "http://www.facebook.com/DayhomeRegistry", :target => "_blank"}
-        %p
-          = image_tag 'icons/facebook.png', :alt => 'Like Dayhomes on Facebook'
-          %span Like us on Facebook
-      %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
-        %p
-          = image_tag 'icons/twitter-2.png', :alt => 'Like Dayhomes on Twitter'
-          %span Follow us on Twitter
+      .social-home
+        .wrapper
+          Get child care tips:
+      .social-home-twitter{:style=>"width: 20%;float: left;margin: 15px 9px 0 0;"}
+        %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
+          =image_tag 'icons/twitter-icon.png', :alt=>'Follow us on Twitter'
+      .social-home-facebook{:style=>"width: 20%;float: left;margin: 15px 9px 0 0;"}
+        %a{:href => "http://facebook.com/dayhomeregistry", :target => "_blank"}
+          =image_tag 'icons/facebook-icon.png', :alt => 'Like Dayhomes on Facebook'
+      .social-home-pinterest{:style=>"width: 20%;float: left;margin: 15px 9px 0 0;"}
+        %a{:href => "http://pinterest.com/dayhomeregistry/", :target => "_blank"}
+          =image_tag 'icons/pinterest-icon.png', :alt=>'Follow us on Pinterest'
+      .social-home-google{:style=>"width: 20%;float: left;margin: 15px 9px 0 0;"}
+        %a{:href=>"https://plus.google.com/102939383628945203063?prsrc=3",:rel=>"publisher",:target=>"_top", :style=>"text-decoration:none;",:target=>"_blank"} 
+          =image_tag 'http://ssl.gstatic.com/images/icons/gplus-32.png', :alt=>"Google+", :style=>"border:0;width:30px;height:30px;"
+
 
 .footer{:style=>"clear:both;width:600px;margin-left:auto;margin-right:auto;"}
   .div{:style=>"width:600px;text-align:center;"}

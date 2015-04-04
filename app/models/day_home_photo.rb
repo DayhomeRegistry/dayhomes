@@ -1,10 +1,10 @@
 class DayHomePhoto < ActiveRecord::Base
   mount_uploader :photo, DayHomePhotoUploader
   
-  belongs_to :day_home
+  belongs_to :day_home, :inverse_of => :photos
   validates_presence_of :photo
   
-  attr_accessible :caption, :default_photo, :photo
+  #attr_accessible :caption, :default_photo, :photo
 
   # Override to silently ignore trying to remove missing
   # previous photo when destroying a User.

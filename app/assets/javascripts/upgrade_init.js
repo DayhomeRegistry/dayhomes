@@ -1,6 +1,8 @@
 
 
 $(function () {
+    $('[data-toggle="popover"]').popover();
+    
     var upgrader = new Dayhome.upgradePage.Upgrade();
 
     // Just eat every event possible.

@@ -40,7 +40,7 @@ class BillingController < ApplicationController
     staff = 0
     locales = 0
 
-    @day_home_signup_request = DayHomeSignupRequest.new(params[:day_home_signup_request])   
+    @day_home_signup_request = DayHomeSignupRequest.new(signup_params)   
     @day_home_signup_request.plan=params[:plan]
     @existing = Plan.find_by_plan("baby50")
     @packages = {}
@@ -127,7 +127,7 @@ class BillingController < ApplicationController
 
       #Create the dayhome
         @day_home = DayHome.create_from_signup(@day_home_signup_request)
-        @day_home.update_attributes(params[:day_home])
+        #@day_home.update_attributes(day_home_params)
 
         @day_home.email = @day_home_signup_request.contact_email
         
@@ -467,5 +467,20 @@ class BillingController < ApplicationController
       @error_msg << err+" (dayhome)"
     end
     raise @error_msg.join("<br/>").html_safe
+  end
+  def signup_params
+    params.require(:day_home_signup_request).permit(
+      :day_home_name, :day_home_slug, :day_home_highlight, :day_home_blurb, :day_home_street1, :day_home_city, 
+      :day_home_province, :day_home_postal_code, :first_name, :last_name, :contact_phone_number, :contact_email, 
+      :password, :password_confirmation, :referral_email, :coupon, :stripe_card_token)
+  end
+  def day_home_params
+    #byebug
+    params.require(:day_home).permit(:name, :approved, :featured, :slug, :phone_number, :email, :highlight, :blurb, 
+                  :street1, :street2, :postal_code, :city, :province, :photos_attributes, :dietary_accommodations, 
+                  :licensed, :location_id, :caption, :default_photo, :photo, :featured_end_date, 
+                  availability_type_ids: [], 
+                  certification_type_ids: [], 
+                  photos_attributes: [:caption, :default_photo, :photo, "_destroy", :id])
   end
 end

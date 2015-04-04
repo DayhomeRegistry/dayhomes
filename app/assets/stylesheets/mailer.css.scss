@@ -5,7 +5,3 @@
  *= require_self
 */
 
-/* Configure and import bootstrap */
-/* Set the proper asset path for loading icon images. */
-$iconSpritePath: image-url("glyphicons-halflings.png") !default;
-@import "bootstrap";
