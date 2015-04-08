@@ -93,7 +93,7 @@
   %br
   %br
   .form-group
-    = f.label :availability_types, 'Full-time Availability', :class=>'col-sm-2',:style => 'font-weight: bold'
+    = f.label :availability_type_ids, 'Full-time Availability', :class=>'col-sm-2',:style => 'font-weight: bold'
     .col-sm-10
       =collection_check_boxes(:day_home, :availability_type_ids, AvailabilityType.full_time, :id, :kind) do |b|
         .checkbox
@@ -101,7 +101,7 @@
             = b.check_box(class: "check_box")
             = b.object.kind
   .form-group
-    = f.label :availability_types, 'Part-time Availability', :class=>'col-sm-2',:style => 'font-weight: bold'
+    = f.label :availability_type_ids, 'Part-time Availability', :class=>'col-sm-2',:style => 'font-weight: bold'
     .col-sm-10
       =collection_check_boxes(:day_home, :availability_type_ids, AvailabilityType.part_time, :id, :kind) do |b|
         .checkbox
@@ -109,7 +109,7 @@
             = b.check_box(class: "check_box")
             = b.object.kind
   .form-group
-    = f.label :certification_types, 'Certifications', :class=>'col-sm-2',:style => 'font-weight: bold'
+    = f.label :certification_type_ids, 'Certifications', :class=>'col-sm-2',:style => 'font-weight: bold'
     .col-sm-10
       =collection_check_boxes(:day_home, :certification_type_ids, CertificationType.all, :id, :kind) do |b|
         .checkbox

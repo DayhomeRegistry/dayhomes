@@ -1,6 +1,7 @@
 class Admin::DayHomesController < Admin::ApplicationController
   helper_method :sort_column, :sort_direction
   def index    
+
     #return render :text=>url_for({:sort => "name", :direction => "asc"})
     if (!params[:query].nil?)
       clause = params[:query]      
@@ -12,26 +13,34 @@ class Admin::DayHomesController < Admin::ApplicationController
       approve = result.length==0 ? "" : result[0][0]  
       clause = clause.gsub(feature,"")
       clause = clause.gsub(approve,"")            
-      
+
+      @day_homes = DayHome.includes(:photos)
       if (!clause.empty?)
-        @day_homes = DayHome.includes(:photos).where("name like ?", "%#{clause.strip}%")
-      else
-        @day_homes = DayHome.includes(:photos).all
+        @day_homes = @day_homes.where("name like ?", "%#{clause.strip}%")
       end
       #return render :text=> clause.strip+"|"+feature+"|"+approve
       
       if(!feature.empty? && feature=="featured:yes")  
         @day_homes = @day_homes.featured
+      elsif (!feature.empty? && feature=="featured:no")  
+        @day_homes = @day_homes.joins("LEFT JOIN features ON features.day_home_id=day_homes.id").where("features.id is null")
+      else
+        @day_homes = @day_homes.joins("LEFT JOIN (select * from features where end >= '" + Time.now().to_s + "' AND start <= '" + Time.now().to_s + "' LIMIT 1) features ON features.day_home_id=day_homes.id")
       end
+
       if(!approve.empty?)
         @day_homes = @day_homes.where(:approved=> approve=="approved:yes")
                 
       end
-      @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
+      @day_homes = @day_homes.page(params[:page] || 1).per(params[:per_page] || 10)
+      @day_homes = @day_homes.order(sort_column + ' ' + sort_direction)
       @query = params[:query]
     else 
-      @day_homes = DayHome.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)
-    end    
+      @day_homes = DayHome.includes(:photos).joins("LEFT JOIN (select * from features where end >= '" + Time.now().to_s + "' AND start <= '" + Time.now().to_s + "' LIMIT 1) features ON features.day_home_id=day_homes.id")
+      @day_homes = @day_homes.page(params[:page] || 1).per(params[:per_page] || 10)
+      @day_homes = @day_homes.order(sort_column + ' ' + sort_direction)
+    end  
+    @day_homes.uniq  
   end
   def deleted
     if (!params[:query].nil?)
@@ -336,7 +345,12 @@ class Admin::DayHomesController < Admin::ApplicationController
   
   private
   def sort_column
-    DayHome.column_names.include?(params[:sort]) ? params[:sort] : "name"
+
+    if(params[:sort]=='features.start')
+      'features.start'
+    else
+      'day_homes.'+ (DayHome.column_names.include?(params[:sort]) ? params[:sort] : "name")
+    end
   end
   
   def sort_direction
