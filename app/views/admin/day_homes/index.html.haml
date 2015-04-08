@@ -48,17 +48,19 @@
         %th          
           = check_box_tag(:select_all)
         %th
-          = sortable "name","Name",params[:query]
+          = sortable "day_homes.name","Name",params[:query]
         %th
           Address
         %th
           Photos
         %th
-          = sortable "featured","Featured?",params[:query]
+          = sortable "features.start","Featured?",params[:query]
         %th
-          = sortable "approved","Approved?",params[:query]
+          = sortable "day_home.approved","Approved?",params[:query]
         %th
-          = sortable "created_at", "Created",params[:query]
+          = sortable "day_home.licensed","Accredited?",params[:query]
+        %th
+          = sortable "day_home.created_at", "Created",params[:query]
         %th
           Actions
     %tbody
@@ -74,12 +76,16 @@
             - if day_home.photos.blank?
               None
             - else
-              - day_home.photos.each do |photo|
-                = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 25px; margin: 0 5px 5px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :alt => photo.caption, :title => photo.caption
+              =day_home.photos.count
+              /
+                - day_home.photos.each do |photo|
+                  = link_to image_tag(photo.photo_url(:thumb), :style => 'max-height: 25px; margin: 0 5px 5px 0;', :class => :left), photo.photo_url, :class => 'photo_preview', :alt => photo.caption, :title => photo.caption
           %td
             = yes_no(day_home.featured?)
           %td
             = yes_no(day_home.approved)		
+          %td
+            = yes_no(day_home.licensed)   
           %td
             = day_home.created_at.to_date.to_s(:rfc822)	
           %td

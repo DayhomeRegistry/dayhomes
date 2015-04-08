@@ -32,8 +32,8 @@ class DayHome < ActiveRecord::Base
   end
 
   # availability types
-  has_many :day_home_availability_types, :dependent => :destroy
   has_many :availability_types, :through => :day_home_availability_types
+  has_many :day_home_availability_types, :dependent => :destroy
   accepts_nested_attributes_for :availability_types
 
   # certification types

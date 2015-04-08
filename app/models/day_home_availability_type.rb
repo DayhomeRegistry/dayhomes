@@ -1,7 +1,7 @@
 class DayHomeAvailabilityType < ActiveRecord::Base
-  validates_presence_of :day_home_id, :availability_type_id
+  validates_presence_of :day_home, :availability_type
 
-  belongs_to :dayhome
+  belongs_to :day_home
   belongs_to :availability_type
 
 end
