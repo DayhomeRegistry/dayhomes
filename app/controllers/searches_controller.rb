@@ -84,11 +84,19 @@ class SearchesController < ApplicationController
                        :height => 45
                      })
       marker.infowindow render_to_string(:partial => "/searches/pin", :locals => { :dayhome => day_home})
-      marker.title render_to_string(:partial => "/searches/day_home", :locals => { :day_home => day_home})
+      #marker.title render_to_string(:partial => "/searches/day_home", :locals => { :day_home => day_home})
+      marker.title day_home.id
     end
 
     # make sure the search object keeps its persistance
     @advanced_search = params.has_key?(:search) ? @search : Search.new
+  end
+
+  def build_dayhome_tile
+    respond_to do |format|
+        format.html {render json: 'format.html This is the tile'}
+        format.js { render json: "format.js This is the tile" }
+    end
   end
   
   private

@@ -40,6 +40,10 @@ class RichMarkerBuilder extends Gmaps.Google.Builders.Marker #inherit from built
     window.markers = window.handler.addMarkers(markers)
     window.handler.bounds.extendWith(window.markers)
     window.handler.fitMapToBounds()
+    #This needs to be the search pin
+    window.handler.getMap().setCenter(new google.maps.LatLng(53.544389, -113.4909267));
+    #There needs to be an if here, to determine if we should zoom
+    window.handler.getMap().setZoom(11);
     google.maps.event.addListener window.handler.getMap(), 'idle', ->
       if (isMapDragging)
         idleSkipped=true;
@@ -55,3 +59,82 @@ class RichMarkerBuilder extends Gmaps.Google.Builders.Marker #inherit from built
         idleSkipped = false;
     google.maps.event.addListener window.handler.getMap(), 'bounds_changed', ->
       idleSkipped = false;
+
+isMapDragging = false
+idleSkipped = false
+currentInfo = null
+
+_respondToMapChange = ->
+  $('#markers_list').children().remove()
+  j = 0
+  lasti = -1
+  lastj = -1
+  i = 0
+  while i < window.markers.length
+    if window.handler.getMap().getBounds().contains(new (google.maps.LatLng)(window.markers[i].serviceObject.position.lat(), window.markers[i].serviceObject.position.lng()))
+      if i<5
+        $.ajax(
+          url: 'searches/build_dayhome_tile'
+          data: 'id': window.markers[i].serviceObject.title
+          dataType: 'json'
+          async: true
+        ).done((data, text, xhr) ->
+          alert("success: "+data);
+          
+          return
+        ).fail (jqXHR, textStatus, errorThrown) ->
+          alert("fail: "+data);
+          return
+    #   m = $(window.markers[i].serviceObject.title)
+    #   m.click ->
+    #     window.handler.getMap().setZoom 4
+    #     window.handler.getMap().setCenter window.markers[i].getPosition()
+    #     return
+    #   $('#markers_list').append m
+    #   j++
+    # if lasti != i and lastj != j and j > 0 and j % 5 == 0
+    #   $('#markers_list').append '<div class=\'dayhome_listing\'><ins class=\'adsbygoogle\' style=\'display:inline-block;width:234px;height:60px\' data-ad-client=\'ca-pub-6835867491393885\' data-ad-slot=\'3925033656\'></ins></div'
+    #   lasti = i
+    #   lastj = j
+    # i++
+  return
+
+$(document).ready ->
+  $(document).on 'click', '#showSearchLink', ->
+    $('#showSearch').toggle()
+    $('#hideSearch').toggle()
+    return
+  $(document).on 'click', '#hideSearchLink', ->
+    $('#showSearch').toggle()
+    $('#hideSearch').toggle()
+    return
+  #Add the center of the search?
+  $(document).on 'click', '.markerCallout', ->
+    slug = $(this).attr('id')
+    i = 0
+    while i < markers.length
+      railsmarker = markers[i]
+      #var marker = new google.maps.Marker({
+      #  position: new google.maps.LatLng(railsmarker.lat,railsmarker.lng),
+      # map: Gmaps.map.map              
+      #});
+      if railsmarker.getServiceObject().title and railsmarker.getServiceObject().title.toString().indexOf(slug) > 0
+        if currentInfo != null
+          currentInfo.serviceObject.setIcon '/assets/dayhome.png'
+          currentInfo['infowindow'].close()
+        currentInfo = railsmarker
+        try
+          railsmarker['infowindow'].open handler.map, railsmarker.serviceObject
+          if railsmarker.picture.indexOf('-featured') > 0
+            railsmarker.serviceObject.setIcon '/assets/dayhome-red-featured.png'
+          else
+            railsmarker.serviceObject.setIcon '/assets/dayhome-red.png'
+        catch err
+          #wish I knew how to tell someone
+        window.handler.getMap().setZoom 7
+        window.handler.getMap().setCenter railsmarker.serviceObject.position
+      i++
+    $.scrollTo $('#map').position().top - $(window).height() / 2, speed: 'slow'
+    false
+  return
+

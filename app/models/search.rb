@@ -2,7 +2,7 @@ class Search
   include ActiveModel::Validations
   include ActiveModel::Conversion
   extend ActiveModel::Naming
-  include GoogleMapsJsonHelper
+  #include GoogleMapsJsonHelper
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
                 :advanced_search, :pin_count, :day_homes, :featured, :search_pin, :auto_adjust, :center_latitude,
@@ -87,7 +87,8 @@ class Search
 
     # create search dayhome pin
     if params.has_key?(:address) && !params[:address].blank?
-      search_addy_pin = geocode(setup_address(params[:address]))
+      loc = Geocoder.coordinates(setup_address(params[:address]))
+      search_addy_pin = {:lat=>loc[0],:lng=>loc[1]}
     elsif params.has_key?(:location) && params[:location]["lng"] != 0
       #Try geocoding the IP
       search_addy_pin = params[:location]
@@ -289,13 +290,13 @@ class Search
     # get all of the dayhomes from the system
     self.day_homes = dayhome_query.uniq.all
 
-    self.day_homes = self.day_homes.reject {|obj|
-        d=1000;
-        if obj.geocoded?
-          d = obj.distance_from([search_addy_pin["lat"],search_addy_pin["lng"]])
-        end
-        d>100
-    }
+    # self.day_homes = self.day_homes.reject {|obj|
+    #     d=1000;
+    #     if obj.geocoded?
+    #       d = obj.distance_from([search_addy_pin["lat"],search_addy_pin["lng"]])
+    #     end
+    #     d>100
+    # }
 
     self.featured = dayhome_query.joins(:features).where("approved=1").where("end > ?",Time.now()).uniq
 
@@ -315,16 +316,5 @@ class Search
 
   end
 
-  def geocode(address)
-
-    begin
-      # get the json representation of an address
-      search_pin = convert_address(address)
-    rescue
-      errors.add(:base, "Unable to find dayhomes within that criteria, please try a different address near the location you're searching for" )
-      search_pin = nil
-    end
-    search_pin
-  end
 
 end
