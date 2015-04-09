@@ -25,8 +25,8 @@ class Organization < ActiveRecord::Base
   before_save :check_and_update_affiliate_tag
   before_destroy :destroy_customer
 
-  validates :billing_email, :presence => true
-  validates_format_of :billing_email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  #validates :billing_email, :presence => true
+  #validates_format_of :billing_email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
 
   def check_and_update_affiliate_tag
