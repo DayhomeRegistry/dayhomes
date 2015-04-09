@@ -30,7 +30,6 @@ class OrganizationsController < ApplicationController
 
   def update
     #raise params.to_json
-
     @organization = Organization.find(params[:id])
     @organization.update_attributes(organization_params)
 
