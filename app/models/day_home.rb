@@ -61,13 +61,12 @@ class DayHome < ActiveRecord::Base
   has_many :features, :dependent => :destroy
 
   #validates :name, :street1, :city, :province, :postal_code, :slug, :email, :phone_number, :highlight, :presence => true
-  validates :name,  :postal_code, :slug, :email, :highlight, :presence => true
+  validates :name,  :postal_code, :slug, :highlight, :presence => true
   validates :highlight,:length => { :maximum => 200 }
 
   #validates_associated :photos
   validates_uniqueness_of :slug, message: "That web address has already been chosen."
   validates_format_of :slug, :with => /[a-z0-9]+/
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
 
   before_save :ensure_default_availability
