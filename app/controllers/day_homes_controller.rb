@@ -231,7 +231,6 @@ class DayHomesController < ApplicationController
 
     @day_home = DayHome.new(day_home_params)
     @day_home.approved = true
-    
     if @day_home.save
       redirect_to day_homes_path
     else
