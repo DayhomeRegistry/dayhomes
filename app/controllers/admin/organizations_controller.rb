@@ -48,8 +48,13 @@ class Admin::OrganizationsController < Admin::ApplicationController
 
   def update
     @organization = Organization.find(params[:id])    
+<<<<<<< Updated upstream
          
     if @organization.update_attributes(params[:organization])  
+=======
+    @organization.update_attributes(organization_params)  
+    if @organization.save 
+>>>>>>> Stashed changes
       redirect_to admin_organizations_path
     else
       render :action => :edit
