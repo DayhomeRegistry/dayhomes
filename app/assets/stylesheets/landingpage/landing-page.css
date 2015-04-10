@@ -426,7 +426,7 @@ a:focus, a:active {
   font-size: 20px;
 }
 .navbar .navbar-nav > li > a {
-  padding: 10px 15px;
+  padding: 10px 10px;
   margin: 15px 3px;
 }
 .navbar .navbar-nav > li > a.btn {
@@ -1293,6 +1293,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de8e0009', e
   .footer nav.pull-left, .footer:not(.footer-big) nav > ul li, .pull-right {
     float: none !important;
   }
+  .navbar-collapse .logo {
+    display:none;
+  }
 }
 
 @media (min-width: 768px){
@@ -1307,6 +1310,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de8e0009', e
     }
     .logo-container {
       display:none;
+    }
+    .navbar-collapse ul {
+      margin-top:120px;
     }
 }
 @media (max-width:768px){

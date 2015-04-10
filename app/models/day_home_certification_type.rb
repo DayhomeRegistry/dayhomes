@@ -1,7 +1,7 @@
 class DayHomeCertificationType < ActiveRecord::Base
-  validates_presence_of :day_home_id, :certification_type_id
+  validates_presence_of :day_home, :certification_type
 
-  belongs_to :dayhome
+  belongs_to :day_home
   belongs_to :certification_type
 
 end

@@ -32,13 +32,13 @@
         %th
           = sortable "location_id","Locale"
         %th
-          = sortable "name","Name"
+          = sortable "day_homes.name","Name", params[:query]
         %th
           Address
         %th
           Photos
         %th
-          Featured?
+          = sortable "features.start","Featured?",params[:query]
         %th
           Actions
     %tbody

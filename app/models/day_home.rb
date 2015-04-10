@@ -34,8 +34,8 @@ class DayHome < ActiveRecord::Base
   end
 
   # availability types
-  has_many :day_home_availability_types, :dependent => :destroy
   has_many :availability_types, :through => :day_home_availability_types
+  has_many :day_home_availability_types, :dependent => :destroy
   accepts_nested_attributes_for :availability_types
 
   # certification types
@@ -63,13 +63,12 @@ class DayHome < ActiveRecord::Base
   has_many :features, :dependent => :destroy
 
   #validates :name, :street1, :city, :province, :postal_code, :slug, :email, :phone_number, :highlight, :presence => true
-  validates :name,  :postal_code, :slug, :email, :highlight, :presence => true
+  validates :name,  :postal_code, :slug, :highlight, :presence => true
   validates :highlight,:length => { :maximum => 200 }
 
   #validates_associated :photos
   validates_uniqueness_of :slug, message: "That web address has already been chosen."
   validates_format_of :slug, :with => /[a-z0-9]+/
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
 
   before_save :ensure_default_availability
@@ -215,6 +214,9 @@ class DayHome < ActiveRecord::Base
   
   def self.all_for_select
     all.collect {|day_home| [ day_home.name, day_home.id ] }
+  end
+  def self.for_select(dayhomes)
+    dayhomes.collect {|day_home| [ day_home.name, day_home.id ] }
   end
   
   def self.create_from_signup(signup)

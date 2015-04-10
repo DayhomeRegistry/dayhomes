@@ -66,7 +66,7 @@
         / Collect the nav links, forms, and other content for toggling
         #example.collapse.navbar-collapse
 
-          %ul.nav.navbar-nav.navbar-left{:style=>"margin-top:120px"}
+          %ul.nav.navbar-nav.navbar-left{:style=>""}
             %li
               %a{:href => "http://blog.dayhomeregistry.com"}
                 %i.fa.fa-wordpress
@@ -78,7 +78,7 @@
           .logo{:style=>"position:absolute;left:50%;margin-left:-102.5px"}
             %a{:href => "http://www.dayhomeregistry.com"}
               =image_tag 'logo.png',:alt => "Dayhome Registry", :style=>"max-width:175px;"
-          %ul.nav.navbar-nav.navbar-right{:style=>"margin-top:120px"}
+          %ul.nav.navbar-nav.navbar-right{:style=>""}
             -if current_user.nil?
               %li
                 %a{:href => "#{login_url}"}

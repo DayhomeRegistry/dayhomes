@@ -76,7 +76,7 @@
 
 
 -if @day_home.errors.any?  
-  .alert.alert-error
+  .alert.alert-danger
     %h3
       It seems that 
       = pluralize(@day_home.errors.count, "error")

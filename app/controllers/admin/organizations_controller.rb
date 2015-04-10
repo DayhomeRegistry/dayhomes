@@ -32,7 +32,7 @@ class Admin::OrganizationsController < Admin::ApplicationController
   end
 
   def create
-    @organization = Organization.new(params[:organization])
+    @organization = Organization.new(organization_params)
     
     if @organization.save
       redirect_to admin_organizations_path
@@ -48,13 +48,8 @@ class Admin::OrganizationsController < Admin::ApplicationController
 
   def update
     @organization = Organization.find(params[:id])    
-<<<<<<< Updated upstream
-         
-    if @organization.update_attributes(params[:organization])  
-=======
     @organization.update_attributes(organization_params)  
     if @organization.save 
->>>>>>> Stashed changes
       redirect_to admin_organizations_path
     else
       render :action => :edit
@@ -110,4 +105,11 @@ class Admin::OrganizationsController < Admin::ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"    
   end  
+  def organization_params
+    params.require(:organization).permit(
+              :name, :phone_number, :street1, :street2, :city, :billing_email,
+              :province, :postal_code, :blurb, :stripe_card_token,
+              logo_attributes:[:photo],
+              pin_attributes:[:photo])
+  end
 end
