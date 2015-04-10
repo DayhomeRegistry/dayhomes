@@ -201,6 +201,9 @@ class DayHome < ActiveRecord::Base
   def self.all_for_select
     all.collect {|day_home| [ day_home.name, day_home.id ] }
   end
+  def self.for_select(dayhomes)
+    dayhomes.collect {|day_home| [ day_home.name, day_home.id ] }
+  end
   
   def self.create_from_signup(signup)
     dayhome = self.new

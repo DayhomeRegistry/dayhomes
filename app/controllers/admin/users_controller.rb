@@ -51,7 +51,12 @@ class Admin::UsersController < Admin::ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.assign_attributes(user_params)  
+    params = user_params
+    if params[:password].blank? && params[:password_confirmation].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation)
+    end
+    @user.assign_attributes(params)  
     
     if @user.save
       redirect_to    admin_users_path
@@ -80,7 +85,8 @@ class Admin::UsersController < Admin::ApplicationController
   end  
   def user_params
     params.require(:user).permit(
-        :email, :password, :password_confirmation, :remember_me, :first_name,:last_name, :provider, :uid, :admin, 
-        :assign_day_home_ids, :location_id)
+        :email, :password, :password_confirmation, :remember_me, :first_name,:last_name, 
+        :provider, :uid, :admin, :location_id, :organization_id,
+        assign_day_home_ids:[])
   end
 end
