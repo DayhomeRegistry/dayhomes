@@ -28,7 +28,9 @@ class Organization < ActiveRecord::Base
   #validates :billing_email, :presence => true
   #validates_format_of :billing_email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
-
+  def self.all_for_select
+    all.collect {|org| [ org.name, org.id ] }
+  end
   def check_and_update_affiliate_tag
     if self.affiliate_tag.nil?
       a = [('0'..'9')].map { |i| i.to_a }.flatten
