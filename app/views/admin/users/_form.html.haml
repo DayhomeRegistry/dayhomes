@@ -43,14 +43,20 @@
     Has admin access?
     
   .form-group
-    = f.label :assign_day_home_ids, "Assigned dayhomes"
-  
-    - f.object.user_day_homes.each do |user_day_home|
-      .add_multiples.clear.form-control{'data-group' => 'assign_day_home_ids'}
-        = select_tag 'user[assign_day_home_ids][]', options_for_select([['None', nil]] + DayHome.all_for_select, user_day_home.day_home_id)
-        = link_to 'Remove', '#', :class => 'remove_fieldset_link'
-        %br
-    = link_to 'Assign another dayhome', '#', :class => 'add_multiples_link', 'data-group' => 'assign_day_home_ids', 'data-attribute-key' => 'assign_day_home_ids_attributes'
+    = f.label :organization_id, "Organization"
+    = f.select :organization_id, options_for_select([['None', nil]] + Organization.all_for_select, @user.organization.nil? ? nil : @user.organization.id)
+
+  -if @user.organization || @user.location
+    -dayhomes = @user.organization.day_homes unless @user.organization.nil?
+    -dayhomes = @user.location.day_homes unless @user.location.nil?
+    .form-group
+      = f.label :assign_day_home_ids, "Assigned dayhomes"
+      - f.object.user_day_homes.each do |user_day_home|
+        .add_multiples.clear.form-control{'data-group' => 'assign_day_home_ids'}
+          = select_tag 'user[assign_day_home_ids][]', options_for_select([['None', nil]] + DayHome.for_select(dayhomes), user_day_home.day_home_id)
+          = link_to 'Remove', '#', :class => 'remove_fieldset_link'
+          %br
+      = link_to 'Assign another dayhome', '#', :class => 'add_multiples_link', 'data-group' => 'assign_day_home_ids', 'data-attribute-key' => 'assign_day_home_ids_attributes'
     
   %br
   = f.submit 'Save', :class => 'btn'
