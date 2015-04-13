@@ -37,9 +37,9 @@ Dayhomes::Application.routes.draw do
 
   root :to => 'pages#index'
 
-  resources :searches do
-    get "build_dayhome_tile"
-  end
+  get "searches/build_dayhome_tile"
+  get "searches/markers"
+  resources :searches 
   
   get 'day_homes/deleted' => 'day_homes#deleted',:as=>:deleted_day_homes
   resources :day_homes do

@@ -41,9 +41,9 @@ class RichMarkerBuilder extends Gmaps.Google.Builders.Marker #inherit from built
     window.handler.bounds.extendWith(window.markers)
     window.handler.fitMapToBounds()
     #This needs to be the search pin
-    window.handler.getMap().setCenter(new google.maps.LatLng(53.544389, -113.4909267));
+    window.handler.getMap().setCenter(new google.maps.LatLng(window.search_pin.center_latitude, window.search_pin.center_longitude));
     #There needs to be an if here, to determine if we should zoom
-    window.handler.getMap().setZoom(11);
+    window.handler.getMap().setZoom(window.search_pin.zoom);
     google.maps.event.addListener window.handler.getMap(), 'idle', ->
       if (isMapDragging)
         idleSkipped=true;
@@ -70,33 +70,33 @@ _respondToMapChange = ->
   lasti = -1
   lastj = -1
   i = 0
-  while i < window.markers.length
-    if window.handler.getMap().getBounds().contains(new (google.maps.LatLng)(window.markers[i].serviceObject.position.lat(), window.markers[i].serviceObject.position.lng()))
-      if i<5
-        $.ajax(
+  setTimeout (->
+    while i < window.markers.length
+      if window.handler.getMap().getBounds().contains(new (google.maps.LatLng)(window.markers[i].serviceObject.position.lat(), window.markers[i].serviceObject.position.lng()))
+        $.ajax 
           url: 'searches/build_dayhome_tile'
           data: 'id': window.markers[i].serviceObject.title
-          dataType: 'json'
+          dataType: 'html'
           async: true
-        ).done((data, text, xhr) ->
-          alert("success: "+data);
-          
+        .done (data, textStatus, jqXHR) ->
+          $('#markers_list').append(data);
           return
-        ).fail (jqXHR, textStatus, errorThrown) ->
-          alert("fail: "+data);
+        .fail (jqXHR, textStatus, errorThrown) ->
+          #alert("fail: "+textStatus);
           return
-    #   m = $(window.markers[i].serviceObject.title)
-    #   m.click ->
-    #     window.handler.getMap().setZoom 4
-    #     window.handler.getMap().setCenter window.markers[i].getPosition()
-    #     return
-    #   $('#markers_list').append m
-    #   j++
-    # if lasti != i and lastj != j and j > 0 and j % 5 == 0
-    #   $('#markers_list').append '<div class=\'dayhome_listing\'><ins class=\'adsbygoogle\' style=\'display:inline-block;width:234px;height:60px\' data-ad-client=\'ca-pub-6835867491393885\' data-ad-slot=\'3925033656\'></ins></div'
-    #   lasti = i
-    #   lastj = j
-    # i++
+      #   m = $(window.markers[i].serviceObject.title)
+      #   m.click ->
+      #     window.handler.getMap().setZoom 4
+      #     window.handler.getMap().setCenter window.markers[i].getPosition()
+      #     return
+      #   $('#markers_list').append m
+      #   j++
+      # if lasti != i and lastj != j and j > 0 and j % 5 == 0
+      #   $('#markers_list').append '<div class=\'dayhome_listing\'><ins class=\'adsbygoogle\' style=\'display:inline-block;width:234px;height:60px\' data-ad-client=\'ca-pub-6835867491393885\' data-ad-slot=\'3925033656\'></ins></div'
+      #   lasti = i
+      #   lastj = j
+      i++
+  ),0
   return
 
 $(document).ready ->

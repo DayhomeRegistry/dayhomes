@@ -43,12 +43,7 @@ class SearchesController < ApplicationController
       end
       # attributes["availability_types"] = kinds
     end
-    #byebug
-    #{"address"=>"", "location"=>{"lat"=>43.643, "lng"=>-79.388}}
-    # logger.info "*********************************************"
-    # logger.info request.remote_ip
-    # logger.info attributes
-    # logger.info "*********************************************"
+
     @search = Search.new(attributes)
 
     # If any errors, show an error message
@@ -59,17 +54,15 @@ class SearchesController < ApplicationController
     end
 
     # set the pins for gmaps
-    #@featured = DayHome.featured
     @day_homes = @search.day_homes
 
-    #@featured = @day_homes.reject {|dayhome| !dayhome.featured?}
     @featured = @search.featured
     @agencies = Organization.joins(:day_homes).group('organization_id').having('count(day_homes.id)>1')
-    #gmaps hash
+
+    @day_homes = []
     @hash = Gmaps4rails.build_markers(@day_homes) do |day_home, marker|
       marker.lat day_home.lat
       marker.lng day_home.lng
-      marker.infowindow day_home.blurb
       if @featured.include?(day_home)
         picture = ActionController::Base.helpers.asset_path("dayhome-private-featured.png")
         picture = ActionController::Base.helpers.asset_path("dayhome-featured.png") unless !day_home.licensed
@@ -83,19 +76,28 @@ class SearchesController < ApplicationController
                        :width => 41,
                        :height => 45
                      })
-      marker.infowindow render_to_string(:partial => "/searches/pin", :locals => { :dayhome => day_home})
+      #marker.infowindow render_to_string(:partial => "/searches/pin", :locals => { :dayhome => day_home})
       #marker.title render_to_string(:partial => "/searches/day_home", :locals => { :day_home => day_home})
-      marker.title day_home.id
+      marker.title day_home.id.to_s
     end
 
     # make sure the search object keeps its persistance
     @advanced_search = params.has_key?(:search) ? @search : Search.new
   end
+  def markers
+    bounds = params(:bounds)
+
+  end
 
   def build_dayhome_tile
     respond_to do |format|
-        format.html {render json: 'format.html This is the tile'}
-        format.js { render json: "format.js This is the tile" }
+        format.html {
+          render json: 'Coupon is valid.'
+        }
+        format.js { 
+          day_home = DayHome.find_by_id(params[:id])
+          render :partial => "/searches/day_home", :locals => { :day_home => day_home}
+        }
     end
   end
   
