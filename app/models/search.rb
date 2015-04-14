@@ -6,7 +6,8 @@ class Search
 
   attr_accessor :address, :availability_types, :certification_types, :dietary_accommodations,
                 :advanced_search, :pin_count, :day_homes, :featured, :search_pin, :auto_adjust, :center_latitude,
-                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group, :organization, :location
+                :center_longitude, :zoom, :licensed, :unlicensed, :both_license_types, :license_group, :organization, 
+                :location,:bounds
 
   DEFAULT_AVAILABILITY_TYPES = {:availability => ['Full-time', 'Part-time'], :kind => ['Full Days', 'After School','Before School','Morning','Afternoon']}
 
@@ -55,8 +56,12 @@ class Search
   def dayhome_filter(params)
 
     search_addy_pin = nil
-    dayhome_query = DayHome.eager_load(:organization)#.eager_load(:photos)#.eager_load(:day_home_availability_types).eager_load(:availability_types).all
-  
+    #dayhome_query = DayHome.eager_load(:organization)#.eager_load(:photos)#.eager_load(:day_home_availability_types).eager_load(:availability_types).all
+    dayhome_query = DayHome.eager_load(:organization)
+    if(!params[:bounds].nil?)
+      dayhome_query = DayHome.eager_load(:organization).within_bounding_box(params[:bounds])
+    end
+
     # don't display any dayhomes that are not approved
     dayhome_query = dayhome_query.where( :approved => true )
 
@@ -94,8 +99,8 @@ class Search
       search_addy_pin = params[:location]
     else
       #default to edmonton
-      edmonton = Geocoder.coordinates("Edmonton, Alberta, Canada")
-
+      #edmonton = Geocoder.coordinates("Edmonton, Alberta, Canada")
+      edmonton = EDMONTON_GEO
       search_addy_pin= {:lat=>edmonton[0],:lng=>edmonton[1]}
 
     end
@@ -128,13 +133,13 @@ class Search
 
   def calibrate_map
     # determine the autozoom
-    if self.day_homes.blank? || self.search_pin
-      # disable auto adjust so we can focus in on a location (either edmonton, or the search pin location)
-      self.auto_adjust = false
-    elsif self.day_homes || self.search_pin.nil?
-      # no search pin entered and dayhomes are found, let the map position itself around the pins
-      self.auto_adjust = true
-    end
+    # if self.day_homes.blank? || self.search_pin
+    #   # disable auto adjust so we can focus in on a location (either edmonton, or the search pin location)
+    #   self.auto_adjust = false
+    # elsif self.day_homes || self.search_pin.nil?
+    #   # no search pin entered and dayhomes are found, let the map position itself around the pins
+    #   self.auto_adjust = true
+    # end
 
     # check where to position the map
     if self.search_pin.nil? || self.search_pin[:lng]==0

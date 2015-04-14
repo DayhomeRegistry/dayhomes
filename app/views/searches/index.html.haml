@@ -35,14 +35,9 @@
       %h3
         In your area
       <ul id="markers_list">  </ul>
-    /
-      - if !@day_homes.empty?
-        =render :partial => 'day_home', :collection => @day_homes 
 - content_for :scripts do
   = javascript_include_tag params[:controller]
   :javascript
-    window.handler = {};
-    window.markers = {};
-    window.search_pin = #{@search.to_json}
     buildMap(#{raw @hash.to_json});
+    Gmaps.store.search_pin = #{@search.to_json(:except=>[:day_homes,:featured])}
   

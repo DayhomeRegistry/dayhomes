@@ -1,5 +1,8 @@
 class Organization < ActiveRecord::Base
   
+  default_scope {includes(:logo)}
+  default_scope {includes(:pin)}
+
   has_many :users
 
   has_one :logo, :class_name => "OrganizationPhoto", :foreign_key => "logo_id"

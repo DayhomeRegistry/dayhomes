@@ -18,6 +18,7 @@
 //= require bootstrap
 //= require fullcalendar
 //= require underscore
+//= require jquery.serializejson
 //= require gmaps/google
 //= require jquery.add_more
 //= require jquery.colorbox
