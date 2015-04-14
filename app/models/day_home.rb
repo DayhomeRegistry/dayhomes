@@ -3,7 +3,7 @@ class DayHome < ActiveRecord::Base
 
   default_scope {includes(:photos)}
   default_scope {includes(:availability_types)}
-  default_scope {includes(:features)}
+  #default_scope {includes(:features)}
   default_scope {where("deleted < 1")}
   after_save :clear_cache
 
@@ -12,10 +12,12 @@ class DayHome < ActiveRecord::Base
   #                 :street1, :street2, :postal_code, :city, :province, :photos_attributes, :dietary_accommodations, 
   #                 :licensed, :location_id, :caption, :default_photo, :photo, :assign_availability_type_ids, :assign_certification_type_ids
 
-  reverse_geocoded_by :lat, :lng
-  acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
-                    :check_process => :prevent_geocoding, :address => :geo_address,
-                    :msg => 'Cannot find a location matching that query.' 
+  geocoded_by :address, :latitude  => :lat, :longitude => :lng
+  after_validation :geocode
+  #reverse_geocoded_by :lat, :lng
+  # acts_as_gmappable :lat => 'lat', :lng => 'lng', :process_geocoding => true,
+  #                   :check_process => :prevent_geocoding, :address => :geo_address,
+  #                   :msg => 'Cannot find a location matching that query.' 
 
   # scopes
   scope :with_availability_uniq, lambda { |default_availability_types|
@@ -134,6 +136,18 @@ class DayHome < ActiveRecord::Base
         @featured_photo ||= photos.build
       end
     end
+  end
+  def marker_photo
+    picture = ActionController::Base.helpers.asset_path("dayhome-private.png")
+    if self.featured?
+      picture = ActionController::Base.helpers.asset_path("dayhome-private-featured.png")
+      picture = ActionController::Base.helpers.asset_path("dayhome-featured.png") unless !self.licensed
+      picture = ActionController::Base.helpers.asset_path("dayhome-premium-featured.png") unless self.organization.pin.nil?
+    else
+      picture = ActionController::Base.helpers.asset_path("dayhome.png") unless !self.licensed
+      picture = self.organization.pin.photo_url(:pin) unless self.organization.pin.nil?
+    end
+    picture
   end
 
   def featured?

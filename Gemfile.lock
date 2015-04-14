@@ -219,8 +219,7 @@ GEM
       rails (>= 3.0)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
-    gmaps4rails (1.4.8)
-      json
+    gmaps4rails (2.1.2)
     guard (2.12.5)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -476,7 +475,7 @@ DEPENDENCIES
   geocoder
   geokit
   geokit-rails
-  gmaps4rails (= 1.4.8)
+  gmaps4rails
   guard-rspec
   haml
   jquery-rails
