@@ -1,428 +1,106 @@
-﻿-content_for :footer_scripts do
-  = javascript_include_tag :billing, :billing_init
-  :javascript
-    $('#day_home_signup_request_day_home_city').change(function(){
-      select = $("#community_id option");//[value='"+$(this).val()+"']:first");
-      if(select.length){
-        for(var i = 0; i < select.length; i++) {
-          if($(select[i]).html()==$(this).val()){
-            $(select[i]).attr("selected", true);
-            $(select).change();
-          } 
-        }
-      } 
-    });
-    $('#community_id').change(function(){
-      selected = $("#community_id").find(":selected");
-      if ($(selected).html()=="Other"){
-        $("#community_name").show();
-      } else {
-        $("#community_name").hide();
-      } 
-    });
-
-    $(function() {
-      $("textarea[maxlength]").each(function() {
-          var $this = $(this);
-          var maxLength = parseInt($this.attr('maxlength'));
-          $this.attr('maxlength', null);
-          var cc = $this.val().length;
-          var el = $("<div class=\"controls character-count\" style=\"clear:left;\">" + (maxLength-cc) + "</div>");
-          el.insertAfter($this.parent().children().last()[0]);
-          
-          $this.bind('keyup', function() {
-              var cc = $this.val().length;
-              if(cc>maxLength){
-                  //var pre= $this.val().slice(1,maxLength);
-                  //$this.html(pre+'<em>'+$this.val().slice(maxLength)+'</em>');
-                  $this.css("background","#FCC");
-              } else {
-                  $this.css("background","#FFF");
-              }
-              
-              el.text(maxLength - cc);
-              
-              if(maxLength < cc) {
-                  el.css('color', 'red');
-              } else {
-                  el.removeAttr("style");
-                  el.css("clear","left");
-              }
-          });
-      });
-    });
- 
-%table.pricingTable.billing-page{:align => "center", :cellpadding => "0", :cellspacing => "0"}
-  %tbody
-    %tr{:valign => "top"}
-      %th.pricingSelect
-        Choose Your Plan
-      - @packages.each_with_index do |(key,value),index|
-        %th.enabled{ :width=>"135" ,:class=>"package_#{key} column_#{@packages.count-index}"}
-          =value.name
-          .price
-            %strong                
-              -if(value.price<=0)
-                %span.dollar-sign>
-                  Free
-              -else
-                %span.dollar-sign> $
-                %span> #{value.price}
-                %span.cents> 00
-                %span.permonth> /#{value.subscription}
-          %a.button.medium.green{:href => ""}
-            %span Select               
-    %tr
-      %td.pricingLeft
-        \# of dayhomes you can manage
-      - @packages.each_with_index do |(key,value),index|
-        %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
-          %strong
-            -if (value.day_homes < 0)
-              Unlimited
-            -else
-              =value.day_homes   
-    %tr
-      %td.pricingLeft
-        Additional staff who can access your account
-      - @packages.each_with_index do |(key,value),index|
-        %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
-          %span
-            -if (value.staff < 0)
-              Unlimited
-            -else
-              =value.staff
-          /-if (value.block_staff_addon==0)
-          /  %span.row-tiny ($10 each additional)
-    %tr
-      %td.pricingLeft
-        \# of Communities
-      - @packages.each_with_index do |(key,value),index|
-        %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
-          %span
-            -if (value.locales < 0)
-              Unlimited
-            -else
-              =value.locales
-          /-if (value.block_locales_addon==0)
-          /  %span.row-tiny ($10 each additional)  
-    %tr
-      %td.pricingLeft
-        \Free Features
-      - @packages.each_with_index do |(key,value),index|
-        %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
-          %span
-            -if (value.free_features < 0)
-              Unlimited
-            -else
-              =value.free_features
-          %span.row-tiny-inline /#{value.subscription}   
-    %tr
-      %td.pricingLeft
-        \Free Events
-      - @packages.each_with_index do |(key,value),index|
-        %td.enabled{:rel=>"#{key}", :class=>"package_#{key}"}
-          -if (value.events < 0)
-            Unlimited
-          -else
-            =value.events        
-    %tr.last-row
-      %td.pricingLeft
-        \
-      - @packages.each_with_index do |(key,value),index|
-        %td.enabled{ :rel=>"#{key}", :class=>"package_#{key} column_#{@packages.count-index}"}
-          %a.button.medium.green{:href => "", :class=>"a_package#{key}"}
-            %span Select  
-
-= form_for @day_home_signup_request,:url => billing_register_path(),:method => :put, :html=>{:class=>"form-horizontal",:id=>"billing-form", :style=>""} do |f|
-  = hidden_field_tag 'choose-package', "1"
-  = hidden_field_tag 'plan', @day_home_signup_request.plan
-  %br
-  #add-on-section{:style=>""}
-    %h3#addon-header.section-header
-      What you get...
-    .container
-      .row
-        .span-22.col-lg-8.col-md-8.col-sm-8.append-bottom-1
-          .blurbs
-            %div
-              Over 600 parents looking for dayhomes every week.
-            #feature_blurb
-              You can highlight your dayhome on our homepage and in social media 
-              %span.feature_frequency
-            #dayhome_blurb
-              You can manage  
-              %span.dayhome_count 
-              dayhomes from one simple page.
-            #community_blurb
-              You can register to be a part of 
-              %span.community_count
-              of our growing communities of active child care providers.
-            #event_blurb
-              You get to attend one of our riviting information sessions for free, 
-              %span.blue a $20 value!
-            #staff_blurb
-              You can have up to 
-              %span.staff_count
-              extra email addresses of staff to receive contacts from the parents.
-            %div
-              Remember, you can always add
-              = succeed "like" do
-                %a#A1{:href => "buy.htm"}
-                  %span one-time use extras
-              "Featuring your dayhome" credits.
-        .spann-13.col-lg-4.col-md-4.col-sm-4.append-bottom-2
-          #total_box.bg_orange{:style => "display: block;"}
-            %h4.sidebar_header_orange
-              %span Pricing Details
-            %table.fs_11{:cellpadding => "2", :cellspacing => "0", :width => "100%"}
-              %tbody
-                %tr#total_box_base{:style => "", :valign => "top"}
-                  %td
-                    %strong
-                      %span#package_name Baby Bear
-                  %td{:align => "right"}
-                    %span.amount 0.00
-                %tr#total_box_features{:style => ""}
-                  %td
-                    %span.num>
-                    Free Feature
-                  %td{:align => "right"}
-                    %span.amount
-                %tr#total_box_events{:style => ""}
-                  %td
-                    %span.num>
-                    Free Event
-                  %td{:align => "right"}
-                    %span.amount
-                %tr#total_box_total
-                  %td
-                    %strong.title> Total value
-                    \:
-                  %td{:align => "right"}
-                    %strong
-                      $
-                      %span.amount 0.00       
-                %tr#coupon_value{:style =>"display:none;"}
-                  %td
-                    %strong.title> Coupon
-                    \:
-                  %td{:align => "right"}
-                    %strong
-                      $
-                      %span.amount 0.00         
-                %tr
-                  %td{:colspan => "2", :style => "height: 5px; overflow: hidden;"}
-                %tr#total_box_rate
-                  %td
-                    %strong.title> You pay
-                    \:
-                  %td{:align => "right"}
-                    %strong
-                      $
-                      %span.amount 0.00
-                %tr#total_after_coupon{:style=>"display:none"}
-                  %td
-                    %strong.title> After Coupon
-                    \ (
-                    %span#coupon_amount>$0
-                    ):
-                  %td{:align => "right"}
-                    %strong
-                      $
-                      %span.amount 0.00 
-                %tr
-                  %td
-                  %td{:align => "right"}
-                    %span.small
-                      plus GST                       
-  .clear
-  %h3.section-header
-    Tell us a little about yourself
-  - flash.each do |type, value|
-    -if type.to_s.starts_with?('page')
-      .flash{ :class => "alert alert-" + type.to_s }
-        = raw (value )
-  .form-group
-    = f.label :day_home_name, 'Dayhome Name', :class=>"control-lable col-sm-2"
-    .col-sm-10
-      = f.text_field :day_home_name, :class=>"form-control"
-      <i class="icon-info-sign" data-title="What's in a name?" data-content="This is the name of your dayhome. Don't have one? Well, pick something that you'll want your parents to know you by...it's your first impression when attracting new families."></i>
-  .form-group
-    = f.label :day_home_slug, 'Web Address', :class=>"control-lable col-sm-2"
-    .col-sm-10
-      .input-group
-        .input-group-addon
-          https://dayhomeregistry.com/
-        = f.text_field :day_home_slug
-      <i class="icon-info-sign" data-title="What's a web address?" data-content="The web address is the short name that makes it easy for you and your customers to find your page.  The web address that you see to the left will be your home on our website."></i>             
-  .form-group
-    = f.label :day_home_highlight, 'Front page highlight (max 200 chars)', :class=>"control-lable col-sm-2"
-    .col-sm-10
-      = f.text_area :day_home_highlight, :rows => 4, :class=>"form-control", :maxLength=>"200"
-      <i class="icon-info-sign" data-title="What's a highlight?" data-content="On our homepage, when we feature a dayhome, the name of the dayhome and the text you put below are displayed over one of your images.  This highlight has to be 200 characters or less so we can still see how wonderful you are in your picture."></i>
-  .form-group
-    = f.label :day_home_highlight, 'Full description', :class=>"control-lable col-sm-2"
-    .col-sm-10
-      = f.text_area :day_home_blurb, :rows => 8, :class=>"form-control"
-      <i class="icon-info-sign" data-title="What's a highlight?" data-content="This is a full description of you and what you do.  This is your time to shine."></i>
-  .form-group
-    .col-sm-2
-    .col-sm-10
-      = label_tag "ack", :class => :checkbox, :style=>"margin-left:20px;" do       
-        = check_box_tag "ack","yes",false,:class => "select"
-        I have read and understood the 
-        =link_to "Privacy Policy and Terms of Use","/pages/privacy"    
-  .form-group
-    =f.label :day_home_street1,'Street Address', :class=>"control-lable col-sm-2"         
-    .col-sm-10
-      .append-bottom-1
-        = f.text_field :day_home_street1, :class=>"form-control"          
-        .example
-          Street
-      .append-bottom-1
-        = f.text_field :day_home_city, :class=>"form-control"            
-        .example
-          City
-      .append-bottom-1
-        = f.subregion_select :day_home_province,'CA'
-        .example
-          Province
-      .append-bottom-1
-        = f.text_field :day_home_postal_code
-        .example
-          Postal/Zip Code
-  .section-header
-  .form-group
-    =f.label :first_name,'Your name', :class=>"control-lable col-sm-2"         
-    .col-sm-10
-      .append-bottom-1
-        = f.text_field :first_name,:class=>"form-control"    
-        .example
-          First
-      .append-bottom-1
-        = f.text_field :last_name,:class=>"form-control"             
-        .example
-          Last
-  .form-group.append-bottom-1
-    = f.label :contact_phone_number, 'Phone Number', :class=>"control-lable col-sm-2"        
-    .col-sm-10
-      = f.text_field :contact_phone_number
-  .form-group
-    = f.label :contact_email, 'Email Address (login)', :class=>"control-lable col-sm-2"        
-    .col-sm-10
-      = f.text_field :contact_email,:class=>"form-control"    
-  .form-group
-    = f.label :password, 'Password', :class=>"control-lable col-sm-2"        
-    .col-sm-10
-      = f.password_field :password
-  .clearb              
-  .form-group.append-bottom-1
-    = f.label :password_confirmation, 'Confirm password', :class=>"control-lable col-sm-2"        
-    .col-sm-10
-      = f.password_field :password_confirmation
-  %h3#addon-header.section-header
-    Your Community...
-  .section-text
-    We're building communities of dayhomes that help parents know where to find you and dayhomes in your community connect.  Which community would you like to be a part of?
-  .form-group
-    = f.label :community, 'Community', :class=>"control-lable col-sm-2"        
-    .col-sm-10  
-      = select("community", "id", options_from_collection_for_select(@communities, "id", "name",1), {prompt: 'Other'},{ :class=>"form-control"})
-      = text_field :community, :name, style:"display:none", class: "form-control"
-  %h3#addon-header.section-header
-    Good Karma...
-  .form-group
-    = f.label :referral_email, 'Referral Email', :class=>"control-lable col-sm-2"        
-    .col-sm-10
-      = f.text_field :referral_email, class:"form-control"
-      <i class="icon-info-sign" data-title="Hear about us from a parent?" data-content="Enter an email address of a parent registered on this site and we'll add them into our monthly draw."></i>
-  .form-group.append-bottom-1
-    = f.label :coupon, 'Coupon code', :class=>"control-lable col-sm-2"        
-    .col-sm-10
-      = f.text_field :coupon
-      <i class="icon-info-sign" data-title="Have a coupon?" data-content="If you found one of our coupons in an add, enter it here to receive your discount."></i>
-  .clearb
-  #credit-card-section{:style => "display:none;"}
-    = f.hidden_field :stripe_card_token
-    %h3.section-header
-      Enter Your Credit Card Information
-    .append-bottom-1  
-      #stripe_error
-        %noscript
-          Javascript is not enabled and is required for this form.  First enable it in your web browser settings.                
-      .form-group
-        =label_tag :card_number, "Card Number", :class=>"control-lable col-sm-2"            
-        .col-sm-10  
-          %div
-            =text_field_tag :card_number, '', :name=>nil, :class=>"input-large form-control",:onkeypress => "return numbersonly2(this, event)"
-            .example
-              Number
-          .append-bottom-1
-            =text_field_tag :card_code, nil, name:nil, :class=>"input-mini"
-            .example
-              CVV
-              <i class="icon-info-sign" data-title="What's a CVV?" data-content="The CVV Number ("Card Verification Value") on your credit card or debit card is a 3 digit number on VISA®, MasterCard® and Discover® branded credit and debit cards. On your American Express® branded credit or debit card it is a 4 digit numeric code."></i>      
-      .form-group
-        =label_tag :card_expiry, "Expiry date", :class=>"control-lable col-sm-2"  
-        .col-sm-2
-          =select_month nil, {add_month_numbers: true},{name:nil,id:"card_month"}
-          .example
-            Month
-        .col-sm-2   
-          =select_year nil, {start_year:Date.today.year,end_year:Date.today.year+15}, {name:nil, id: "card_year"}
-          .example.first
-            Year   
-        .col-sm-6
-          %strong Need Help? Call us!
-          %br
-            .gray50.fs_11
-              .append-bottom-half
-                Call us Monday-Friday, 8am-4pm MST
-                %br
-                  at +1-877-564-8937
-                %br
-    .clear                            
-    .clear
+﻿= stylesheet_link_tag :meyer_reset, :media => :all
+= stylesheet_link_tag :bouncy_pricing, :media => :all
+.cd-pricing-container
+  .cd-pricing-switcher
+    %p.fieldset
+      %input#monthly{:checked => "checked", :name => "duration", :type => "radio", :value => "monthly"}
+      %label{:for => "monthly"} Monthly
+      %input#yearly{:name => "duration", :type => "radio", :value => "yearly"}
+      %label{:for => "yearly"} Yearly
+      %span.cd-switch
+  %ul.cd-pricing-list
+    - @plans.each_with_index do |(key,value),index|
+      %li{"class" => ((index>0&&index<2) ? "cd-popular" : "")}
+        %ul.cd-pricing-wrapper
+          %li.is-ended.is-visible{"data-type" => "monthly"}
+            %header.cd-pricing-header
+              %h2 
+                =value["monthly"].name
+              .cd-price
+                %span.cd-currency $
+                %span.cd-value 
+                  =value["monthly"].price
+                %span.cd-currency 00
+                %span.cd-duration 
+                  =value["monthly"].subscription
+            .cd-pricing-body
+              %ul.cd-pricing-features
+                %li
+                  %em Dayhome
+                  Page
+                %li
+                  %em 
+                    = index>0 ? "Supported" : "Self"
+                  Setup
+                  %br
+                  - if index>1 
+                    and Writeup editing
+                  -else
+                    &nbsp;
+                %li
+                  %em 
+                    = index>0 ? "Phone" : "Email"
+                  Support
+                %li
+                  %em 
+                    =value["monthly"].free_features
+                  Free Feature /yr
+                %li
+                  %em
+                    -if index>0
+                      Social
+                  -if index>0
+                    Media Promotion
+                %li
+                  %em
+                    -if index>1
+                      %em One-on-one
+                  -if index>1
+                    Coaching
+          %li.is-ended.is-hidden{"data-type" => "yearly"}
+            %header.cd-pricing-header
+              %h2 
+                =value["annual"].name
+              .cd-price
+                %span.cd-currency $
+                %span.cd-value 
+                  =value["annual"].price
+                %span.cd-currency 00
+                %span.cd-duration 
+                  =value["annual"].subscription
+            .cd-pricing-body
+              %ul.cd-pricing-features
+                %li
+                  %em Dayhome
+                  Page
+                %li
+                  %em 
+                    = index>0 ? "Supported" : "Self"
+                  Setup
+                  %br
+                  - if index>1 
+                    and Writeup editing
+                  -else
+                    &nbsp;
+                %li
+                  %em 
+                    = index>0 ? "Phone" : "Email"
+                  Support
+                %li
+                  %em 
+                    =value["monthly"].free_features
+                  Free Feature /yr
+                %li
+                  %em
+                    -if index>0
+                      Social
+                  -if index>0
+                    Media Promotion
+                %li
+                  %em
+                    -if index>1
+                      %em One-on-one
+                  -if index>1
+                    Coaching     
   
-  .submit-container
-    %span.button.large.green.single
-      %input#pay-now-button{:name => "paynow", :type => "submit", :value => "Pay Now"}
-:javascript
-  $('.icon-info-sign').popover() ;
-  if($('.alert-page-error').length>0) {
-    try {
-      $.scrollTo($('.alert-page-error').position().top - ($(window).height() / 2),
-        { speed: 'slow'}
-      );
-    } catch(err) {alert(err);}
-  }
-  
-  Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'));
-
-  $('#day_home_signup_request_day_home_name').keyup(function(e) {
-      var parsed_subdomain = $(this).val().replace(/[^a-z0-9]/gi,'').toLowerCase();
-      $('#day_home_signup_request_day_home_slug').empty().attr('value', parsed_subdomain);
-  });
-
-  var Dayhome = Dayhome || {};
-
-    Dayhome.billingPage = {
-    existing: #{@existing.to_json},
-    packages: #{@packages.to_json},
-    additional_cost: {
-        staff: function (n) {
-            return parseInt(n, 10) * 10 || 0;
-        },
-        locales: function (n) {
-            //return { "1": 10, "2": 20, "3": 30, "4": 40, "5": 50, "1500": 60, "1750": 70, "2000": 80, "3000": 120, "4000": 160, "5000": 200}[n] || 0;
-            return parseInt(n, 10) * 10 || 0;
-        }
-    },
-    current:{
-    },
-    index: {
-    }
-  };
-
-
+= javascript_include_tag :pricing

@@ -1,0 +1,34 @@
+/*
+ * This is the base CSS of the new beta look.
+ *
+ * The beta-layout tree gives us all the core css broken out into five files
+ * (as per https://smacss.com/book/type-layout):
+ *     1.  _base.css.scss    - defaults, including the variables, mixins, and resets from Bootstrap
+ *     2.  _layout.css.scss  - dividing the pages into sections, including the grid and scaffolding from Bootstrap
+ *     3.  _modules.css.scss - modular / reusable parts of the design
+ *     4.  _state.css.scss   - modules in a particular state
+ *     5.  _theme.css.scss   - do I need this?
+ *
+ * The utility classes need to be loaded last, so those are included here.
+ *
+ *= require_self
+ *
+ */
+@import "bootstrap-sprockets";
+
+@import "beta-layout/base";
+@import "beta-layout/layout";
+@import "beta-layout/module";
+@import "beta-layout/state";
+@import "beta-layout/theme";
+
+// Bootstrap - Utility classes 
+@import "bootstrap/utilities";
+@import "bootstrap/responsive-utilities";
+
+
+footer {
+	position: relative;
+
+}
+

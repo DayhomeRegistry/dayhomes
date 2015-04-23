@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150206012003) do
+ActiveRecord::Schema.define(version: 20150417210144) do
 
   create_table "agencies", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -46,9 +46,12 @@ ActiveRecord::Schema.define(version: 20150206012003) do
   end
 
   create_table "communities", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",         limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.float    "latitude",     limit: 24
+    t.float    "longitude",    limit: 24
+    t.string   "full_address", limit: 255
   end
 
   create_table "day_home_agencies", force: :cascade do |t|
@@ -259,6 +262,7 @@ ActiveRecord::Schema.define(version: 20150206012003) do
     t.integer  "free_features",       limit: 4,                  default: 0
     t.string   "subscription",        limit: 255,                default: "mth"
     t.integer  "events",              limit: 4,                  default: 0
+    t.boolean  "agency",              limit: 1,                  default: true
   end
 
   create_table "posts", force: :cascade do |t|

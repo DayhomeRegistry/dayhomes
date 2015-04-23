@@ -1,0 +1,95 @@
+#signInForm.modal.fade{:tabindex=>"-1",:role=>"dialog","aria-labelledby"=>"signInForm","aria-hidden"=>"true"}
+  .modal-dialog
+    .modal-content
+      /
+        %button.close{:type=>"button",:data=>{:dismiss=>"modal"}}
+          %span{"aria-hidden"=>"true"}
+            &times;
+      .modal-body
+        #signinPage{:style=>"display:none;"}
+          .panel-padding.panel-body
+            %a#omniauth.fb-button.fb-blue.btn.icon-btn.btn-block.padded-btn-block.row-space-1.btn-large.large.btn-facebook{:href => omniauth_authorize_path(:user, :facebook) ,:target=>"_blank", :data=>{:popup=>true}}
+              %span.icon-container
+                %i.icon.icon-facebook
+              %span.text-container
+                Sign in with Facebook
+            .signup-or-separator
+              %h6.text.shift.text-special or
+              %hr/
+            .text-center
+              %a#signin-using-email.btn-block.padded-btn-block.row-space-2.icon-btn
+                %i.icon.icon-envelope
+                Sign in with Email
+            = form_for(resource, :as => resource_name,
+                               :url => session_path(resource_name) ,
+                               :html => {:id => "signin-form", :style=>"display:none;"},
+                               :format => :json,
+                               :remote => true ) do |f|
+              .control-group.row-space-1
+                = f.email_field :email, placeholder: 'Email Address', :class=> "decorative-input"
+              .control-group.row-space-2
+                = f.password_field :password, placeholder: 'Password', :class=> "decorative-input"
+              .clearfix.row-space-2
+                - if devise_mapping.rememberable?
+                  %label.checkbox.remember-me{:for => "remember_me"}
+                    = f.check_box :remember_me, :class=>"remember_me"
+                    Remember me
+                %a.forgot-password.pull-right{:href => "/auth/secret/new"} Forgot password?
+              %button#user-login-btn.btn.btn-block.btn-primary.large.btn-large.padded-btn-block{:type => "submit"}
+                Log In
+          .panel-footer.panel-body
+            .text-left
+              Don't have an account?
+              %a.modal-link#sign-up-link
+                Sign up
+        #signupPage
+          .panel-padding.panel-body
+            %a#omniauth.fb-button.fb-blue.btn.icon-btn.btn-block.padded-btn-block.row-space-1.btn-large.large.btn-facebook{:href => omniauth_authorize_path(:user, :facebook) ,:target=>"_blank", :data=>{:popup=>true}}
+              %span.icon-container
+                %i.icon.icon-facebook
+              %span.text-container
+                Sign up with Facebook
+            .signup-or-separator
+              %h6.shift.text.text-special or
+              %hr/
+            .text-center
+              %a#create-using-email.btn-block.padded-btn-block.row-space-2.btn.btn-primary.btn-block.btn-large.large.icon-btn
+                %i.icon.icon-envelope
+                Sign up with Email
+            = simple_form_for(resource, :as => resource_name, 
+                                        :url => registration_path(resource_name), 
+                                        :html => {:id => "signup-form", :style=>"display:none;"},
+                                        :format => :json,
+                                        :remote=>true) do |f|
+              .signup-form-fields.hidden-element
+                #inputFirst.control-group.row-space-1
+                  =f.input :first_name, :placeholder=>"First Name", :type=> "text", :value=>"", :required=>true, :autofocus =>true, :class=>"decorative-input", :label=>false
+                #inputLast.control-group.row-space-1
+                  =f.input :last_name, :placeholder=>"Last Name", :type=> "text", :value=>"", :required=>true, :class=>"decorative-input", :label=>false
+                #inputEmail.control-group.row-space-1
+                  =f.input :email, :placeholder=>"Email Address", :type=> "email", :value=>"", :required=>true, :class=>"decorative-input", :label=>false
+                #inputPassword.control-group.row-space-1
+                  =f.input :password, :placeholder=>"Password", :type=> "password", :value=>"", :required=>true, :class=>"decorative-input", :label=>false
+                #inputConfirmPassword.control-group.row-space-1
+                  =f.input :password_confirmation, :placeholder=>"Confirm Password", :type=> "password", :value=>"", :required=>true, :class=>"decorative-input", :label=>false
+                %label.checkbox{:for => "user_profile_info_receive_promotional_email"}
+                  %input{:name => "user_profile_info[receive_promotional_email]", :type => "hidden", :value => "0"}/
+                  %input#user_profile_info_receive_promotional_email{:checked => "checked", :name => "user_profile_info[receive_promotional_email]", :type => "checkbox", :value => "1"}/
+                  Tell me about Dayhome Registry news
+                .row-space-2.row-space-top-2
+                  %small
+                    By signing up, I agree to Dayhome Registry's
+                    = succeed "." do
+                      %a{"data-popup" => "true", :href => "/pages/privacy"} Terms of Service & Privacy Policy
+                    
+                %button.btn.btn-primary.btn-block.btn-large.large.padded-btn-block{:type => "submit"}
+                  Sign up
+            #tos_outside.row-space-top-2
+              %small
+                By signing up, I agree to Dayhome Registry's
+                = succeed "." do
+                  %a{"data-popup" => "true", :href => "/pages/privacy"} Terms of Service & Privacy Policy
+          .panel-body
+            Already signed up?
+            %a.modal-link#show-login
+              Log in

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+/[if lt IE 7] <html lang="en-us" class="lt-ie9 lt-ie8 lt-ie7">
+/[if IE 7] <html lang="en-us" class="lt-ie9 lt-ie8">
+/[if IE 8] <html lang="en-us" class="lt-ie9">
+/ [if gt IE 8] <!
+%html{:lang => "en-us"}
+  / <![endif]
+  %head
+    -if content_for?(:title)
+      = yield :title
+    -else
+      %title Dayhome Registry
+    = tag :meta, :name=>"viewport", :content => "width=device-width, initial-scale=1"
+    %link{:href => "http://fonts.googleapis.com/css?family=Open+Sans:400,300,700", :rel => "stylesheet", :type => "text/css"}
+    = stylesheet_link_tag "beta-layout", :media => :all
+    = javascript_include_tag "beta-layout"
+    = csrf_meta_tags
+    / yield
+    = yield :header_scripts
+  %body
+    .container-fluid
+      = render 'layouts/beta/header'
+      = render 'layouts/flash_msgs'
+      = yield    
+    = render 'layouts/beta/footer'
+    = yield :footer_scripts

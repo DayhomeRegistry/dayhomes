@@ -1,0 +1,66 @@
+// Variable adjustments
+$brand-primary:         #52BE60 !default;
+$brand-success:         #52BE60 !default;
+$brand-info:            #23affa !default;
+$brand-warning:         #f08816 !default;
+$brand-danger:          #d9534f !default;
+
+$green: #52BE60;
+$yellow: #f0df73;
+$red: #FE1A00;
+$blue: #23affa;
+$light-grey: #e3e3e3;
+$dark-grey: #798e94;
+
+//Airbnb
+@font-face{
+	font-family:Airglyphs;
+	src:url("https://a2.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-989da9a23fafa790c2dfa464c062862f.eot");
+	src:url("https://a2.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-989da9a23fafa790c2dfa464c062862f.eot?#") format("eot"),url("https://a1.muscache.com/s/static/o2.1/build/fonts/airglyphs-267ef9db9038817a1bf80e5bb6466bfc.woff") format("woff"),url("https://a1.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-0edec9d5f22cc0aef7cfdf4206c86ff6.ttf") format("truetype"),url("https://a1.muscache.com/airbnb/static/o2.1/build/fonts/airglyphs-4b7393561c90bf8bee868c5a1b3ad7d2.svg") format("svg");
+	font-weight:normal;
+	font-style:normal
+}
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,600);*/
+@import url(http://fonts.googleapis.com/css?family=Exo+2:400,700,100,100italic,400italic,700italic,500,500italic);
+$icon-font-path: '/assets/';
+$font-family-sans-serif:  'Exo 2', 'Helvetica Neue', Helvetica, Arial, sans-serif !default;
+
+// Bootstrap - Core variables and mixins
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+// Bootstrap - Reset and dependencies
+@import "bootstrap/normalize";
+@import "bootstrap/print";
+@import "bootstrap/glyphicons";
+
+// Bootstrap - Core
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+
+// Dayhome Registry
+html, body {
+	height:100%;
+}
+.container-fluid {
+	min-height:100%;
+}
+body {
+	font-family: $font-family-base;
+}
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.no-left-gutter {
+	margin-left: -15px;
+}
+.no-right-gutter {
+	margin-right: -15px;
+}
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+	position: static;
+	margin-left: 0;
+}
