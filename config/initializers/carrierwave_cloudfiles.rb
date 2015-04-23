@@ -5,18 +5,18 @@ Rails.configuration.use_fog = cloudfiles_config[:use_fog] || false
 
 CarrierWave.configure do |config|
 
-  config.fog_credentials = {
-    :provider             => 'Rackspace',
-    :rackspace_username   => cloudfiles_config[:username],
-    :rackspace_api_key    => cloudfiles_config[:api_key],
-    :rackspace_servicenet => cloudfiles_config[:servicenet] || false, # NOTE - Can only be used on rackspace VPS, see SNET note at top.
-    :rackspace_region     => cloudfiles_config[:region]||:dfw # we're in dfw, but may not be
-  }
-
-  config.fog_directory = cloudfiles_config[:container]
-
-  # Setting asset_host overrides path in the the local file storage
   if Rails.configuration.use_fog
+    config.fog_credentials = {
+      :provider             => 'Rackspace',
+      :rackspace_username   => cloudfiles_config[:username],
+      :rackspace_api_key    => cloudfiles_config[:api_key],
+      :rackspace_servicenet => cloudfiles_config[:servicenet] || false, # NOTE - Can only be used on rackspace VPS, see SNET note at top.
+      :rackspace_region     => cloudfiles_config[:region]||:dfw # we're in dfw, but may not be
+    }
+
+    config.fog_directory = cloudfiles_config[:container]
+
+    # Setting asset_host overrides path in the the local file storage
     config.asset_host = cloudfiles_config[:cdn_url]
   end
 
