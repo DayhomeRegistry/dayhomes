@@ -10,7 +10,7 @@ class ReviewsController < ApplicationController
 
   def create
     @day_home = DayHome.find(params[:day_home_id])
-    @review = Review.new(params[:review])
+    @review = Review.new(review_params)
 
     unless params[:star].blank?
       @review.rating = params[:star]
@@ -30,6 +30,10 @@ class ReviewsController < ApplicationController
       flash[:error] = error_msg.join("<br/>").html_safe
       redirect_to :back
     end
+  end
+  private
+  def review_params
+    params.require(:review).permit(:content)
   end
 
 end
