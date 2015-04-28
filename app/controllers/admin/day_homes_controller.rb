@@ -345,11 +345,13 @@ class Admin::DayHomesController < Admin::ApplicationController
   
   private
   def sort_column
-
-    if(params[:sort]=='features.start')
+    sort = params[:sort]
+    if(sort =='features.start')
       'features.start'
-    else
+    elsif !sort.nil?
       'day_homes.'+ (DayHome.column_names.include?(params[:sort].gsub('day_homes.','')) ? params[:sort].gsub('day_homes.','') : "name")
+    else
+      'day_homes.name'
     end
   end
   
