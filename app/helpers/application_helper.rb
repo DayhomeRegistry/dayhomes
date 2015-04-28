@@ -21,12 +21,12 @@ module ApplicationHelper
     link_to url_for({:sort => column, :direction => direction, :params=>p}), {:class => css_class} do      
       if (column == sort_column)
         if (sort_direction == "asc")
-          raw ("<div style='min-width:100px;'>#{title} <i class='fa fa-chevron-up'></i></div>")
+          raw ("<div style='min-width:120px;'>#{title} <i class='fa fa-chevron-up'></i></div>")
         else
-          raw ("<div style='min-width:100px;'>#{title} <i class='fa fa-chevron-down'></i></div>")
+          raw ("<div style='min-width:120px;'>#{title} <i class='fa fa-chevron-down'></i></div>")
         end
       else
-          title
+        raw (title + '&nbsp;')
       end
     end
   end
