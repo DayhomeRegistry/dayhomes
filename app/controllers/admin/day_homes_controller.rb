@@ -101,6 +101,7 @@ class Admin::DayHomesController < Admin::ApplicationController
 
     DayHome.transaction do
       @day_home = DayHome.new(day_home_params)
+      @day_home.ensure_default_availability
         
       #raise @day_home.to_json
       #Create the user
@@ -225,7 +226,8 @@ class Admin::DayHomesController < Admin::ApplicationController
   end
 
   def update
-   
+
+
     community = Community.find(params[:location][:community_id]) 
 
     #raise community.to_json
