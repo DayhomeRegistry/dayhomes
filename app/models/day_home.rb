@@ -69,7 +69,7 @@ class DayHome < ActiveRecord::Base
   validates_format_of :slug, :with => /[a-z0-9]+/
 
 
-  before_save :ensure_default_availability
+  #before_save :ensure_default_availability
   def ensure_default_availability
     if self.availability_types.empty?
       self.day_home_availability_types = []
