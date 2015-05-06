@@ -5,10 +5,12 @@ class EventsController < ApplicationController
 
 
   def index
-    @events = Event.all
-    @events.find_by_day_home_id(params[:day_home_id])
+    byebug
+    #@events = Event.all
+    @events = Event.find_by_day_home_id(params[:day_home_id])
 
     respond_to do |format|
+      format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found}
       format.js  { render :json => @events }
     end
   end

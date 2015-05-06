@@ -42,14 +42,15 @@ class ApplicationController < ActionController::Base
   
   def require_user
     unless current_user
-     if current_user
-       redirect_to logout_path
-     else
-       session[:return_to] ="#{request.protocol}#{request.host_with_port}#{request.fullpath}"
-       redirect_to login_path
-     end
+     # if current_user
+     #   redirect_to logout_path
+     # else
+     #   session[:return_to] ="#{request.protocol}#{request.host_with_port}#{request.fullpath}"
+     #   redirect_to login_path
+     # end
  
-     return false
+     # return false
+      authenticate_user!
     end
   end
 

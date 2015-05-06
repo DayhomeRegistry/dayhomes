@@ -40,7 +40,7 @@ class DayHomesController < ApplicationController
       elsif (!feature.empty? && feature=="featured:no")  
         @day_homes = @day_homes.joins("LEFT JOIN features ON features.day_home_id=day_homes.id").where("features.id is null")
       else
-        @day_homes = @day_homes.joins("LEFT JOIN (select * from features where end >= '" + Time.now().to_s + "' AND start <= '" + Time.now().to_s + "' LIMIT 1) features ON features.day_home_id=day_homes.id")
+        @day_homes = @day_homes.joins("LEFT JOIN (select day_home_id, min(start) as start, end from features where end >= '" + Time.now().to_s + "' AND start <= '" + Time.now().to_s + "' GROUP BY day_home_id) features ON features.day_home_id=day_homes.id")
       end
       
       if(!approve.empty?)
@@ -55,7 +55,7 @@ class DayHomesController < ApplicationController
       else
         @day_homes = current_user.day_homes
       end
-      @day_homes = @day_homes.joins("LEFT JOIN (select * from features where end >= '" + Time.now().to_s + "' AND start <= '" + Time.now().to_s + "' LIMIT 1) features ON features.day_home_id=day_homes.id")
+      @day_homes = @day_homes.joins("LEFT JOIN (select day_home_id, min(start) as start, end from features where end >= '" + Time.now().to_s + "' AND start <= '" + Time.now().to_s + "' GROUP BY day_home_id) features ON features.day_home_id=day_homes.id")
       @day_homes = @day_homes.order(sort_column + ' ' + sort_direction).page(params[:page] || 1).per(params[:per_page] || 10)      
     end
   end
@@ -274,10 +274,13 @@ class DayHomesController < ApplicationController
   
   private
   def sort_column
-    if(params[:sort]=='features.start')
+    sort = params[:sort]
+    if(sort=='features.start')
       'features.start'
+    elsif !sort.nil?
+      'day_homes.'+(DayHome.column_names.include?(params[:sort].gsub('day_homes.','')) ? params[:sort].gsub('day_homes.','') : "name")
     else
-      'day_homes.'+(DayHome.column_names.include?(params[:sort]) ? params[:sort] : "name")
+      'day_homes.name'
     end
   end
   

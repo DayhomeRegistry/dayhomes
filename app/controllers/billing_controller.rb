@@ -1,7 +1,6 @@
 class BillingController < ApplicationController
   layout "beta", only: [:signup]
 
-  before_filter :authenticate_user!, :except=>[:signup, :register, :get_coupon, :list]
   before_filter :require_user, :except=>[:signup, :register, :get_coupon,:list]
   before_filter :require_user_to_be_organization_admin, :except=>[:signup, :register, :get_coupon,:list]
   # before_filter :configure_permitted_parameters, if: :devise_controller?
@@ -9,7 +8,6 @@ class BillingController < ApplicationController
   def list
   end
   def signup
-    #byebug
     if(current_user)
       redirect_to :action=>:options
     end
@@ -153,7 +151,6 @@ class BillingController < ApplicationController
         
         @day_home.location = loc
   
-        #byebug
         #add default availability
         #full_time_full_days = AvailabilityType.where(:availability => 'Full-time', :kind => 'Full Days')
         #@day_home.availability_types << full_time_full_days
@@ -495,7 +492,6 @@ class BillingController < ApplicationController
       :password, :password_confirmation, :referral_email, :coupon, :stripe_card_token)
   end
   def day_home_params
-    #byebug
     params.require(:day_home).permit(:name, :approved, :featured, :slug, :phone_number, :email, :highlight, :blurb, 
                   :street1, :street2, :postal_code, :city, :province, :photos_attributes, :dietary_accommodations, 
                   :licensed, :location_id, :caption, :default_photo, :photo, :featured_end_date, 
