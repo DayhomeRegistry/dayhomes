@@ -132,15 +132,15 @@
       %strong= link_to 'Add Another Photo', '#', :class => 'add_multiples_link', 'data-group' => 'photos', 'data-attribute-key' => 'photos_attributes'
   %br
   .form-group
-    = f.label :availability_types, 'Full-time Availability', :class=>'col-sm-2',:style => 'font-weight: bold'
+    = f.label :availability_type_ids, 'Full-time Availability', :class=>'col-sm-2',:style => 'font-weight: bold'
     .col-sm-10
-      =collection_check_boxes(:day_home, :availability_types, AvailabilityType.full_time, :id, :kind) do |b|
+      =collection_check_boxes(:day_home, :availability_type_ids, AvailabilityType.full_time, :id, :kind) do |b|
         .checkbox
           = b.label(class: "check_box") do
             = b.check_box(class: "check_box")
             = b.object.kind
   .form-group
-    = f.label :availability_types, 'Part-time Availability', :class=>'col-sm-2',:style => 'font-weight: bold'
+    = f.label :availability_types_ids, 'Part-time Availability', :class=>'col-sm-2',:style => 'font-weight: bold'
     .col-sm-10
       =collection_check_boxes(:day_home, :availability_type_ids, AvailabilityType.part_time, :id, :kind) do |b|
         .checkbox
