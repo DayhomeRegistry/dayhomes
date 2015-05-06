@@ -1,0 +1,108 @@
+﻿= stylesheet_link_tag :meyer_reset, :media => :all
+= stylesheet_link_tag :bouncy_pricing, :media => :all
+.cd-pricing-container
+  .cd-pricing-switcher
+    %p.fieldset
+      %input#monthly{:checked => "checked", :name => "duration", :type => "radio", :value => "monthly"}
+      %label{:for => "monthly"} Monthly
+      %input#yearly{:name => "duration", :type => "radio", :value => "yearly"}
+      %label{:for => "yearly"} Yearly
+      %span.cd-switch
+  %ul.cd-pricing-list
+    - @plans.each_with_index do |(key,value),index|
+      %li{"class" => ((index>0&&index<2) ? "cd-popular" : "")}
+        %ul.cd-pricing-wrapper
+          %li.is-ended.is-visible{"data-type" => "monthly"}
+            %header.cd-pricing-header
+              %h2 
+                =value["monthly"].name
+              .cd-price
+                %span.cd-currency $
+                %span.cd-value 
+                  =value["monthly"].price
+                %span.cd-currency 00
+                %span.cd-duration 
+                  =value["monthly"].subscription
+            .cd-pricing-body
+              %ul.cd-pricing-features
+                %li
+                  %em Dayhome
+                  Page
+                %li
+                  %em 
+                    = index>0 ? "Supported" : "Self"
+                  Setup
+                  %br
+                  - if index>1 
+                    and Writeup editing
+                  -else
+                    &nbsp;
+                %li
+                  %em 
+                    = index>0 ? "Phone" : "Email"
+                  Support
+                %li
+                  %em 
+                    =value["monthly"].free_features
+                  Free Feature /yr
+                %li
+                  %em
+                    -if index>0
+                      Social
+                  -if index>0
+                    Media Promotion
+                %li
+                  %em
+                    -if index>1
+                      %em One-on-one
+                  -if index>1
+                    Coaching
+            %footer.cd-pricing-footer
+              %a.cd-select{:href => "http://codyhouse.co/?p=429"} Select
+          %li.is-ended.is-hidden{"data-type" => "yearly"}
+            %header.cd-pricing-header
+              %h2 
+                =value["annual"].name
+              .cd-price
+                %span.cd-currency $
+                %span.cd-value 
+                  =value["annual"].price
+                %span.cd-currency 00
+                %span.cd-duration 
+                  =value["annual"].subscription
+            .cd-pricing-body
+              %ul.cd-pricing-features
+                %li
+                  %em Dayhome
+                  Page
+                %li
+                  %em 
+                    = index>0 ? "Supported" : "Self"
+                  Setup
+                  %br
+                  - if index>1 
+                    and Writeup editing
+                  -else
+                    &nbsp;
+                %li
+                  %em 
+                    = index>0 ? "Phone" : "Email"
+                  Support
+                %li
+                  %em 
+                    =value["monthly"].free_features
+                  Free Feature /yr
+                %li
+                  %em
+                    -if index>0
+                      Social
+                  -if index>0
+                    Media Promotion
+                %li
+                  %em
+                    -if index>1
+                      %em One-on-one
+                  -if index>1
+                    Coaching     
+  
+= javascript_include_tag :pricing

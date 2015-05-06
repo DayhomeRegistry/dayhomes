@@ -8,10 +8,11 @@
         Dayhome Registry
   .col-xs-8.col-sm-8.col-md-8.no-left-gutter.nav
     .col-xs-10.col-sm-8.col-md-8.search
-      %form{action:"/s", id:"search-form", class:"search-form"}
+      %form{action:"/searches", id:"search", class:"search-form", method:'get'}
         .search-bar.no-left-gutter
           %i.icon.icon-search.icon-gray.h4
-          %input#header-location.location{:autocomplete => "off", :name => "location", :placeholder => "Find your dayhome today", :type => "text"}
+          %input#header-location.location{:autocomplete => "off", :name => "search[address]", :placeholder => "Find your dayhome today", :type => "text"}
+          =hidden_field_tag 'spots',1
     .col-xs-2.col-sm-4.col-md-4.text-right.menus
       -if(current_user.nil?)
         %ul.nav.pull-right.logged-out.list-unstyled
