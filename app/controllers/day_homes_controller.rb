@@ -111,6 +111,27 @@ class DayHomesController < ApplicationController
   
   def show
     @day_home = DayHome.find_by_slug(params[:slug]) || DayHome.find_by_id(params[:id])
+    @hash = Gmaps4rails.build_markers(@day_home) do |day_home, marker|
+      marker.lat day_home.lat
+      marker.lng day_home.lng
+      if day_home.featured?
+        picture = ActionController::Base.helpers.asset_path("dayhome-private-featured.png")
+        picture = ActionController::Base.helpers.asset_path("dayhome-featured.png") unless !day_home.licensed
+        picture = ActionController::Base.helpers.asset_path("dayhome-premium-featured.png") unless day_home.organization.pin.nil?
+      else
+        picture = ActionController::Base.helpers.asset_path("dayhome-private.png")
+        picture = ActionController::Base.helpers.asset_path("dayhome.png") unless !day_home.licensed
+        picture = day_home.organization.pin.photo_url(:pin) unless day_home.organization.pin.nil?
+      end
+      marker.picture({ :url => picture,
+                       :width => 41,
+                       :height => 45
+                     })
+      #marker.infowindow render_to_string(:partial => "/searches/pin", :locals => { :dayhome => day_home})
+      #marker.title render_to_string(:partial => "/searches/day_home", :locals => { :day_home => day_home})
+      marker.title day_home.slug
+      marker.json({ :id => day_home.id })
+    end
 
     if @day_home.nil?
       redirect_to '/404.html', :status => 301
