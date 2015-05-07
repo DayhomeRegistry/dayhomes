@@ -14,7 +14,7 @@ gem 'omniauth-facebook'
 #Jquery assets
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-#gem 'gmaps-autocomplete-rails'
+gem 'gmaps-autocomplete-rails'
 
 #Image processing
 gem 'carrierwave'
@@ -79,6 +79,7 @@ group :assets do
   gem 'bootstrap-sass'#, '~> 3'
   gem 'sass-rails'#, '>= 3.2'
   gem 'autoprefixer-rails'
+  gem 'bourbon'
 
   gem 'coffee-rails'
   gem 'uglifier'

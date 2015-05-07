@@ -1,0 +1,50 @@
+%footer
+  .page-container
+    .row
+      .col-md-4#about
+        %h2
+          About Us
+        %p
+          Dayhome Registry is your answer for all of your dayhome searching needs!
+        %p
+          Being a parent is busy enough. The mission of the Dayhome Registry is to make being a parent a little easier.
+          = link_to 'Read More...', about_pages_path
+      .col-md-4#contact
+        %h2
+          Contact
+        %p
+          Have any questions or concerns about the Dayhome Registry? We'd love to hear from you.
+        %p
+          Email us at       
+          = mail_to 'contact@dayhomeregistry.com', 'contact@dayhomeregistry.com',:encode=>'javascript'
+      .col-md-4#social
+        %h2 We're Social
+        %p Join the conversation and connect with other dayhomes and parents in your area.
+        .social-home
+          .row.wrapper
+            .col-sm-12
+              Get child care tips:
+          .row  
+            .col-xs-3.social-home-twitter
+              %a{:href => "http://twitter.com/dayhomeregistry", :target => "_blank"}
+                =image_tag '/assets/icons/twitter-icon.png', :alt=>'Follow us on Twitter'
+            .col-xs-3.social-home-facebook
+              %a{:href => "http://facebook.com/dayhomeregistry", :target => "_blank"}
+                =image_tag '/assets/icons/facebook-icon.png', :alt => 'Like Dayhomes on Facebook'
+            .col-xs-3.social-home-pinterest
+              %a{:href => "http://pinterest.com/dayhomeregistry/", :target => "_blank"}
+                =image_tag '/assets/icons/pinterest-icon.png', :alt=>'Follow us on Pinterest'
+            .col-xs-3.social-home-google
+              %a{:href=>"https://plus.google.com/102939383628945203063?prsrc=3",:rel=>"publisher",:target=>"_top", :style=>"text-decoration:none;",:target=>"_blank"} 
+                =image_tag '//ssl.gstatic.com/images/icons/gplus-32.png', :alt=>"Google+", :style=>"border:0;width:30px;height:30px;"
+    .row.copyright
+      .col-md-12
+        %p.text-center  
+          &copy;
+          = link_to "Dayhome Registry #{Date.today.year}", root_path
+          = "(#{Dayhomes::Application::VERSION})"
+          | Read our
+          = link_to 'Privacy Policy', [:privacy, :pages]
+
+= yield :scripts
+

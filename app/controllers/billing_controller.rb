@@ -1,8 +1,12 @@
 class BillingController < ApplicationController
+  #layout "beta", only: [:signup]
+
   before_filter :require_user, :except=>[:signup, :register, :get_coupon,:list]
   before_filter :require_user_to_be_organization_admin, :except=>[:signup, :register, :get_coupon,:list]
   # before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  def list
+  end
   def signup
     if(current_user)
       redirect_to :action=>:options
@@ -22,7 +26,7 @@ class BillingController < ApplicationController
     #     @day_home_signup_request.day_home_province = city.split(",")[1] #Geocoder.search(city)[0].address_components[2]["long_name"]
     #   end
     # end
-    @existing = Plan.find_by_plan("baby50")
+    @existing = Plan.find_by_plan("baby5mth")
     @communities = Community.all
     #@closest_community = Community.near(Geocoder.coordinates(city))
     
@@ -31,7 +35,51 @@ class BillingController < ApplicationController
       @packages.merge!({"#{p.id}" => p}) #unless p===@existing
     end
   end
-  def list
+  def signup_new
+    if(current_user)
+      redirect_to :action=>:options
+    end
+    #"dayhome"=>{"care_type_id"=>"0", "capacity"=>"", "title"=>"Temp", "city"=>"Edmonton, AB"}
+
+    @type = params["dayhome"]["care_type_id"]
+    @day_home_signup_request = DayHomeSignupRequest.new
+    @day_home_signup_request.day_home_name = params["dayhome"]["title"]
+    @day_home_signup_request.day_home_slug = @day_home_signup_request.day_home_name.gsub(/[^A-Za-z0-9]/,'').downcase;
+    city = params["dayhome"]["city"]
+    split = city.split(",")
+
+    if(split.size>0)
+      @day_home_signup_request.day_home_city = split[0]
+      if(split.size>1)
+        @day_home_signup_request.day_home_province = city.split(",")[1] #Geocoder.search(city)[0].address_components[2]["long_name"]
+      end
+    end
+    @existing = Plan.find_by_plan("baby50")
+    @communities = Community.all
+    @closest_community = Community.near(Geocoder.coordinates(city))
+    
+    @plans = {}
+    @monthly={}
+    @annual= {}
+
+    plans = Plan.where("inactive is null").where("agency = 0")
+    if(@type==2)
+      plans = Plan.where("inactive is null").where("agency = 1")
+    end
+    plans.order(:price).order("subscription DESC")
+    plans.each do |p|
+
+      plan = @plans[p.plan] || @plans[p.plan]={}
+      
+
+      if(p.subscription=='mth')
+        plan['monthly'] = p
+        @monthly.merge!({"#{p.id}" => p}) #unless p===@existing
+      else
+        plan['annual'] = p
+        @annual.merge!({"#{p.id}" => p}) #unless p===@existing
+      end
+    end
   end
   def register
 
