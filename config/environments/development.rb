@@ -48,6 +48,8 @@ Dayhomes::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  #config.assets.precompile += %w(jquery.home_slider.js upgrade.js upgrade_init.js billing.js billing_init.js organization.js categories.css mailer.css pages.css landingpage.css landingpage.js searches.js searches.css)
+
 
   #Preloader
   config.eager_load=false
