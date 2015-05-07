@@ -44,10 +44,12 @@ Dayhomes::Application.configure do
   config.active_record.raise_in_transactional_callbacks = true
 
   # Do not compress assets
-  config.assets.compress = false
+  config.assets.compress = true
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  config.assets.precompile += %w(jquery.home_slider.js upgrade.js upgrade_init.js billing.js billing_init.js organization.js categories.css mailer.css pages.css landingpage.css landingpage.js searches.js searches.css)
+
 
   #Preloader
   config.eager_load=false
