@@ -59,6 +59,9 @@ GEM
     bootstrap-sass (3.3.4.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
+    bourbon (4.2.2)
+      sass (~> 3.4)
+      thor
     builder (3.2.2)
     byebug (4.0.2)
       columnize (= 0.9.0)
@@ -219,8 +222,9 @@ GEM
       rails (>= 3.0)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
-    gmaps4rails (1.4.8)
-      json
+    gmaps-autocomplete-rails (0.1.4)
+      rails (>= 3.1.0)
+    gmaps4rails (2.1.2)
     guard (2.12.5)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -458,6 +462,7 @@ DEPENDENCIES
   awesome_print
   bootstrap-kaminari-views
   bootstrap-sass
+  bourbon
   byebug
   capistrano (= 2.12.0)
   capistrano-fanfare (= 0.0.21)
@@ -476,7 +481,8 @@ DEPENDENCIES
   geocoder
   geokit
   geokit-rails
-  gmaps4rails (= 1.4.8)
+  gmaps-autocomplete-rails
+  gmaps4rails
   guard-rspec
   haml
   jquery-rails

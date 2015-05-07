@@ -277,7 +277,7 @@ Dayhome.billingPage.Billing = Class.extend({
         	totalBoxBase.find('span.amount').text(base_package.price);
         	value_total+=base_package.price;
         } else {
-        	var val = Math.round((20/12)*(base_package.day_homes>0?base_package.day_homes:500),2);
+        	var val = Math.round(5*(base_package.day_homes>0?base_package.day_homes:500),2);
         	totalBoxBase.find('span.amount').text((base_package.day_homes>0?"":"> ")+val);
         	value_total+=val;
         }

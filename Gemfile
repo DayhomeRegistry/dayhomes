@@ -14,15 +14,15 @@ gem 'omniauth-facebook'
 #Jquery assets
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-#gem 'gmaps-autocomplete-rails'
+gem 'gmaps-autocomplete-rails'
 
 #Image processing
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog' 
 
-#This needs a hefty upgrade
-gem 'gmaps4rails','1.4.8'
+#Mapping
+gem 'gmaps4rails'
 
 # This is used for the country/province select
 gem 'carmen'
@@ -79,6 +79,7 @@ group :assets do
   gem 'bootstrap-sass'#, '~> 3'
   gem 'sass-rails'#, '>= 3.2'
   gem 'autoprefixer-rails'
+  gem 'bourbon'
 
   gem 'coffee-rails'
   gem 'uglifier'

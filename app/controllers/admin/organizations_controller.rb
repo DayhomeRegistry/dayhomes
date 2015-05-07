@@ -49,7 +49,6 @@ class Admin::OrganizationsController < Admin::ApplicationController
   def update
     @organization = Organization.find(params[:id])    
     @organization.update_attributes(organization_params)  
-    byebug
     if @organization.save 
       redirect_to admin_organizations_path
     else

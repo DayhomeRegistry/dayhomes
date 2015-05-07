@@ -9,7 +9,7 @@
     .col-sm-3
       .bubble_pic
         -if(!day_home.nil? && !day_home.featured_photo.nil?)
-          =link_to(day_home.photos.empty? ? '' : image_tag(day_home.featured_photo.photo_url(:thumb)), day_home_slug_path(day_home.slug))
+          /=link_to(day_home.photos.empty? ? '' : image_tag(day_home.featured_photo.photo_url(:thumb)), day_home_slug_path(day_home.slug))
     .col-sm-9
       %div
         =day_home.highlight
