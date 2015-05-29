@@ -75,6 +75,10 @@
               %a{:href => "http://shop.dayhomeregistry.com"}
                 %i.fa.fa-shopping-cart
                 Shop   
+            %li
+              %a{:href => "/pages/about"}
+                %i.fa.fa-book
+                About 
           .logo{:style=>"position:absolute;left:50%;margin-left:-102.5px"}
             %a{:href => "http://www.dayhomeregistry.com"}
               =image_tag 'logo.png',:alt => "Dayhome Registry", :style=>"max-width:175px;"
@@ -140,16 +144,28 @@
         %h4.header-text 
           How does it work?
         %p 
-          Dayhome Registry is an advertising venue for individual dayhomes and agencies.  We also publish many resources to help operators run provide the best possible care for kids (checkout our 
+          Dayhome Registry is NOT an agency.  We are an advertising venue for individual dayhomes and agencies.  We also publish many resources to help operators run provide the best possible care for kids (checkout our 
           =link_to 'shop','http://shop.dayhomeregistry.com'
           ).  It works because this allows parents to find the dayhomes that are in their area, rather than having to scroll through pages of ads on Facebook or Kijiji.
     .section.section-gray.section-clients
       .container.text-center
         %h4.header-text Our Partners
         .logos
-          %ul.list-unstyled
-            %li
-              =image_tag("landingpage/born2create.jpg", width: "232", alt: "Born2Create") 
+          = link_to partners_pages_path do
+            %ul.list-unstyled
+              %li
+                =image_tag("lmf.png", width: "232", alt: "Born2Create") 
+              %li
+                =image_tag("parenting_power.jpg", width: "232", alt: "Born2Create") 
+              %li
+                =image_tag("landingpage/born2create.jpg", width: "232", alt: "Born2Create") 
+              %li
+                =image_tag("bellebliss_out.png", width: "232", alt: "Born2Create") 
+              %li
+                =image_tag("wee piggies.gif", width: "232", alt: "Born2Create") 
+              %li
+                =image_tag("Shanti.png", width: "232", alt: "Born2Create") 
+
         .other{style:"padding-top:3em;"}
           = link_to 'Visit our other partners...', partners_pages_path
     .section.section-newsletter
@@ -261,31 +277,45 @@
           %p Do you want to provide the best care for kids that you can?  Join our community today.
           %a.btn.btn-neutral.btn-lg{:href => "#{billing_signup_path}"} List your dayhome
     %footer.footer
-      .container
-        %nav.pull-left
-          %ul
-            %li
-              %a{:href => "http://blog.dayhomeregistry.com"}
-                %i.fa.fa-wordpress
-                Blog
-            %li
-              %a{:href => "http://shop.dayhomeregistry.com"}
-                %i.fa.fa-shopping-cart
-                Shop   
-        .social-area.pull-right
-          %a{:href=>"http://www.facebook.com/dayhomeregistry", :class=>"btn btn-social btn-facebook btn-simple"}
-            %i.fa.fa-facebook-square
-          %a{:href=>"http://www.twitter.com/dayhomeregistry", :class=>"btn btn-social btn-twitter btn-simple"}
-            %i.fa.fa-twitter
-          %a{:href=>"http://www.pinterest.com/dayhomeregistry", :class=>"btn btn-social btn-pinterest btn-simple"}
-            %i.fa.fa-pinterest
-        .copyright
-          &copy;
-          = link_to "Dayhome Registry #{Date.today.year}", root_path
-          = "(#{Dayhomes::Application::VERSION})"
-          | Read our
-          = link_to 'Privacy Policy', [:privacy, :pages]
-
+      .section.section-gray
+        .container
+          .row
+            .col-sm-4.col-md-4.bottom-nav
+              %nav
+                %ul
+                  %li
+                    %a{:href => "http://blog.dayhomeregistry.com"}
+                      %i.fa.fa-wordpress
+                      Blog
+                  %li
+                    %a{:href => "http://shop.dayhomeregistry.com"}
+                      %i.fa.fa-shopping-cart
+                      Shop   
+                  %li
+                    %a{:href => "/pages/about"}
+                      %i.fa.fa-book
+                      About 
+            .col-sm-4.col-md-4.social-area
+              %div
+                %a{:href=>"mailto:contact@dayhomeregistry.com", :class=>"btn btn-social btn-email btn-simple"}
+                  %i.fa.fa-envelope-o
+                %a{:href=>"http://www.facebook.com/dayhomeregistry", :class=>"btn btn-social btn-facebook btn-simple"}
+                  %i.fa.fa-facebook-square
+                %a{:href=>"http://www.twitter.com/dayhomeregistry", :class=>"btn btn-social btn-twitter btn-simple"}
+                  %i.fa.fa-twitter
+                %a{:href=>"http://www.pinterest.com/dayhomeregistry", :class=>"btn btn-social btn-pinterest btn-simple"}
+                  %i.fa.fa-pinterest
+                %a{:href=>"https://plus.google.com/102939383628945203063?prsrc=3", :class=>"btn btn-social btn-google btn-simple"}
+                  %i.fa.fa-google-plus
+            .col-sm-4.col-md-4.copyright
+              %div
+                %div
+                  &copy;
+                  = link_to "Dayhome Registry #{Date.today.year}", root_path
+                  = "(#{Dayhomes::Application::VERSION})"
+                %div
+                  Read our
+                  = link_to 'Privacy Policy', [:privacy, :pages]
   = javascript_include_tag :landingpage
   :javascript
     var big_image;

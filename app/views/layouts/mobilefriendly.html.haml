@@ -66,7 +66,24 @@
         / Collect the nav links, forms, and other content for toggling
         #example.collapse.navbar-collapse.small
           %div.logo{:style=>"text-align:center;"}
-            = image_tag("mini-logo.png", :alt => "Dayhome Registry")#, :width => "40px")#, :style => "float:left;padding-left: 50px;", :width => "150px")  
+            
+            .navbar-center{:style=>"text-align:center;padding-top:18px;"}
+              = image_tag("mini-logo.png", :alt => "Dayhome Registry", :width => "60px")
+              %ul{:style=>"display:inline-table;padding:10px;"}
+                %li{:style=>"display:inline;"}
+                  = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f| 
+                    /
+                      .search-form-input-wrapper
+                        .location-wrapper
+                          %span.input-placeholder-group
+                            %input#searchQuery.form-inline.location.input-large.input-contrast{:autocomplete => "off", :name => "search[address]", :placeholder => "Tell us your neighborhood...", :type => "text"}
+                            %span.input-group-btn
+                              %button.btn.btn-default{:type => "button"} Go!
+                      %button#submit_location.search-button.form-inline.btn.btn-primary.btn-large{:type => "submit"} Search
+                    .input-group
+                      %input#searchQuery.form-control.location.input-large.input-contrast{:autocomplete => "off", :name => "search[address]", :placeholder => "Tell us your neighborhood...", :type => "text",:size=>30}
+                      %span.input-group-btn
+                        %button.btn.btn-primary{:type => "button"} Search!
           %ul.nav.navbar-nav.navbar-left{:style=>""}
             %li
               %a{:href => "http://blog.dayhomeregistry.com"}
@@ -80,80 +97,105 @@
               %a{:href => "/pages/about"}
                 %i.fa.fa-book
                 About 
-          .navbar-center{:style=>"text-align:center;float:left;padding-top:18px;"}
-            %ul{:style=>"display:inline-table;"}
-              %li{:style=>"display:inline;"}
-                = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f| 
-                  /
-                    .search-form-input-wrapper
-                      .location-wrapper
-                        %span.input-placeholder-group
-                          %input#searchQuery.form-inline.location.input-large.input-contrast{:autocomplete => "off", :name => "search[address]", :placeholder => "Tell us your neighborhood...", :type => "text"}
-                          %span.input-group-btn
-                            %button.btn.btn-default{:type => "button"} Go!
-                    %button#submit_location.search-button.form-inline.btn.btn-primary.btn-large{:type => "submit"} Search
-                  .input-group
-                    %input#searchQuery.form-control.location.input-large.input-contrast{:autocomplete => "off", :name => "search[address]", :placeholder => "Tell us your neighborhood...", :type => "text",:size=>30}
-                    %span.input-group-btn
-                      %button.btn.btn-primary{:type => "button"} Search!
+          
           %ul.nav.navbar-nav.navbar-right{:style=>""}
+            - if !current_user.nil? && current_user.admin?
+              %li
+                = link_to [:admin, :users] do
+                  %i.fa.fa-users
+                  People
+              %li
+                %a{:href => "#{admin_day_homes_path}"}
+                  %i.fa.fa-home
+                  Day Homes
+              %li
+                = link_to [:admin, :organizations] do
+                  %i.fa.fa-sitemap
+                  Manage Organizations
+
+            -if !current_user.nil? && current_user.organization_admin?
+              %li
+                = link_to organization_path(current_user.organization) do
+                  %i.fa.fa-eye
+                  Overview
+              -if current_user.organization && current_user.organization.max_users>1
+                %li
+                  = link_to users_path do
+                    %i.fa.fa-users
+                    People
+              -else
+                %li
+                  = link_to user_path(current_user) do
+                    %i.fa.fa-user
+                    My Account
+              - if current_user.organization.max_dayhomes>1 || current_user.organization.day_homes.count==0
+                %li
+                  = link_to day_homes_path do
+                    %i.fa.fa-home
+                    Day Homes
+              - else
+                %li
+                  = link_to edit_day_home_path(current_user.organization.day_homes.first) do
+                    %i.fa.fa-home
+                    My Dayhome     
+                          
             -if current_user.nil?
               %li
                 %a{:href => "#{login_url}"}
                   %i.fa.fa-sign-in
                   Login
+              %li
+                %a.call-to-action{:href => "#{billing_signup_path}"} List your dayhome
             -else
               %li
                 %a{:href => "#{logout_url}"}
                   %i.fa.fa-sign-out
                   Logout
-            - if !current_user.nil?
-              - if current_user.admin?
-                %li
-                  %a{:href => "#{admin_day_homes_path}"}
-                    %i.fa.fa-home
-                    Day Homes
-              - elsif current_user.organization_admin?
-                %li
-                  %a{:href => "#{day_homes_path}"}
-                    %i.fa.fa-home
-                    Day Homes            
-              - else
-                %li
-                  %a{:href => "#{edit_day_home_path(current_user.organization.day_homes.first)}"}
-                    %i.fa.fa-home
-                    My Dayhomes
-            %li
-              %a.call-to-action{:href => "#{billing_signup_path}"} List your dayhome
+
+
         / /.navbar-collapse
     .wrapper
-      .top-section
+      .section.top-section
         = yield
     %footer.footer
-      .container
-        %nav.pull-left
-          %ul
-            %li
-              %a{:href => "http://blog.dayhomeregistry.com"}
-                %i.fa.fa-wordpress
-                Blog
-            %li
-              %a{:href => "http://shop.dayhomeregistry.com"}
-                %i.fa.fa-shopping-cart
-                Shop   
-        .social-area.pull-right
-          %a{:href=>"http://www.facebook.com/dayhomeregistry", :class=>"btn btn-social btn-facebook btn-simple"}
-            %i.fa.fa-facebook-square
-          %a{:href=>"http://www.twitter.com/dayhomeregistry", :class=>"btn btn-social btn-twitter btn-simple"}
-            %i.fa.fa-twitter
-          %a{:href=>"http://www.pinterest.com/dayhomeregistry", :class=>"btn btn-social btn-pinterest btn-simple"}
-            %i.fa.fa-pinterest
-        .copyright
-          &copy;
-          = link_to "Dayhome Registry #{Date.today.year}", root_path
-          = "(#{Dayhomes::Application::VERSION})"
-          | Read our
-          = link_to 'Privacy Policy', [:privacy, :pages]
-
-  = javascript_include_tag :landingpage
+      .section.section-gray
+        .container
+          .row
+            .col-sm-4.col-md-4.bottom-nav
+              %nav
+                %ul
+                  %li
+                    %a{:href => "http://blog.dayhomeregistry.com"}
+                      %i.fa.fa-wordpress
+                      Blog
+                  %li
+                    %a{:href => "http://shop.dayhomeregistry.com"}
+                      %i.fa.fa-shopping-cart
+                      Shop   
+                  %li
+                    %a{:href => "/pages/about"}
+                      %i.fa.fa-book
+                      About 
+            .col-sm-4.col-md-4.social-area
+              %div
+                %a{:href=>"mailto:contact@dayhomeregistry.com", :class=>"btn btn-social btn-email btn-simple"}
+                  %i.fa.fa-envelope-o
+                %a{:href=>"http://www.facebook.com/dayhomeregistry", :class=>"btn btn-social btn-facebook btn-simple"}
+                  %i.fa.fa-facebook-square
+                %a{:href=>"http://www.twitter.com/dayhomeregistry", :class=>"btn btn-social btn-twitter btn-simple"}
+                  %i.fa.fa-twitter
+                %a{:href=>"http://www.pinterest.com/dayhomeregistry", :class=>"btn btn-social btn-pinterest btn-simple"}
+                  %i.fa.fa-pinterest
+                %a{:href=>"https://plus.google.com/102939383628945203063?prsrc=3", :class=>"btn btn-social btn-google btn-simple"}
+                  %i.fa.fa-google-plus
+            .col-sm-4.col-md-4.copyright
+              %div
+                %div
+                  &copy;
+                  = link_to "Dayhome Registry #{Date.today.year}", root_path
+                  = "(#{Dayhomes::Application::VERSION})"
+                %div
+                  Read our
+                  = link_to 'Privacy Policy', [:privacy, :pages]
+= javascript_include_tag :landingpage
   
