@@ -105,10 +105,11 @@
                     %i.fa.fa-home
                     Day Homes            
               - else
-                %li
-                  %a{:href => "#{edit_day_home_path(current_user.organization.day_homes.first)}"}
-                    %i.fa.fa-home
-                    My Dayhomes
+                -if current_user.default_dayhome
+                  %li
+                    %a{:href => "#{edit_day_home_path(current_user.default_dayhome)}"}
+                      %i.fa.fa-home
+                      My Dayhome
             %li
               %a.call-to-action{:href => "#{billing_signup_path}"} List your dayhome
         / /.navbar-collapse
