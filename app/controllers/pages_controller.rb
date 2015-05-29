@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   layout 'application'
-  layout "landingpage", only: [:index]
 
+  
   def index 
     edmonton = Community.where("name like 'Edmonton%'");
     calgary =  Community.where("name like 'Calgary%'");
@@ -14,6 +14,7 @@ class PagesController < ApplicationController
       @featured_day_homes = DayHome.all.limit(3).offset(rand(DayHome.all.count-3))  
     end
     
+    render layout: "landingpage"
   end
   
   def about
@@ -26,6 +27,9 @@ class PagesController < ApplicationController
     current_user.privacy_effective_date = Time.now()
     current_user.save
     redirect_to request.referer
+  end
+  def partners
+    render layout: "mobilefriendly"
   end
   
 end

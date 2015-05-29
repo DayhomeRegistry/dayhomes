@@ -1,0 +1,159 @@
+!!!
+%html{:lang => "en", :xmlns=>"http://www.w3.org/1999/xhtml", 'xmlns:fb'=>"http://ogp.me/ns/fb#"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+    %title Dayhome Registry
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0", :name => "viewport"}/
+    %meta{:content => "width=device-width", :name => "viewport"}/
+    = tag :meta, :property=>"og:type", :content => "website"
+    = tag :meta, :property=>"og:title", :content => "Dayhome Registry"
+    = tag :meta, :property=>"og:site_name", :content => "Dayhome Registry"
+    = tag :meta, :property=>"og:description", :content => "The center of the Dayhome provider communitiy where Parents can find a dayhome for their children, Dayhome Providers can find resources to help them deliver a better experience, and Agencies can coordinate their online presence."
+    = tag :meta, :property=>"og:image", :content => URI.join(root_url, image_path("logo.png"))
+    = tag :meta, :property=>"fb:app_id",:content => "371277729589519"
+
+    :plain
+      <script>
+        //This is the audience token for the Dayhome Registry Facebook page.
+        (function() {
+          var _fbq = window._fbq || (window._fbq = []);
+          if (!_fbq.loaded) {
+            var fbds = document.createElement('script');
+            fbds.async = true;
+            fbds.src = '//connect.facebook.net/en_US/fbds.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(fbds, s);
+            _fbq.loaded = true;
+          }
+          _fbq.push(['addPixelId', '780389685408561']);
+        })();
+        window._fbq = window._fbq || [];
+        window._fbq.push(['track', 'PixelInitialized', {}]);
+      </script>
+      <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=780389685408561&amp;ev=PixelInitialized" /></noscript>
+    :javascript
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-31077078-1', 'dayhomeregistry.com');
+      ga('require', 'linkid', 'linkid.js');
+      ga('require', 'displayfeatures');
+      ga('send', 'pageview');
+    = stylesheet_link_tag :landingpage, :media => :all
+    / Fonts and icons
+    %link{:href => "https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+    %link{:href => "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400,300", :rel => "stylesheet", :type => "text/css"}/
+  %body.landing-page
+    %nav.navbar.navbar-transparent.navbar-top{:role => "navigation",:style=>""}
+      .container
+        / Brand and toggle get grouped for better mobile display
+        .navbar-header
+          %button#menu-toggle.navbar-toggle{"data-target" => "#example", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar.bar1
+            %span.icon-bar.bar2
+            %span.icon-bar.bar3
+          %a{:href => "http://dayhomeregistry.com"}
+            .logo-container
+              .logo
+                =image_tag "landingpage/new_logo.jpg",:alt => "Dayhome Registry"
+              .brand
+                Dayhome Registry
+        
+        / Collect the nav links, forms, and other content for toggling
+        #example.collapse.navbar-collapse.small
+          %div.logo{:style=>"text-align:center;"}
+            = image_tag("mini-logo.png", :alt => "Dayhome Registry")#, :width => "40px")#, :style => "float:left;padding-left: 50px;", :width => "150px")  
+          %ul.nav.navbar-nav.navbar-left{:style=>""}
+            %li
+              %a{:href => "http://blog.dayhomeregistry.com"}
+                %i.fa.fa-wordpress
+                Blog
+            %li
+              %a{:href => "http://shop.dayhomeregistry.com"}
+                %i.fa.fa-shopping-cart
+                Shop 
+            %li
+              %a{:href => "/pages/about"}
+                %i.fa.fa-book
+                About 
+          .navbar-center{:style=>"text-align:center;float:left;padding-top:18px;"}
+            %ul{:style=>"display:inline-table;"}
+              %li{:style=>"display:inline;"}
+                = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f| 
+                  /
+                    .search-form-input-wrapper
+                      .location-wrapper
+                        %span.input-placeholder-group
+                          %input#searchQuery.form-inline.location.input-large.input-contrast{:autocomplete => "off", :name => "search[address]", :placeholder => "Tell us your neighborhood...", :type => "text"}
+                          %span.input-group-btn
+                            %button.btn.btn-default{:type => "button"} Go!
+                    %button#submit_location.search-button.form-inline.btn.btn-primary.btn-large{:type => "submit"} Search
+                  .input-group
+                    %input#searchQuery.form-control.location.input-large.input-contrast{:autocomplete => "off", :name => "search[address]", :placeholder => "Tell us your neighborhood...", :type => "text",:size=>30}
+                    %span.input-group-btn
+                      %button.btn.btn-primary{:type => "button"} Search!
+          %ul.nav.navbar-nav.navbar-right{:style=>""}
+            -if current_user.nil?
+              %li
+                %a{:href => "#{login_url}"}
+                  %i.fa.fa-sign-in
+                  Login
+            -else
+              %li
+                %a{:href => "#{logout_url}"}
+                  %i.fa.fa-sign-out
+                  Logout
+            - if !current_user.nil?
+              - if current_user.admin?
+                %li
+                  %a{:href => "#{admin_day_homes_path}"}
+                    %i.fa.fa-home
+                    Day Homes
+              - elsif current_user.organization_admin?
+                %li
+                  %a{:href => "#{day_homes_path}"}
+                    %i.fa.fa-home
+                    Day Homes            
+              - else
+                %li
+                  %a{:href => "#{edit_day_home_path(current_user.organization.day_homes.first)}"}
+                    %i.fa.fa-home
+                    My Dayhomes
+            %li
+              %a.call-to-action{:href => "#{billing_signup_path}"} List your dayhome
+        / /.navbar-collapse
+    .wrapper
+      .top-section
+        = yield
+    %footer.footer
+      .container
+        %nav.pull-left
+          %ul
+            %li
+              %a{:href => "http://blog.dayhomeregistry.com"}
+                %i.fa.fa-wordpress
+                Blog
+            %li
+              %a{:href => "http://shop.dayhomeregistry.com"}
+                %i.fa.fa-shopping-cart
+                Shop   
+        .social-area.pull-right
+          %a{:href=>"http://www.facebook.com/dayhomeregistry", :class=>"btn btn-social btn-facebook btn-simple"}
+            %i.fa.fa-facebook-square
+          %a{:href=>"http://www.twitter.com/dayhomeregistry", :class=>"btn btn-social btn-twitter btn-simple"}
+            %i.fa.fa-twitter
+          %a{:href=>"http://www.pinterest.com/dayhomeregistry", :class=>"btn btn-social btn-pinterest btn-simple"}
+            %i.fa.fa-pinterest
+        .copyright
+          &copy;
+          = link_to "Dayhome Registry #{Date.today.year}", root_path
+          = "(#{Dayhomes::Application::VERSION})"
+          | Read our
+          = link_to 'Privacy Policy', [:privacy, :pages]
+
+  = javascript_include_tag :landingpage
+  
