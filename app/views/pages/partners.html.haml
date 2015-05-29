@@ -1,0 +1,113 @@
+.container
+  .row
+    .col-lg-12.col-md-12.col-sm-12
+      %h4.header-text 
+        Partners
+      %p 
+        These are the awesome folks that we've partnered with to give you some great deals just for being a part of the Dayhome Registry community.
+  .row
+    .col-lg-6.col-md-6.col-sm-6
+      .partner-img{style:"background-image:url('#{image_url("lmf.png")}');"}
+      .partner-blurb
+        =link_to "Lorraine-Marie Fotography", "http://www.lorraine-marie.com/"
+        offers unique and creative documentary photography sessions for you, your family or your business.
+      .partner-deal
+        .offer
+          15%
+          %span
+            off
+        Lorraine-Marie offers %15 off life, birth and children (Edmonton) photography sessions to Dayhome Registry members.
+
+      -if !current_user.nil? 
+        Use coupon code <code>DAYHOMEREGISTRY</code> when booking a session.
+      -else
+        =link_to "Login", login_url
+        to access this promotion.
+    .col-lg-6.col-md-6.col-sm-6
+      .partner-img{style:"background-image:url('#{image_url("parenting_power.jpg")}');"}
+      .partner-blurb
+        It’s one thing to have parenting tools that help you tackle situations in the moment. It’s another thing to have strategies that guide you through the ‘real life’ hurdles, and help you to prepare your kids by providing them with essential skills for their growth and development. 
+        =link_to "Parenting Power", "http://parentingpower.ca/"
+        covers it all.
+      .partner-deal
+        .offer
+          10%
+          %span
+            off
+        Parenting Power offers 10% off parenting or childcare provider sessions to Dayhome Registry members.
+
+      -if !current_user.nil? 
+        Use coupon code <code>DAYHOMEREGISTRY</code> when booking a session.
+      -else
+        =link_to "Login", login_url
+        to access this promotion.
+  .row
+    .col-lg-6.col-md-6.col-sm-6
+      .partner-img{style:"background-image:url('#{image_url("landingpage/born2create.jpg")}');"}
+      .partner-blurb
+        =link_to "Born 2 Create", "http://www.born2create.ca/"
+        offers unique sensory experience through Sensory Bin play.
+      .partner-deal
+        .offer
+          10%
+          %span
+            off
+        Born2Create offers Discounts on Edmonton Sensory Bin Birthday parties and workshops to Dayhome Registry members.
+
+      -if !current_user.nil? 
+        Use coupon code <code>DAYHOMEREGISTRY</code> when booking a session.
+      -else
+        =link_to "Login", login_url
+        to access this promotion.
+    .col-lg-6.col-md-6.col-sm-6
+      .partner-img{style:"background-image:url('#{image_url("bellebliss_out.png")}');"}
+      .partner-blurb
+        =link_to "Belle and Bliss", "http://www.belleandblissboutique.com/"
+        offers Leggies, tuniques, comfy clothing for women and children.
+      .partner-deal
+        .offer
+          10%
+          %span
+            off
+        Belle and Bliss Boutique offers a discount to Dayhome Registry members.
+
+      -if !current_user.nil? 
+        Use coupon code <code>DAYHOME</code> when purchasing online.
+      -else
+        =link_to "Login", login_url
+        to access this promotion.
+  .row
+    .col-lg-6.col-md-6.col-sm-6
+      .partner-img{style:"background-image:url('#{image_url("wee piggies.gif")}');"}
+      .partner-blurb
+        =link_to "Wee Piggies and Paws", "http://www.weepiggies.com/"
+        makes your memories last a lifetime with one-of-a-kind, highly-detailed LifeCasts, mounted or professionally framed.
+      .partner-deal
+        .offer
+          Free
+          %span
+            upgrade
+        Wee Piggies and Paws offers FREE Hand/Foot Impression with purchase of any sterling fingerprint necklace and Love Note to Dayhome Registry members.
+
+      -if !current_user.nil? 
+        Use coupon code <code>DAYHOMEREGISTRY</code> when booking a session.
+      -else
+        =link_to "Login", login_url
+        to access this promotion.
+    .col-lg-6.col-md-6.col-sm-6
+      .partner-img{style:"background-image:url('#{image_url("Shanti.png")}');"}
+      .partner-blurb
+        =link_to "Shanti Life Coaching", "http://www.shantilifecoaching.com/"
+        specializes in parenting and wellness coaching.  They are proud to serve individuals who wish to enhance their overall mental health and wellness.
+      .partner-deal
+        .offer
+          30%
+          %span
+            off
+        Shanti Life Coaching offers a discount of 30% off any coaching session to Dayhome Registry members.
+
+      -if !current_user.nil? 
+        Use coupon code <code>DAYHOMEREGISTRY</code> when booking a session.
+      -else
+        =link_to "Login", login_url
+        to access this promotion.
