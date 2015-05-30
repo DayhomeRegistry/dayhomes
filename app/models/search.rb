@@ -93,7 +93,9 @@ class Search
     # create search dayhome pin
     if params.has_key?(:address) && !params[:address].blank?
       loc = Geocoder.coordinates(setup_address(params[:address]))
-      search_addy_pin = {:lat=>loc[0],:lng=>loc[1]}
+      if loc
+        search_addy_pin = {:lat=>loc[0],:lng=>loc[1]}
+      end
     elsif params.has_key?(:location) && params[:location]["lng"] != 0
       #Try geocoding the IP
       search_addy_pin = params[:location]

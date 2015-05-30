@@ -63,6 +63,7 @@ Dayhomes::Application.routes.draw do
       get :privacy
       get :pricing
       get :acknowledge
+      get :partners
     end
   end
   resources :reviews

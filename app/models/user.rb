@@ -94,6 +94,15 @@ class User < ActiveRecord::Base
   def organization_admin?
     !organization.nil?
   end  
+  def default_dayhome
+    org = self.location.organization unless self.location.nil?
+    org = self.organization unless self.organization.nil?
+    if(org)
+      org.day_homes.first
+    else
+      nil
+    end
+  end
   
   def assign_day_home_ids=(day_home_id_attrs=[])
     self.user_day_homes = []
