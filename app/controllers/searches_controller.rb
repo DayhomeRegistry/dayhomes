@@ -133,14 +133,25 @@ class SearchesController < ApplicationController
     render :partial => "/searches/pin", :locals => { :dayhome => day_home}
   end
   def build_dayhome_tile
-    respond_to do |format|
-        format.html {
-          render json: 'Coupon is valid.'
-        }
-        format.js { 
-          day_home = DayHome.find_by_id(params[:day_home_id])
-          render :partial => "/searches/day_home", :locals => { :day_home => day_home}
-        }
+    day_home = DayHome.find_by_id(params[:day_home_id])
+    if(day_home)
+      respond_to do |format|
+          format.html {
+            render json: 'Dayhome is valid.'
+          }
+          format.js { 
+            render :partial => "/searches/day_home", :locals => { :day_home => day_home}
+          }
+      end
+    else
+      respond_to do |format|
+          format.html {
+            render json: 'Dayhome is invalid.'
+          }
+          format.js { 
+            render :nothing => true, :status => 500, :content_type => 'text/html'
+          }
+      end
     end
   end
   
