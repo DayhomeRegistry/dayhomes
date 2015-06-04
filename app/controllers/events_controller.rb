@@ -5,7 +5,6 @@ class EventsController < ApplicationController
 
 
   def index
-    byebug
     #@events = Event.all
     @events = Event.find_by_day_home_id(params[:day_home_id])
 
