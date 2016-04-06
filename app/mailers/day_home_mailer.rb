@@ -2,12 +2,15 @@ class DayHomeMailer < ActionMailer::Base
   default :from => 'DayHomeRegistry.com <questions@dayhomeregistry.com>'
 
   def contact_day_home(contact, dayhome)
+    byebug
     @contact = contact
     @dayhome = dayhome
     admin_emails = dayhome.admin_users.map(&:email).join(', ')
     locale_emails = dayhome.locale_users.map(&:email).join(', ')
     emails = dayhome.admin_users+dayhome.locale_users
     to = emails.map(&:email).join(', ')
+    @contact.day_home_email = to
+    @contact.save
 
     if (Rails.env.development?)          
       mail(:to => APPLICATION_CONFIG[:signup_request_to], :subject => contact.subject+"[admin:{"+admin_emails+"}, locale:{"+locale_emails+"}, to:{#{to}}]", :reply_to=>contact.email)
