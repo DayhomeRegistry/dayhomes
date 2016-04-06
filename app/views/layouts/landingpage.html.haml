@@ -176,8 +176,6 @@
         %p
           Get recipes, tips for kids and info on our newest dayhomes. And just for signing up, we'll send you a <strong>free Childcare Search Checklist</strong>
 
-        %script{"data-config" => "%7B%7D", "data-leadbox" => "146cf0d73f72a2:1513729dbb46dc", "data-url" => "https://my.leadpages.net/leadbox/146cf0d73f72a2%3A1513729dbb46dc/5656058538229760/", :src => "//my.leadpages.net/leadbox-901.js", :type => "text/javascript",:async => true}
-
         = form_tag('https://dayhomeregistry.us7.list-manage.com/subscribe/post?u=cde938b38d19f459bce32538b&amp;id=31701e2e10',:method=>:post,:target=>:_blank) do
           = email_field_tag 'EMAIL','', :placeholder=>"Your email", :id=>'mail', :style=>"width:50%;display:inline-block;"
           = submit_tag "Subscribe to our weekly newsletter!", :id=>"subscribe",:class=>"btn slim", :style=>"background-color:#FFCE08;color:white;border:none;"
