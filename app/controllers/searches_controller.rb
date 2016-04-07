@@ -1,6 +1,5 @@
 class SearchesController < ApplicationController
   def index
-
     attributes = params[:search] || Hash.new
     attributes[:location]=getHash(request.location)
     #attributes["location"]=Geocoder.search("Calgary").first.data["geometry"]["location"]
@@ -58,6 +57,7 @@ class SearchesController < ApplicationController
 
     @featured = @search.featured
     @agencies = Organization.joins(:day_homes).group('organization_id').having('count(day_homes.id)>1')
+
 
     @hash = Gmaps4rails.build_markers(@day_homes) do |day_home, marker|
       marker.lat day_home.lat

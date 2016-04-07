@@ -46,6 +46,10 @@ showOnMap = false
       Gmaps.store.handler.bounds.extendWith(Gmaps.store.markers)
       Gmaps.store.handler.fitMapToBounds()
 
+    Gmaps.store.handler.addMarker({
+      "lat": Gmaps.store.search_pin.center_latitude, 
+      "lng": Gmaps.store.search_pin.center_longitude,
+    });
     #This needs to be the search pin
     Gmaps.store.handler.getMap().setCenter(new google.maps.LatLng(Gmaps.store.search_pin.center_latitude, Gmaps.store.search_pin.center_longitude));
     #There needs to be an if here, to determine if we should zoom
@@ -101,6 +105,7 @@ showOnMap = false
           return
         return
       ++i
+  
 
 isMapDragging = false
 idleSkipped = false
