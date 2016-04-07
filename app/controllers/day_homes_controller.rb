@@ -154,7 +154,6 @@ class DayHomesController < ApplicationController
     @day_home_contact = DayHomeContact.new(day_home_contact_params)
     @day_home_contact.day_home_id = @day_home.id        
 
-    byebug
     if validate_recap(params, @day_home_contact.errors) && @day_home_contact.save
       #redirect_to day_home_slug_path(@day_home.slug), :notice => "#{@day_home.name} has been contacted!"
 

@@ -2,7 +2,6 @@ class DayHomeMailer < ActionMailer::Base
   default :from => 'DayHomeRegistry.com <questions@dayhomeregistry.com>'
 
   def contact_day_home(contact, dayhome)
-    byebug
     @contact = contact
     @dayhome = dayhome
     admin_emails = dayhome.admin_users.map(&:email).join(', ')
