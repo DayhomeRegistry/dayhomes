@@ -18,7 +18,6 @@
 //= require bootstrap
 //= require fullcalendar
 //= require underscore
-//= require gmaps-auto-complete
 //= require jquery.serializejson
 //= require gmaps/google
 //= require jquery.add_more
@@ -32,6 +31,11 @@
 //= require externals/modernizr
 //= require externals/html5support/jquery.html5support
 //= require class
+//= require maps.google.com.js
+//= require infobox_packed.js
+//= require markerclusterer.min.js
+//= require richmarker-compiled.js
+//= require gmaps-auto-complete
 
 
 function isPrintableKey(e){if(e.altKey||e.ctrlKey||e.metaKey)return!1;var t=e.which;return t<32||t==144?!1:!0}
