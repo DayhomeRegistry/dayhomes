@@ -77,7 +77,8 @@ showOnMap = false
     i=0
     infowindow = new google.maps.InfoWindow();
     while i < Gmaps.store.markers.length
-      google.maps.event.addListener Gmaps.store.markers[i].serviceObject, 'click', ->
+      #google.maps.event.addListener Gmaps.store.markers[i].serviceObject, 'click', ->
+      Gmaps.store.markers[i].serviceObject.addListener 'click', ->
         clicked = this;
         index = -1
         i = 0
