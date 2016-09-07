@@ -240,8 +240,9 @@ class Organization < ActiveRecord::Base
     if(!self.stripe_customer_token.nil?)
       
       customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-      card = customer.cards.retrieve(customer.default_card)
-
+      #card = customer.cards.retrieve(customer.default_card)
+      card = customer.sources.data[0]
+      
       #raise customer.to_json
       credit_card = {
         last4: card.last4,
