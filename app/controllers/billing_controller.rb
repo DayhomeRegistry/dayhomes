@@ -278,7 +278,8 @@ class BillingController < ApplicationController
     end
     if(!@organization.stripe_customer_token.nil?)
       customer = Stripe::Customer.retrieve(@organization.stripe_customer_token)
-      card = customer.cards.retrieve(customer.default_card)
+      #card = customer.cards.retrieve(customer.default_card)
+      card = customer.sources.data[0]
 
       #raise customer.to_json
       @credit_card = {
@@ -302,7 +303,8 @@ class BillingController < ApplicationController
     if(!@organization.stripe_customer_token.nil?)
       
       customer = Stripe::Customer.retrieve(@organization.stripe_customer_token)
-      card = customer.cards.retrieve(customer.default_card)
+      #card = customer.cards.retrieve(customer.default_card)
+      card = customer.sources.data[0]
 
       #raise customer.to_json
       @credit_card = {
