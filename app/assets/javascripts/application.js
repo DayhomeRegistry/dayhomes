@@ -19,7 +19,7 @@
 //= require fullcalendar
 //= require underscore
 //= require jquery.serializejson
-//= require gmaps/google
+// require gmaps/google
 //= require jquery.add_more
 //= require jquery.colorbox
 //= require jquery.modal
@@ -31,10 +31,10 @@
 //= require externals/modernizr
 //= require externals/html5support/jquery.html5support
 //= require class
-//= require infobox_packed.js
-//= require markerclusterer.min.js
-//= require richmarker-compiled.js
-//= require gmaps-auto-complete
+// require infobox_packed.js
+// require markerclusterer.min.js
+// require richmarker-compiled.js
+// require gmaps-auto-complete
 
 // require maps.google.com.js
 

@@ -37,6 +37,11 @@ Dayhomes::Application.routes.draw do
 
   root :to => 'pages#index'
 
+  get "find/markers"
+  resources :find do
+    root :to => 'find#index'
+  end
+  
   get "searches/markers"
   get "searches/infowindow/:day_home_id" =>'searches#infowindow'
   get "searches/build_dayhome_tile/:day_home_id"=>'searches#build_dayhome_tile'

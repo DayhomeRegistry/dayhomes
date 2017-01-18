@@ -1,0 +1,31 @@
+.row
+  
+  = form_tag '/find', :method => 'get', :focus => 'submit', :id => 'advanced-search' do |f| 
+    .search-form-input-wrapper
+      .location-wrapper
+        %span.input-placeholder-group
+          %input#searchQuery.form-inline.location.input-large.input-contrast{:autocomplete => "off", :name => "search[address]", :placeholder => "Tell us your neighborhood...", :type => "text"}/
+      .select.select-large
+        %select#guests{:name => "spots"}
+          %option{:value => "1"} All spots
+          %option{:value => "2"} Full time
+          %option{:value => "3"} Part time
+          %option{:value => "4"} Before/After School
+  %button#submit_location.search-button.form-inline.btn.btn-primary.btn-large{:type => "submit"} Search
+  
+.row
+  .col-sm-12    
+    #map{:style => "width: 800px; height: 400px;"}
+  - content_for :scripts do
+    = javascript_include_tag params[:controller]
+    :javascript
+      var privateDayhomeMarker = "<%= asset_path('dayhome-private.png') %>";
+      var dayhomeMarker = "<%= asset_path('dayhome.png') %>";
+      //placeholder
+      // function loadMarkers(){
+      //   //init the data
+      //   var markersData = #{raw @hash.to_json};
+      //   updateMarkers(map, markersData.markers);
+      // }
+    :plain
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYPLQjWeUWSe3H-420NOPNP7K1wRn0yyE&callback=initMap"></script>
