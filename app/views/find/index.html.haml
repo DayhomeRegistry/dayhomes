@@ -19,8 +19,10 @@
   - content_for :scripts do
     = javascript_include_tag params[:controller]
     :javascript
-      var privateDayhomeMarker = "<%= asset_path('dayhome-private.png') %>";
-      var dayhomeMarker = "<%= asset_path('dayhome.png') %>";
+      var privateDayhomeMarker = "#{asset_path('dayhome-private.png') }";
+      var dayhomeMarker = "#{asset_path('dayhome.png')}";
+      var privateDayhomeFeaturedMarker = "#{asset_path('dayhome-private-featured.png')}"
+      var dayhomeFeaturedMarker = "#{asset_path('dayhome-featured.png')}"
       //placeholder
       // function loadMarkers(){
       //   //init the data

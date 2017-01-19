@@ -35,7 +35,8 @@ function updateMarkers(map, markersData)
 function addMarker(location) {
     var marker = new google.maps.Marker({
       position: location,
-      map: map
+      map: map,
+      icon: location.featured?(location.accredited?dayhomeFeaturedMarker:privateDayhomeFeaturedMarker):(location.licensed?dayhomeMarker:privateDayhomeMarker),
     });
     markers.push(marker);
 }
