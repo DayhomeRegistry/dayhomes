@@ -15,8 +15,6 @@
       
     %link{:href => "https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}/
     = stylesheet_link_tag :application, :media => :all
-    
-    %script{:src=>"https://maps.googleapis.com/maps/api/js?key="+GMAPS_CONFIG[:api_key], :type=>"text/javascript", :async=>true, :defer=>true}
 
     = javascript_include_tag "https://js.stripe.com/v1/",:application
 

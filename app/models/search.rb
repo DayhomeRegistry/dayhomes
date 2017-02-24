@@ -108,7 +108,12 @@ class Search
     end
 
     # return the gmaps pins variable
-    create_pins(dayhome_query, search_addy_pin)
+    #create_pins(dayhome_query, search_addy_pin)
+
+    # get all of the dayhomes from the system
+    self.day_homes = dayhome_query.uniq.all
+    self.featured = dayhome_query.joins(:features).where("approved=1").where("end > ?",Time.now()).uniq
+
 
   end
 

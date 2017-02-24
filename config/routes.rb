@@ -38,6 +38,9 @@ Dayhomes::Application.routes.draw do
   root :to => 'pages#index'
 
   get "find/markers"
+  get "find/featured"
+  get "find/details"
+  get "find/infowindow/:day_home_id" => 'find#infowindow'
   resources :find do
     root :to => 'find#index'
   end
