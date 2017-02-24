@@ -33,7 +33,13 @@
   .col-sm-12    
     #map{:style => "width: 800px; height: 400px;"}
   #featured
-  #details
+  .col-sm-8
+    .col-sm-12
+      %h3
+        In your area
+      #details
+        %span.glyphicon.glyphicon-refresh.glyphicon-refresh-animate
+        Loading...
   
   - content_for :scripts do
     = javascript_include_tag params[:controller]

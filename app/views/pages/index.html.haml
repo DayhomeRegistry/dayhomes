@@ -5,7 +5,7 @@
         Find a Dayhome
       %p.rightb_txt{:style=>""}
         Find a dayhome in and around your home, work or wherever.
-        
+       
       %div{:id=>"searchBox",:style=>"height:60px;"}
         = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f| 
           = f.search_field :address, :id => 'searchQuery', :placeholder => "Address or Neighbourhood"

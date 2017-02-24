@@ -127,7 +127,7 @@
                 Got a Dayhome?
               %i.input-suffix.btn.btn-primary.icon.icon-full.icon-search
           .col-12
-            = form_for @search, :url => searches_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f| 
+            = form_for @search, :url => find_index_path, :method => 'get', :focus => 'submit', :html => {:id => :search} do |f| 
               .search-form-input-wrapper
                 .location-wrapper
                   %span.input-placeholder-group

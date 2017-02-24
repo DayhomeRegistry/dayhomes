@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include ReCaptcha::AppHelper
   
-  #before_filter :create_search
+  before_filter :create_search
   #before_filter :validate_acknowledgement
   protect_from_forgery
 

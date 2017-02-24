@@ -57,6 +57,7 @@ class FindController < ApplicationController
     	box = [bounds["SW"]["lat"].to_f,bounds["SW"]["lng"].to_f,bounds["NE"]["lat"].to_f,bounds["NE"]["lng"].to_f]
 
     	search = params[:search]
+    	
 	    attributes = search[:search] || Hash.new
 	   	
 		@search = Search.new(attributes)

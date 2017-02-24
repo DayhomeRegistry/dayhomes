@@ -90,6 +90,7 @@ class Search
       dayhome_query = dayhome_query.where(:licensed => [true, false])
     end
 
+
     # create search dayhome pin
     if params.has_key?(:address) && !params[:address].blank?
       loc = Geocoder.coordinates(setup_address(params[:address]))
@@ -108,11 +109,11 @@ class Search
     end
 
     # return the gmaps pins variable
-    #create_pins(dayhome_query, search_addy_pin)
+    create_pins(dayhome_query, search_addy_pin)
 
     # get all of the dayhomes from the system
-    self.day_homes = dayhome_query.uniq.all
-    self.featured = dayhome_query.joins(:features).where("approved=1").where("end > ?",Time.now()).uniq
+    # self.day_homes = dayhome_query.uniq.all
+    # self.featured = dayhome_query.joins(:features).where("approved=1").where("end > ?",Time.now()).uniq
 
 
   end
@@ -147,6 +148,7 @@ class Search
     #   # no search pin entered and dayhomes are found, let the map position itself around the pins
     #   self.auto_adjust = true
     # end
+
 
     # check where to position the map
     if self.search_pin.nil? || self.search_pin[:lng]==0

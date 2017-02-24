@@ -12,7 +12,13 @@ var _getMarkers = function(bounds) {
     async: true
   }).success(function(data, textStatus, jqXHR) {
     _getFeatured(bounds);
-    updateMarkers(map,data.markers);
+    if(data.markers.length==0){
+    	$('#details').empty();
+  		$('#details').append('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...');
+    	map.setZoom(map.getZoom()-4);
+    }
+    else
+    	updateMarkers(map,data.markers);
 
   }).error(function(jqXHR, textStatus, errorThrown) {
     var fail;
@@ -38,6 +44,8 @@ var _getFeatured = function(bounds) {
   });
 }
 var _getDetails = function(bounds) {
+  $('#details').empty();
+  $('#details').append('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...');
   return $.ajax({
     url: '/find/details',
     data: {
