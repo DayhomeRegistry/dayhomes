@@ -11,14 +11,16 @@ var _getMarkers = function(bounds) {
     dataType: 'json',
     async: true
   }).success(function(data, textStatus, jqXHR) {
-    _getFeatured(bounds);
+    
     if(data.markers.length==0){
     	$('#details').empty();
   		$('#details').append('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...');
-    	map.setZoom(map.getZoom()-4);
+    	map.setZoom(Math.max(6,map.getZoom()-2));
     }
-    else
+    else {
     	updateMarkers(map,data.markers);
+    	_getFeatured(bounds);
+    }
 
   }).error(function(jqXHR, textStatus, errorThrown) {
     var fail;
