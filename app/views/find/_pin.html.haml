@@ -16,9 +16,11 @@
     -if avail.empty?
       =image_tag("circle-empty.png", :alt=> "Closed", :title=> "Closed")
     -else
-      -if avail.include? "Full-time"
+      /-if avail.include? "Full-time"
+      -if avail.select { |type| type.availability == "Full-time"}.count > 0
         =image_tag("circle-full.png", :alt=> "Full-time", :title=> "Full-time")
-      -if avail.include? "Part-time"
+      /-if avail.include? "Part-time"
+      -if avail.select { |type| type.availability == "Part-time"}.count > 0
         =image_tag("circle-half.png", :alt=> "Part-time", :title=> "Part-time")
 
   - if @agencies.include?(dayhome.organization)

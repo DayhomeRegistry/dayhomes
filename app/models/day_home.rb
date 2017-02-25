@@ -147,6 +147,7 @@ class DayHome < ActiveRecord::Base
       picture = ActionController::Base.helpers.asset_path("dayhome.png") unless !self.licensed
       picture = self.organization.pin.photo_url(:pin) unless self.organization.pin.nil?
     end
+    byebug
     picture
   end
 

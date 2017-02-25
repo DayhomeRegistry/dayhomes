@@ -124,12 +124,20 @@ function openInfoWindow(){
 
 // Adds a marker to the map and push to the array.
 function addMarker(location) {
+	var picture = location.licensed?dayhomeMarker:privateDayhomeMarker;
+	if (location.featured) {
+		if(location.licensed)
+			picture = dayhomeFeaturedMarker;
+		else
+			picture = privateDayhomeFeaturedMarker;
+    }
     var marker = new google.maps.Marker({
       title: location.slug,
       id: location.id,
       position: location,
       map: map,
-      icon: location.featured?(location.accredited?dayhomeFeaturedMarker:privateDayhomeFeaturedMarker):(location.licensed?dayhomeMarker:privateDayhomeMarker)
+      //icon: location.featured?(location.accredited?dayhomeFeaturedMarker:privateDayhomeFeaturedMarker):(location.licensed?dayhomeMarker:privateDayhomeMarker)
+      icon:picture
     });
     marker.addListener('click', openInfoWindow);	
     markers.push(marker);

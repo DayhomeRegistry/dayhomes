@@ -57,14 +57,18 @@ class FindController < ApplicationController
     	box = [bounds["SW"]["lat"].to_f,bounds["SW"]["lng"].to_f,bounds["NE"]["lat"].to_f,bounds["NE"]["lng"].to_f]
 
     	search = params[:search]
-    	
+
 	    attributes = search[:search] || Hash.new
 	   	
 		@search = Search.new(attributes)
 
+		
 	 	#Shrink to just the box
 	 	@hits = @search.day_homes #DayHome.joins(:availability_types)
 	  	@hits = @hits.within_bounding_box(box)
+	  	@hits.each do |dayhome|
+	    	dayhome[:featured]= dayhome.featured?
+	    end
 	  	
 	    render json: {markers: @hits } #, featured:@featured }
 	  }
