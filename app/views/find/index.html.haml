@@ -1,0 +1,70 @@
+.row
+  .col-sm-12
+    =render 'form'
+
+/ .row
+/   = form_tag '/find', :method => 'get', :focus => 'submit', :id => 'advanced-search' do |f| 
+/     .search-form-input-wrapper
+/       .location-wrapper
+/         %span.input-placeholder-group
+/           %input#searchQuery.form-inline.location.input-large.input-contrast{:autocomplete => "off", :name => "search[address]", :placeholder => "Tell us your neighborhood...", :type => "text"}/
+/       / .select.select-large
+/       /   %select#guests{:name => "spots"}
+/       /     %option{:value => "1"} All spots
+/       /     %option{:value => "2"} Full time
+/       /     %option{:value => "3"} Part time
+/       /     %option{:value => "4"} Before/After School
+/       %div
+/         %label
+/           %input.filter{:name => "spots", :type => "checkbox", :value => "1"}>
+/           All spots
+/         %label
+/           %input.filter{:name => "spots", :type => "checkbox", :value => "2"}>/
+/           Full time
+/         %label
+/           %input.filter{:name => "spots", :type => "checkbox", :value => "3"}>/
+/           Part time
+/         %label
+/           %input.filter{:name => "spots", :type => "checkbox", :value => "3"}>/
+/           Before/After School
+/   %button#submit_location.search-button.form-inline.btn.btn-primary.btn-large{:type => "submit"} Search
+  
+.row
+  .col-sm-12    
+    #map{:style => "width: 800px; height: 400px;"}
+  #featured
+  .col-sm-8
+    .col-sm-12
+      %h3
+        In your area
+      #details
+        %span.glyphicon.glyphicon-refresh.glyphicon-refresh-animate
+        Loading...
+  
+  - content_for :scripts do
+    = javascript_include_tag params[:controller]
+    :javascript
+      var privateDayhomeMarker = "#{asset_path('dayhome-private.png') }";
+      var dayhomeMarker = "#{asset_path('dayhome.png')}";
+      var privateDayhomeFeaturedMarker = "#{asset_path('dayhome-private-featured.png')}"
+      var dayhomeFeaturedMarker = "#{asset_path('dayhome-featured.png')}"
+
+      $("input:checkbox").on('click', function() {
+        var $box = $(this);
+        if ($box.is(":checked")) {
+          var group = "input:checkbox[name='" + $box.attr("name") + "']";
+          $(group).prop("checked", false);
+          $box.prop("checked", true);
+        } else {
+          $box.prop("checked", false);
+        }
+      });
+
+      var loc = null;
+      if(""!="#{@advanced_search.address}") {
+        loc={"lat":#{@advanced_search.center_latitude},"lng":#{@advanced_search.center_longitude}};
+      }
+
+    %script{:src=>"https://maps.googleapis.com/maps/api/js?key="+GMAPS_CONFIG[:api_key]+"&callback=initMap", :type=>"text/javascript", :async=>true, :defer=>true}
+    / :plain
+    /   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYPLQjWeUWSe3H-420NOPNP7K1wRn0yyE&callback=initMap"></script>
