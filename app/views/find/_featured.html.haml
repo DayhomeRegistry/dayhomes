@@ -1,0 +1,8 @@
+- if !@featured.empty?
+  .col-sm-8
+    .featured_listing
+      .col-sm-12
+        %h3
+          Featured
+        .featured{:style=>"margin:10px -10px -10px -10px;padding: 0 10px 10px 10px;"}
+          =render :partial => 'day_home', :collection => @featured 
