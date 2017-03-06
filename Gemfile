@@ -9,7 +9,7 @@ gem 'haml'
 gem 'simple_form', '~>3'
 #gem 'protected_attributes'
 gem 'devise', '>=3.4'
-gem 'omniauth-facebook'
+gem 'omniauth-facebook', '4.0.0'
 
 #Jquery assets
 gem 'jquery-rails'
