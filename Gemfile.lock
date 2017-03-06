@@ -309,7 +309,7 @@ GEM
     omniauth (1.3.1)
       hashie (>= 1.2, < 4)
       rack (>= 1.0, < 3)
-    omniauth-facebook (3.0.0)
+    omniauth-facebook (4.0.0)
       omniauth-oauth2 (~> 1.2)
     omniauth-oauth2 (1.4.0)
       oauth2 (~> 1.0)
@@ -495,7 +495,7 @@ DEPENDENCIES
   mini_magick
   mysql2
   newrelic_rpm (~> 3.8.0)
-  omniauth-facebook
+  omniauth-facebook (= 4.0.0)
   premailer-rails
   rack-affiliates
   rack-mini-profiler
