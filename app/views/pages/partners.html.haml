@@ -7,6 +7,41 @@
         These are the awesome folks that we've partnered with to give you some great deals just for being a part of the Dayhome Registry community.
   .row
     .col-lg-6.col-md-6.col-sm-6
+      .partner-img{style:"background-image:url('#{image_url("godiaperfree.jpg")}');"}
+      .partner-blurb
+        =link_to "Wee Potty", "http://www.weepotty.ca/"
+        helps families reduce or eliminate their use of diapers by teaching and offering support for elimination communication and potty training. Looking for some strategies to move potty training forward? We can help.
+      .partner-deal
+        .offer
+          10%
+          %span
+            off
+        Wee Potty offers 10% off classes and consultations to Dayhome Registry members.
+
+      -if !current_user.nil? 
+        Use coupon code <code>DAYHOMEREGISTRY</code> when booking a session.
+      -else
+        =link_to "Login", login_url
+        to access this promotion.
+    .col-lg-6.col-md-6.col-sm-6
+      .partner-img{style:"background-image:url('#{image_url("imagination_station_cm.png")}');"}
+      .partner-blurb
+        =link_to "Imagination Station CM", " https://m.facebook.com/ImaginationStationCM"
+        LEARN THROUGH PLAY! Sensory Play Encourages development in Fine/Gross Motor Skills, creativity, self-esteem, and social & cognitive development. Sensory Play is an opportunity to explore, experiment, and manipulate - a way for a child to discover the world around them! 
+      .partner-deal
+        .offer
+          Free
+          %span
+            upgrade
+        Imagination Station CM offers a FREE small Sensory Bin with orders over $100 and discounts on birthday party favours & home parties
+
+      -if !current_user.nil? 
+        Use coupon code <code>DAYHOMEREGISTRY</code> when placing your order.
+      -else
+        =link_to "Login", login_url
+        to access this promotion.
+  .row
+    .col-lg-6.col-md-6.col-sm-6
       .partner-img{style:"background-image:url('#{image_url("lmf.png")}');"}
       .partner-blurb
         =link_to "Lorraine-Marie Fotography", "http://www.lorraine-marie.com/"
@@ -111,21 +146,4 @@
       -else
         =link_to "Login", login_url
         to access this promotion.
-  .row
-    .col-lg-6.col-md-6.col-sm-6
-      .partner-img{style:"background-image:url('#{image_url("imagination_station_cm.png")}');"}
-      .partner-blurb
-        =link_to "Imagination Station CM", " https://m.facebook.com/ImaginationStationCM"
-        LEARN THROUGH PLAY! Sensory Play Encourages development in Fine/Gross Motor Skills, creativity, self-esteem, and social & cognitive development. Sensory Play is an opportunity to explore, experiment, and manipulate - a way for a child to discover the world around them! 
-      .partner-deal
-        .offer
-          Free
-          %span
-            upgrade
-        Imagination Station CM offers a FREE small Sensory Bin with orders over $100 and discounts on birthday party favours & home parties
-
-      -if !current_user.nil? 
-        Use coupon code <code>DAYHOMEREGISTRY</code> when placing your order.
-      -else
-        =link_to "Login", login_url
-        to access this promotion.
+  
