@@ -75,5 +75,9 @@
           = link_to 'Login', login_path
     .clear
   #charm
-    
+    -if current_user && request.path != goodbye_pages_path
+      .flash{ :class => "alert alert-warning", :style=>"text-align:center;" }
+        We're shutting down dayhome registry. Click 
+        = link_to 'here', goodbye_pages_path, :class=>"blue" 
+        to read more.
   .clear
